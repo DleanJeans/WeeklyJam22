@@ -1,0 +1,144 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Player.gd" type="Script" id=1]
+[ext_resource path="res://Sprite.png" type="Texture" id=2]
+[ext_resource path="res://InputAction.gd" type="Script" id=3]
+[ext_resource path="res://AI.gd" type="Script" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 10, 5 )
+
+[sub_resource type="RectangleShape2D" id=2]
+
+custom_solver_bias = 0.0
+extents = Vector2( 15, 5 )
+
+[sub_resource type="GDScript" id=3]
+
+script/source = "extends Timer
+
+onready var label = get_parent().get_node(\"TimerLabel\")
+
+func start():
+	get_parent().toggle_frozen()
+	.start()
+
+func _process(delta):
+	var time = get_time_left()
+	if time > 0:
+		label.text = String(time + 1).substr(0, 1)
+	else:
+		label.text = \"\""
+
+[node name="Player" type="KinematicBody2D"]
+
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+collision/safe_margin = 0.5
+script = ExtResource( 1 )
+controller = "AI"
+max_velocity = 200
+drag_scale = Vector2( 0.9, 0.9 )
+
+[node name="Shadow" type="Sprite" parent="."]
+
+modulate = Color( 0, 0, 0, 0.392157 )
+show_behind_parent = true
+scale = Vector2( 0.3, 0.1 )
+texture = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+
+show_behind_parent = true
+position = Vector2( 0, -20 )
+scale = Vector2( 0.2, 0.4 )
+texture = ExtResource( 2 )
+
+[node name="Shape" type="CollisionShape2D" parent="."]
+
+position = Vector2( 0, -5 )
+shape = SubResource( 1 )
+
+[node name="InputAction" type="Node2D" parent="."]
+
+position = Vector2( 0, -40 )
+script = ExtResource( 3 )
+
+[node name="DebugLabel" type="Label" parent="."]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 15.0
+margin_top = -40.0
+margin_right = 75.0
+margin_bottom = -26.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+size_flags_horizontal = 1
+size_flags_vertical = 4
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="AI" type="Node2D" parent="."]
+
+script = ExtResource( 4 )
+
+[node name="TouchArea" type="Area2D" parent="."]
+
+position = Vector2( 0, -40 )
+scale = Vector2( 1.1, 1.1 )
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+
+[node name="Shape" type="CollisionShape2D" parent="TouchArea"]
+
+position = Vector2( 0, 40 )
+shape = SubResource( 2 )
+
+[node name="TimerLabel" type="Label" parent="."]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -10.0
+margin_top = -60.0
+margin_right = 10.0
+margin_bottom = -46.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+size_flags_horizontal = 1
+size_flags_vertical = 4
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="FreezeTimer" type="Timer" parent="."]
+
+process_mode = 1
+wait_time = 3.0
+one_shot = true
+autostart = false
+script = SubResource( 3 )
+
+[connection signal="area_entered" from="TouchArea" to="." method="pass_crocodile"]
+
+[connection signal="timeout" from="FreezeTimer" to="." method="toggle_frozen"]
+
+
