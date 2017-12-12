@@ -1,18 +1,18 @@
 extends TileMap
 
-onready var players = get_children()
+onready var players = Global.Players
 var positions = []
 
 func _ready():
 	_record_positions()
 
 func _record_positions():
-	for player in Global.Players:
+	for player in players:
 		positions.append(player.position)
 
 func _reset_positions():
 	var i = 0
-	for player in Global.Players:
+	for player in players:
 		player.position = positions[i]
 		i += 1
 

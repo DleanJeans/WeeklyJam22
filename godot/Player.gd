@@ -12,8 +12,11 @@ var on_platform = false
 var velocity = Vector2()
 var frozen = false
 
+var coins = 0
+
 func reset():
 	turn_normal()
+	coins = 0
 	self.controller = "AI"
 	$FreezeTimer.stop()
 	if not frozen:
@@ -21,6 +24,10 @@ func reset():
 
 func toggle_frozen():
 	frozen = not frozen
+
+func collect_coin():
+	coins += 1
+	$CoinLabel.text = String(coins)
 
 func move(direction, multiplier = 1):
 	velocity += direction.normalized() * max_velocity * multiplier
