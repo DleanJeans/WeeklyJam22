@@ -5,7 +5,6 @@ var _player
 func _on_player_enter(player):
 	if not player.is_in_group(Global.PLAYERS_GROUP): return
 	
-	print("Player entered")
 	_player = player
 	
 	if _player_is_not_allowed():

@@ -27,8 +27,6 @@ func _process(delta):
 		elif distance_to_crocodile > 200:
 			player.velocity += _get_max_velocity_vector(vector_away_from_platform)
 			player.clamp_velocity()
-		
-		player.append_debug_info("Crocodile: %s px" % round(distance_to_crocodile))
 
 func _get_max_velocity_vector(vector):
 	return vector.normalized() * player.max_velocity

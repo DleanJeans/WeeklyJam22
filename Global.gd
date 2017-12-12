@@ -12,4 +12,4 @@ var WHITE = Color("#ffffff")
 var CROCODILE_GREEN = Color("#14840e")
 
 var PLAYERS_GROUP = "Players"
-var PLATFORMs_GROUP = "Platforms"
+var PLATFORMS_GROUP = "Platforms"
