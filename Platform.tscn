@@ -9,7 +9,9 @@ resource_local_to_scene = true
 custom_solver_bias = 0.0
 extents = Vector2( 50, 50 )
 
-[node name="Platform" type="StaticBody2D"]
+[node name="Platform" type="StaticBody2D" groups=[
+"Platforms",
+]]
 
 input_pickable = false
 collision_layer = 0

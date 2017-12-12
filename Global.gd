@@ -3,6 +3,8 @@ extends Node
 onready var Players = get_tree().get_nodes_in_group("Players")
 onready var Platforms = get_tree().get_nodes_in_group("Platforms")
 
+var crocodile
+
 var UP = Vector2(0, -1)
 var DOWN = Vector2(0, 1)
 var LEFT = Vector2(-1, 0)

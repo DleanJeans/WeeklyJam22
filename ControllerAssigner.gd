@@ -1,5 +1,8 @@
 extends Node2D
 
+export(NodePath) var PlayersPath
+onready var players = get_node(PlayersPath)
+
 var num_users = 0
 var _current_controller
 
@@ -25,4 +28,4 @@ func _check_key_list(controller_child):
 func _activate_controller():
 	_current_controller.activated = true
 	num_users += 1
-	get_parent()._activate_controller(num_users, _current_controller.get_name())
+	players._activate_controller(num_users, _current_controller.get_name())
