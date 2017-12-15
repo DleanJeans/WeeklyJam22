@@ -23,30 +23,29 @@ _sections_unfolded = [ "Cell" ]
 [node name="CoinSpawner" parent="." instance=ExtResource( 4 )]
 
 editor/display_folded = true
-position = Vector2( 200, 290 )
-scale = Vector2( 1.80346, 1.87227 )
+position = Vector2( 480, 300 )
+scale = Vector2( 2, 2 )
+_sections_unfolded = [ "Transform" ]
 container_path = NodePath("../Objects")
+spawn_interval = 5.0
 
 [node name="CoinSpawner2" parent="." instance=ExtResource( 4 )]
 
 editor/display_folded = true
-position = Vector2( 471.145, 270.044 )
-scale = Vector2( 1.52673, 1.56114 )
+position = Vector2( 240, 300 )
+scale = Vector2( 1, 5 )
+_sections_unfolded = [ "Transform" ]
 container_path = NodePath("../Objects")
-
-[node name="CoinSpawner4" parent="." instance=ExtResource( 4 )]
-
-editor/display_folded = true
-position = Vector2( 555.572, 460 )
-scale = Vector2( 6.07586, 0.624317 )
-container_path = NodePath("../Objects")
+spawn_interval = 5.0
 
 [node name="CoinSpawner3" parent="." instance=ExtResource( 4 )]
 
 editor/display_folded = true
-position = Vector2( 770, 350 )
-scale = Vector2( 1.05798, 1.09239 )
+position = Vector2( 740, 280 )
+scale = Vector2( 1, 5 )
+_sections_unfolded = [ "Transform" ]
 container_path = NodePath("../Objects")
+spawn_interval = 5.0
 
 [node name="GameTimer" parent="." instance=ExtResource( 5 )]
 
@@ -66,6 +65,7 @@ script = ExtResource( 8 )
 
 [node name="MusicBox" type="AudioStreamPlayer2D" parent="."]
 
+visible = false
 position = Vector2( 480, 270 )
 stream = ExtResource( 9 )
 volume_db = -10.0
@@ -78,19 +78,19 @@ _sections_unfolded = [ "Transform" ]
 
 [connection signal="countdown_started" from="." to="CoinSpawner" method="clear_coins"]
 
+[connection signal="countdown_started" from="." to="ControllerAssigner" method="reset"]
+
 [connection signal="countdown_started" from="." to="PlayerManager" method="_choose_random_crocodile"]
 
 [connection signal="countdown_started" from="." to="PlayerManager" method="_reset_positions"]
-
-[connection signal="countdown_started" from="." to="ControllerAssigner" method="reset"]
 
 [connection signal="countdown_started" from="." to="GameTimer" method="start_playing"]
 
 [connection signal="game_loaded" from="." to="PlayerManager" method="_choose_random_crocodile"]
 
-[connection signal="game_over" from="." to="PlayerManager" method="_reset_controllers"]
-
 [connection signal="game_over" from="." to="MainMenu" method="show"]
+
+[connection signal="game_over" from="." to="PlayerManager" method="_reset_controllers"]
 
 [connection signal="game_started" from="." to="PlayerManager" method="_unfreeze_players"]
 

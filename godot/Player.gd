@@ -3,7 +3,7 @@ extends KinematicBody2D
 const COINS_PERCENT_TRANSFERRED_ON_TAG = 50
 const BONUS_COINS_ON_TAG = 10
 
-export(int) var max_velocity = 100
+export(int) var max_velocity = 300
 export(float) var drag_scale = 0.8
 
 onready var platform_offset = $Sprite.texture.get_height() * $Sprite.scale.y

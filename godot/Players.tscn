@@ -24,28 +24,28 @@ tile_data = PoolIntArray(  )
 
 [node name="Player1" parent="." instance=ExtResource( 1 )]
 
-position = Vector2( 819.958, 272.715 )
+position = Vector2( 824.39, 476.593 )
 _sections_unfolded = [ "Material", "Visibility" ]
 
 [node name="Player2" parent="." instance=ExtResource( 1 )]
 
-position = Vector2( 690.803, 121.302 )
+position = Vector2( 808.255, 94.7092 )
 
 [node name="Player3" parent="." instance=ExtResource( 1 )]
 
-position = Vector2( 566.198, 442.477 )
+position = Vector2( 630.464, 287.352 )
 
 [node name="Player4" parent="." instance=ExtResource( 1 )]
 
-position = Vector2( 410.346, 117.659 )
+position = Vector2( 363.809, 286.08 )
 
 [node name="Player5" parent="." instance=ExtResource( 1 )]
 
-position = Vector2( 193.809, 415.222 )
+position = Vector2( 160.568, 486.136 )
 
 [node name="Player6" parent="." instance=ExtResource( 1 )]
 
-position = Vector2( 230.291, 106.191 )
+position = Vector2( 236.939, 119.487 )
 _sections_unfolded = [ "Visibility" ]
 
 

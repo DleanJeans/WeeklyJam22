@@ -9,49 +9,44 @@
 
 [node name="Platform" parent="Platforms" instance=ExtResource( 1 )]
 
-position = Vector2( 103.5, 127.25 )
-scale = Vector2( 2.39062, 2.27344 )
+position = Vector2( 480, 83.875 )
+scale = Vector2( 2.39062, 3.24609 )
 
 [node name="Platform2" parent="Platforms" instance=ExtResource( 1 )]
 
-position = Vector2( 355, 290 )
-scale = Vector2( 1.14844, 1.03125 )
+position = Vector2( 50, 270 )
+scale = Vector2( 1.90235, 2.9375 )
 
 [node name="Platform3" parent="Platforms" instance=ExtResource( 1 )]
 
-position = Vector2( 145, 460 )
-scale = Vector2( 3.70313, 1.53906 )
+position = Vector2( 480, 490 )
+scale = Vector2( 4.48047, 2.06445 )
 
 [node name="Platform4" parent="Platforms" instance=ExtResource( 1 )]
 
-position = Vector2( 880, 460 )
-scale = Vector2( 1.75, 2.29688 )
-
-[node name="Platform5" parent="Platforms" instance=ExtResource( 1 )]
-
-position = Vector2( 655, 255 )
-scale = Vector2( 1.75, 2.29688 )
+position = Vector2( 920, 275 )
+scale = Vector2( 1.75, 3.49219 )
 
 [node name="Walls" type="Node2D" parent="."]
 
 [node name="RightWall" parent="Walls" instance=ExtResource( 2 )]
 
-position = Vector2( 975, 270 )
+position = Vector2( 980, 270 )
 scale = Vector2( 0.5, 10.7812 )
 
 [node name="LeftWall" parent="Walls" instance=ExtResource( 2 )]
 
-position = Vector2( -15, 270 )
+position = Vector2( -10, 270 )
 scale = Vector2( 0.5, 10.7812 )
 
 [node name="SouthWall" parent="Walls" instance=ExtResource( 2 )]
 
-position = Vector2( 480, 555 )
+position = Vector2( 480, 550 )
 scale = Vector2( 19.2188, 0.5 )
 
 [node name="NorthWall" parent="Walls" instance=ExtResource( 2 )]
 
-position = Vector2( 480, 20 )
+position = Vector2( 480, 50 )
 scale = Vector2( 19.2188, 0.5 )
 
 

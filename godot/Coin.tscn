@@ -1,14 +1,13 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Coin.gd" type="Script" id=1]
 [ext_resource path="res://Sprite.png" type="Texture" id=2]
 [ext_resource path="res://assets/CoinDrop.ogg" type="AudioStream" id=3]
-[ext_resource path="res://PickupSound.gd" type="Script" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
-extents = Vector2( 7, 4 )
+extents = Vector2( 15, 8 )
 
 [sub_resource type="Animation" id=2]
 
@@ -25,7 +24,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 0, -13 ), Vector2( 0, -24 ) ]
+"values": [ Vector2( 0, -30 ), Vector2( 0, -50 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Shape/Shadow:scale")
@@ -36,7 +35,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 0.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 0.1, 0.04 ), Vector2( 0.05, 0.02 ) ]
+"values": [ Vector2( 0.2, 0.1 ), Vector2( 0.1, 0.05 ) ]
 }
 
 [sub_resource type="Animation" id=3]
@@ -51,10 +50,10 @@ tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 0.3, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 0, -15 ), Vector2( 0, -51 ) ]
+"values": [ Vector2( 0, -30 ), Vector2( 0, -100 ), Vector2( 0, -30 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Shape:scale")
@@ -96,8 +95,8 @@ _sections_unfolded = [ "Transform" ]
 [node name="Sprite" type="Sprite" parent="."]
 
 modulate = Color( 1, 0.843137, 0, 1 )
-position = Vector2( 0, -15 )
-scale = Vector2( 0.1, 0.12 )
+position = Vector2( 0, -30 )
+scale = Vector2( 0.2, 0.24 )
 texture = ExtResource( 2 )
 _sections_unfolded = [ "Transform", "Visibility" ]
 
@@ -109,7 +108,7 @@ _sections_unfolded = [ "Transform", "Visibility" ]
 [node name="Shadow" type="Sprite" parent="Shape"]
 
 modulate = Color( 0, 0, 0, 0.196078 )
-scale = Vector2( 0.1, 0.04 )
+scale = Vector2( 0.2, 0.1 )
 texture = ExtResource( 2 )
 _sections_unfolded = [ "Transform", "Visibility" ]
 
@@ -137,13 +136,12 @@ max_distance = 2000.0
 attenuation = 1.0
 bus = "Master"
 area_mask = 1
-script = ExtResource( 4 )
 
 [connection signal="body_entered" from="." to="." method="_on_collected"]
 
-[connection signal="collected" from="." to="PickupSound" method="play"]
-
 [connection signal="collected" from="." to="AnimationPlayer" method="play" binds= [ "Collected" ]]
+
+[connection signal="collected" from="." to="PickupSound" method="play"]
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_finished"]
 
