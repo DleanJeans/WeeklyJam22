@@ -1,5 +1,8 @@
 extends KinematicBody2D
 
+const COINS_PERCENT_TRANSFERRED_ON_TAG = 50
+const BONUS_COINS_ON_TAG = 10
+
 export(int) var max_velocity = 100
 export(float) var drag_scale = 0.8
 
@@ -35,8 +38,17 @@ func jump():
 func toggle_frozen():
 	frozen = not frozen
 
-func collect_coin():
-	coins += 1
+func collect_coin(amount = 10):
+	coins += amount
+	_update_coin_label()
+
+func take_away_coin(amount):
+	coins -= amount
+	if coins < 0:
+		coins = 0
+	_update_coin_label()
+
+func _update_coin_label():
 	$Sprite/CoinLabel.text = String(coins)
 
 func move(direction, multiplier = 1):
@@ -62,16 +74,27 @@ func tag_crocodile(player_area):
 	if _not_taggable(player):
 		return
 	
+	var coins_transferred = _coins_transferred(player)
+	
 	player.turn_crocodile()
 	player.get_node("FreezeTimer").start()
+	player.take_away_coin(coins_transferred)
+	
 	self.turn_normal()
+	self.collect_coin(coins_transferred + BONUS_COINS_ON_TAG)
+	
 	$TapSound.play()
+
+func _coins_transferred(player):
+	var coins = ceil(player.coins * COINS_PERCENT_TRANSFERRED_ON_TAG * 0.01)
+	coins = round(coins / 5) * 5 # round to nearest 5
+	return coins
 
 func _not_taggable(player):
 	return not is_crocodile() or not player is load("res://Player.gd") or frozen or player.on_platform
 
 func _physics_process(delta):
-	$DebugLabel.text = "[Debug]\n"
+	$DebugLabel.text = "[Debu:%s]\n" % get_name()
 	debug("On Platform: %s" % on_platform)
 	
 	if frozen: return

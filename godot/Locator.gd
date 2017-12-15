@@ -13,8 +13,9 @@ func _player_desirability(me, player):
 	var distance = distance_squared(player, me)
 	var distance_to_closest_platform = distance_squared(find_closest_platform(player), player)
 	var distance_to_peers = _total_distance_to_peers(player)
+	var coins_collected = player.coins / 10
 	
-	var good = distance_to_closest_platform
+	var good = distance_to_closest_platform * coins_collected
 	var bad = distance * distance_to_peers + 1
 	
 	var desirability = good / bad

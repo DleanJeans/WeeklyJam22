@@ -3,7 +3,7 @@ extends "res://ai/goal/Goal.gd"
 var coin
 
 func _ready():
-	_name = "ArriveAtCoin"
+	_name = "GoGetCoin"
 
 func activate():
 	.activate()
