@@ -12,7 +12,7 @@ func activate():
 
 func _relocate_coin():
 	coin = Locator.find_most_desired_coin(player)
-	steering.arrive_on(coin)
+	steering.seek_on(coin)
 
 func process():
 	.process()
@@ -21,9 +21,9 @@ func process():
 		state = GOAL_FAILED
 	elif coin.collected:
 		state = GOAL_COMPLETED
-		steering.arrive_off()
+		steering.seek_off()
 
 func terminate():
 	.terminate()
-	steering.arrive_off()
+	steering.seek_off()
 	$RelocatingTimer.stop()

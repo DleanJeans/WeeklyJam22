@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
 [ext_resource path="res://Map.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://MainMenu.tscn" type="PackedScene" id=6]
 [ext_resource path="res://ControllerAssigner.tscn" type="PackedScene" id=7]
 [ext_resource path="res://PlayerManager.gd" type="Script" id=8]
+[ext_resource path="res://assets/OurMusicBox _CanCan.ogg" type="AudioStream" id=9]
 
 [node name="Game" type="Node2D"]
 
@@ -63,15 +64,27 @@ visible = false
 visible = false
 script = ExtResource( 8 )
 
-[connection signal="countdown_started" from="." to="GameTimer" method="start_playing"]
+[node name="MusicBox" type="AudioStreamPlayer2D" parent="."]
+
+position = Vector2( 480, 270 )
+stream = ExtResource( 9 )
+volume_db = -10.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Master"
+area_mask = 1
+_sections_unfolded = [ "Transform" ]
 
 [connection signal="countdown_started" from="." to="CoinSpawner" method="clear_coins"]
-
-[connection signal="countdown_started" from="." to="ControllerAssigner" method="reset"]
 
 [connection signal="countdown_started" from="." to="PlayerManager" method="_choose_random_crocodile"]
 
 [connection signal="countdown_started" from="." to="PlayerManager" method="_reset_positions"]
+
+[connection signal="countdown_started" from="." to="ControllerAssigner" method="reset"]
+
+[connection signal="countdown_started" from="." to="GameTimer" method="start_playing"]
 
 [connection signal="game_loaded" from="." to="PlayerManager" method="_choose_random_crocodile"]
 

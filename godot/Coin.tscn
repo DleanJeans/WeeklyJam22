@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Coin.gd" type="Script" id=1]
 [ext_resource path="res://Sprite.png" type="Texture" id=2]
-[ext_resource path="res://CoinPickup.wav" type="AudioStream" id=3]
+[ext_resource path="res://assets/CoinDrop.ogg" type="AudioStream" id=3]
 [ext_resource path="res://PickupSound.gd" type="Script" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
@@ -135,7 +135,7 @@ volume_db = 0.0
 autoplay = false
 max_distance = 2000.0
 attenuation = 1.0
-bus = "CoinBus"
+bus = "Master"
 area_mask = 1
 script = ExtResource( 4 )
 

@@ -23,8 +23,10 @@ func _player_is_not_allowed():
 
 func _block_player():
 	_player.collision_layer |= collision_mask
+	$BlockSound.play()
 
 func _unblock_player():
+	$AllowSound.play()
 	_player.collision_layer = 1
 
 func _on_player_exited(player):
