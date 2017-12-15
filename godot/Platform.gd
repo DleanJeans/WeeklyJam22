@@ -1,5 +1,8 @@
 extends StaticBody2D
 
+# ALWAYS keep $Shape/Area/Shape
+# a lil bit larget than $Shape itself
+
 var _player
 
 func _on_player_enter(player):

@@ -26,7 +26,8 @@ func _activate_controller(player_num, controller_name):
 		random_player = _find_random_player()
 		
 	random_player.controller = controller_name
-	random_player.get_node("NameTag").text = "P%s" % player_num
+	random_player.set_name_tag( "P%s" % player_num)
+	random_player.jump()
 
 func _choose_random_crocodile():
 	var random_player = _find_random_player()

@@ -1,23 +1,39 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
-[ext_resource path="res://Sprite.png" type="Texture" id=2]
-[ext_resource path="res://InputAction.gd" type="Script" id=3]
-[ext_resource path="res://AI.gd" type="Script" id=4]
-[ext_resource path="res://Tap.ogg" type="AudioStream" id=5]
+[ext_resource path="res://InputAction.gd" type="Script" id=2]
+[ext_resource path="res://ai/AI.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Tap.ogg" type="AudioStream" id=4]
+[ext_resource path="res://Sprite.png" type="Texture" id=5]
 [ext_resource path="res://BebasNeue.otf" type="DynamicFontData" id=6]
+[ext_resource path="res://MovementVisualizer.tscn" type="PackedScene" id=7]
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="DynamicFont" id=1]
+
+size = 20
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 6 )
+_sections_unfolded = [ "Font", "Settings" ]
+
+[sub_resource type="DynamicFont" id=2]
+
+size = 20
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 6 )
+
+[sub_resource type="RectangleShape2D" id=3]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 5 )
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=4]
 
 custom_solver_bias = 0.0
 extents = Vector2( 12, 7 )
 
-[sub_resource type="GDScript" id=3]
+[sub_resource type="GDScript" id=5]
 
 script/source = "extends Timer
 
@@ -34,27 +50,81 @@ func _process(delta):
 	else:
 		label.text = \"\""
 
-[sub_resource type="DynamicFont" id=4]
-
-size = 20
-use_mipmaps = false
-use_filter = false
-font_data = ExtResource( 6 )
-_sections_unfolded = [ "Font", "Settings" ]
-
-[sub_resource type="DynamicFont" id=5]
-
-size = 20
-use_mipmaps = false
-use_filter = false
-font_data = ExtResource( 6 )
-
 [sub_resource type="DynamicFont" id=6]
 
 size = 20
 use_mipmaps = false
 use_filter = false
 font_data = ExtResource( 6 )
+
+[sub_resource type="Animation" id=7]
+
+resource_name = "Grounded"
+length = 0.01
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, -20 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0.2, 0.4 ) ]
+}
+
+[sub_resource type="Animation" id=8]
+
+resource_name = "Jump"
+length = 1.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.4, 0.6, 0.8, 0.9, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -20 ), Vector2( 0, -15 ), Vector2( 0, -20 ), Vector2( 0, -70 ), Vector2( 0, -20 ), Vector2( 0, -15 ), Vector2( 0, -20 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3, 0.4, 0.6, 0.8, 0.9, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.2, 0.4 ), Vector2( 0.225, 0.3 ), Vector2( 0.2, 0.4 ), Vector2( 0.2, 0.5 ), Vector2( 0.2, 0.4 ), Vector2( 0.225, 0.3 ), Vector2( 0.2, 0.4 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Shadow:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.3, 0.4, 0.6, 0.8, 0.9, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.3, 0.1 ), Vector2( 0.35, 0.1 ), Vector2( 0.3, 0.1 ), Vector2( 0.2, 0.05 ), Vector2( 0.3, 0.1 ), Vector2( 0.35, 0.1 ), Vector2( 0.3, 0.1 ) ]
+}
 
 [node name="Player" type="KinematicBody2D" groups=[
 "Players",
@@ -66,42 +136,101 @@ collision_mask = 1
 collision/safe_margin = 1.0
 script = ExtResource( 1 )
 max_velocity = 200
-drag_scale = Vector2( 0.9, 0.9 )
+drag_scale = 0.8
+
+[node name="InputAction" type="Node2D" parent="."]
+
+position = Vector2( 0, -40 )
+script = ExtResource( 2 )
+
+[node name="AI" parent="." instance=ExtResource( 3 )]
+
+[node name="TapSound" type="AudioStreamPlayer2D" parent="."]
+
+visible = false
+stream = ExtResource( 4 )
+volume_db = 0.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Master"
+area_mask = 1
 
 [node name="Shadow" type="Sprite" parent="."]
 
 modulate = Color( 0, 0, 0, 0.160235 )
 show_behind_parent = true
-scale = Vector2( 0.3, 0.1 )
-texture = ExtResource( 2 )
+scale = Vector2( 0.323391, 0.1 )
+texture = ExtResource( 5 )
+_sections_unfolded = [ "Transform", "Z" ]
 
 [node name="Sprite" type="Sprite" parent="."]
 
 show_behind_parent = true
-position = Vector2( 0, -20 )
-scale = Vector2( 0.2, 0.4 )
-texture = ExtResource( 2 )
-_sections_unfolded = [ "Transform" ]
+position = Vector2( 0, -17.6609 )
+scale = Vector2( 0.211696, 0.353218 )
+texture = ExtResource( 5 )
+_sections_unfolded = [ "Animation", "Transform" ]
+
+[node name="CoinLabel" type="Label" parent="Sprite"]
+
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -220.0
+margin_top = -162.5
+margin_right = -172.0
+margin_bottom = -138.5
+rect_scale = Vector2( 5, 2.5 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 1 )
+text = "0"
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Rect", "custom_fonts" ]
+
+[node name="NameTag" type="Label" parent="Sprite"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -100.0
+margin_top = -170.0
+margin_right = -60.0
+margin_bottom = -146.0
+rect_scale = Vector2( 5, 2.5 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 2 )
+text = "P0"
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Anchor", "Rect" ]
 
 [node name="Shape" type="CollisionShape2D" parent="."]
 
+visible = false
 position = Vector2( 0, -3 )
-shape = SubResource( 1 )
+shape = SubResource( 3 )
 _sections_unfolded = [ "Transform" ]
-
-[node name="InputAction" type="Node2D" parent="."]
-
-visible = false
-position = Vector2( 0, -40 )
-script = ExtResource( 3 )
-
-[node name="AI" type="Node2D" parent="."]
-
-visible = false
-script = ExtResource( 4 )
 
 [node name="TouchArea" type="Area2D" parent="."]
 
+visible = false
 position = Vector2( 0, -40 )
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
@@ -115,7 +244,7 @@ _sections_unfolded = [ "Pickable", "Transform" ]
 [node name="Shape" type="CollisionShape2D" parent="TouchArea"]
 
 position = Vector2( 0, 37 )
-shape = SubResource( 2 )
+shape = SubResource( 4 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="FreezeTimer" type="Timer" parent="."]
@@ -124,86 +253,7 @@ process_mode = 1
 wait_time = 3.0
 one_shot = true
 autostart = false
-script = SubResource( 3 )
-
-[node name="TapSound" type="AudioStreamPlayer2D" parent="."]
-
-visible = false
-stream = ExtResource( 5 )
-volume_db = 0.0
-autoplay = false
-max_distance = 2000.0
-attenuation = 1.0
-bus = "Master"
-area_mask = 1
-
-[node name="CoinLabel" type="Label" parent="."]
-
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-margin_left = -76.0
-margin_top = -96.0
-margin_right = -52.0
-margin_bottom = -72.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-size_flags_horizontal = 1
-size_flags_vertical = 4
-custom_fonts/font = SubResource( 4 )
-text = "0"
-align = 1
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Rect", "custom_fonts" ]
-
-[node name="NameTag" type="Label" parent="."]
-
-visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = -20.0
-margin_top = 10.0
-margin_right = 20.0
-margin_bottom = 34.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-size_flags_horizontal = 1
-size_flags_vertical = 4
-custom_fonts/font = SubResource( 5 )
-text = "P0"
-align = 1
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Rect" ]
-
-[node name="DebugLabel" type="Label" parent="."]
-
-visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 15.0
-margin_top = -40.0
-margin_right = 75.0
-margin_bottom = -26.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-size_flags_horizontal = 1
-size_flags_vertical = 4
-align = 1
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
+script = SubResource( 5 )
 
 [node name="TimerLabel" type="Label" parent="."]
 
@@ -227,7 +277,51 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[connection signal="area_entered" from="TouchArea" to="." method="pass_crocodile"]
+[node name="DebugLabel" type="Label" parent="."]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 15.0
+margin_top = -40.0
+margin_right = 75.0
+margin_bottom = -26.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+size_flags_horizontal = 1
+size_flags_vertical = 4
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="MovementVisualizer" parent="." instance=ExtResource( 7 )]
+
+visible = false
+multiplier = 0.2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+root_node = NodePath("..")
+autoplay = "Grounded"
+speed_scale = 1.0
+active = true
+anims/Grounded = SubResource( 7 )
+anims/Jump = SubResource( 8 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = "Grounded"
+
+[connection signal="turning_crocodile" from="." to="AI" method="_on_turning_crocodile"]
+
+[connection signal="turning_normal" from="." to="AI" method="_on_turning_normal"]
+
+[connection signal="area_entered" from="TouchArea" to="." method="tag_crocodile"]
 
 [connection signal="timeout" from="FreezeTimer" to="." method="toggle_frozen"]
 

@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 export(int) var max_velocity = 100
-export(Vector2) var drag_scale = Vector2(0.9, 0.9)
+export(float) var drag_scale = 0.8
 
 onready var platform_offset = $Sprite.texture.get_height() * $Sprite.scale.y
 
@@ -10,9 +10,15 @@ var last_visited_platform
 var on_platform = false
 
 var velocity = Vector2()
+var heading = Vector2()
 var frozen = false
 
 var coins = 0
+
+var _debug_text = ""
+
+signal turning_crocodile
+signal turning_normal
 
 func reset():
 	turn_normal()
@@ -22,29 +28,38 @@ func reset():
 	if not frozen:
 		toggle_frozen()
 
+func jump():
+	if not $AnimationPlayer.is_playing():
+		$AnimationPlayer.play("Jump")
+
 func toggle_frozen():
 	frozen = not frozen
 
 func collect_coin():
 	coins += 1
-	$CoinLabel.text = String(coins)
+	$Sprite/CoinLabel.text = String(coins)
 
 func move(direction, multiplier = 1):
 	velocity += direction.normalized() * max_velocity * multiplier
 
+func moving_vector(direction, multiplier = 1):
+	return direction.normalized() * max_velocity * multiplier
+
 func turn_normal():
+	emit_signal("turning_normal")
 	$Sprite.modulate = Global.WHITE
 
 func turn_crocodile():
+	emit_signal("turning_crocodile")
 	Global.crocodile = self
 	$Sprite.modulate = Global.CROCODILE_GREEN
 
 func is_crocodile():
 	return $Sprite.modulate == Global.CROCODILE_GREEN
 
-func pass_crocodile(player_area):
+func tag_crocodile(player_area):
 	var player = player_area.get_parent()
-	if _not_passable(player):
+	if _not_taggable(player):
 		return
 	
 	player.turn_crocodile()
@@ -52,28 +67,35 @@ func pass_crocodile(player_area):
 	self.turn_normal()
 	$TapSound.play()
 
-func _not_passable(player):
+func _not_taggable(player):
 	return not is_crocodile() or not player is load("res://Player.gd") or frozen or player.on_platform
 
 func _physics_process(delta):
-	$DebugLabel.text = ""
+	$DebugLabel.text = "[Debug]\n"
+	debug("On Platform: %s" % on_platform)
+	
 	if frozen: return
 	
-	velocity *= drag_scale
 	clamp_velocity()
 	move_and_slide(velocity)
+	velocity *= drag_scale
+	
+	heading = velocity.normalized()
 
-func append_debug_info(info):
+func debug(info):
 	$DebugLabel.text += "%s\n" % info
 
 func clamp_velocity():
 	velocity = velocity.clamped(max_velocity)
 
+func set_name_tag(name):
+	$Sprite/NameTag.text = name
+
 func _set_controller(value):
 	controller = value
-	if $NameTag == null: return
+	if $Sprite/NameTag == null: return
 	
-	$NameTag.text = value
+	$Sprite/NameTag.text = value
 	if value == "AI":
-		$NameTag.hide()
-	else: $NameTag.show()
+		$Sprite/NameTag.hide()
+	else: $Sprite/NameTag.show()

@@ -2,6 +2,7 @@ extends Node
 
 onready var Players = get_tree().get_nodes_in_group("Players")
 onready var Platforms = get_tree().get_nodes_in_group("Platforms")
+var Coins setget , _get_coins
 
 var crocodile
 
@@ -15,3 +16,6 @@ var CROCODILE_GREEN = Color("#14840e")
 
 var PLAYERS_GROUP = "Players"
 var PLATFORMS_GROUP = "Platforms"
+
+func _get_coins():
+	return get_tree().get_nodes_in_group("Coins")

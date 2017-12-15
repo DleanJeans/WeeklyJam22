@@ -22,10 +22,3 @@ func end():
 func _ready():
 	randomize()
 	emit_signal("game_loaded")
-
-func _choose_random_crocodile():
-	pass # replace with function body
-
-
-func _unfreeze_players():
-	pass # replace with function body

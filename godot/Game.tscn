@@ -21,7 +21,30 @@ _sections_unfolded = [ "Cell" ]
 
 [node name="CoinSpawner" parent="." instance=ExtResource( 4 )]
 
-position = Vector2( 306.356, 227.067 )
+editor/display_folded = true
+position = Vector2( 200, 290 )
+scale = Vector2( 1.80346, 1.87227 )
+container_path = NodePath("../Objects")
+
+[node name="CoinSpawner2" parent="." instance=ExtResource( 4 )]
+
+editor/display_folded = true
+position = Vector2( 471.145, 270.044 )
+scale = Vector2( 1.52673, 1.56114 )
+container_path = NodePath("../Objects")
+
+[node name="CoinSpawner4" parent="." instance=ExtResource( 4 )]
+
+editor/display_folded = true
+position = Vector2( 555.572, 460 )
+scale = Vector2( 6.07586, 0.624317 )
+container_path = NodePath("../Objects")
+
+[node name="CoinSpawner3" parent="." instance=ExtResource( 4 )]
+
+editor/display_folded = true
+position = Vector2( 770, 350 )
+scale = Vector2( 1.05798, 1.09239 )
 container_path = NodePath("../Objects")
 
 [node name="GameTimer" parent="." instance=ExtResource( 5 )]
@@ -31,6 +54,7 @@ round_duration = 180
 [node name="MainMenu" parent="." instance=ExtResource( 6 )]
 
 editor/display_folded = true
+visible = false
 
 [node name="ControllerAssigner" parent="." instance=ExtResource( 7 )]
 
@@ -38,6 +62,8 @@ editor/display_folded = true
 
 visible = false
 script = ExtResource( 8 )
+
+[connection signal="countdown_started" from="." to="GameTimer" method="start_playing"]
 
 [connection signal="countdown_started" from="." to="CoinSpawner" method="clear_coins"]
 
@@ -47,17 +73,16 @@ script = ExtResource( 8 )
 
 [connection signal="countdown_started" from="." to="PlayerManager" method="_reset_positions"]
 
-[connection signal="countdown_started" from="." to="GameTimer" method="start_playing"]
-
 [connection signal="game_loaded" from="." to="PlayerManager" method="_choose_random_crocodile"]
 
-[connection signal="game_over" from="." to="MainMenu" method="show"]
-
 [connection signal="game_over" from="." to="PlayerManager" method="_reset_controllers"]
+
+[connection signal="game_over" from="." to="MainMenu" method="show"]
 
 [connection signal="game_started" from="." to="PlayerManager" method="_unfreeze_players"]
 
 [connection signal="pressed" from="MainMenu/PlayButton" to="." method="start_counting_down"]
 
 
+[editable path="CoinSpawner"]
 [editable path="MainMenu"]

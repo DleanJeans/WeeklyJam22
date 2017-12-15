@@ -141,9 +141,9 @@ script = ExtResource( 4 )
 
 [connection signal="body_entered" from="." to="." method="_on_collected"]
 
-[connection signal="collected" from="." to="AnimationPlayer" method="play" binds= [ "Collected" ]]
-
 [connection signal="collected" from="." to="PickupSound" method="play"]
+
+[connection signal="collected" from="." to="AnimationPlayer" method="play" binds= [ "Collected" ]]
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_finished"]
 
