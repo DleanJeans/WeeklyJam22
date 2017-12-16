@@ -9,14 +9,13 @@ export(float) var drag_scale = 0.8
 onready var platform_offset = $Sprite.texture.get_height() * $Sprite.scale.y
 
 var controller = "AI" setget _set_controller
-var last_visited_platform
 var on_platform = false
 
 var velocity = Vector2()
 var heading = Vector2()
 var frozen = false
 
-var coins = 0
+var coins = 0 setget _set_coins
 
 var _debug_text = ""
 
@@ -25,11 +24,13 @@ signal turning_normal
 
 func reset():
 	turn_normal()
-	coins = 0
+	self.coins = 0
 	self.controller = "AI"
+	$AI/WinGame.clear_subgoals()
 	$FreezeTimer.stop()
 	if not frozen:
 		toggle_frozen()
+	$WinnerLabel.hide()
 
 func jump():
 	if not $AnimationPlayer.is_playing():
@@ -39,17 +40,12 @@ func toggle_frozen():
 	frozen = not frozen
 
 func collect_coin(amount = 10):
-	coins += amount
-	_update_coin_label()
+	self.coins += amount
 
 func take_away_coin(amount):
-	coins -= amount
-	if coins < 0:
-		coins = 0
-	_update_coin_label()
-
-func _update_coin_label():
-	$Sprite/CoinLabel.text = String(coins)
+	self.coins -= amount
+	if self.coins < 0:
+		self.coins = 0
 
 func move(direction, multiplier = 1):
 	velocity += direction.normalized() * max_velocity * multiplier
@@ -94,7 +90,7 @@ func _not_taggable(player):
 	return not is_crocodile() or not player is load("res://Player.gd") or frozen or player.on_platform
 
 func _physics_process(delta):
-	$DebugLabel.text = "[Debu:%s]\n" % get_name()
+	$DebugLabel.text = "[Debug:%s]\n" % get_name()
 	debug("On Platform: %s" % on_platform)
 	
 	if frozen: return
@@ -122,3 +118,7 @@ func _set_controller(value):
 	if value == "AI":
 		$Sprite/NameTag.hide()
 	else: $Sprite/NameTag.show()
+
+func _set_coins(value):
+	coins = value
+	$Sprite/CoinLabel.text = String(value)

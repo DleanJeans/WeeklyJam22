@@ -18,6 +18,7 @@ func _ready():
 	for behavior in Steering.get_children():
 		behavior.player = TestSubject
 	ControlSubject.controller = \"P1\"
+	$TileMap/TestSubject/AI.remove_child($TileMap/TestSubject/AI/WinGame)
 
 func _physics_process(delta):
 	TestSubject.velocity += Steering.steer()
@@ -94,6 +95,7 @@ _sections_unfolded = [ "Cell" ]
 
 [node name="TestSubject" parent="TileMap" instance=ExtResource( 2 )]
 
+editor/display_folded = true
 position = Vector2( 400, 150 )
 
 [node name="ControlSubject" parent="TileMap" instance=ExtResource( 2 )]
@@ -334,3 +336,4 @@ _sections_unfolded = [ "custom_fonts" ]
 [connection signal="toggled" from="Container/Separation" to="." method="_on_Behavior_toggled" binds= [ "Separation" ]]
 
 
+[editable path="TileMap/TestSubject"]

@@ -2,7 +2,9 @@ extends StaticBody2D
 
 # ALWAYS keep $Shape/Area/Shape
 # a lil bit larget than $Shape itself
+# because only then _on_player_enter() can be called
 
+var occupied
 var _player
 
 func _on_player_enter(player):
@@ -12,22 +14,25 @@ func _on_player_enter(player):
 	
 	if _player_is_not_allowed():
 		_block_player()
-		return
 	else:
 		_unblock_player()
-		_player.last_visited_platform = self
-		_player.on_platform = true
 
 func _player_is_not_allowed():
-	return _player.last_visited_platform == self or _player.is_crocodile()
+	return occupied or _player.is_crocodile()
 
 func _block_player():
 	_player.collision_layer |= collision_mask
-	$BlockSound.play()
+	if _player.controller != "AI":
+		$BlockSound.play()
 
 func _unblock_player():
+	occupied = true
 	$AllowSound.play()
 	_player.collision_layer = 1
+	_player.on_platform = true
 
 func _on_player_exited(player):
-	player.on_platform = false
+	if occupied and player.on_platform:
+		occupied = false
+		player.on_platform = false
+		

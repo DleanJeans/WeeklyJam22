@@ -7,21 +7,21 @@ func _ready():
 
 func activate():
 	.activate()
-	$RelocatingTimer.start()
+	steering.flee_on(Global.crocodile)
 
 func process():
 	.process()
 	
-	if player.on_platform or not steering.get_node("Flee").is_panicking():
+	if _got_away():
 		state = GOAL_COMPLETED
 
-func terminate():
-	$RelocatingTimer.stop()
-	steering.flee_off()
-	steering.arrive_off()
-	.terminate()
+func _got_away():
+	var on_platform = player.on_platform
+	var not_panicking_anymore = not steering.get_node("Flee").is_panicking()
+	var crocodile_frozen = Global.crocodile.frozen
+	
+	return on_platform or not_panicking_anymore or crocodile_frozen
 
-func _relocate_platform():
-	platform = Locator.find_most_desired_platform(player)
-	steering.arrive_on(platform)
-	steering.flee_on(Global.crocodile)
+func terminate():
+	steering.flee_off()
+	.terminate()

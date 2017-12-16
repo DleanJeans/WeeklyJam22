@@ -16,8 +16,9 @@ func process():
 			add_subgoal(GetMostCoins.new())
 
 func _process(delta):
-	player.debug("WinGame")
-	_debug_subgoals(get_children(), 1)
+	if ProjectSettings.get_setting("game/debug_goal_tree"):
+		player.debug("WinGame")
+		_debug_subgoals(get_children(), 1)
 
 func _debug_subgoals(subgoals, level):
 	for child in subgoals:

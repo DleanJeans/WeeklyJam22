@@ -56,7 +56,7 @@ tracks/0/keys = {
 "values": [ Vector2( 0, -30 ), Vector2( 0, -100 ), Vector2( 0, -30 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Shape:scale")
+tracks/1/path = NodePath("Sprite:modulate")
 tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -64,10 +64,10 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 0.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 1e-005, 1e-005 ) ]
+"values": [ Color( 1, 0.843137, 0, 1 ), Color( 1, 0.843137, 0, 0 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Sprite:self_modulate")
+tracks/2/path = NodePath("Shape:scale")
 tracks/2/interp = 2
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -75,7 +75,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0, 0.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+"values": [ Vector2( 1, 1 ), Vector2( 1e-005, 1e-005 ) ]
 }
 
 [node name="Coin" type="Area2D" groups=[
@@ -99,6 +99,20 @@ position = Vector2( 0, -30 )
 scale = Vector2( 0.2, 0.24 )
 texture = ExtResource( 2 )
 _sections_unfolded = [ "Transform", "Visibility" ]
+
+[node name="Sprite" type="Sprite" parent="Sprite"]
+
+self_modulate = Color( 0, 0, 0, 0.196078 )
+scale = Vector2( 0.6, 0.6 )
+texture = ExtResource( 2 )
+_sections_unfolded = [ "Transform", "Visibility" ]
+
+[node name="Sprite2" type="Sprite" parent="Sprite"]
+
+position = Vector2( 7.5, 0 )
+scale = Vector2( 0.45, 0.3 )
+texture = ExtResource( 2 )
+_sections_unfolded = [ "Transform" ]
 
 [node name="Shape" type="CollisionShape2D" parent="."]
 
@@ -129,6 +143,7 @@ autoplay = "Bobbing"
 
 [node name="PickupSound" type="AudioStreamPlayer2D" parent="."]
 
+visible = false
 stream = ExtResource( 3 )
 volume_db = 0.0
 autoplay = false
@@ -136,6 +151,7 @@ max_distance = 2000.0
 attenuation = 1.0
 bus = "Master"
 area_mask = 1
+_sections_unfolded = [ "Transform" ]
 
 [connection signal="body_entered" from="." to="." method="_on_collected"]
 

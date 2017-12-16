@@ -39,6 +39,10 @@ func _find_random_player():
 	
 	return random_player
 
+func _freeze_players():
+	for p in players:
+		p.frozen = true
+
 func _unfreeze_players():
 	for p in players:
-		p.toggle_frozen()
+		p.frozen = false

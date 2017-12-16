@@ -4,6 +4,8 @@ export(float) var look_ahead_time_tweaker = 0.5
 onready var seeker = get_parent().get_node("Seek")
 
 func execute():
+	if target == null:
+		return Vector2()
 	return pursuit() * multiplier
 
 func pursuit():

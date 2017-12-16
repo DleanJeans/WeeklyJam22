@@ -16,5 +16,7 @@ func _on_turning_normal():
 func _physics_process(delta):
 	if player.controller != "AI": return
 	
-	$WinGame.process()
+	if has_node("WinGame"):
+		$WinGame.process()
+	
 	player.velocity += $Steering.steer()

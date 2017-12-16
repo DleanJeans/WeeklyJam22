@@ -3,9 +3,11 @@ extends Node2D
 export(int) var total_force = 350
 onready var player = get_parent().get_parent()
 
-var priorities = ["Separation", "ObstacleAvoidance", "Flee", "Arrive", "Pursuit", "Seek"]
+var priorities = ["Separation", "ObstacleAvoidance", "Arrive", "Flee", "Pursuit", "Seek"]
 
 func steer():
+	if player.get_name() == "Player2":
+		pass
 	var steering_velocity = Vector2()
 	var force_left = total_force
 	
@@ -21,6 +23,8 @@ func steer():
 				steering_velocity += velocity.normalized() * force_left
 			
 			force_left -= magnitude
+			if magnitude > 0 and ProjectSettings.get_setting("game/debug_steering"):
+				player.debug("%s: %s" % [behavior.get_name(), round(magnitude)])
 			
 		if force_left <= 0:
 			break

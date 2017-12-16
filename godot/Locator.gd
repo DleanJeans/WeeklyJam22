@@ -11,11 +11,10 @@ func _filter_player(me, player):
 
 func _player_desirability(me, player):
 	var distance = distance_squared(player, me)
-	var distance_to_closest_platform = distance_squared(find_closest_platform(player), player)
 	var distance_to_peers = _total_distance_to_peers(player)
 	var coins_collected = player.coins / 10
 	
-	var good = distance_to_closest_platform * coins_collected
+	var good = coins_collected
 	var bad = distance * distance_to_peers + 1
 	
 	var desirability = good / bad
@@ -39,7 +38,7 @@ func find_most_desired_platform(me):
 	return _find_max(me, Global.Platforms, "_filter_platform", "_platform_desirability")
 
 func _filter_platform(me, platform):
-	return platform == me.last_visited_platform
+	return platform.occupied
 
 func _platform_desirability(me, platform):
 	var distance = distance_squared(me, platform)
@@ -47,7 +46,7 @@ func _platform_desirability(me, platform):
 	var crocodile_relative_direction = _relative_direction(me.position, platform.position, Global.crocodile.position)
 	
 	var good = distance_to_crocodile
-	var bad = (1 + crocodile_relative_direction) * distance + 1
+	var bad = (1 + crocodile_relative_direction) + distance
 	
 	var desirability = good / bad
 	
@@ -68,17 +67,17 @@ func _filter_coin(me, coin):
 	if coin.collected:
 		return coin.collected
 	
-#	for player in Global.Players:
-#		if player == me: continue
-#
-#		var their_distance_to_coin = distance(player, coin)
-#		var my_distance_to_coin = distance(me, coin)
-#
-#		var their_duration_to_coin = their_distance_to_coin / (player.velocity.length() + 1)
-#		var my_duration_to_coin = my_distance_to_coin / player.max_velocity
-#
-#		if their_distance_to_coin < my_duration_to_coin:
-#			return true
+	for player in Global.Players:
+		if player == me: continue
+
+		var their_distance_to_coin = distance(player, coin)
+		var my_distance_to_coin = distance(me, coin)
+
+		var their_duration_to_coin = their_distance_to_coin / (player.velocity.length() + 1)
+		var my_duration_to_coin = my_distance_to_coin / player.max_velocity
+
+		if their_distance_to_coin < my_duration_to_coin:
+			return true
 	
 	return false
 

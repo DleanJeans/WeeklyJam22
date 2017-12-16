@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://InputAction.gd" type="Script" id=2]
@@ -59,7 +59,7 @@ use_filter = false
 font_data = ExtResource( 6 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=7]
 
 resource_name = "Jump"
 length = 1.0
@@ -99,15 +99,24 @@ tracks/2/keys = {
 "values": [ Vector2( 0.6, 0.2 ), Vector2( 0.7, 0.2 ), Vector2( 0.6, 0.2 ), Vector2( 0.4, 0.1 ), Vector2( 0.6, 0.2 ), Vector2( 0.35, 0.1 ), Vector2( 0.6, 0.2 ) ]
 }
 
+[sub_resource type="DynamicFont" id=8]
+
+size = 40
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 6 )
+_sections_unfolded = [ "Font", "Settings" ]
+
 [node name="Player" type="KinematicBody2D" groups=[
 "Players",
 ]]
 
 input_pickable = false
 collision_layer = 1
-collision_mask = 1
+collision_mask = 0
 collision/safe_margin = 1.0
 script = ExtResource( 1 )
+_sections_unfolded = [ "Collision", "collision" ]
 max_velocity = 300
 drag_scale = 0.8
 
@@ -255,6 +264,7 @@ _sections_unfolded = [ "custom_fonts" ]
 
 [node name="DebugLabel" type="Label" parent="."]
 
+visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -285,11 +295,34 @@ root_node = NodePath("..")
 autoplay = "Grounded"
 speed_scale = 1.25
 active = true
-anims/Jump = SubResource( 8 )
+anims/Jump = SubResource( 7 )
 playback/active = true
 playback/speed = 1.25
 blend_times = [  ]
 autoplay = "Grounded"
+
+[node name="WinnerLabel" type="Label" parent="."]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -50.0
+margin_top = 10.0
+margin_right = 46.0
+margin_bottom = 58.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 8 )
+text = "Winner"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts" ]
 
 [connection signal="turning_crocodile" from="." to="AI" method="_on_turning_crocodile"]
 

@@ -7,10 +7,6 @@ func _ready():
 
 func activate():
 	.activate()
-	$RelocatingTimer.start()
-	_relocate_coin()
-
-func _relocate_coin():
 	coin = Locator.find_most_desired_coin(player)
 	steering.seek_on(coin)
 
@@ -26,4 +22,3 @@ func process():
 func terminate():
 	.terminate()
 	steering.seek_off()
-	$RelocatingTimer.stop()

@@ -11,7 +11,7 @@ func separate():
 	
 	for player_in_range in _get_players_in_range():
 		var to_me = player.position - player_in_range.position
-		velocity += to_me.normalized() / to_me.length() * 100
+		velocity += to_me.normalized() * 1000 / to_me.length()
 	
 	return velocity
 
@@ -27,4 +27,4 @@ func _get_players_in_range():
 func _set_separation_range(value):
 	separation_range = value
 	if has_node("SeparationCircle/Shape"):
-		$SeparationCircle/Shape.shape.radius = value
+		$SeparationCircle/Shape.scale = Vector2(1, 1) * value / 50

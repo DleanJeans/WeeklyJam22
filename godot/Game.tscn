@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
 [ext_resource path="res://Map.tscn" type="PackedScene" id=2]
@@ -10,41 +10,74 @@
 [ext_resource path="res://PlayerManager.gd" type="Script" id=8]
 [ext_resource path="res://assets/OurMusicBox _CanCan.ogg" type="AudioStream" id=9]
 
+[sub_resource type="GDScript" id=1]
+
+script/source = "extends Node2D
+
+func stop():
+	for timer in get_children():
+		timer.stop()
+
+func resume():
+	for timer in get_children():
+		timer.resume()"
+
 [node name="Game" type="Node2D"]
 
 script = ExtResource( 1 )
+_sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
 
 [node name="Map" parent="." instance=ExtResource( 2 )]
 
 [node name="Objects" parent="." instance=ExtResource( 3 )]
 
+editor/display_folded = true
 _sections_unfolded = [ "Cell" ]
 
-[node name="CoinSpawner" parent="." instance=ExtResource( 4 )]
+[node name="CoinSpawners" type="Node2D" parent="."]
+
+script = SubResource( 1 )
+
+[node name="CoinSpawner" parent="CoinSpawners" instance=ExtResource( 4 )]
 
 editor/display_folded = true
 position = Vector2( 480, 300 )
 scale = Vector2( 2, 2 )
 _sections_unfolded = [ "Transform" ]
-container_path = NodePath("../Objects")
-spawn_interval = 5.0
+container_path = NodePath("../../Objects")
 
-[node name="CoinSpawner2" parent="." instance=ExtResource( 4 )]
-
-editor/display_folded = true
-position = Vector2( 240, 300 )
-scale = Vector2( 1, 5 )
-_sections_unfolded = [ "Transform" ]
-container_path = NodePath("../Objects")
-spawn_interval = 5.0
-
-[node name="CoinSpawner3" parent="." instance=ExtResource( 4 )]
+[node name="CoinSpawner2" parent="CoinSpawners" instance=ExtResource( 4 )]
 
 editor/display_folded = true
-position = Vector2( 740, 280 )
-scale = Vector2( 1, 5 )
+position = Vector2( 480, 470 )
 _sections_unfolded = [ "Transform" ]
-container_path = NodePath("../Objects")
+container_path = NodePath("../../Objects")
+spawn_interval = 5.0
+
+[node name="CoinSpawner3" parent="CoinSpawners" instance=ExtResource( 4 )]
+
+editor/display_folded = true
+position = Vector2( 480, 120 )
+_sections_unfolded = [ "Transform" ]
+container_path = NodePath("../../Objects")
+spawn_interval = 5.0
+
+[node name="CoinSpawner4" parent="CoinSpawners" instance=ExtResource( 4 )]
+
+editor/display_folded = true
+position = Vector2( 110, 300 )
+scale = Vector2( 2, 0.5 )
+_sections_unfolded = [ "Transform" ]
+container_path = NodePath("../../Objects")
+spawn_interval = 5.0
+
+[node name="CoinSpawner5" parent="CoinSpawners" instance=ExtResource( 4 )]
+
+editor/display_folded = true
+position = Vector2( 870, 300 )
+scale = Vector2( 2, 0.5 )
+_sections_unfolded = [ "Transform" ]
+container_path = NodePath("../../Objects")
 spawn_interval = 5.0
 
 [node name="GameTimer" parent="." instance=ExtResource( 5 )]
@@ -54,7 +87,6 @@ round_duration = 180
 [node name="MainMenu" parent="." instance=ExtResource( 6 )]
 
 editor/display_folded = true
-visible = false
 
 [node name="ControllerAssigner" parent="." instance=ExtResource( 7 )]
 
@@ -69,33 +101,40 @@ visible = false
 position = Vector2( 480, 270 )
 stream = ExtResource( 9 )
 volume_db = -10.0
-autoplay = false
+autoplay = true
 max_distance = 2000.0
 attenuation = 1.0
 bus = "Master"
 area_mask = 1
 _sections_unfolded = [ "Transform" ]
 
-[connection signal="countdown_started" from="." to="CoinSpawner" method="clear_coins"]
-
-[connection signal="countdown_started" from="." to="ControllerAssigner" method="reset"]
+[connection signal="countdown_started" from="." to="PlayerManager" method="_reset_positions"]
 
 [connection signal="countdown_started" from="." to="PlayerManager" method="_choose_random_crocodile"]
 
-[connection signal="countdown_started" from="." to="PlayerManager" method="_reset_positions"]
+[connection signal="countdown_started" from="." to="ControllerAssigner" method="reset"]
+
+[connection signal="countdown_started" from="." to="CoinSpawners/CoinSpawner" method="clear_coins"]
 
 [connection signal="countdown_started" from="." to="GameTimer" method="start_playing"]
 
-[connection signal="game_loaded" from="." to="PlayerManager" method="_choose_random_crocodile"]
+[connection signal="countdown_started" from="." to="CoinSpawners" method="stop"]
 
-[connection signal="game_over" from="." to="MainMenu" method="show"]
+[connection signal="game_loaded" from="." to="PlayerManager" method="_choose_random_crocodile"]
 
 [connection signal="game_over" from="." to="PlayerManager" method="_reset_controllers"]
 
+[connection signal="game_over" from="." to="." method="_show_winner"]
+
+[connection signal="game_over" from="." to="CoinSpawners" method="stop"]
+
+[connection signal="game_over" from="." to="MainMenu" method="show"]
+
 [connection signal="game_started" from="." to="PlayerManager" method="_unfreeze_players"]
+
+[connection signal="game_started" from="." to="CoinSpawners" method="resume"]
 
 [connection signal="pressed" from="MainMenu/PlayButton" to="." method="start_counting_down"]
 
 
-[editable path="CoinSpawner"]
 [editable path="MainMenu"]

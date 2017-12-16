@@ -1,7 +1,7 @@
-tool
+
 extends "res://ai/steering/SteeringBehavior.gd"
 
-export(int) var panic_radius = 100 setget _set_panic_radius
+var panic_radius setget , _get_panic_radius
 
 func execute():
 	return flee_target() * multiplier
@@ -17,14 +17,12 @@ func flee(target_position):
 	if not is_panicking():
 		return Vector2()
 	
-	var velocity = player.moving_vector(player.position - target_position, panic_radius / distance_squared * multiplier)
+	var velocity = player.moving_vector(player.position - target_position, self.panic_radius / distance_squared * multiplier)
 	
 	return velocity - player.velocity
 
 func is_panicking():
 	return $PanicRadius.get_overlapping_bodies().has(Global.crocodile)
 
-func _set_panic_radius(value):
-	panic_radius = value
-	if has_node("PanicRadius"):
-		$PanicRadius.scale = Vector2(1, 1) * value / 50
+func _get_panic_radius():
+	return $PanicRadius.scale.x * $PanicRadius/Shape.shape.radius

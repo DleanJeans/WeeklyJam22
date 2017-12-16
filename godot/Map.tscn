@@ -9,23 +9,24 @@
 
 [node name="Platform" parent="Platforms" instance=ExtResource( 1 )]
 
-position = Vector2( 480, 83.875 )
-scale = Vector2( 2.39062, 3.24609 )
+position = Vector2( 105, 79.5 )
+scale = Vector2( 4, 3 )
 
 [node name="Platform2" parent="Platforms" instance=ExtResource( 1 )]
 
-position = Vector2( 50, 270 )
-scale = Vector2( 1.90235, 2.9375 )
+position = Vector2( 105, 495 )
+scale = Vector2( 4, 2 )
 
 [node name="Platform3" parent="Platforms" instance=ExtResource( 1 )]
 
-position = Vector2( 480, 490 )
-scale = Vector2( 4.48047, 2.06445 )
+position = Vector2( 870, 485 )
+scale = Vector2( 4, 2 )
 
 [node name="Platform4" parent="Platforms" instance=ExtResource( 1 )]
 
-position = Vector2( 920, 275 )
-scale = Vector2( 1.75, 3.49219 )
+position = Vector2( 865, 80 )
+scale = Vector2( 4, 3 )
+_sections_unfolded = [ "Collision", "Transform", "Z" ]
 
 [node name="Walls" type="Node2D" parent="."]
 

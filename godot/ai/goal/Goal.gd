@@ -1,10 +1,11 @@
 extends Node2D
 
 enum {
-	GOAL_INACTIVE,
-	GOAL_ACTIVE,
-	GOAL_COMPLETED,
-	GOAL_FAILED
+	GOAL_TERMINATED, #0
+	GOAL_INACTIVE, #1
+	GOAL_ACTIVE, #2
+	GOAL_COMPLETED, #3
+	GOAL_FAILED #4
 }
 
 var Goal = load("res://ai/goal/Goal.gd")
@@ -31,6 +32,7 @@ func terminate():
 #	print("Goal Terminated - %s: %s" % [state, _name])
 	clear_subgoals()
 	queue_free()
+	state = GOAL_TERMINATED
 
 func add_subgoal(goal):
 	add_child(goal)
@@ -60,12 +62,14 @@ func _first_subgoal():
 		var child = get_child(i)
 		if child is Goal:
 			return child
+	return null
 
 func _clear_completed_failed_subgoals():
 	while _has_subgoals() and _first_subgoal()._is_completed_or_failed():
 		_terminate_subgoal(_first_subgoal())
 
 func _terminate_subgoal(goal):
+	if goal.is_terminated() or goal.is_inactive(): return
 	goal.terminate()
 	remove_child(goal)
 
@@ -96,3 +100,6 @@ func is_completed():
 
 func has_failed():
 	return state == GOAL_FAILED
+
+func is_terminated():
+	return state == GOAL_TERMINATED
