@@ -10,6 +10,7 @@ var winners
 
 func start_counting_down():
 	_reset_players()
+	_reset_platforms()
 	emit_signal("countdown_started")
 	showing_winner = false
 
@@ -18,6 +19,10 @@ func start():
 
 func _reset_players():
 	for p in Global.Players:
+		p.reset()
+
+func _reset_platforms():
+	for p in Global.Platforms:
 		p.reset()
 
 func end():
@@ -58,4 +63,4 @@ func _process(delta):
 			p.jump()
 	
 	if Input.is_action_just_pressed("slo_mo_toggle"):
-		Engine.set_time_scale(1.0 / 60 if Engine.get_time_scale() == 1 else 1)
+		Engine.set_time_scale(ProjectSettings.get_setting("game/slo_mo_scale") if Engine.get_time_scale() == 1 else 1)

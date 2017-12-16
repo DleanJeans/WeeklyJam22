@@ -25,27 +25,32 @@ tile_data = PoolIntArray(  )
 [node name="Player1" parent="." instance=ExtResource( 1 )]
 
 position = Vector2( 93.0881, 221.745 )
-_sections_unfolded = [ "Material", "Visibility" ]
+_sections_unfolded = [ "Collision", "Material", "Visibility", "collision" ]
+color = Color( 0.894531, 0.157242, 0.451006, 1 )
 
 [node name="Player2" parent="." instance=ExtResource( 1 )]
 
 position = Vector2( 100, 370 )
+color = Color( 0.84375, 0.733801, 0.44165, 1 )
 
 [node name="Player3" parent="." instance=ExtResource( 1 )]
 
 position = Vector2( 340, 490 )
+color = Color( 0.248291, 0.258205, 0.882813, 1 )
 
 [node name="Player4" parent="." instance=ExtResource( 1 )]
 
 position = Vector2( 590, 490 )
+color = Color( 0.06073, 0.777344, 0.29027, 1 )
 
 [node name="Player5" parent="." instance=ExtResource( 1 )]
 
 position = Vector2( 870, 360 )
+color = Color( 0.20347, 0.187042, 0.210938, 1 )
 
 [node name="Player6" parent="." instance=ExtResource( 1 )]
 
 position = Vector2( 870, 200 )
-_sections_unfolded = [ "Visibility" ]
+_sections_unfolded = [ "Collision", "Visibility", "collision" ]
 
 

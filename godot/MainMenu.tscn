@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://BebasNeue.otf" type="DynamicFontData" id=1]
 
@@ -18,14 +18,19 @@ func _process(delta):
 
 func _input(event):
 	if event is InputEventJoypadButton:
-		print(\"Joypad %s - %s: %s\" % [event.device, event, event.button_index])"
+		print(\"Joypad %s - %s: %s\" % [event.device, event, event.button_index])
 
-[sub_resource type="DynamicFont" id=2]
+func _on_FullScreenButton_pressed():
+	OS.set_window_fullscreen(not OS.is_window_fullscreen())
+"
+
+[sub_resource type="DynamicFont" id=5]
 
 size = 100
 use_mipmaps = false
 use_filter = false
 font_data = ExtResource( 1 )
+_sections_unfolded = [ "Font", "Settings" ]
 
 [sub_resource type="DynamicFont" id=3]
 
@@ -33,6 +38,15 @@ size = 40
 use_mipmaps = false
 use_filter = false
 font_data = ExtResource( 1 )
+_sections_unfolded = [ "Font", "Settings" ]
+
+[sub_resource type="DynamicFont" id=4]
+
+size = 30
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 1 )
+_sections_unfolded = [ "Font", "Settings" ]
 
 [node name="MainMenu" type="Node2D"]
 
@@ -60,16 +74,16 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 65.0
-margin_top = 175.0
-margin_right = 153.0
-margin_bottom = 241.0
+margin_left = 30.0
+margin_top = 100.0
+margin_right = 430.0
+margin_bottom = 226.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 5 )
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
@@ -77,6 +91,7 @@ group = null
 text = "Play"
 flat = true
 align = 0
+_sections_unfolded = [ "Rect", "custom_fonts" ]
 
 [node name="ResumeButton" type="Button" parent="."]
 
@@ -84,10 +99,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 65.0
-margin_top = 245.0
-margin_right = 322.0
-margin_bottom = 371.0
+margin_left = 30.0
+margin_top = 210.0
+margin_right = 430.0
+margin_bottom = 264.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -101,9 +116,61 @@ group = null
 text = "Resume"
 flat = true
 align = 0
+_sections_unfolded = [ "Rect" ]
+
+[node name="FullScreenButton" type="Button" parent="."]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 30.0
+margin_top = 270.0
+margin_right = 430.0
+margin_bottom = 324.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_fonts/font = SubResource( 3 )
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Fullscreen Toggle"
+flat = true
+align = 0
+_sections_unfolded = [ "Rect" ]
+
+[node name="Credits" type="Label" parent="."]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 20.0
+margin_top = 410.0
+margin_right = 361.0
+margin_bottom = 524.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 4 )
+text = "Code: Dlean Jeans
+Music: Can Can - OurMusicBox.com
+SFX: Zapslat.com"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts" ]
 
 [connection signal="pressed" from="PlayButton" to="." method="hide"]
 
 [connection signal="pressed" from="ResumeButton" to="." method="hide"]
+
+[connection signal="pressed" from="FullScreenButton" to="." method="_on_FullScreenButton_pressed"]
 
 

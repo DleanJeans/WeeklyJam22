@@ -7,15 +7,21 @@ extends StaticBody2D
 var occupied
 var _player
 
-func _on_player_enter(player):
-	if not player.is_in_group(Global.PLAYERS_GROUP): return
+func reset():
+	_turn_green()
+
+func _on_player_enter(body):
+	if not _is_player(body): return
 	
-	_player = player
+	_player = body
 	
 	if _player_is_not_allowed():
 		_block_player()
 	else:
 		_unblock_player()
+
+func _is_player(body):
+	return body.is_in_group(Global.PLAYERS_GROUP)
 
 func _player_is_not_allowed():
 	return occupied or _player.is_crocodile()
@@ -30,9 +36,22 @@ func _unblock_player():
 	$AllowSound.play()
 	_player.collision_layer = 1
 	_player.on_platform = true
+	_turn_red()
 
 func _on_player_exited(player):
 	if occupied and player.on_platform:
 		occupied = false
 		player.on_platform = false
-		
+		_turn_green()
+
+func _turn_red():
+	$ColorChanger.play("TurnRed")
+
+func _process(delta):
+	for body in $Shape/Area.get_overlapping_bodies():
+		if _is_player(body) and not occupied:
+			_player = body
+			_unblock_player()
+
+func _turn_green():
+	$ColorChanger.play("TurnGreen")

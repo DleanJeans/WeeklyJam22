@@ -29,9 +29,11 @@ func _relocate_platform():
 func process():
 	.process()
 	
-	if Locator.distance(player, platform) <= 5 and not steering.get_node("Flee").is_panicking():
+	if platform == null:
+		state = GOAL_FAILED
+	elif Locator.distance(player, platform) <= 50 and not steering.get_node("Flee").is_panicking():
 		state = GOAL_COMPLETED
-	elif platform.occupied:
+	elif platform.occupied and not player.on_platform:
 		state = GOAL_FAILED
 
 func terminate():

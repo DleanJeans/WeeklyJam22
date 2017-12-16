@@ -108,7 +108,7 @@ multiplier = 1
 
 [node name="PanicRadius" type="Area2D" parent="Flee"]
 
-scale = Vector2( 2, 2 )
+scale = Vector2( 3, 3 )
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0

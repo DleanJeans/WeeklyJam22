@@ -13,7 +13,8 @@ var LEFT = Vector2(-1, 0)
 var RIGHT = Vector2(1, 0)
 
 var WHITE = Color("#ffffff")
-var CROCODILE_GREEN = Color("#14840e")
+var RED = Color("#ce0707")
+var GREEN = Color("#007b2a")
 
 var PLAYERS_GROUP = "Players"
 var PLATFORMS_GROUP = "Platforms"

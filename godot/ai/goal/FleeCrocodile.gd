@@ -1,13 +1,22 @@
 extends "res://ai/goal/Goal.gd"
 
 var platform
+var timer
 
 func _ready():
 	_name = "FleeCrocodile"
+	timer = Timer.new()
+	timer.wait_time = 2
+	timer.connect("timeout", self, "_goal_completed")
+
+func _goal_completed():
+	state = GOAL_COMPLETED
+	get_parent().add_subgoal(load("res://ai/goal/ArriveAtPlatform.gd").new())
 
 func activate():
 	.activate()
 	steering.flee_on(Global.crocodile)
+	timer.start()
 
 func process():
 	.process()

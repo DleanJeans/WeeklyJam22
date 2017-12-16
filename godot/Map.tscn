@@ -9,12 +9,12 @@
 
 [node name="Platform" parent="Platforms" instance=ExtResource( 1 )]
 
-position = Vector2( 105, 79.5 )
+position = Vector2( 100, 75 )
 scale = Vector2( 4, 3 )
 
 [node name="Platform2" parent="Platforms" instance=ExtResource( 1 )]
 
-position = Vector2( 105, 495 )
+position = Vector2( 100, 495 )
 scale = Vector2( 4, 2 )
 
 [node name="Platform3" parent="Platforms" instance=ExtResource( 1 )]
@@ -24,7 +24,7 @@ scale = Vector2( 4, 2 )
 
 [node name="Platform4" parent="Platforms" instance=ExtResource( 1 )]
 
-position = Vector2( 865, 80 )
+position = Vector2( 870, 75 )
 scale = Vector2( 4, 3 )
 _sections_unfolded = [ "Collision", "Transform", "Z" ]
 

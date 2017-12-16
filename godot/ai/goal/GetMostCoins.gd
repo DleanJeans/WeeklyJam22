@@ -19,12 +19,12 @@ func process():
 	
 	if _has_subgoals(): return
 	
-	if _should_get_on_platform():
-		add_subgoal(ArriveAtPlatform.new())
+	if _should_flee():
+		add_subgoal(FleeCrocodile.new())
 	elif _should_go_after_coins():
 		add_subgoal(GoGetCoin.new())
-	elif _should_flee():
-		add_subgoal(FleeCrocodile.new())
+	elif _should_get_on_platform():
+		add_subgoal(ArriveAtPlatform.new())
 
 func _should_get_on_platform():
 	if player.on_platform:

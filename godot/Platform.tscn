@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Platform.gd" type="Script" id=1]
 [ext_resource path="res://Sprite.png" type="Texture" id=2]
@@ -10,6 +10,42 @@
 resource_local_to_scene = true
 custom_solver_bias = 0.0
 extents = Vector2( 50, 50 )
+
+[sub_resource type="Animation" id=2]
+
+resource_name = "TurnGreen"
+length = 0.1
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Shape/Sprite:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 0.28125, 0, 1 ), Color( 0.0103455, 0.882813, 0.289808, 1 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+
+resource_name = "TurnRed"
+length = 0.1
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Shape/Sprite:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0.0103455, 0.882813, 0.289808, 1 ), Color( 1, 0.28125, 0, 1 ) ]
+}
 
 [node name="Platform" type="StaticBody2D" groups=[
 "Platforms",
@@ -23,7 +59,7 @@ constant_angular_velocity = 0.0
 friction = 1.0
 bounce = 0.0
 script = ExtResource( 1 )
-_sections_unfolded = [ "Collision", "Transform" ]
+_sections_unfolded = [ "Collision", "Transform", "Visibility" ]
 
 [node name="Shape" type="CollisionShape2D" parent="."]
 
@@ -35,6 +71,7 @@ _sections_unfolded = [ "Transform" ]
 
 self_modulate = Color( 0.0103455, 0.882813, 0.289808, 1 )
 texture = ExtResource( 2 )
+_sections_unfolded = [ "Visibility" ]
 
 [node name="Area" type="Area2D" parent="Shape"]
 
@@ -51,6 +88,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="Shape" type="CollisionShape2D" parent="Shape/Area"]
 
+visible = false
 shape = SubResource( 1 )
 _sections_unfolded = [ "Transform" ]
 
@@ -73,6 +111,21 @@ max_distance = 2000.0
 attenuation = 1.0
 bus = "Master"
 area_mask = 1
+
+[node name="ColorChanger" type="AnimationPlayer" parent="."]
+
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+root_node = NodePath("..")
+autoplay = ""
+speed_scale = 2.0
+active = true
+anims/TurnGreen = SubResource( 2 )
+anims/TurnRed = SubResource( 3 )
+playback/active = true
+playback/speed = 2.0
+blend_times = [  ]
+autoplay = ""
 
 [connection signal="body_entered" from="Shape/Area" to="." method="_on_player_enter"]
 

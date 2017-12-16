@@ -36,6 +36,7 @@ _sections_unfolded = [ "Cell" ]
 
 [node name="CoinSpawners" type="Node2D" parent="."]
 
+editor/display_folded = true
 script = SubResource( 1 )
 
 [node name="CoinSpawner" parent="CoinSpawners" instance=ExtResource( 4 )]
@@ -82,7 +83,7 @@ spawn_interval = 5.0
 
 [node name="GameTimer" parent="." instance=ExtResource( 5 )]
 
-round_duration = 180
+round_duration = 120
 
 [node name="MainMenu" parent="." instance=ExtResource( 6 )]
 
@@ -100,7 +101,7 @@ script = ExtResource( 8 )
 visible = false
 position = Vector2( 480, 270 )
 stream = ExtResource( 9 )
-volume_db = -10.0
+volume_db = 0.0
 autoplay = true
 max_distance = 2000.0
 attenuation = 1.0
@@ -108,27 +109,27 @@ bus = "Master"
 area_mask = 1
 _sections_unfolded = [ "Transform" ]
 
-[connection signal="countdown_started" from="." to="PlayerManager" method="_reset_positions"]
-
-[connection signal="countdown_started" from="." to="PlayerManager" method="_choose_random_crocodile"]
-
-[connection signal="countdown_started" from="." to="ControllerAssigner" method="reset"]
-
 [connection signal="countdown_started" from="." to="CoinSpawners/CoinSpawner" method="clear_coins"]
 
 [connection signal="countdown_started" from="." to="GameTimer" method="start_playing"]
+
+[connection signal="countdown_started" from="." to="ControllerAssigner" method="reset"]
+
+[connection signal="countdown_started" from="." to="PlayerManager" method="_reset_positions"]
+
+[connection signal="countdown_started" from="." to="PlayerManager" method="_choose_random_crocodile"]
 
 [connection signal="countdown_started" from="." to="CoinSpawners" method="stop"]
 
 [connection signal="game_loaded" from="." to="PlayerManager" method="_choose_random_crocodile"]
 
-[connection signal="game_over" from="." to="PlayerManager" method="_reset_controllers"]
+[connection signal="game_over" from="." to="MainMenu" method="show"]
 
 [connection signal="game_over" from="." to="." method="_show_winner"]
 
-[connection signal="game_over" from="." to="CoinSpawners" method="stop"]
+[connection signal="game_over" from="." to="PlayerManager" method="_reset_controllers"]
 
-[connection signal="game_over" from="." to="MainMenu" method="show"]
+[connection signal="game_over" from="." to="CoinSpawners" method="stop"]
 
 [connection signal="game_started" from="." to="PlayerManager" method="_unfreeze_players"]
 
