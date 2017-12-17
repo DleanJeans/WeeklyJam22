@@ -97,10 +97,12 @@ _sections_unfolded = [ "Cell" ]
 
 editor/display_folded = true
 position = Vector2( 400, 150 )
+crocodile_speed = 400
 
 [node name="ControlSubject" parent="TileMap" instance=ExtResource( 2 )]
 
 position = Vector2( 483.792, 278.83 )
+crocodile_speed = 400
 
 [node name="Target" type="Sprite" parent="."]
 

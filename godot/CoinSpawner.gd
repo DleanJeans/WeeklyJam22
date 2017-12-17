@@ -1,6 +1,6 @@
 extends Area2D
 
-export(NodePath) var container_path
+export(NodePath) var container_path = "../../Objects"
 export(float) var spawn_interval = 3
 
 onready var size = $Shape.shape.extents * 2
@@ -21,7 +21,7 @@ func resume():
 func spawn():
 	var random_position = Vector2(rand_range(0, size.x), rand_range(0, size.y))
 	var coin = Coin.instance()
-	coin.position = position + random_position
+	coin.position = position - $Shape.shape.extents + random_position
 	
 	container.add_child(coin)
 

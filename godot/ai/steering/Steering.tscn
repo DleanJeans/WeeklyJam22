@@ -105,10 +105,11 @@ shape = SubResource( 2 )
 script = ExtResource( 7 )
 _sections_unfolded = [ "Transform" ]
 multiplier = 1
+panic_radius = 200
 
 [node name="PanicRadius" type="Area2D" parent="Flee"]
 
-scale = Vector2( 3, 3 )
+scale = Vector2( 4, 4 )
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0

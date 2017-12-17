@@ -1,106 +1,90 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
-[ext_resource path="res://Map.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Players.tscn" type="PackedScene" id=3]
-[ext_resource path="res://CoinSpawner.tscn" type="PackedScene" id=4]
-[ext_resource path="res://GameTimer.tscn" type="PackedScene" id=5]
-[ext_resource path="res://MainMenu.tscn" type="PackedScene" id=6]
-[ext_resource path="res://ControllerAssigner.tscn" type="PackedScene" id=7]
-[ext_resource path="res://PlayerManager.gd" type="Script" id=8]
-[ext_resource path="res://assets/OurMusicBox _CanCan.ogg" type="AudioStream" id=9]
+[ext_resource path="res://maps/SixPlayerMap.tscn" type="PackedScene" id=2]
+[ext_resource path="res://MainMenu.tscn" type="PackedScene" id=3]
+[ext_resource path="res://GameTimer.tscn" type="PackedScene" id=4]
+[ext_resource path="res://ControllerAssigner.tscn" type="PackedScene" id=5]
+[ext_resource path="res://PlayerManager.gd" type="Script" id=6]
+[ext_resource path="res://assets/OurMusicBox _CanCan.ogg" type="AudioStream" id=7]
+[ext_resource path="res://BebasNeue.tres" type="DynamicFont" id=8]
 
 [sub_resource type="GDScript" id=1]
 
 script/source = "extends Node2D
 
-func stop():
-	for timer in get_children():
-		timer.stop()
+onready var game = get_parent()
 
-func resume():
-	for timer in get_children():
-		timer.resume()"
+var nums = [4, 5, 6]
+
+var maps = [
+	load(\"res://maps/FourPlayerMap.tscn\"),
+	load(\"res://maps/FivePlayerMap.tscn\"),
+	load(\"res://maps/SixPlayerMap.tscn\")
+]
+
+var index = 2
+var map_name = \"SixPlayerMap\"
+
+func next_map():
+	index += 1
+	if index >= nums.size():
+		index = 0
+	
+	game.get_node(\"GameTimer\").stop()
+	
+	game.get_node(map_name).free()
+	var map = maps[index].instance()
+	map_name = map.get_name()
+	game.add_child(map)
+	game.move_child(map, 0)
+	game.get_node(\"MainMenu/MapButton\").text = \"%s Players\" % nums[index]
+	game.emit_signal(\"game_loaded\")"
 
 [node name="Game" type="Node2D"]
 
 script = ExtResource( 1 )
 _sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
 
-[node name="Map" parent="." instance=ExtResource( 2 )]
+[node name="SixPlayerMap" parent="." instance=ExtResource( 2 )]
 
-[node name="Objects" parent="." instance=ExtResource( 3 )]
-
-editor/display_folded = true
-_sections_unfolded = [ "Cell" ]
-
-[node name="CoinSpawners" type="Node2D" parent="."]
-
-editor/display_folded = true
-script = SubResource( 1 )
-
-[node name="CoinSpawner" parent="CoinSpawners" instance=ExtResource( 4 )]
-
-editor/display_folded = true
-position = Vector2( 480, 300 )
-scale = Vector2( 2, 2 )
-_sections_unfolded = [ "Transform" ]
-container_path = NodePath("../../Objects")
-
-[node name="CoinSpawner2" parent="CoinSpawners" instance=ExtResource( 4 )]
-
-editor/display_folded = true
-position = Vector2( 480, 470 )
-_sections_unfolded = [ "Transform" ]
-container_path = NodePath("../../Objects")
-spawn_interval = 5.0
-
-[node name="CoinSpawner3" parent="CoinSpawners" instance=ExtResource( 4 )]
-
-editor/display_folded = true
-position = Vector2( 480, 120 )
-_sections_unfolded = [ "Transform" ]
-container_path = NodePath("../../Objects")
-spawn_interval = 5.0
-
-[node name="CoinSpawner4" parent="CoinSpawners" instance=ExtResource( 4 )]
-
-editor/display_folded = true
-position = Vector2( 110, 300 )
-scale = Vector2( 2, 0.5 )
-_sections_unfolded = [ "Transform" ]
-container_path = NodePath("../../Objects")
-spawn_interval = 5.0
-
-[node name="CoinSpawner5" parent="CoinSpawners" instance=ExtResource( 4 )]
-
-editor/display_folded = true
-position = Vector2( 870, 300 )
-scale = Vector2( 2, 0.5 )
-_sections_unfolded = [ "Transform" ]
-container_path = NodePath("../../Objects")
-spawn_interval = 5.0
-
-[node name="GameTimer" parent="." instance=ExtResource( 5 )]
-
-round_duration = 120
-
-[node name="MainMenu" parent="." instance=ExtResource( 6 )]
+[node name="CoinSpawners" parent="SixPlayerMap"]
 
 editor/display_folded = true
 
-[node name="ControllerAssigner" parent="." instance=ExtResource( 7 )]
+[node name="Platforms" parent="SixPlayerMap"]
+
+editor/display_folded = true
+
+[node name="Objects" parent="SixPlayerMap"]
+
+editor/display_folded = true
+
+[node name="MainMenu" parent="." instance=ExtResource( 3 )]
+
+editor/display_folded = true
+margin_right = -64.0
+margin_bottom = -64.0
+
+[node name="GameTimer" parent="." instance=ExtResource( 4 )]
+
+[node name="ControllerAssigner" parent="." instance=ExtResource( 5 )]
 
 [node name="PlayerManager" type="Node2D" parent="."]
 
 visible = false
-script = ExtResource( 8 )
+script = ExtResource( 6 )
+
+[node name="MapSelector" type="Node2D" parent="."]
+
+visible = false
+script = SubResource( 1 )
 
 [node name="MusicBox" type="AudioStreamPlayer2D" parent="."]
 
 visible = false
 position = Vector2( 480, 270 )
-stream = ExtResource( 9 )
+stream = ExtResource( 7 )
 volume_db = 0.0
 autoplay = true
 max_distance = 2000.0
@@ -109,33 +93,88 @@ bus = "Master"
 area_mask = 1
 _sections_unfolded = [ "Transform" ]
 
-[connection signal="countdown_started" from="." to="CoinSpawners/CoinSpawner" method="clear_coins"]
+[node name="ControlHint" type="Label" parent="."]
 
-[connection signal="countdown_started" from="." to="GameTimer" method="start_playing"]
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 340.0
+margin_top = 500.0
+margin_right = 624.0
+margin_bottom = 531.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = ExtResource( 8 )
+text = "Press Esc|L1|Start to main menu"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[connection signal="countdown_started" from="." to="GameTimer" method="resume"]
+
+[connection signal="countdown_started" from="." to="GameTimer" method="start_counting_down"]
+
+[connection signal="countdown_started" from="." to="." method="_stop_coin_spawners"]
+
+[connection signal="countdown_started" from="." to="." method="_clear_coins"]
+
+[connection signal="countdown_started" from="." to="." method="_reset_players"]
+
+[connection signal="countdown_started" from="." to="." method="_reset_platforms"]
 
 [connection signal="countdown_started" from="." to="ControllerAssigner" method="reset"]
 
-[connection signal="countdown_started" from="." to="PlayerManager" method="_reset_positions"]
+[connection signal="countdown_started" from="." to="PlayerManager" method="freeze_players"]
 
-[connection signal="countdown_started" from="." to="PlayerManager" method="_choose_random_crocodile"]
+[connection signal="countdown_started" from="." to="PlayerManager" method="choose_crocodile_randomly"]
 
-[connection signal="countdown_started" from="." to="CoinSpawners" method="stop"]
+[connection signal="countdown_started" from="." to="PlayerManager" method="reset_positions"]
 
-[connection signal="game_loaded" from="." to="PlayerManager" method="_choose_random_crocodile"]
+[connection signal="game_loaded" from="." to="PlayerManager" method="record_positions"]
 
-[connection signal="game_over" from="." to="MainMenu" method="show"]
+[connection signal="game_loaded" from="." to="PlayerManager" method="choose_crocodile_randomly"]
 
 [connection signal="game_over" from="." to="." method="_show_winner"]
 
-[connection signal="game_over" from="." to="PlayerManager" method="_reset_controllers"]
+[connection signal="game_over" from="." to="PlayerManager" method="reset_controllers"]
 
-[connection signal="game_over" from="." to="CoinSpawners" method="stop"]
+[connection signal="game_paused" from="." to="GameTimer" method="pause"]
 
-[connection signal="game_started" from="." to="PlayerManager" method="_unfreeze_players"]
+[connection signal="game_paused" from="." to="." method="_stop_coin_spawners"]
 
-[connection signal="game_started" from="." to="CoinSpawners" method="resume"]
+[connection signal="game_paused" from="." to="PlayerManager" method="freeze_players"]
+
+[connection signal="game_resumed" from="." to="GameTimer" method="resume"]
+
+[connection signal="game_resumed" from="." to="." method="_resume_coin_spawners"]
+
+[connection signal="game_resumed" from="." to="PlayerManager" method="unfreeze_players"]
+
+[connection signal="game_started" from="." to="." method="_resume_coin_spawners"]
+
+[connection signal="game_started" from="." to="PlayerManager" method="unfreeze_players"]
+
+[connection signal="hidden" from="MainMenu" to="GameTimer" method="show"]
+
+[connection signal="hidden" from="MainMenu" to="." method="try_resume"]
+
+[connection signal="shown" from="MainMenu" to="GameTimer" method="hide"]
+
+[connection signal="shown" from="MainMenu" to="ControlHint" method="hide"]
+
+[connection signal="shown" from="MainMenu" to="." method="try_pause"]
 
 [connection signal="pressed" from="MainMenu/PlayButton" to="." method="start_counting_down"]
 
+[connection signal="pressed" from="MainMenu/MapButton" to="MapSelector" method="next_map"]
 
+[connection signal="pressed" from="MainMenu/RoundDurationButton" to="GameTimer" method="next_duration"]
+
+
+[editable path="SixPlayerMap"]
 [editable path="MainMenu"]

@@ -5,10 +5,12 @@
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
-extents = Vector2( 25, 25 )
+extents = Vector2( 32, 32 )
 
 [node name="Wall" type="StaticBody2D"]
 
+position = Vector2( -1, 0 )
+scale = Vector2( 0.96875, 1 )
 input_pickable = false
 collision_layer = 0
 collision_mask = 1
@@ -23,9 +25,11 @@ _sections_unfolded = [ "Collision", "Transform" ]
 shape = SubResource( 1 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="Sprite" type="Sprite" parent="Shape"]
 
-visible = false
+self_modulate = Color( 0.0103455, 0.882813, 0.289808, 1 )
+scale = Vector2( 0.64, 0.64 )
 texture = ExtResource( 1 )
+_sections_unfolded = [ "Transform", "Visibility" ]
 
 

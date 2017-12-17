@@ -17,22 +17,45 @@ func process():
 	if player.is_crocodile():
 		state = GOAL_FAILED
 	
+	if _should_flee():
+		var subgoal_to_add
+		
+		if _all_platforms_occupied() or _crocodile_blocks_way_to_platform():
+			subgoal_to_add = FleeCrocodile
+		else:
+			subgoal_to_add = ArriveAtPlatform
+		
+		if _has_subgoals() and not _first_subgoal() is subgoal_to_add:
+			clear_subgoals()
+			add_subgoal(subgoal_to_add.new())
+	
 	if _has_subgoals(): return
 	
-	if _should_flee():
-		add_subgoal(FleeCrocodile.new())
-	elif _should_go_after_coins():
+	
+	if _should_go_after_coins():
 		add_subgoal(GoGetCoin.new())
 	elif _should_get_on_platform():
 		add_subgoal(ArriveAtPlatform.new())
+
+func _all_platforms_occupied():
+	for plat in Global.Platforms:
+		if not plat.occupied:
+			return false
+	return true
+
+func _crocodile_blocks_way_to_platform():
+	var platform = Locator.find_most_desired_platform(player)
+	var to_platform = (platform.position - player.position).normalized()
+	var to_crocodile = (Global.crocodile.position - player.position).normalized()
+	var dot = to_platform.dot(to_crocodile)
+	
+	return dot > 0
 
 func _should_get_on_platform():
 	if player.on_platform:
 		return false
 	
-	for plat in Global.Platforms:
-		if not plat.occupied:
-			return true
+	return not _all_platforms_occupied()
 
 func _should_flee():
 	var should_be_panicking = steering.get_node("Flee").is_panicking()

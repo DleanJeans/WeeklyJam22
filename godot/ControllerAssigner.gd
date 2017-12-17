@@ -27,4 +27,4 @@ func _check_key_list(controller_child):
 func _activate_controller():
 	_current_controller.activated = true
 	num_users += 1
-	player_manager._activate_controller(num_users, _current_controller.get_name())
+	player_manager.activate_controller(num_users, _current_controller.get_name())

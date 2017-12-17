@@ -49,8 +49,11 @@ func _turn_red():
 
 func _process(delta):
 	for body in $Shape/Area.get_overlapping_bodies():
-		if _is_player(body) and not occupied:
-			_player = body
+		if not _is_player(body): continue
+		_player = body
+		if _player.is_crocodile():
+			_block_player()
+		elif not occupied:
 			_unblock_player()
 
 func _turn_green():

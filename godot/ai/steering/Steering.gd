@@ -6,8 +6,6 @@ onready var player = get_parent().get_parent()
 var priorities = ["Separation", "ObstacleAvoidance", "Arrive", "Flee", "Pursuit", "Seek"]
 
 func steer():
-	if player.get_name() == "Player2":
-		pass
 	var steering_velocity = Vector2()
 	var force_left = total_force
 	

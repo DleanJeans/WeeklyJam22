@@ -1,26 +1,26 @@
 extends Node2D
 
-onready var players = Global.Players
 var positions = []
 
 func _ready():
-	_record_positions()
+	record_positions()
 
-func _record_positions():
-	for player in players:
+func record_positions():
+	positions.clear()
+	for player in Global.Players:
 		positions.append(player.position)
 
-func _reset_positions():
+func reset_positions():
 	var i = 0
-	for player in players:
+	for player in Global.Players:
 		player.position = positions[i]
 		i += 1
 
-func _reset_controllers():
-	for player in players:
+func reset_controllers():
+	for player in Global.Players:
 		player.controller = "AI"
 
-func _activate_controller(player_num, controller_name):
+func activate_controller(player_num, controller_name):
 	var random_player = _find_random_player()
 	while random_player.controller != "AI":
 		random_player = _find_random_player()
@@ -29,20 +29,20 @@ func _activate_controller(player_num, controller_name):
 	random_player.set_name_tag( "P%s" % player_num)
 	random_player.jump()
 
-func _choose_random_crocodile():
+func choose_crocodile_randomly():
 	var random_player = _find_random_player()
 	random_player.turn_crocodile()
 
 func _find_random_player():
-	var random_player_index = randi() % players.size()
-	var random_player = players[random_player_index]
+	var random_player_index = randi() % Global.Players.size()
+	var random_player = Global.Players[random_player_index]
 	
 	return random_player
 
-func _freeze_players():
-	for p in players:
+func freeze_players():
+	for p in Global.Players:
 		p.frozen = true
 
-func _unfreeze_players():
-	for p in players:
+func unfreeze_players():
+	for p in Global.Players:
 		p.frozen = false

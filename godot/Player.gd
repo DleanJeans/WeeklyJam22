@@ -1,11 +1,21 @@
+tool
 extends KinematicBody2D
+
+var GAMEPAD_DEVICE_MAP = {
+	"P3": 0,
+	"P4": 1,
+	"P5": 2,
+	"P6": 3
+}
 
 const COINS_PERCENT_TRANSFERRED_ON_TAG = 50
 const BONUS_COINS_ON_TAG = 10
 
-export(Color) var color = Color("#ffffff")
+export(Color) var color = Color("#ffffff") setget _set_color
 export(int) var max_velocity = 300
 export(float) var drag_scale = 0.8
+export(int) var crocodile_speed = 350
+export(int) var normal_speed = 300
 
 onready var platform_offset = $Sprite.texture.get_height() * $Sprite.scale.y
 
@@ -23,11 +33,6 @@ var _debug_text = ""
 signal turning_crocodile
 signal turning_normal
 
-func _ready():
-	$Sprite.self_modulate = color
-	$Sprite/CoinLabel.self_modulate = color
-	$Sprite/NameTag.self_modulate = color
-
 func reset():
 	turn_normal()
 	self.coins = 0
@@ -38,9 +43,13 @@ func reset():
 		toggle_frozen()
 	$WinnerLabel.hide()
 
+func show_winner_label():
+	$WinnerLabel.show()
+
 func jump():
 	if not $AnimationPlayer.is_playing():
 		$AnimationPlayer.play("Jump")
+		$JumpSound.play()
 
 func toggle_frozen():
 	frozen = not frozen
@@ -48,7 +57,7 @@ func toggle_frozen():
 func collect_coin(amount = 10):
 	self.coins += amount
 	$CoinChangeLabel.text = "+%s" % amount
-	$CoinChangeLabel.modulate = Global.GREEN
+	$CoinChangeLabel.modulate = get_node("/root/Global").GREEN
 	$AnimationPlayer.play("CoinChanged")
 
 func take_away_coin(amount):
@@ -59,8 +68,11 @@ func take_away_coin(amount):
 	
 	if amount > 0:
 		$CoinChangeLabel.text = "%s" % amount
-		$CoinChangeLabel.modulate = Global.RED
+		$CoinChangeLabel.modulate = get_node("/root/Global").RED
 		$AnimationPlayer.play("CoinChanged")
+
+func is_controlled_by_ai():
+	return controller == "AI"
 
 func move(direction, multiplier = 1):
 	velocity += direction.normalized() * max_velocity * multiplier
@@ -70,15 +82,15 @@ func moving_vector(direction, multiplier = 1):
 
 func turn_normal():
 	emit_signal("turning_normal")
-	$Sprite/Crocodile.hide()
+	max_velocity = normal_speed
 
 func turn_crocodile():
 	emit_signal("turning_crocodile")
-	Global.crocodile = self
-	$Sprite/Crocodile.show()
+	get_node("/root/Global").crocodile = self
+	max_velocity = crocodile_speed
 
 func is_crocodile():
-	return self == Global.crocodile
+	return self == get_node("/root/Global").crocodile
 
 func tag_crocodile(player_area):
 	var player = player_area.get_parent()
@@ -125,9 +137,11 @@ func _physics_process(delta):
 		if velocity.x > 0:
 			$Sprite/Crocodile.flip_h = true
 			$Sprite/Crocodile.position.x = 12
+			$Sprite/Crocodile/Shadow.position.x = -10
 		else:
 			$Sprite/Crocodile.flip_h = false
 			$Sprite/Crocodile.position.x = -12
+			$Sprite/Crocodile/Shadow.position.x = 10
 	
 	heading = velocity.normalized()
 
@@ -152,3 +166,11 @@ func _set_controller(value):
 func _set_coins(value):
 	coins = value
 	$Sprite/CoinLabel.text = String(value)
+
+func _set_color(value):
+	color = value
+	if has_node("Sprite"):
+		$Sprite.self_modulate = color
+		$Sprite/CoinLabel.self_modulate = color
+		$Sprite/NameTag.self_modulate = color
+		$WinnerLabel.self_modulate = color

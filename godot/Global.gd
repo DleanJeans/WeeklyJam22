@@ -1,9 +1,10 @@
 tool
 extends Node
 
-onready var Players = get_tree().get_nodes_in_group("Players")
-onready var Platforms = get_tree().get_nodes_in_group("Platforms")
+var Players setget , _get_players 
+var Platforms setget, _get_platforms
 var Coins setget , _get_coins
+var CoinSpawners setget , _get_coin_spawners
 
 var crocodile
 
@@ -21,3 +22,12 @@ var PLATFORMS_GROUP = "Platforms"
 
 func _get_coins():
 	return get_tree().get_nodes_in_group("Coins")
+
+func _get_players():
+	return get_tree().get_nodes_in_group("Players")
+
+func _get_platforms():
+	return get_tree().get_nodes_in_group("Platforms")
+
+func _get_coin_spawners():
+	return get_tree().get_nodes_in_group("CoinSpawners")

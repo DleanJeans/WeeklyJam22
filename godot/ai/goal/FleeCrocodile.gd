@@ -7,9 +7,10 @@ func _ready():
 	_name = "FleeCrocodile"
 	timer = Timer.new()
 	timer.wait_time = 2
-	timer.connect("timeout", self, "_goal_completed")
+	timer.connect("timeout", self, "_get_on_platform")
+	add_child(timer)
 
-func _goal_completed():
+func _get_on_platform():
 	state = GOAL_COMPLETED
 	get_parent().add_subgoal(load("res://ai/goal/ArriveAtPlatform.gd").new())
 

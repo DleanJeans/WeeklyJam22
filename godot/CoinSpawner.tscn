@@ -7,7 +7,9 @@
 custom_solver_bias = 0.0
 extents = Vector2( 32, 32 )
 
-[node name="CoinSpawner" type="Area2D"]
+[node name="CoinSpawner" type="Area2D" groups=[
+"CoinSpawners",
+]]
 
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
@@ -17,7 +19,7 @@ angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
 script = ExtResource( 1 )
-container_path = null
+container_path = "../../Objects"
 spawn_interval = 3.0
 
 [node name="Shape" type="CollisionShape2D" parent="."]

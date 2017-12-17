@@ -20,15 +20,16 @@ func avoid_obstacles():
 	if obstacle == null:
 		return velocity
 	
-	var obstacle_local_position = $DetectionBox.to_local(obstacle.position)	
-	var distance_to_obstacle = player.position.distance_to(obstacle.position)
-	var multiplier = 1 + (detection_length - obstacle_local_position.y) / detection_length
-	var obstacle_size = obstacle.get_node("Shape").shape.extents * 2
-
-	velocity.y = (obstacle_size.y - obstacle_local_position.y) * multiplier
-	velocity.x = (obstacle_size.x - obstacle_local_position.x) * breaking_weight
-
-	velocity = $DetectionBox.to_global(velocity) - obstacle.position
+#	var obstacle_local_position = $DetectionBox.to_local(obstacle.position)	
+#	var distance_to_obstacle = player.position.distance_to(obstacle.position)
+#	var multiplier = 1 + (detection_length - obstacle_local_position.y) / detection_length
+#	var obstacle_size = obstacle.get_node("Shape").shape.extents * 2
+#
+#	velocity.y = (obstacle_size.y - obstacle_local_position.y) * multiplier
+#	velocity.x = (obstacle_size.x - obstacle_local_position.x) * breaking_weight
+#
+#	velocity = $DetectionBox.to_global(velocity) - obstacle.position
+	velocity = player.position - obstacle.position
 	velocity = velocity.clamped(player.max_velocity)
 	
 	return velocity

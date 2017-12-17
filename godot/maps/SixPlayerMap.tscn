@@ -1,0 +1,120 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://BoxWall.tscn" type="PackedScene" id=1]
+[ext_resource path="res://CoinSpawner.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Platform.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=4]
+
+[node name="SixPlayerMap" type="Node2D"]
+
+[node name="BoxWall" parent="." instance=ExtResource( 1 )]
+
+[node name="CoinSpawners" type="Node2D" parent="."]
+
+[node name="CoinSpawner" parent="CoinSpawners" instance=ExtResource( 2 )]
+
+position = Vector2( 480, 300 )
+scale = Vector2( 6, 2 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="CoinSpawner2" parent="CoinSpawners" instance=ExtResource( 2 )]
+
+position = Vector2( 480, 475 )
+scale = Vector2( 4, 1 )
+_sections_unfolded = [ "Transform", "Z" ]
+spawn_interval = 5.0
+
+[node name="CoinSpawner4" parent="CoinSpawners" instance=ExtResource( 2 )]
+
+position = Vector2( 860, 300 )
+scale = Vector2( 2, 2 )
+_sections_unfolded = [ "Transform", "Z" ]
+spawn_interval = 7.5
+
+[node name="CoinSpawner5" parent="CoinSpawners" instance=ExtResource( 2 )]
+
+position = Vector2( 100, 300 )
+scale = Vector2( 2, 2 )
+_sections_unfolded = [ "Transform", "Z" ]
+spawn_interval = 7.5
+
+[node name="CoinSpawner3" parent="CoinSpawners" instance=ExtResource( 2 )]
+
+position = Vector2( 480, 125 )
+scale = Vector2( 4, 1 )
+_sections_unfolded = [ "Transform", "Z" ]
+spawn_interval = 5.0
+
+[node name="Platforms" type="Node2D" parent="."]
+
+[node name="Platform4" parent="Platforms" instance=ExtResource( 3 )]
+
+position = Vector2( 95, 495 )
+scale = Vector2( 3, 1.5 )
+
+[node name="Platform6" parent="Platforms" instance=ExtResource( 3 )]
+
+position = Vector2( 865, 495 )
+scale = Vector2( 3, 1.5 )
+
+[node name="Platform7" parent="Platforms" instance=ExtResource( 3 )]
+
+position = Vector2( 865, 105 )
+scale = Vector2( 3, 1.5 )
+
+[node name="Platform5" parent="Platforms" instance=ExtResource( 3 )]
+
+position = Vector2( 95, 105 )
+scale = Vector2( 3, 1.5 )
+
+[node name="Objects" type="TileMap" parent="."]
+
+mode = 0
+tile_set = null
+cell_size = Vector2( 64, 64 )
+cell_quadrant_size = 16
+cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+cell_half_offset = 2
+cell_tile_origin = 0
+cell_y_sort = true
+cell_clip_uv = false
+collision_use_kinematic = false
+collision_friction = 1.0
+collision_bounce = 0.0
+collision_layer = 1
+collision_mask = 1
+occluder_light_mask = 1
+format = 1
+tile_data = PoolIntArray(  )
+_sections_unfolded = [ "Cell", "Collision" ]
+
+[node name="Player1" parent="Objects" instance=ExtResource( 4 )]
+
+position = Vector2( 315, 115 )
+color = Color( 0.953125, 0.0670166, 0.399307, 1 )
+
+[node name="Player2" parent="Objects" instance=ExtResource( 4 )]
+
+position = Vector2( 95, 295 )
+color = Color( 0.0397797, 0.240514, 0.925781, 1 )
+
+[node name="Player3" parent="Objects" instance=ExtResource( 4 )]
+
+position = Vector2( 320, 490 )
+color = Color( 0.878906, 0.767863, 0.168228, 1 )
+
+[node name="Player4" parent="Objects" instance=ExtResource( 4 )]
+
+position = Vector2( 665, 485 )
+color = Color( 0.164063, 0.164063, 0.164063, 1 )
+
+[node name="Player5" parent="Objects" instance=ExtResource( 4 )]
+
+position = Vector2( 875, 300 )
+color = Color( 0.14801, 0.757813, 0.514844, 1 )
+
+[node name="Player6" parent="Objects" instance=ExtResource( 4 )]
+
+position = Vector2( 625, 125 )
+
+

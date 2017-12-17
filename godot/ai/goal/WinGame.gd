@@ -10,10 +10,10 @@ func process():
 	.process()
 	
 	if _has_no_subgoals():
-		if player.is_crocodile():
-			add_subgoal(ChaseOthers.new())
-		else:
+		if not player.is_crocodile():
 			add_subgoal(GetMostCoins.new())
+		elif not player.frozen:
+			add_subgoal(ChaseOthers.new())
 
 func _process(delta):
 	if ProjectSettings.get_setting("game/debug_goal_tree"):
