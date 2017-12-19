@@ -1,21 +1,23 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://InputAction.gd" type="Script" id=2]
 [ext_resource path="res://ai/AI.tscn" type="PackedScene" id=3]
-[ext_resource path="res://assets/Tap.ogg" type="AudioStream" id=4]
-[ext_resource path="res://assets/CartoonJump.ogg" type="AudioStream" id=5]
-[ext_resource path="res://Sprite.png" type="Texture" id=6]
-[ext_resource path="res://BebasNeue.otf" type="DynamicFontData" id=7]
-[ext_resource path="res://assets/Crocodile.png" type="Texture" id=8]
-[ext_resource path="res://MovementVisualizer.tscn" type="PackedScene" id=9]
+[ext_resource path="res://assets/Freezing.ogg" type="AudioStream" id=4]
+[ext_resource path="res://assets/Tap.ogg" type="AudioStream" id=5]
+[ext_resource path="res://assets/Groan.ogg" type="AudioStream" id=6]
+[ext_resource path="res://assets/CartoonJump.ogg" type="AudioStream" id=7]
+[ext_resource path="res://Sprite.png" type="Texture" id=8]
+[ext_resource path="res://BebasNeue.otf" type="DynamicFontData" id=9]
+[ext_resource path="res://assets/Crocodile.png" type="Texture" id=10]
+[ext_resource path="res://MovementVisualizer.tscn" type="PackedScene" id=11]
 
 [sub_resource type="DynamicFont" id=1]
 
 size = 40
 use_mipmaps = false
 use_filter = false
-font_data = ExtResource( 7 )
+font_data = ExtResource( 9 )
 _sections_unfolded = [ "Font", "Settings" ]
 
 [sub_resource type="DynamicFont" id=2]
@@ -23,7 +25,7 @@ _sections_unfolded = [ "Font", "Settings" ]
 size = 40
 use_mipmaps = false
 use_filter = false
-font_data = ExtResource( 7 )
+font_data = ExtResource( 9 )
 _sections_unfolded = [ "Font", "Settings" ]
 
 [sub_resource type="RectangleShape2D" id=3]
@@ -31,37 +33,52 @@ _sections_unfolded = [ "Font", "Settings" ]
 custom_solver_bias = 0.0
 extents = Vector2( 20, 10 )
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="CapsuleShape2D" id=4]
+
+custom_solver_bias = 0.0
+radius = 50.0
+height = 40.0
+
+[sub_resource type="RectangleShape2D" id=5]
 
 custom_solver_bias = 0.0
 extents = Vector2( 20, 10 )
 
-[sub_resource type="GDScript" id=5]
+[sub_resource type="GDScript" id=6]
 
 script/source = "extends Timer
 
-onready var label = get_parent().get_node(\"TimerLabel\")
+onready var player = get_parent()
+onready var label = player.get_node(\"TimerLabel\")
+onready var jump_duration = player.get_node(\"AnimationPlayer\").get_animation(\"Jump\").get_length()
+
+var jumped = false
 
 func start():
 	.start()
-	get_parent().toggle_frozen()
+	player.toggle_frozen()
+	jumped = false
 
 func _process(delta):
 	var time = get_time_left()
 	if time > 0:
 		label.text = String(time + 1).substr(0, 1)
 	else:
-		label.text = \"\""
+		label.text = \"\"
+	
+	if time < jump_duration / 2 and player.is_crocodile() and not jumped:
+		jumped = true
+		player.break_unfrozen()"
 
-[sub_resource type="DynamicFont" id=6]
+[sub_resource type="DynamicFont" id=7]
 
 size = 40
 use_mipmaps = false
 use_filter = false
-font_data = ExtResource( 7 )
+font_data = ExtResource( 9 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=8]
 
 length = 0.8
 loop = false
@@ -89,7 +106,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=9]
 
 length = 1.0
 loop = false
@@ -128,24 +145,24 @@ tracks/2/keys = {
 "values": [ Vector2( 0.6, 0.2 ), Vector2( 0.7, 0.2 ), Vector2( 0.6, 0.2 ), Vector2( 0.4, 0.1 ), Vector2( 0.6, 0.2 ), Vector2( 0.7, 0.2 ), Vector2( 0.6, 0.2 ) ]
 }
 
-[sub_resource type="DynamicFont" id=9]
-
-size = 30
-use_mipmaps = false
-use_filter = false
-font_data = ExtResource( 7 )
-_sections_unfolded = [ "Font", "Settings" ]
-
 [sub_resource type="DynamicFont" id=10]
 
 size = 30
 use_mipmaps = false
 use_filter = false
-font_data = ExtResource( 7 )
+font_data = ExtResource( 9 )
+_sections_unfolded = [ "Font", "Settings" ]
 
-[sub_resource type="Theme" id=11]
+[sub_resource type="DynamicFont" id=11]
 
-default_font = SubResource( 10 )
+size = 30
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 9 )
+
+[sub_resource type="Theme" id=12]
+
+default_font = SubResource( 11 )
 
 [node name="Player" type="KinematicBody2D" groups=[
 "Players",
@@ -158,10 +175,6 @@ collision/safe_margin = 1.0
 script = ExtResource( 1 )
 _sections_unfolded = [ "Collision", "collision" ]
 color = Color( 1, 1, 1, 1 )
-max_velocity = 300
-drag_scale = 0.8
-crocodile_speed = 350
-normal_speed = 300
 
 [node name="InputAction" type="Node2D" parent="."]
 
@@ -173,7 +186,7 @@ _sections_unfolded = [ "Visibility" ]
 
 visible = false
 
-[node name="TapSound" type="AudioStreamPlayer2D" parent="."]
+[node name="FreezingSound" type="AudioStreamPlayer2D" parent="."]
 
 visible = false
 stream = ExtResource( 4 )
@@ -184,10 +197,31 @@ attenuation = 1.0
 bus = "Master"
 area_mask = 1
 
-[node name="JumpSound" type="AudioStreamPlayer2D" parent="."]
+[node name="TapSound" type="AudioStreamPlayer2D" parent="."]
 
 visible = false
 stream = ExtResource( 5 )
+volume_db = 0.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Master"
+area_mask = 1
+
+[node name="GroaningSound" type="AudioStreamPlayer2D" parent="."]
+
+stream = ExtResource( 6 )
+volume_db = 10.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Master"
+area_mask = 1
+
+[node name="JumpSound" type="AudioStreamPlayer2D" parent="."]
+
+visible = false
+stream = ExtResource( 7 )
 volume_db = 0.0
 autoplay = false
 max_distance = 2000.0
@@ -200,7 +234,7 @@ area_mask = 1
 modulate = Color( 0, 0, 0, 0.160235 )
 show_behind_parent = true
 scale = Vector2( 0.6, 0.2 )
-texture = ExtResource( 6 )
+texture = ExtResource( 8 )
 _sections_unfolded = [ "Transform", "Z" ]
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -208,7 +242,7 @@ _sections_unfolded = [ "Transform", "Z" ]
 show_behind_parent = true
 position = Vector2( 0, -40 )
 scale = Vector2( 0.4, 0.8 )
-texture = ExtResource( 6 )
+texture = ExtResource( 8 )
 _sections_unfolded = [ "Animation", "Transform" ]
 
 [node name="CoinLabel" type="Label" parent="Sprite"]
@@ -263,10 +297,13 @@ _sections_unfolded = [ "Anchor", "Rect", "custom_fonts" ]
 [node name="Crocodile" type="Sprite" parent="Sprite"]
 
 visible = false
-position = Vector2( 12, -6 )
+position = Vector2( -12.5, -6.25 )
 scale = Vector2( 1.25, 0.61563 )
-texture = ExtResource( 8 )
+texture = ExtResource( 10 )
 _sections_unfolded = [ "Animation", "Offset", "Region", "Transform" ]
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Shadow" type="Sprite" parent="Sprite/Crocodile"]
 
@@ -274,18 +311,26 @@ modulate = Color( 0, 0, 0, 0.160235 )
 show_behind_parent = true
 position = Vector2( 10, 90 )
 scale = Vector2( 2.25, 1 )
-texture = ExtResource( 6 )
+texture = ExtResource( 8 )
 _sections_unfolded = [ "Offset", "Transform" ]
 
 [node name="Shape" type="CollisionShape2D" parent="."]
 
+visible = false
 position = Vector2( 0, -5 )
 shape = SubResource( 3 )
 _sections_unfolded = [ "Transform" ]
 
+[node name="CrocodileShape" type="CollisionShape2D" parent="."]
+
+visible = false
+position = Vector2( 0.2, -0.199993 )
+rotation = 1.5708
+scale = Vector2( 0.5, 0.492504 )
+shape = SubResource( 4 )
+
 [node name="TouchArea" type="Area2D" parent="."]
 
-editor/display_folded = true
 visible = false
 position = Vector2( 0, -40 )
 input_pickable = true
@@ -301,7 +346,7 @@ _sections_unfolded = [ "Pickable", "Transform" ]
 
 position = Vector2( 0, 35 )
 scale = Vector2( 1.2, 1.2 )
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="FreezeTimer" type="Timer" parent="."]
@@ -310,7 +355,7 @@ process_mode = 1
 wait_time = 3.0
 one_shot = true
 autostart = false
-script = SubResource( 5 )
+script = SubResource( 6 )
 
 [node name="TimerLabel" type="Label" parent="."]
 
@@ -327,7 +372,7 @@ rect_clip_content = false
 mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 7 )
 text = "3"
 align = 1
 percent_visible = 1.0
@@ -335,41 +380,13 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "custom_fonts" ]
 
-[node name="DebugLabel" type="Label" parent="."]
-
-visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 25.0
-margin_top = -80.0
-margin_right = 85.0
-margin_bottom = -66.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-size_flags_horizontal = 1
-size_flags_vertical = 4
-text = "[Debug:Player]
-On Platform: False
-"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-
-[node name="MovementVisualizer" parent="." instance=ExtResource( 9 )]
-
-visible = false
-multiplier = 0.2
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 root_node = NodePath("..")
-anims/CoinChanged = SubResource( 7 )
-anims/Jump = SubResource( 8 )
+anims/CoinChanged = SubResource( 8 )
+anims/Jump = SubResource( 9 )
 playback/active = true
 playback/speed = 1.25
 blend_times = [  ]
@@ -377,6 +394,7 @@ autoplay = "Grounded"
 
 [node name="CoinChangeLabel" type="Label" parent="."]
 
+modulate = Color( 0.0618048, 0.894531, 0.0349426, 1 )
 self_modulate = Color( 1, 1, 1, 0 )
 anchor_left = 0.0
 anchor_top = 0.0
@@ -390,7 +408,7 @@ rect_clip_content = false
 mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 9 )
+custom_fonts/font = SubResource( 10 )
 text = "+10"
 percent_visible = 1.0
 lines_skipped = 0
@@ -413,18 +431,51 @@ rect_clip_content = false
 mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
-theme = SubResource( 11 )
+theme = SubResource( 12 )
 text = "Winner"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Rect", "custom_fonts" ]
 
+[node name="DebugLabel" type="Label" parent="."]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 25.0
+margin_top = -80.0
+margin_right = 143.0
+margin_bottom = -15.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "[Debug:Player]
+On Platform: False
+Velocity: 0
+"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="MovementVisualizer" parent="." instance=ExtResource( 11 )]
+
+visible = false
+multiplier = 0.2
+
 [connection signal="turning_crocodile" from="." to="Sprite/Crocodile" method="show"]
+
+[connection signal="turning_crocodile" from="." to="CrocodileShape" method="set_disabled" binds= [ false ]]
 
 [connection signal="turning_crocodile" from="." to="AI" method="_on_turning_crocodile"]
 
 [connection signal="turning_normal" from="." to="Sprite/Crocodile" method="hide"]
+
+[connection signal="turning_normal" from="." to="CrocodileShape" method="set_disabled" binds= [ true ]]
 
 [connection signal="turning_normal" from="." to="AI" method="_on_turning_normal"]
 

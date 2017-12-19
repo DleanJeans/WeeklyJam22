@@ -46,3 +46,7 @@ func freeze_players():
 func unfreeze_players():
 	for p in Global.Players:
 		p.frozen = false
+
+func reset():
+	for p in Global.Players:
+		p.reset()

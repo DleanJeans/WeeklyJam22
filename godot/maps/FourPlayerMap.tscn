@@ -28,7 +28,7 @@ _sections_unfolded = [ "Transform" ]
 [node name="CoinSpawner" parent="CoinSpawners" instance=ExtResource( 3 )]
 
 position = Vector2( 480, 300 )
-scale = Vector2( 2, 2 )
+scale = Vector2( 2, 3.75 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="CoinSpawner2" parent="CoinSpawners" instance=ExtResource( 3 )]
@@ -40,15 +40,15 @@ spawn_interval = 10.0
 
 [node name="CoinSpawner4" parent="CoinSpawners" instance=ExtResource( 3 )]
 
-position = Vector2( 475, 455 )
-scale = Vector2( 10, 1 )
+position = Vector2( 483.75, 460 )
+scale = Vector2( 11.5234, 1 )
 _sections_unfolded = [ "Transform" ]
 spawn_interval = 7.0
 
 [node name="CoinSpawner5" parent="CoinSpawners" instance=ExtResource( 3 )]
 
-position = Vector2( 475, 145 )
-scale = Vector2( 10, 1 )
+position = Vector2( 480, 140 )
+scale = Vector2( 11.4844, 1 )
 _sections_unfolded = [ "Transform" ]
 spawn_interval = 7.0
 
@@ -82,22 +82,22 @@ _sections_unfolded = [ "Cell", "Collision" ]
 
 [node name="Player1" parent="Objects" instance=ExtResource( 4 )]
 
-position = Vector2( 90, 160 )
+position = Vector2( 135, 95 )
 color = Color( 0.953125, 0.0670166, 0.399307, 1 )
 
 [node name="Player2" parent="Objects" instance=ExtResource( 4 )]
 
-position = Vector2( 875, 155 )
-color = Color( 0.0397797, 0.240514, 0.925781, 1 )
+position = Vector2( 825, 90 )
+color = Color( 0.441249, 0.0397797, 0.925781, 1 )
 
 [node name="Player3" parent="Objects" instance=ExtResource( 4 )]
 
-position = Vector2( 885, 490 )
+position = Vector2( 830, 513.2 )
 color = Color( 0.14801, 0.757813, 0.514844, 1 )
 
 [node name="Player4" parent="Objects" instance=ExtResource( 4 )]
 
-position = Vector2( 85, 495 )
+position = Vector2( 120, 513.2 )
 color = Color( 0.164063, 0.164063, 0.164063, 1 )
 
 

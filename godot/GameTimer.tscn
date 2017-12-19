@@ -3,7 +3,7 @@
 [ext_resource path="res://GameTimer.gd" type="Script" id=1]
 [ext_resource path="res://BebasNeue.otf" type="DynamicFontData" id=2]
 
-[sub_resource type="DynamicFont" id=8]
+[sub_resource type="DynamicFont" id=1]
 
 size = 50
 use_mipmaps = false
@@ -11,7 +11,7 @@ use_filter = false
 font_data = ExtResource( 2 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[sub_resource type="DynamicFont" id=9]
+[sub_resource type="DynamicFont" id=2]
 
 size = 100
 use_mipmaps = false
@@ -19,7 +19,7 @@ use_filter = false
 font_data = ExtResource( 2 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[sub_resource type="DynamicFont" id=10]
+[sub_resource type="DynamicFont" id=3]
 
 size = 30
 use_mipmaps = false
@@ -52,7 +52,7 @@ rect_clip_content = false
 mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 1 )
 text = "3:00"
 percent_visible = 1.0
 lines_skipped = 0
@@ -76,7 +76,7 @@ rect_clip_content = false
 mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 9 )
+custom_fonts/font = SubResource( 2 )
 text = "5
 Press to Join"
 align = 1
@@ -100,7 +100,7 @@ rect_clip_content = false
 mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 10 )
+custom_fonts/font = SubResource( 3 )
 text = "Space|Enter|USB 3|PS X|Xbox A|Nintendo B"
 percent_visible = 1.0
 lines_skipped = 0

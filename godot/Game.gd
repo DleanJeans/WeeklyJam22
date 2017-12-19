@@ -26,7 +26,6 @@ func try_resume():
 		emit_signal("game_resumed")
 		if $GameTimer.in_countdown_mode():
 			$PlayerManager.freeze_players()
-			_stop_coin_spawners()
 
 func _users_playing():
 	for player in Global.Players:
@@ -34,21 +33,9 @@ func _users_playing():
 			return true
 	return false
 
-func _reset_players():
-	for p in Global.Players:
-		p.reset()
-
 func _reset_platforms():
 	for p in Global.Platforms:
 		p.reset()
-
-func _resume_coin_spawners():
-	for spawner in Global.CoinSpawners:
-		spawner.resume()
-
-func _stop_coin_spawners():
-	for spawner in Global.CoinSpawners:
-		spawner.stop()
 
 func end():
 	emit_signal("game_over")
@@ -91,6 +78,6 @@ func _process(delta):
 		for p in winners:
 			p.show_winner_label()
 			p.jump()
-	
-	if Input.is_action_just_pressed("slo_mo_toggle"):
-		Engine.set_time_scale(ProjectSettings.get_setting("game/slo_mo_scale") if Engine.get_time_scale() == 1 else 1)
+
+func reset():
+	pass # replace with function body

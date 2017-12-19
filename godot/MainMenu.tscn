@@ -1,55 +1,19 @@
 [gd_scene load_steps=13 format=2]
 
-[ext_resource path="res://BebasNeue.otf" type="DynamicFontData" id=1]
-[ext_resource path="res://assets/Crocodile.png" type="Texture" id=2]
-[ext_resource path="res://Sprite.png" type="Texture" id=3]
-[ext_resource path="res://FocusStyle.tres" type="StyleBox" id=4]
-[ext_resource path="res://BebasNeue.tres" type="DynamicFont" id=5]
-[ext_resource path="res://assets/Select.wav" type="AudioStream" id=6]
-
-[sub_resource type="GDScript" id=1]
-
-script/source = "extends Container
-
-onready var game = get_parent()
-
-signal shown
-signal hidden
-
-func show():
-	.show()
-	emit_signal(\"shown\")
-
-func hide():
-	.hide()
-	emit_signal(\"hidden\")
-
-func _ready():
-	$PlayButton.grab_focus()
-
-func _process(delta):
-	if not visible:
-		if Input.is_action_just_pressed(\"ui_select\"):
-			show()
-	else:
-		if Input.is_action_just_pressed(\"toggle_fullscreen\"):
-			$FullScreenButton.emit_signal(\"pressed\")
-			$SelectSound.play()
-		if Input.is_action_just_pressed(\"ui_cancel\"):
-			$ResumeButton.emit_signal(\"pressed\")
-			$SelectSound.play()
-		if Input.is_action_just_pressed(\"ui_accept\"):
-			$SelectSound.play()
-
-func _on_FullScreenButton_pressed():
-	OS.set_window_fullscreen(not OS.is_window_fullscreen())"
+[ext_resource path="res://MainMenu.gd" type="Script" id=1]
+[ext_resource path="res://assets/Select.wav" type="AudioStream" id=2]
+[ext_resource path="res://BebasNeue.otf" type="DynamicFontData" id=3]
+[ext_resource path="res://assets/Crocodile.png" type="Texture" id=4]
+[ext_resource path="res://Sprite.png" type="Texture" id=5]
+[ext_resource path="res://FocusStyle.tres" type="StyleBox" id=6]
+[ext_resource path="res://BebasNeue.tres" type="DynamicFont" id=7]
 
 [sub_resource type="DynamicFont" id=2]
 
 size = 100
 use_mipmaps = false
 use_filter = false
-font_data = ExtResource( 1 )
+font_data = ExtResource( 3 )
 _sections_unfolded = [ "Font", "Settings" ]
 
 [sub_resource type="DynamicFont" id=3]
@@ -57,7 +21,7 @@ _sections_unfolded = [ "Font", "Settings" ]
 size = 40
 use_mipmaps = false
 use_filter = false
-font_data = ExtResource( 1 )
+font_data = ExtResource( 3 )
 _sections_unfolded = [ "Font", "Settings" ]
 
 [sub_resource type="DynamicFont" id=4]
@@ -65,7 +29,7 @@ _sections_unfolded = [ "Font", "Settings" ]
 size = 30
 use_mipmaps = false
 use_filter = false
-font_data = ExtResource( 1 )
+font_data = ExtResource( 3 )
 _sections_unfolded = [ "Settings" ]
 
 [sub_resource type="DynamicFont" id=5]
@@ -73,7 +37,7 @@ _sections_unfolded = [ "Settings" ]
 size = 20
 use_mipmaps = false
 use_filter = false
-font_data = ExtResource( 1 )
+font_data = ExtResource( 3 )
 _sections_unfolded = [ "Font", "Settings" ]
 
 [sub_resource type="DynamicFont" id=6]
@@ -81,7 +45,7 @@ _sections_unfolded = [ "Font", "Settings" ]
 size = 30
 use_mipmaps = false
 use_filter = false
-font_data = ExtResource( 1 )
+font_data = ExtResource( 3 )
 
 [node name="MainMenu" type="Container"]
 
@@ -96,7 +60,17 @@ rect_clip_content = false
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-script = SubResource( 1 )
+script = ExtResource( 1 )
+
+[node name="SelectSound" type="AudioStreamPlayer2D" parent="."]
+
+stream = ExtResource( 2 )
+volume_db = 0.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Master"
+area_mask = 1
 
 [node name="Background" type="Panel" parent="."]
 
@@ -158,7 +132,7 @@ rect_clip_content = false
 mouse_filter = 1
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = ExtResource( 2 )
+texture = ExtResource( 4 )
 stretch_mode = 0
 __meta__ = {
 "_edit_group_": true
@@ -182,7 +156,7 @@ rect_clip_content = false
 mouse_filter = 1
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = ExtResource( 3 )
+texture = ExtResource( 5 )
 stretch_mode = 0
 
 [node name="ResumeButton" type="Button" parent="."]
@@ -199,8 +173,8 @@ rect_clip_content = false
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_styles/hover = ExtResource( 4 )
-custom_styles/focus = ExtResource( 4 )
+custom_styles/hover = ExtResource( 6 )
+custom_styles/focus = ExtResource( 6 )
 custom_fonts/font = SubResource( 3 )
 toggle_mode = false
 enabled_focus_mode = 2
@@ -225,8 +199,8 @@ rect_clip_content = false
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_styles/hover = ExtResource( 4 )
-custom_styles/focus = ExtResource( 4 )
+custom_styles/hover = ExtResource( 6 )
+custom_styles/focus = ExtResource( 6 )
 custom_fonts/font = SubResource( 4 )
 toggle_mode = false
 enabled_focus_mode = 2
@@ -251,8 +225,8 @@ rect_clip_content = false
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_styles/hover = ExtResource( 4 )
-custom_styles/focus = ExtResource( 4 )
+custom_styles/hover = ExtResource( 6 )
+custom_styles/focus = ExtResource( 6 )
 custom_fonts/font = SubResource( 2 )
 toggle_mode = false
 enabled_focus_mode = 2
@@ -278,8 +252,8 @@ rect_clip_content = false
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_styles/hover = ExtResource( 4 )
-custom_styles/focus = ExtResource( 4 )
+custom_styles/hover = ExtResource( 6 )
+custom_styles/focus = ExtResource( 6 )
 custom_fonts/font = SubResource( 3 )
 toggle_mode = false
 action_mode = 0
@@ -306,8 +280,8 @@ rect_clip_content = false
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_styles/hover = ExtResource( 4 )
-custom_styles/focus = ExtResource( 4 )
+custom_styles/hover = ExtResource( 6 )
+custom_styles/focus = ExtResource( 6 )
 custom_fonts/font = SubResource( 3 )
 toggle_mode = false
 action_mode = 0
@@ -349,7 +323,7 @@ rect_clip_content = false
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_fonts/font = ExtResource( 5 )
+custom_fonts/font = ExtResource( 7 )
 text = "Esc|L1"
 align = 1
 percent_visible = 1.0
@@ -372,7 +346,7 @@ rect_clip_content = false
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_fonts/font = ExtResource( 5 )
+custom_fonts/font = ExtResource( 7 )
 text = "F11|R1"
 align = 1
 percent_visible = 1.0
@@ -404,16 +378,6 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "custom_fonts" ]
 
-[node name="SelectSound" type="AudioStreamPlayer2D" parent="."]
-
-stream = ExtResource( 6 )
-volume_db = 0.0
-autoplay = false
-max_distance = 2000.0
-attenuation = 1.0
-bus = "Master"
-area_mask = 1
-
 [node name="Version" type="Label" parent="."]
 
 anchor_left = 0.0
@@ -439,8 +403,18 @@ max_lines_visible = -1
 
 [connection signal="pressed" from="ResumeButton" to="." method="hide"]
 
+[connection signal="pressed" from="ResumeButton" to="SelectSound" method="play"]
+
 [connection signal="pressed" from="FullScreenButton" to="." method="_on_FullScreenButton_pressed"]
 
+[connection signal="pressed" from="FullScreenButton" to="SelectSound" method="play"]
+
 [connection signal="pressed" from="PlayButton" to="." method="hide"]
+
+[connection signal="pressed" from="PlayButton" to="SelectSound" method="play"]
+
+[connection signal="pressed" from="MapButton" to="SelectSound" method="play"]
+
+[connection signal="pressed" from="RoundDurationButton" to="SelectSound" method="play"]
 
 

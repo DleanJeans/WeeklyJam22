@@ -12,10 +12,11 @@ const COINS_PERCENT_TRANSFERRED_ON_TAG = 50
 const BONUS_COINS_ON_TAG = 10
 
 export(Color) var color = Color("#ffffff") setget _set_color
-export(int) var max_velocity = 300
-export(float) var drag_scale = 0.8
-export(int) var crocodile_speed = 350
-export(int) var normal_speed = 300
+var max_velocity = 300
+var drag_scale = 0.8
+var crocodile_speed = 400
+var normal_speed = 300
+var ai_speed_scale = 0.9
 
 onready var platform_offset = $Sprite.texture.get_height() * $Sprite.scale.y
 
@@ -39,9 +40,8 @@ func reset():
 	self.controller = "AI"
 	$AI/WinGame.clear_subgoals()
 	$FreezeTimer.stop()
-	if not frozen:
-		toggle_frozen()
 	$WinnerLabel.hide()
+	frozen = true
 
 func show_winner_label():
 	$WinnerLabel.show()
@@ -51,13 +51,25 @@ func jump():
 		$AnimationPlayer.play("Jump")
 		$JumpSound.play()
 
+func break_unfrozen():
+	$Sprite.modulate = get_node("/root/Global").WHITE
+	groan()
+	jump()
+
 func toggle_frozen():
 	frozen = not frozen
+	if is_crocodile() and frozen:
+		$Sprite.modulate = get_node("/root/Global").ICY_BLUE
+		$FreezingSound.play()
+
+func groan():
+	if not $GroaningSound.playing:
+		$GroaningSound.play()
 
 func collect_coin(amount = 10):
 	self.coins += amount
 	$CoinChangeLabel.text = "+%s" % amount
-	$CoinChangeLabel.modulate = get_node("/root/Global").GREEN
+	$CoinChangeLabel.modulate = get_node("/root/Global").CASHY_GREEN
 	$AnimationPlayer.play("CoinChanged")
 
 func take_away_coin(amount):
@@ -82,12 +94,14 @@ func moving_vector(direction, multiplier = 1):
 
 func turn_normal():
 	emit_signal("turning_normal")
-	max_velocity = normal_speed
+	self.max_velocity = normal_speed
+	$TouchArea/Shape.scale = Vector2(1, 1)
 
 func turn_crocodile():
 	emit_signal("turning_crocodile")
 	get_node("/root/Global").crocodile = self
-	max_velocity = crocodile_speed
+	self.max_velocity = crocodile_speed
+	$TouchArea/Shape.scale = Vector2(2, 2)
 
 func is_crocodile():
 	return self == get_node("/root/Global").crocodile
@@ -97,6 +111,10 @@ func tag_crocodile(player_area):
 	if _not_taggable(player):
 		return
 	
+	_transfer_coins(player)
+	$TapSound.play()
+
+func _transfer_coins(player):
 	var coins_lost = _coins_lost(player)
 	var coins_gained = _coins_gained(coins_lost)
 	
@@ -106,8 +124,6 @@ func tag_crocodile(player_area):
 	
 	self.turn_normal()
 	self.collect_coin(coins_gained)
-	
-	$TapSound.play()
 
 func _coins_lost(player):
 	var coins = ceil(player.coins * 0.5)
@@ -130,26 +146,33 @@ func _physics_process(delta):
 	if frozen: return
 	
 	clamp_velocity()
-	move_and_slide(velocity)
 	velocity *= drag_scale
+	move_and_slide(velocity)
 	
-	if sign(velocity.x) != sign(heading.x):
-		if velocity.x > 0:
-			$Sprite/Crocodile.flip_h = true
-			$Sprite/Crocodile.position.x = 12
-			$Sprite/Crocodile/Shadow.position.x = -10
-		else:
-			$Sprite/Crocodile.flip_h = false
-			$Sprite/Crocodile.position.x = -12
-			$Sprite/Crocodile/Shadow.position.x = 10
+	_flip_crocodile()
 	
 	heading = velocity.normalized()
+	debug("Velocity: %s" % velocity.length())
 
 func debug(info):
 	$DebugLabel.text += "%s\n" % info
 
 func clamp_velocity():
 	velocity = velocity.clamped(max_velocity)
+	if is_controlled_by_ai():
+		velocity *= ai_speed_scale
+
+func _flip_crocodile():
+	if sign(velocity.x) == sign(heading.x): return
+	
+	if velocity.x > 0:
+		$Sprite/Crocodile.flip_h = true
+		$Sprite/Crocodile.position.x = 12
+		$Sprite/Crocodile/Shadow.position.x = -10
+	else:
+		$Sprite/Crocodile.flip_h = false
+		$Sprite/Crocodile.position.x = -12
+		$Sprite/Crocodile/Shadow.position.x = 10
 
 func set_name_tag(name):
 	$Sprite/NameTag.text = name
