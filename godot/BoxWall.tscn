@@ -26,4 +26,9 @@ scale = Vector2( 15.9375, 0.5 )
 position = Vector2( 480, 33 )
 scale = Vector2( 15, 1 )
 
+[node name="Sprite" parent="NorthWall/Shape"]
 
+self_modulate = Color( 0, 0, 0, 0.25 )
+
+
+[editable path="NorthWall"]
