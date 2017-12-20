@@ -28,8 +28,6 @@ func _player_is_not_allowed():
 
 func _block_player():
 	_player.collision_layer |= collision_mask
-	if _player.controller != "AI":
-		$BlockSound.play()
 
 func _unblock_player():
 	occupied = true
@@ -55,6 +53,12 @@ func _process(delta):
 			_block_player()
 		elif not occupied:
 			_unblock_player()
+
+func _steer_player():
+	var heading_angle = _player.velocity.angle_to_point(Vector2())
+	var new_angle = round(heading_angle / 45) * 45
+	
+	_player.velocity = _player.velocity.rotated(new_angle - heading_angle)
 
 func _turn_green():
 	$ColorChanger.play("TurnGreen")
