@@ -27,7 +27,7 @@ func process():
 
 func _got_away():
 	var on_platform = player.on_platform
-	var not_panicking_anymore = not steering.get_node("Flee").is_panicking()
+	var not_panicking_anymore = not steering.get_node("Flee").is_panicking(Global.crocodile)
 	var crocodile_frozen = Global.crocodile.frozen
 	
 	return on_platform or not_panicking_anymore or crocodile_frozen

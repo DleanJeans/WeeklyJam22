@@ -7,7 +7,6 @@ func _ready():
 
 func activate():
 	.activate()
-	steering.obstacle_avoidance_on()
 	_relocate_target()
 
 func _relocate_target():
@@ -24,5 +23,4 @@ func process():
 
 func terminate():
 	.terminate()
-	steering.obstacle_avoidance_off()
 	steering.seek_off()

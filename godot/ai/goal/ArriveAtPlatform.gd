@@ -31,7 +31,7 @@ func process():
 	
 	if platform == null:
 		state = GOAL_FAILED
-	elif Locator.distance(player, platform) <= 50 and not steering.get_node("Flee").is_panicking():
+	elif Locator.distance(player, platform) <= 50 and not steering.get_node("Flee").is_panicking(Global.crocodile):
 		state = GOAL_COMPLETED
 	elif platform.occupied and not player.on_platform:
 		state = GOAL_FAILED

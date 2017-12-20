@@ -3,7 +3,7 @@ extends Node2D
 export(int) var total_force = 350
 onready var player = get_parent().get_parent()
 
-var priorities = ["Separation", "ObstacleAvoidance", "Arrive", "Flee", "Pursuit", "Seek"]
+var priorities = ["Separation", "Arrive", "Flee", "Pursuit", "Seek"]
 
 func steer():
 	var steering_velocity = Vector2()
@@ -56,12 +56,6 @@ func pursuit_on(target):
 
 func pursuit_off():
 	$Pursuit.off()
-
-func obstacle_avoidance_on():
-	$ObstacleAvoidance.on()
-
-func obstacle_avoidance_off():
-	$ObstacleAvoidance.off()
 
 func separation_on():
 	$Separation.on()

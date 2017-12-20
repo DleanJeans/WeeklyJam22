@@ -21,8 +21,10 @@ func flee(target_position):
 	
 	return velocity - player.velocity
 
-func is_panicking():
-	return $PanicRadius.get_overlapping_bodies().has(get_node("/root/Global").crocodile)
+func is_panicking(target = null):
+	if target == null:
+		target = self.target
+	return $PanicRadius.get_overlapping_bodies().has(target)
 
 func _set_panic_radius(value):
 	panic_radius = value

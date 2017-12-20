@@ -1,17 +1,11 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://ai/steering/Steering.gd" type="Script" id=1]
 [ext_resource path="res://ai/steering/Seek.gd" type="Script" id=2]
 [ext_resource path="res://ai/steering/Arrive.gd" type="Script" id=3]
 [ext_resource path="res://ai/steering/Pursuit.gd" type="Script" id=4]
-[ext_resource path="res://ai/steering/ObstacleAvoidance.gd" type="Script" id=5]
-[ext_resource path="res://ai/steering/Separation.gd" type="Script" id=6]
-[ext_resource path="res://ai/steering/Flee.gd" type="Script" id=7]
-
-[sub_resource type="RectangleShape2D" id=1]
-
-custom_solver_bias = 0.0
-extents = Vector2( 100, 20 )
+[ext_resource path="res://ai/steering/Separation.gd" type="Script" id=5]
+[ext_resource path="res://ai/steering/Flee.gd" type="Script" id=6]
 
 [sub_resource type="CircleShape2D" id=2]
 
@@ -42,43 +36,15 @@ deceleration = 0.5
 [node name="Pursuit" type="Node2D" parent="."]
 
 script = ExtResource( 4 )
-multiplier = 1
+multiplier = 0.5
 look_ahead_time_tweaker = 0.75
-
-[node name="ObstacleAvoidance" type="Node2D" parent="."]
-
-visible = false
-script = ExtResource( 5 )
-_sections_unfolded = [ "Transform", "Z" ]
-multiplier = 1.0
-breaking_weight = 1.0
-min_detection_length = 25
-
-[node name="DetectionBox" type="Area2D" parent="ObstacleAvoidance"]
-
-input_pickable = true
-gravity_vec = Vector2( 0, 1 )
-gravity = 98.0
-linear_damp = 0.1
-angular_damp = 1.0
-collision_layer = 0
-collision_mask = 4
-audio_bus_override = false
-audio_bus_name = "Master"
-_sections_unfolded = [ "Collision", "Transform", "Z" ]
-
-[node name="Shape" type="CollisionShape2D" parent="ObstacleAvoidance/DetectionBox"]
-
-position = Vector2( 25, 0 )
-scale = Vector2( 0.25, 1 )
-shape = SubResource( 1 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="Separation" type="Node2D" parent="."]
 
+editor/display_folded = true
 visible = false
 rotation = 0.000271485
-script = ExtResource( 6 )
+script = ExtResource( 5 )
 multiplier = 1.0
 separation_range = 100
 
@@ -102,7 +68,9 @@ shape = SubResource( 2 )
 
 [node name="Flee" type="Node2D" parent="."]
 
-script = ExtResource( 7 )
+editor/display_folded = true
+visible = false
+script = ExtResource( 6 )
 _sections_unfolded = [ "Transform" ]
 multiplier = 1
 panic_radius = 200

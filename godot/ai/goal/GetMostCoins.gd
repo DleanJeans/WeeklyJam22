@@ -58,7 +58,7 @@ func _should_get_on_platform():
 	return not _all_platforms_occupied()
 
 func _should_flee():
-	var should_be_panicking = steering.get_node("Flee").is_panicking()
+	var should_be_panicking = steering.get_node("Flee").is_panicking(Global.crocodile)
 	var crocodile_not_frozen = not Global.crocodile.frozen
 	
 	return should_be_panicking and crocodile_not_frozen
