@@ -1,0 +1,72 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="GDScript" id=1]
+
+script/source = "extends Node2D
+
+class VectorData:
+	var vector
+	var color
+	var offset
+	
+	func _init(vector, color, offset):
+		self.vector = vector
+		self.color = color
+		self.offset = offset
+
+# GDquest _colors
+var COLORS = {
+	WHITE = Color(1.0, 1.0, 1.0),
+	YELLOW = Color(1.0, .757, .027),
+	GREEN = Color(.282, .757, .255),
+	BLUE = Color(.098, .463, .824),
+	PINK = Color(.914, .118, .388)
+}
+
+export(float) var width = 4
+export(float) var multiplier = 1
+
+var _vectors = []
+
+func clear_vectors():
+	_vectors.clear()
+
+func add_vector(vector, color, offset = Vector2()):
+	_vectors.append(VectorData.new(vector, color, offset))
+
+func _ready():
+	update()
+
+func _process(delta):
+	update()
+
+func _draw():
+	
+	for i in range(0, _vectors.size()):
+		var data = _vectors[i]
+		_draw_vector(data.vector, data.offset, data.color)
+
+func _draw_vector(vector, _offset, _color):
+	if vector == Vector2():
+		return
+	draw_line(_offset * multiplier, vector * multiplier, _color, width)
+
+	var dir = vector.normalized()
+	_draw_triangle_equilateral(vector * multiplier, dir, 10, _color)
+	draw_circle(_offset, 6, _color)
+
+func _draw_triangle_equilateral(center=Vector2(), direction=Vector2(), radius=50, _color=WHITE):
+	var point_1 = center + direction * radius
+	var point_2 = center + direction.rotated(2*PI/3) * radius
+	var point_3 = center + direction.rotated(4*PI/3) * radius
+
+	var points = PoolVector2Array([point_1, point_2, point_3])
+	draw_polygon(points, PoolColorArray([_color]))"
+
+[node name="VectorVisualizer" type="Node2D"]
+
+script = SubResource( 1 )
+width = 4
+multiplier = 1
+
+
