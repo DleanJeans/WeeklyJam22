@@ -184,8 +184,6 @@ _sections_unfolded = [ "Visibility" ]
 
 [node name="AI" parent="." instance=ExtResource( 3 )]
 
-visible = false
-
 [node name="FreezingSound" type="AudioStreamPlayer2D" parent="."]
 
 visible = false
@@ -210,6 +208,7 @@ area_mask = 1
 
 [node name="GroaningSound" type="AudioStreamPlayer2D" parent="."]
 
+visible = false
 stream = ExtResource( 6 )
 volume_db = 10.0
 autoplay = false
@@ -239,6 +238,7 @@ _sections_unfolded = [ "Transform", "Z" ]
 
 [node name="Sprite" type="Sprite" parent="."]
 
+editor/display_folded = true
 show_behind_parent = true
 position = Vector2( 0, -40 )
 scale = Vector2( 0.4, 0.8 )
@@ -316,22 +316,21 @@ _sections_unfolded = [ "Offset", "Transform" ]
 
 [node name="Shape" type="CollisionShape2D" parent="."]
 
-visible = false
 position = Vector2( 0, -5 )
 shape = SubResource( 3 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="CrocodileShape" type="CollisionShape2D" parent="."]
 
-visible = false
 position = Vector2( 0.2, -0.199993 )
 rotation = 1.5708
 scale = Vector2( 0.5, 0.492504 )
 shape = SubResource( 4 )
+disabled = true
 
 [node name="TouchArea" type="Area2D" parent="."]
 
-visible = false
+editor/display_folded = true
 position = Vector2( 0, -40 )
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
@@ -455,8 +454,6 @@ mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
 text = "[Debug:Player]
-On Platform: False
-Velocity: 0
 "
 percent_visible = 1.0
 lines_skipped = 0
@@ -465,7 +462,6 @@ max_lines_visible = -1
 [node name="MovementVisualizer" parent="." instance=ExtResource( 11 )]
 
 visible = false
-multiplier = 0.2
 
 [connection signal="turning_crocodile" from="." to="Sprite/Crocodile" method="show"]
 

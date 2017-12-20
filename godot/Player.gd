@@ -95,13 +95,11 @@ func moving_vector(direction, multiplier = 1):
 func turn_normal():
 	emit_signal("turning_normal")
 	self.max_velocity = normal_speed
-	$TouchArea/Shape.scale = Vector2(1, 1)
 
 func turn_crocodile():
 	emit_signal("turning_crocodile")
 	get_node("/root/Global").crocodile = self
 	self.max_velocity = crocodile_speed
-	$TouchArea/Shape.scale = Vector2(2, 2)
 
 func is_crocodile():
 	return self == get_node("/root/Global").crocodile
@@ -141,7 +139,6 @@ func _not_taggable(player):
 
 func _physics_process(delta):
 	$DebugLabel.text = "[Debug:%s]\n" % get_name()
-	debug("On Platform: %s" % on_platform)
 	
 	if frozen: return
 	
@@ -152,7 +149,21 @@ func _physics_process(delta):
 	_flip_crocodile()
 	
 	heading = velocity.normalized()
-	debug("Velocity: %s" % velocity.length())
+	
+	_steer_ai_crocodile_if_blocked()
+
+func _steer_ai_crocodile_if_blocked():
+	if get_slide_count() > 0 and is_crocodile() and is_controlled_by_ai():
+		var collision = get_slide_collision(0)
+		var normal = collision.normal
+		var tangent = velocity.tangent()
+		var velocity_dot = heading.dot(normal)
+		var tangent_dot = tangent.normalized().dot(normal)
+		
+		if abs(velocity_dot) > 0.25 and abs(velocity_dot) < 0.75 and tangent_dot < 0:
+			tangent *= -1
+		velocity = tangent
+		move_and_slide(velocity)
 
 func debug(info):
 	$DebugLabel.text += "%s\n" % info
