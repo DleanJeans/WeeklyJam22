@@ -11,6 +11,8 @@ var GAMEPAD_DEVICE_MAP = {
 const COINS_PERCENT_TRANSFERRED_ON_TAG = 50
 const BONUS_COINS_ON_TAG = 10
 
+var crocodile setget _set_crocodile, _get_crocodile
+
 export(Color) var color = Color("#ffffff") setget _set_color
 var max_velocity = 300
 var drag_scale = 0.8
@@ -41,7 +43,24 @@ func reset():
 	$AI/WinGame.clear_subgoals()
 	$FreezeTimer.stop()
 	$WinnerLabel.hide()
-	frozen = true
+	$ScreamSound.choose_random_sound()
+
+func is_panicking():
+	var crocodile_in_panic_radius = $PanicRadius.get_overlapping_bodies().has(self.crocodile)
+	var crocodile_not_frozen = not self.crocodile.frozen
+	return not on_platform and crocodile_in_panic_radius and crocodile_not_frozen
+
+func is_close_to_at_least_3_others():
+	if frozen or not is_crocodile(): return
+	
+	var bodies = $PanicRadius.get_overlapping_bodies()
+	var players_count = 0
+	
+	for b in bodies:
+		if get_node("/root/Global").Players.has(b) and b != self:
+			players_count += 1
+	
+	return players_count >= 3
 
 func show_winner_label():
 	$WinnerLabel.show()
@@ -98,14 +117,13 @@ func turn_normal():
 
 func turn_crocodile():
 	emit_signal("turning_crocodile")
-	get_node("/root/Global").crocodile = self
+	self.crocodile = self
 	self.max_velocity = crocodile_speed
 
 func is_crocodile():
-	return self == get_node("/root/Global").crocodile
+	return self == self.crocodile
 
-func tag_crocodile(player_area):
-	var player = player_area.get_parent()
+func tag_crocodile(player):
 	if _not_taggable(player):
 		return
 	
@@ -146,7 +164,6 @@ func _physics_process(delta):
 	velocity *= drag_scale
 	move_and_slide(velocity)
 	
-	_flip_crocodile()
 	
 	heading = velocity.normalized()
 	
@@ -173,18 +190,6 @@ func clamp_velocity():
 	if is_controlled_by_ai():
 		velocity *= ai_speed_scale
 
-func _flip_crocodile():
-	if sign(velocity.x) == sign(heading.x): return
-	
-	if velocity.x > 0:
-		$Sprite/Crocodile.flip_h = true
-		$Sprite/Crocodile.position.x = 12
-		$Sprite/Crocodile/Shadow.position.x = -10
-	else:
-		$Sprite/Crocodile.flip_h = false
-		$Sprite/Crocodile.position.x = -12
-		$Sprite/Crocodile/Shadow.position.x = 10
-
 func set_name_tag(name):
 	$Sprite/NameTag.text = name
 
@@ -208,3 +213,10 @@ func _set_color(value):
 		$Sprite/CoinLabel.self_modulate = color
 		$Sprite/NameTag.self_modulate = color
 		$WinnerLabel.self_modulate = color
+		$Panic.self_modulate = color
+
+func _set_crocodile(value):
+	get_node("/root/Global").crocodile = value
+
+func _get_crocodile():
+	return get_node("/root/Global").crocodile

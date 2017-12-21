@@ -114,16 +114,6 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[connection signal="countdown_started" from="." to="PlayerManager" method="freeze_players"]
-
-[connection signal="countdown_started" from="." to="PlayerManager" method="choose_crocodile_randomly"]
-
-[connection signal="countdown_started" from="." to="PlayerManager" method="reset_positions"]
-
-[connection signal="countdown_started" from="." to="PlayerManager" method="reset"]
-
-[connection signal="countdown_started" from="." to="ControllerAssigner" method="reset"]
-
 [connection signal="countdown_started" from="." to="GameTimer" method="start_counting_down"]
 
 [connection signal="countdown_started" from="." to="GameTimer" method="resume"]
@@ -132,29 +122,41 @@ max_lines_visible = -1
 
 [connection signal="countdown_started" from="." to="." method="_clear_coins"]
 
-[connection signal="game_loaded" from="." to="PlayerManager" method="choose_crocodile_randomly"]
+[connection signal="countdown_started" from="." to="PlayerManager" method="reset_positions"]
+
+[connection signal="countdown_started" from="." to="PlayerManager" method="choose_crocodile_randomly"]
+
+[connection signal="countdown_started" from="." to="PlayerManager" method="freeze_players"]
+
+[connection signal="countdown_started" from="." to="PlayerManager" method="reset"]
+
+[connection signal="countdown_started" from="." to="ControllerAssigner" method="reset"]
 
 [connection signal="game_loaded" from="." to="PlayerManager" method="record_positions"]
 
-[connection signal="game_over" from="." to="PlayerManager" method="reset_controllers"]
+[connection signal="game_loaded" from="." to="PlayerManager" method="choose_crocodile_randomly"]
+
+[connection signal="game_loaded" from="." to="PlayerManager" method="reset"]
 
 [connection signal="game_over" from="." to="." method="_show_winner"]
 
-[connection signal="game_paused" from="." to="PlayerManager" method="freeze_players"]
+[connection signal="game_over" from="." to="PlayerManager" method="reset_controllers"]
 
 [connection signal="game_paused" from="." to="GameTimer" method="pause"]
 
 [connection signal="game_paused" from="." to="." method="_stop_coin_spawners"]
 
-[connection signal="game_resumed" from="." to="PlayerManager" method="unfreeze_players"]
+[connection signal="game_paused" from="." to="PlayerManager" method="freeze_players"]
 
 [connection signal="game_resumed" from="." to="GameTimer" method="resume"]
 
 [connection signal="game_resumed" from="." to="." method="_resume_coin_spawners"]
 
-[connection signal="game_started" from="." to="PlayerManager" method="unfreeze_players"]
+[connection signal="game_resumed" from="." to="PlayerManager" method="unfreeze_players"]
 
 [connection signal="game_started" from="." to="." method="_resume_coin_spawners"]
+
+[connection signal="game_started" from="." to="PlayerManager" method="unfreeze_players"]
 
 [connection signal="hidden" from="MainMenu" to="GameTimer" method="show"]
 
