@@ -20,22 +20,24 @@ func process():
 	if _should_flee():
 		var subgoal_to_add
 		
-		if _all_platforms_occupied() or _crocodile_blocks_way_to_platform():
+		if _all_platforms_occupied() or _crocodile_blocks_way_to_platform() or player.out_of_coins():
 			subgoal_to_add = FleeCrocodile
 		else:
 			subgoal_to_add = ArriveAtPlatform
 		
-		if _has_subgoals() and not _first_subgoal() is subgoal_to_add:
+		if _goal_not_active_already(subgoal_to_add):
 			clear_subgoals()
 			add_subgoal(subgoal_to_add.new())
 	
 	if _has_subgoals(): return
 	
-	
 	if _should_go_after_coins():
 		add_subgoal(GoGetCoin.new())
 	elif _should_get_on_platform():
 		add_subgoal(ArriveAtPlatform.new())
+
+func _goal_not_active_already(goal):
+	return _has_subgoals() and not _first_subgoal() is goal
 
 func _all_platforms_occupied():
 	for plat in Global.Platforms:
@@ -64,6 +66,8 @@ func _should_flee():
 	return should_be_panicking and crocodile_not_frozen
 
 func _should_go_after_coins():
+	if player.out_of_coins():
+		return true
 	for coin in Global.Coins:
 		return not Locator._filter_coin(player, coin)
 

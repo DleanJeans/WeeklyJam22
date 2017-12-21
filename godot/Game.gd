@@ -48,26 +48,8 @@ func _show_winner():
 	$PlayerManager.freeze_players()
 	Global.crocodile.get_node("FreezeTimer").stop()
 	showing_winner = true
-	winners = _players_with_highest_score()
+	winners = $PlayerManager.players_with_highest_score()
 	$ControlHint.show()
-
-func _players_with_highest_score():
-	var winner
-	var winner2
-	var highest_score = -INF
-	
-	for p in Global.Players:
-		if p.is_crocodile(): continue
-		if p.coins > highest_score:
-			winner = p
-			winner2 = null
-			highest_score = p.coins
-		elif p.coins == highest_score:
-			winner2 = p
-	
-	if winner2 == null:
-		return [winner]
-	else: return [winner, winner2]
 
 func _clear_coins():
 	for coin in Global.Coins:
@@ -78,6 +60,3 @@ func _process(delta):
 		for p in winners:
 			p.show_winner_label()
 			p.jump()
-
-func reset():
-	pass # replace with function body

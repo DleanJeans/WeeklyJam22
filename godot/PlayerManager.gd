@@ -50,3 +50,18 @@ func unfreeze_players():
 func reset():
 	for p in Global.Players:
 		p.reset()
+
+func players_with_highest_score():
+	var winners = []
+	var highest_score = 1
+	
+	for player in Global.Players:
+		if player.is_crocodile(): continue
+		
+		if player.coins > highest_score:
+			winners = [player]
+			highest_score = player.coins
+		elif player.coins == highest_score:
+			winners.append(player)
+	
+	return winners

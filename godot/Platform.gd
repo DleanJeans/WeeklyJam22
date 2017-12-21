@@ -4,8 +4,16 @@ extends StaticBody2D
 # a lil bit larget than $Shape itself
 # because only then _on_player_enter() can be called
 
+var coins_per_second_rates = 10
+
+var to_screen_center
 var occupied
 var _player
+var _occupier
+
+func _ready():
+	var screen_center = Vector2(ProjectSettings.get_setting("display/window/size/width"), ProjectSettings.get_setting("display/window/size/height")) / 2
+	to_screen_center = (screen_center - position).normalized()
 
 func reset():
 	_turn_green()
@@ -31,16 +39,19 @@ func _block_player():
 
 func _unblock_player():
 	occupied = true
+	_occupier = _player
 	$AllowSound.play()
 	_player.collision_layer = 1
 	_player.on_platform = true
 	_turn_red()
+	$FeeTimer.start()
 
 func _on_player_exited(player):
 	if occupied and player.on_platform:
 		occupied = false
 		player.on_platform = false
 		_turn_green()
+		$FeeTimer.stop()
 
 func _turn_red():
 	$ColorChanger.play("TurnRed")
@@ -53,6 +64,12 @@ func _process(delta):
 			_block_player()
 		elif not occupied:
 			_unblock_player()
+		elif _player.coins <= 0:
+			_push_player_out()
+
+func _push_player_out():
+	$FeeTimer.stop()
+	_player.move_and_slide(to_screen_center * 500)
 
 func _steer_player():
 	var heading_angle = _player.velocity.angle_to_point(Vector2())
@@ -62,3 +79,6 @@ func _steer_player():
 
 func _turn_green():
 	$ColorChanger.play("TurnGreen")
+
+func _on_FeeTimer_timeout():
+	_occupier.take_away_coins(coins_per_second_rates * $FeeTimer.wait_time)

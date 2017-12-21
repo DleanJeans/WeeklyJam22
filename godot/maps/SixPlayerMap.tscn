@@ -16,35 +16,33 @@
 position = Vector2( 480, 300 )
 scale = Vector2( 6, 2 )
 _sections_unfolded = [ "Transform" ]
-spawn_interval = 4.0
+spawn_interval = 2.0
 
 [node name="CoinSpawner2" parent="CoinSpawners" instance=ExtResource( 2 )]
 
 position = Vector2( 480, 436 )
 scale = Vector2( 4, 2.21875 )
 _sections_unfolded = [ "Transform", "Z" ]
-spawn_interval = 3.5
 
 [node name="CoinSpawner4" parent="CoinSpawners" instance=ExtResource( 2 )]
 
 position = Vector2( 860, 300 )
 scale = Vector2( 2, 2 )
 _sections_unfolded = [ "Transform", "Z" ]
-spawn_interval = 5.0
+spawn_interval = 4.0
 
 [node name="CoinSpawner5" parent="CoinSpawners" instance=ExtResource( 2 )]
 
 position = Vector2( 100, 300 )
 scale = Vector2( 2, 2 )
 _sections_unfolded = [ "Transform", "Z" ]
-spawn_interval = 5.0
+spawn_interval = 4.0
 
 [node name="CoinSpawner3" parent="CoinSpawners" instance=ExtResource( 2 )]
 
 position = Vector2( 480, 161.5 )
 scale = Vector2( 4, 2.14063 )
 _sections_unfolded = [ "Transform", "Z" ]
-spawn_interval = 3.5
 
 [node name="Platforms" type="Node2D" parent="."]
 
@@ -93,31 +91,31 @@ _sections_unfolded = [ "Cell", "Collision" ]
 
 [node name="Player1" parent="Objects" instance=ExtResource( 4 )]
 
-position = Vector2( 280, 125 )
+position = Vector2( 140, 220 )
 color = Color( 0.953125, 0.0670166, 0.399307, 1 )
 
 [node name="Player2" parent="Objects" instance=ExtResource( 4 )]
 
-position = Vector2( 230, 295 )
+position = Vector2( 205, 365 )
 color = Color( 0.441249, 0.0397797, 0.925781, 1 )
 
 [node name="Player3" parent="Objects" instance=ExtResource( 4 )]
 
-position = Vector2( 285, 490 )
+position = Vector2( 305, 510 )
 color = Color( 0.878906, 0.767863, 0.168228, 1 )
 
 [node name="Player4" parent="Objects" instance=ExtResource( 4 )]
 
-position = Vector2( 680, 485 )
+position = Vector2( 660, 505 )
 color = Color( 0.164063, 0.164063, 0.164063, 1 )
 
 [node name="Player5" parent="Objects" instance=ExtResource( 4 )]
 
-position = Vector2( 735, 300 )
+position = Vector2( 735, 360 )
 color = Color( 0.14801, 0.757813, 0.514844, 1 )
 
 [node name="Player6" parent="Objects" instance=ExtResource( 4 )]
 
-position = Vector2( 680, 130 )
+position = Vector2( 815, 220 )
 
 

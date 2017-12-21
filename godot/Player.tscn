@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=40 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://InputAction.gd" type="Script" id=2]
@@ -6,16 +6,18 @@
 [ext_resource path="res://Sprite.png" type="Texture" id=4]
 [ext_resource path="res://assets/PanicKid.png" type="Texture" id=5]
 [ext_resource path="res://assets/Tongue.png" type="Texture" id=6]
-[ext_resource path="res://BebasNeue.otf" type="DynamicFontData" id=7]
-[ext_resource path="res://assets/Crocodile.png" type="Texture" id=8]
-[ext_resource path="res://assets/Freezing.ogg" type="AudioStream" id=9]
-[ext_resource path="res://assets/Tap.ogg" type="AudioStream" id=10]
-[ext_resource path="res://assets/Groan.ogg" type="AudioStream" id=11]
-[ext_resource path="res://assets/CartoonJump.ogg" type="AudioStream" id=12]
-[ext_resource path="res://assets/screams/FunnyScream.ogg" type="AudioStream" id=13]
-[ext_resource path="res://MovementVisualizer.tscn" type="PackedScene" id=14]
+[ext_resource path="res://assets/Crown.png" type="Texture" id=7]
+[ext_resource path="res://BebasNeue.otf" type="DynamicFontData" id=8]
+[ext_resource path="res://assets/Crocodile.png" type="Texture" id=9]
+[ext_resource path="res://assets/Freezing.ogg" type="AudioStream" id=10]
+[ext_resource path="res://assets/Tap.ogg" type="AudioStream" id=11]
+[ext_resource path="res://assets/Groan.ogg" type="AudioStream" id=12]
+[ext_resource path="res://assets/CartoonJump.ogg" type="AudioStream" id=13]
+[ext_resource path="res://assets/screams/FunnyScream.ogg" type="AudioStream" id=14]
+[ext_resource path="res://assets/Pop.ogg" type="AudioStream" id=15]
+[ext_resource path="res://MovementVisualizer.tscn" type="PackedScene" id=16]
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=21]
 
 length = 0.8
 loop = false
@@ -82,6 +84,64 @@ tracks/2/keys = {
 "values": [ Vector2( 0.6, 0.2 ), Vector2( 0.7, 0.2 ), Vector2( 0.6, 0.2 ), Vector2( 0.4, 0.1 ), Vector2( 0.6, 0.2 ), Vector2( 0.7, 0.2 ), Vector2( 0.6, 0.2 ) ]
 }
 
+[sub_resource type="Animation" id=22]
+
+resource_name = "PopOut"
+length = 0.3
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite/Crown:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1.25, 0.625 ), Vector2( 1.875, 0.9375 ), Vector2( 1e-05, 1e-05 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite/Crown:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[sub_resource type="Animation" id=23]
+
+resource_name = "PopUp"
+length = 0.3
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite/Crown:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1e-05, 1e-05 ), Vector2( 1.875, 0.9375 ), Vector2( 1.25, 0.625 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite/Crown:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
 [sub_resource type="GDScript" id=13]
 
 script/source = "extends Node2D
@@ -112,7 +172,6 @@ func _flip_crocodile():
 		else:
 			$AnimationPlayer.play(\"PanicLeft\")
 	else:
-		ScreamSound.stop()
 		$AnimationPlayer.play(\"Normal\")
 		_reset_Sprite_color()
 
@@ -434,7 +493,7 @@ tracks/5/keys = {
 size = 40
 use_mipmaps = false
 use_filter = false
-font_data = ExtResource( 7 )
+font_data = ExtResource( 8 )
 _sections_unfolded = [ "Font", "Settings" ]
 
 [sub_resource type="DynamicFont" id=2]
@@ -442,7 +501,7 @@ _sections_unfolded = [ "Font", "Settings" ]
 size = 40
 use_mipmaps = false
 use_filter = false
-font_data = ExtResource( 7 )
+font_data = ExtResource( 8 )
 _sections_unfolded = [ "Font", "Settings" ]
 
 [sub_resource type="RectangleShape2D" id=3]
@@ -472,7 +531,7 @@ script/source = "extends Timer
 
 onready var player = get_parent()
 onready var label = player.get_node(\"TimerLabel\")
-onready var jump_duration = player.get_node(\"AnimationPlayer\").get_animation(\"Jump\").get_length()
+onready var jump_duration = player.get_node(\"JumpAnimation\").get_animation(\"Jump\").get_length()
 
 var jumped = false
 
@@ -506,27 +565,29 @@ func choose_random_sound():
 
 func play_crowd_screaming():
 	if playing: return
-	print(\"Crowd Screaming\")
 	stream = crowd_scream
 	play()
 
 func play_random_individual():
 	if playing: return
 	stream = individual_scream
-	print(\"Individual Screaming\")
 	play()
 
 func stop():
 	if playing:
-		print(\"Screaming Stopped\")
 		.stop()"
+
+[sub_resource type="AudioStreamRandomPitch" id=24]
+
+audio_stream = ExtResource( 15 )
+random_pitch = 1.1
 
 [sub_resource type="DynamicFont" id=9]
 
 size = 40
 use_mipmaps = false
 use_filter = false
-font_data = ExtResource( 7 )
+font_data = ExtResource( 8 )
 _sections_unfolded = [ "Font", "Settings" ]
 
 [sub_resource type="DynamicFont" id=10]
@@ -534,7 +595,7 @@ _sections_unfolded = [ "Font", "Settings" ]
 size = 30
 use_mipmaps = false
 use_filter = false
-font_data = ExtResource( 7 )
+font_data = ExtResource( 8 )
 _sections_unfolded = [ "Font", "Settings" ]
 
 [sub_resource type="DynamicFont" id=11]
@@ -542,7 +603,7 @@ _sections_unfolded = [ "Font", "Settings" ]
 size = 30
 use_mipmaps = false
 use_filter = false
-font_data = ExtResource( 7 )
+font_data = ExtResource( 8 )
 
 [sub_resource type="Theme" id=12]
 
@@ -560,13 +621,35 @@ script = ExtResource( 1 )
 _sections_unfolded = [ "Collision", "collision" ]
 color = Color( 1, 1, 1, 1 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="PointsAnimation" type="AnimationPlayer" parent="."]
 
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 root_node = NodePath("..")
-anims/CoinChanged = SubResource( 7 )
+anims/CoinChanged = SubResource( 21 )
+playback/active = true
+playback/speed = 1.25
+blend_times = [  ]
+autoplay = "Grounded"
+
+[node name="JumpAnimation" type="AnimationPlayer" parent="."]
+
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+root_node = NodePath("..")
 anims/Jump = SubResource( 8 )
+playback/active = true
+playback/speed = 1.25
+blend_times = [  ]
+autoplay = "Grounded"
+
+[node name="CrownAnimation" type="AnimationPlayer" parent="."]
+
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+root_node = NodePath("..")
+anims/PopOut = SubResource( 22 )
+anims/PopUp = SubResource( 23 )
 playback/active = true
 playback/speed = 1.25
 blend_times = [  ]
@@ -585,6 +668,7 @@ visible = false
 
 [node name="SpriteFlipper" type="Node2D" parent="."]
 
+editor/display_folded = true
 visible = false
 script = SubResource( 13 )
 
@@ -633,6 +717,13 @@ position = Vector2( 0, -40 )
 scale = Vector2( 0.4, 0.8 )
 texture = ExtResource( 4 )
 _sections_unfolded = [ "Animation", "Transform" ]
+
+[node name="Crown" type="Sprite" parent="Sprite"]
+
+visible = false
+position = Vector2( 0, -68.75 )
+scale = Vector2( 1e-05, 1e-05 )
+texture = ExtResource( 7 )
 
 [node name="CoinLabel" type="Label" parent="Sprite"]
 
@@ -689,7 +780,7 @@ editor/display_folded = true
 visible = false
 position = Vector2( -12.5, -6.25 )
 scale = Vector2( 1.25, 0.61563 )
-texture = ExtResource( 8 )
+texture = ExtResource( 9 )
 _sections_unfolded = [ "Animation", "Offset", "Region", "Transform" ]
 __meta__ = {
 "_edit_group_": true
@@ -769,7 +860,7 @@ script = SubResource( 6 )
 [node name="FreezingSound" type="AudioStreamPlayer2D" parent="."]
 
 visible = false
-stream = ExtResource( 9 )
+stream = ExtResource( 10 )
 volume_db = 0.0
 autoplay = false
 max_distance = 2000.0
@@ -780,7 +871,7 @@ area_mask = 1
 [node name="TapSound" type="AudioStreamPlayer2D" parent="."]
 
 visible = false
-stream = ExtResource( 10 )
+stream = ExtResource( 11 )
 volume_db = 0.0
 autoplay = false
 max_distance = 2000.0
@@ -791,7 +882,7 @@ area_mask = 1
 [node name="GroaningSound" type="AudioStreamPlayer2D" parent="."]
 
 visible = false
-stream = ExtResource( 11 )
+stream = ExtResource( 12 )
 volume_db = 10.0
 autoplay = false
 max_distance = 2000.0
@@ -802,7 +893,7 @@ area_mask = 1
 [node name="JumpSound" type="AudioStreamPlayer2D" parent="."]
 
 visible = false
-stream = ExtResource( 12 )
+stream = ExtResource( 13 )
 volume_db = 0.0
 autoplay = false
 max_distance = 2000.0
@@ -812,7 +903,7 @@ area_mask = 1
 
 [node name="ScreamSound" type="AudioStreamPlayer2D" parent="."]
 
-stream = ExtResource( 13 )
+stream = ExtResource( 14 )
 volume_db = 0.0
 autoplay = false
 max_distance = 2000.0
@@ -820,6 +911,16 @@ attenuation = 1.0
 bus = "Master"
 area_mask = 1
 script = SubResource( 20 )
+
+[node name="PopSound" type="AudioStreamPlayer2D" parent="."]
+
+stream = SubResource( 24 )
+volume_db = 0.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Master"
+area_mask = 1
 
 [node name="TimerLabel" type="Label" parent="."]
 
@@ -912,19 +1013,19 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="MovementVisualizer" parent="." instance=ExtResource( 14 )]
+[node name="MovementVisualizer" parent="." instance=ExtResource( 16 )]
 
 visible = false
 
-[connection signal="turning_crocodile" from="." to="Sprite/Crocodile" method="show"]
-
 [connection signal="turning_crocodile" from="." to="CrocodileShape" method="set_disabled" binds= [ false ]]
+
+[connection signal="turning_crocodile" from="." to="Sprite/Crocodile" method="show"]
 
 [connection signal="turning_crocodile" from="." to="ScreamSound" method="stop"]
 
-[connection signal="turning_normal" from="." to="Sprite/Crocodile" method="hide"]
-
 [connection signal="turning_normal" from="." to="CrocodileShape" method="set_disabled" binds= [ true ]]
+
+[connection signal="turning_normal" from="." to="Sprite/Crocodile" method="hide"]
 
 [connection signal="body_entered" from="TouchArea" to="." method="tag_crocodile"]
 

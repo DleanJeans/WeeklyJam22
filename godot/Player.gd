@@ -45,6 +45,23 @@ func reset():
 	$WinnerLabel.hide()
 	$ScreamSound.choose_random_sound()
 
+func show_crown():
+	if $Sprite/Crown.visible or $CrownAnimation.is_playing(): return
+	
+	$CrownAnimation.play("PopUp")
+	$PopSound.play()
+	print("%s: Crown Popping Up" % get_name())
+
+func hide_crown():
+	if not $Sprite/Crown.visible or $CrownAnimation.is_playing(): return
+	
+	$CrownAnimation.play("PopOut")
+	$PopSound.play()
+	print("%s: Crown Popping Out" % get_name())
+
+func out_of_coins():
+	return coins <= 0
+
 func is_panicking():
 	var crocodile_in_panic_radius = $PanicRadius.get_overlapping_bodies().has(self.crocodile)
 	var crocodile_not_frozen = not self.crocodile.frozen
@@ -66,8 +83,8 @@ func show_winner_label():
 	$WinnerLabel.show()
 
 func jump():
-	if not $AnimationPlayer.is_playing():
-		$AnimationPlayer.play("Jump")
+	if not $JumpAnimation.is_playing():
+		$JumpAnimation.play("Jump")
 		$JumpSound.play()
 
 func break_unfrozen():
@@ -85,13 +102,13 @@ func groan():
 	if not $GroaningSound.playing:
 		$GroaningSound.play()
 
-func collect_coin(amount = 10):
+func collect_coins(amount = 10):
 	self.coins += amount
 	$CoinChangeLabel.text = "+%s" % amount
 	$CoinChangeLabel.modulate = get_node("/root/Global").CASHY_GREEN
-	$AnimationPlayer.play("CoinChanged")
+	$PointsAnimation.play("CoinChanged")
 
-func take_away_coin(amount):
+func take_away_coins(amount):
 	if amount > coins:
 		amount = coins
 	
@@ -100,7 +117,7 @@ func take_away_coin(amount):
 	if amount > 0:
 		$CoinChangeLabel.text = "%s" % amount
 		$CoinChangeLabel.modulate = get_node("/root/Global").RED
-		$AnimationPlayer.play("CoinChanged")
+		$PointsAnimation.play("CoinChanged")
 
 func is_controlled_by_ai():
 	return controller == "AI"
@@ -136,10 +153,10 @@ func _transfer_coins(player):
 	
 	player.turn_crocodile()
 	player.get_node("FreezeTimer").start()
-	player.take_away_coin(coins_lost)
+	player.take_away_coins(coins_lost)
 	
 	self.turn_normal()
-	self.collect_coin(coins_gained)
+	self.collect_coins(coins_gained)
 
 func _coins_lost(player):
 	var coins = ceil(player.coins * 0.5)

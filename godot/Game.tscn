@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
 [ext_resource path="res://maps/SixPlayerMap.tscn" type="PackedScene" id=2]
@@ -8,6 +8,24 @@
 [ext_resource path="res://PlayerManager.gd" type="Script" id=6]
 [ext_resource path="res://assets/OurMusicBox _CanCan.ogg" type="AudioStream" id=7]
 [ext_resource path="res://BebasNeue.tres" type="DynamicFont" id=8]
+
+[sub_resource type="GDScript" id=2]
+
+script/source = "extends Node2D
+
+func _process(delta):
+	show_crowns()
+
+func show_crowns():
+	var to_be_winners = $\"../PlayerManager\".players_with_highest_score()
+	var other_players = Global.Players
+	
+	for player in to_be_winners:
+		other_players.erase(player)
+		player.show_crown()
+	
+	for player in other_players:
+		player.hide_crown()"
 
 [sub_resource type="GDScript" id=1]
 
@@ -69,6 +87,17 @@ visible = false
 
 [node name="ControllerAssigner" parent="." instance=ExtResource( 5 )]
 
+[node name="CrownManager" type="Node2D" parent="."]
+
+script = SubResource( 2 )
+
+[node name="Tween" type="Tween" parent="CrownManager"]
+
+playback_process_mode = 1
+playback/active = false
+playback/repeat = false
+playback/speed = 1.0
+
 [node name="PlayerManager" type="Node2D" parent="."]
 
 visible = false
@@ -114,13 +143,15 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
+[connection signal="countdown_started" from="." to="." method="_reset_platforms"]
+
+[connection signal="countdown_started" from="." to="." method="_clear_coins"]
+
 [connection signal="countdown_started" from="." to="GameTimer" method="start_counting_down"]
 
 [connection signal="countdown_started" from="." to="GameTimer" method="resume"]
 
-[connection signal="countdown_started" from="." to="." method="_reset_platforms"]
-
-[connection signal="countdown_started" from="." to="." method="_clear_coins"]
+[connection signal="countdown_started" from="." to="ControllerAssigner" method="reset"]
 
 [connection signal="countdown_started" from="." to="PlayerManager" method="reset_positions"]
 
@@ -130,7 +161,7 @@ max_lines_visible = -1
 
 [connection signal="countdown_started" from="." to="PlayerManager" method="reset"]
 
-[connection signal="countdown_started" from="." to="ControllerAssigner" method="reset"]
+[connection signal="game_loaded" from="." to="PlayerManager" method="reset_controllers"]
 
 [connection signal="game_loaded" from="." to="PlayerManager" method="record_positions"]
 
@@ -140,17 +171,15 @@ max_lines_visible = -1
 
 [connection signal="game_over" from="." to="." method="_show_winner"]
 
-[connection signal="game_over" from="." to="PlayerManager" method="reset_controllers"]
+[connection signal="game_paused" from="." to="." method="_stop_coin_spawners"]
 
 [connection signal="game_paused" from="." to="GameTimer" method="pause"]
 
-[connection signal="game_paused" from="." to="." method="_stop_coin_spawners"]
-
 [connection signal="game_paused" from="." to="PlayerManager" method="freeze_players"]
 
-[connection signal="game_resumed" from="." to="GameTimer" method="resume"]
-
 [connection signal="game_resumed" from="." to="." method="_resume_coin_spawners"]
+
+[connection signal="game_resumed" from="." to="GameTimer" method="resume"]
 
 [connection signal="game_resumed" from="." to="PlayerManager" method="unfreeze_players"]
 
@@ -158,15 +187,15 @@ max_lines_visible = -1
 
 [connection signal="game_started" from="." to="PlayerManager" method="unfreeze_players"]
 
-[connection signal="hidden" from="MainMenu" to="GameTimer" method="show"]
-
 [connection signal="hidden" from="MainMenu" to="." method="try_resume"]
 
-[connection signal="shown" from="MainMenu" to="ControlHint" method="hide"]
+[connection signal="hidden" from="MainMenu" to="GameTimer" method="show"]
+
+[connection signal="shown" from="MainMenu" to="." method="try_pause"]
 
 [connection signal="shown" from="MainMenu" to="GameTimer" method="hide"]
 
-[connection signal="shown" from="MainMenu" to="." method="try_pause"]
+[connection signal="shown" from="MainMenu" to="ControlHint" method="hide"]
 
 [connection signal="pressed" from="MainMenu/PlayButton" to="." method="start_counting_down"]
 

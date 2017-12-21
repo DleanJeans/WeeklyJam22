@@ -37,26 +37,28 @@ _sections_unfolded = [ "Transform" ]
 position = Vector2( 480, 425 )
 scale = Vector2( 2, 2 )
 _sections_unfolded = [ "Transform" ]
+spawn_interval = 2.0
 
 [node name="CoinSpawner4" parent="CoinSpawners" instance=ExtResource( 3 )]
 
 position = Vector2( 480, 240 )
 scale = Vector2( 2, 2 )
 _sections_unfolded = [ "Transform" ]
+spawn_interval = 2.5
 
 [node name="CoinSpawner2" parent="CoinSpawners" instance=ExtResource( 3 )]
 
 position = Vector2( 780, 235 )
 scale = Vector2( 4, 4 )
 _sections_unfolded = [ "Transform" ]
-spawn_interval = 5.0
+spawn_interval = 4.0
 
 [node name="CoinSpawner3" parent="CoinSpawners" instance=ExtResource( 3 )]
 
 position = Vector2( 190, 240 )
 scale = Vector2( 4, 4 )
 _sections_unfolded = [ "Transform" ]
-spawn_interval = 5.0
+spawn_interval = 4.0
 
 [node name="Objects" type="TileMap" parent="."]
 

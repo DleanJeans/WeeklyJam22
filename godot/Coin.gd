@@ -10,7 +10,7 @@ func _on_collected(body):
 	
 	collected = true
 	emit_signal("collected")
-	body.collect_coin()
+	body.collect_coins()
 
 func _is_not_player(body):
 	return not body is load("res://Player.gd")
