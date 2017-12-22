@@ -29,7 +29,7 @@ func _relocate_platform():
 func process():
 	.process()
 	
-	if platform == null:
+	if platform == null or player.out_of_coins():
 		state = GOAL_FAILED
 	elif Locator.distance(player, platform) <= 50 and not steering.get_node("Flee").is_panicking(Global.crocodile):
 		state = GOAL_COMPLETED

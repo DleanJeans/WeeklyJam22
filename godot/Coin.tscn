@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Coin.gd" type="Script" id=1]
 [ext_resource path="res://Sprite.png" type="Texture" id=2]
@@ -78,6 +78,11 @@ tracks/2/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 1e-05, 1e-05 ) ]
 }
 
+[sub_resource type="CircleShape2D" id=4]
+
+custom_solver_bias = 0.0
+radius = 50.0
+
 [node name="Coin" type="Area2D" groups=[
 "Coins",
 ]]
@@ -91,6 +96,7 @@ audio_bus_override = false
 audio_bus_name = "Master"
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
+magnet_speed = 100
 
 [node name="Sprite" type="Sprite" parent="."]
 
@@ -149,6 +155,20 @@ attenuation = 1.0
 bus = "Master"
 area_mask = 1
 _sections_unfolded = [ "Transform" ]
+
+[node name="MagnetRadius" type="Area2D" parent="."]
+
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+
+[node name="Shape" type="CollisionShape2D" parent="MagnetRadius"]
+
+shape = SubResource( 4 )
 
 [connection signal="body_entered" from="." to="." method="_on_collected"]
 

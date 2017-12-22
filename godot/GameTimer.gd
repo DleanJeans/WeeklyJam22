@@ -16,7 +16,7 @@ func next_duration():
 	
 	var minutes = durations[duration_index]
 	round_duration = minutes * 60
-	get_parent().get_node("MainMenu/RoundDurationButton").text = "%s Minutes" % minutes
+	get_parent().get_node("MainMenu/RoundDurationButton").text = "Duration: %s Minutes" % minutes
 
 func hide():
 	$RoundLabel.hide()

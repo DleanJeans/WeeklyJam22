@@ -40,6 +40,7 @@ func reset():
 	turn_normal()
 	self.coins = 0
 	self.controller = "AI"
+	$Sprite.modulate = get_node("/root/Global").WHITE
 	$AI/WinGame.clear_subgoals()
 	$FreezeTimer.stop()
 	$WinnerLabel.hide()
@@ -50,14 +51,12 @@ func show_crown():
 	
 	$CrownAnimation.play("PopUp")
 	$PopSound.play()
-	print("%s: Crown Popping Up" % get_name())
 
 func hide_crown():
 	if not $Sprite/Crown.visible or $CrownAnimation.is_playing(): return
 	
 	$CrownAnimation.play("PopOut")
 	$PopSound.play()
-	print("%s: Crown Popping Out" % get_name())
 
 func out_of_coins():
 	return coins <= 0
@@ -181,7 +180,6 @@ func _physics_process(delta):
 	velocity *= drag_scale
 	move_and_slide(velocity)
 	
-	
 	heading = velocity.normalized()
 	
 	_steer_ai_crocodile_if_blocked()
@@ -203,9 +201,10 @@ func debug(info):
 	$DebugLabel.text += "%s\n" % info
 
 func clamp_velocity():
-	velocity = velocity.clamped(max_velocity)
+	var cap = max_velocity
 	if is_controlled_by_ai():
-		velocity *= ai_speed_scale
+		cap *= ai_speed_scale
+	velocity = velocity.clamped(cap)
 
 func set_name_tag(name):
 	$Sprite/NameTag.text = name

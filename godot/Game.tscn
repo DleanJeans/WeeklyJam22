@@ -9,7 +9,7 @@
 [ext_resource path="res://assets/OurMusicBox _CanCan.ogg" type="AudioStream" id=7]
 [ext_resource path="res://BebasNeue.tres" type="DynamicFont" id=8]
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="GDScript" id=1]
 
 script/source = "extends Node2D
 
@@ -27,7 +27,7 @@ func show_crowns():
 	for player in other_players:
 		player.hide_crown()"
 
-[sub_resource type="GDScript" id=1]
+[sub_resource type="GDScript" id=2]
 
 script/source = "extends Node2D
 
@@ -56,59 +56,60 @@ func next_map():
 	map_name = map.get_name()
 	game.add_child(map)
 	game.move_child(map, 0)
-	game.get_node(\"MainMenu/MapButton\").text = \"%s Players\" % nums[index]
+	game.get_node(\"MainMenu/MapButton\").text = \"Map: %s\" % map.name
 	game.emit_signal(\"game_loaded\")
 	game.showing_winner = false"
 
-[node name="Game" type="Node2D"]
+[node name="Game" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
 _sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
 
-[node name="SixPlayerMap" parent="." instance=ExtResource( 2 )]
+[node name="SixPlayerMap" parent="." index="0" instance=ExtResource( 2 )]
 
 editor/display_folded = true
 
-[node name="Objects" parent="SixPlayerMap"]
+[node name="Objects" parent="SixPlayerMap" index="3"]
 
 editor/display_folded = true
 
-[node name="MainMenu" parent="." instance=ExtResource( 3 )]
+[node name="MainMenu" parent="." index="1" instance=ExtResource( 3 )]
 
 editor/display_folded = true
 margin_right = -64.0
 margin_bottom = -64.0
 
-[node name="Version" parent="MainMenu"]
+[node name="ResumeButton" parent="MainMenu" index="3"]
+
+align = 1
+
+[node name="FullScreenButton" parent="MainMenu" index="4"]
+
+align = 1
+
+[node name="Version" parent="MainMenu" index="10"]
 
 visible = false
 
-[node name="GameTimer" parent="." instance=ExtResource( 4 )]
+[node name="GameTimer" parent="." index="2" instance=ExtResource( 4 )]
 
-[node name="ControllerAssigner" parent="." instance=ExtResource( 5 )]
+[node name="ControllerAssigner" parent="." index="3" instance=ExtResource( 5 )]
 
-[node name="CrownManager" type="Node2D" parent="."]
+[node name="CrownManager" type="Node2D" parent="." index="4"]
 
-script = SubResource( 2 )
+script = SubResource( 1 )
 
-[node name="Tween" type="Tween" parent="CrownManager"]
-
-playback_process_mode = 1
-playback/active = false
-playback/repeat = false
-playback/speed = 1.0
-
-[node name="PlayerManager" type="Node2D" parent="."]
+[node name="PlayerManager" type="Node2D" parent="." index="5"]
 
 visible = false
 script = ExtResource( 6 )
 
-[node name="MapSelector" type="Node2D" parent="."]
+[node name="MapSelector" type="Node2D" parent="." index="6"]
 
 visible = false
-script = SubResource( 1 )
+script = SubResource( 2 )
 
-[node name="MusicBox" type="AudioStreamPlayer2D" parent="."]
+[node name="MusicBox" type="AudioStreamPlayer2D" parent="." index="7"]
 
 visible = false
 position = Vector2( 480, 270 )
@@ -121,7 +122,7 @@ bus = "Master"
 area_mask = 1
 _sections_unfolded = [ "Transform" ]
 
-[node name="ControlHint" type="Label" parent="."]
+[node name="ControlHint" type="Label" parent="." index="8"]
 
 visible = false
 anchor_left = 0.0
@@ -133,7 +134,6 @@ margin_top = 500.0
 margin_right = 624.0
 margin_bottom = 531.0
 rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
@@ -143,15 +143,17 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
+[connection signal="countdown_started" from="." to="GameTimer" method="resume"]
+
+[connection signal="countdown_started" from="." to="GameTimer" method="start_counting_down"]
+
 [connection signal="countdown_started" from="." to="." method="_reset_platforms"]
 
 [connection signal="countdown_started" from="." to="." method="_clear_coins"]
 
-[connection signal="countdown_started" from="." to="GameTimer" method="start_counting_down"]
-
-[connection signal="countdown_started" from="." to="GameTimer" method="resume"]
-
 [connection signal="countdown_started" from="." to="ControllerAssigner" method="reset"]
+
+[connection signal="countdown_started" from="." to="PlayerManager" method="reset"]
 
 [connection signal="countdown_started" from="." to="PlayerManager" method="reset_positions"]
 
@@ -159,43 +161,41 @@ max_lines_visible = -1
 
 [connection signal="countdown_started" from="." to="PlayerManager" method="freeze_players"]
 
-[connection signal="countdown_started" from="." to="PlayerManager" method="reset"]
-
-[connection signal="game_loaded" from="." to="PlayerManager" method="reset_controllers"]
+[connection signal="game_loaded" from="." to="PlayerManager" method="reset"]
 
 [connection signal="game_loaded" from="." to="PlayerManager" method="record_positions"]
 
 [connection signal="game_loaded" from="." to="PlayerManager" method="choose_crocodile_randomly"]
 
-[connection signal="game_loaded" from="." to="PlayerManager" method="reset"]
+[connection signal="game_loaded" from="." to="PlayerManager" method="reset_controllers"]
 
 [connection signal="game_over" from="." to="." method="_show_winner"]
 
-[connection signal="game_paused" from="." to="." method="_stop_coin_spawners"]
-
 [connection signal="game_paused" from="." to="GameTimer" method="pause"]
+
+[connection signal="game_paused" from="." to="." method="_stop_coin_spawners"]
 
 [connection signal="game_paused" from="." to="PlayerManager" method="freeze_players"]
 
-[connection signal="game_resumed" from="." to="." method="_resume_coin_spawners"]
+[connection signal="game_resumed" from="." to="MainMenu" method="hide"]
 
 [connection signal="game_resumed" from="." to="GameTimer" method="resume"]
 
-[connection signal="game_resumed" from="." to="PlayerManager" method="unfreeze_players"]
+[connection signal="game_resumed" from="." to="." method="_resume_coin_spawners"]
 
-[connection signal="game_started" from="." to="." method="_resume_coin_spawners"]
+[connection signal="game_resumed" from="." to="PlayerManager" method="unfreeze_players"]
 
 [connection signal="game_started" from="." to="PlayerManager" method="unfreeze_players"]
 
-[connection signal="hidden" from="MainMenu" to="." method="try_resume"]
-
 [connection signal="hidden" from="MainMenu" to="GameTimer" method="show"]
-
-[connection signal="shown" from="MainMenu" to="." method="try_pause"]
 
 [connection signal="shown" from="MainMenu" to="GameTimer" method="hide"]
 
 [connection signal="shown" from="MainMenu" to="ControlHint" method="hide"]
+
+[connection signal="shown" from="MainMenu" to="." method="try_pause"]
+
+[connection signal="pressed" from="MainMenu/ResumeButton" to="." method="try_resume"]
 
 [connection signal="pressed" from="MainMenu/PlayButton" to="." method="start_counting_down"]
 

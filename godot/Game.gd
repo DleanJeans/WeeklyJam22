@@ -22,10 +22,10 @@ func try_pause():
 		emit_signal("game_paused")
 
 func try_resume():
-	if _users_playing():
-		emit_signal("game_resumed")
-		if $GameTimer.in_countdown_mode():
-			$PlayerManager.freeze_players()
+	if not _users_playing(): return
+	emit_signal("game_resumed")
+	if $GameTimer.in_countdown_mode():
+		$PlayerManager.freeze_players()
 
 func _users_playing():
 	for player in Global.Players:
@@ -60,3 +60,7 @@ func _process(delta):
 		for p in winners:
 			p.show_winner_label()
 			p.jump()
+
+
+func resume():
+	pass # replace with function body

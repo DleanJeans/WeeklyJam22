@@ -95,10 +95,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 207.0
-margin_top = 16.0
-margin_right = 845.0
-margin_bottom = 142.0
+margin_left = 254.0
+margin_top = 20.0
+margin_right = 892.0
+margin_bottom = 146.0
 rect_rotation = 11.5041
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -216,10 +216,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 270.0
-margin_top = 210.0
-margin_right = 435.0
-margin_bottom = 336.0
+margin_left = 305.0
+margin_top = 225.0
+margin_right = 470.0
+margin_bottom = 351.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -243,10 +243,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 270.0
-margin_top = 345.0
-margin_right = 435.0
-margin_bottom = 399.0
+margin_left = 305.0
+margin_top = 360.0
+margin_right = 673.0
+margin_bottom = 414.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -260,7 +260,7 @@ action_mode = 0
 enabled_focus_mode = 2
 shortcut = null
 group = null
-text = "6 Players"
+text = "Map: Rectangle - 6 Players"
 flat = true
 align = 0
 _sections_unfolded = [ "Rect", "custom_fonts" ]
@@ -271,10 +271,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 270.0
-margin_top = 405.0
-margin_right = 435.0
-margin_bottom = 459.0
+margin_left = 305.0
+margin_top = 420.0
+margin_right = 600.0
+margin_bottom = 474.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -288,7 +288,7 @@ action_mode = 0
 enabled_focus_mode = 2
 shortcut = null
 group = null
-text = "3 Minutes"
+text = "Duration: 3 Minutes"
 flat = true
 align = 0
 _sections_unfolded = [ "Rect", "custom_fonts" ]
@@ -361,9 +361,9 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 15.0
-margin_top = 445.0
+margin_top = 425.0
 margin_right = 242.0
-margin_bottom = 523.0
+margin_bottom = 530.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
@@ -371,8 +371,9 @@ size_flags_horizontal = 1
 size_flags_vertical = 4
 custom_fonts/font = SubResource( 4 )
 text = "Developer: Dlean Jeans
-Music: Can Can - OurMusicBox.com
-SFX: Zapslat.com"
+Music: OurMusicBox.com
+SFX: Zapslat.com
+Game Engine: Godot 3"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
@@ -402,8 +403,6 @@ max_lines_visible = -1
 [connection signal="shown" from="." to="PlayButton" method="grab_focus"]
 
 [connection signal="pressed" from="ResumeButton" to="SelectSound" method="play"]
-
-[connection signal="pressed" from="ResumeButton" to="." method="hide"]
 
 [connection signal="pressed" from="FullScreenButton" to="SelectSound" method="play"]
 

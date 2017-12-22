@@ -10,8 +10,8 @@ func _filter_player(me, player):
 	return player == me or player.on_platform
 
 func _player_desirability(me, player):
-	var distance = distance_squared(player, me)
-	var distance_to_peers = _total_distance_to_peers(player)
+	var distance = distance(player, me)
+	var distance_to_peers = _total_distance_to_peers(player) * 0.2
 	var coins_collected = player.coins / 5
 	
 	var good = coins_collected

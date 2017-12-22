@@ -23,7 +23,7 @@ func _on_player_enter(body):
 	
 	_player = body
 	
-	if _player_is_not_allowed():
+	if _player_not_allowed():
 		_block_player()
 	else:
 		_unblock_player()
@@ -31,8 +31,8 @@ func _on_player_enter(body):
 func _is_player(body):
 	return body.is_in_group(Global.PLAYERS_GROUP)
 
-func _player_is_not_allowed():
-	return occupied or _player.is_crocodile()
+func _player_not_allowed():
+	return occupied or _player.is_crocodile() or _player.out_of_coins()
 
 func _block_player():
 	_player.collision_layer |= collision_mask
@@ -62,10 +62,10 @@ func _process(delta):
 		_player = body
 		if _player.is_crocodile():
 			_block_player()
+		elif _player.coins <= 0 and _player.on_platform:
+			_push_player_out()
 		elif not occupied:
 			_unblock_player()
-		elif _player.coins <= 0:
-			_push_player_out()
 
 func _push_player_out():
 	$FeeTimer.stop()

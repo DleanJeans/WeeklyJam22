@@ -1,5 +1,6 @@
 extends Area2D
 
+export(int) var magnet_speed = 100
 var collected = false
 
 signal collected
@@ -18,3 +19,10 @@ func _is_not_player(body):
 func _on_animation_finished(name):
 	if name == "Collected":
 		queue_free()
+
+func _physics_process(delta):
+	var bodies = $MagnetRadius.get_overlapping_bodies()
+	for body in bodies:
+		if not body in Global.Players or body == Global.crocodile: continue
+		var to_player = (body.position - position).normalized()
+		position += to_player * delta * magnet_speed
