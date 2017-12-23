@@ -15,6 +15,12 @@ func _ready():
 	var screen_center = Vector2(ProjectSettings.get_setting("display/window/size/width"), ProjectSettings.get_setting("display/window/size/height")) / 2
 	to_screen_center = (screen_center - position).normalized()
 
+func enable():
+	set_process(true)
+
+func disable():
+	set_process(false)
+
 func reset():
 	_turn_green()
 

@@ -4,38 +4,36 @@ signal game_loaded
 signal countdown_started
 signal game_started
 signal game_over
-signal game_paused
-signal game_resumed
+signal joining_screen_opened
+signal main_menu_opened
 
 var showing_winner = false
-var winners
+var winners = []
+
+func open_joining_screen():
+	emit_signal("joining_screen_opened")
+
+func open_main_menu():
+	$MainMenu.show()
+	emit_signal("main_menu_opened")
 
 func start_counting_down():
+	if $GameTimer.is_counting_down(): return
+	
 	emit_signal("countdown_started")
-	showing_winner = false
+
+func stop_counting_down():
+	$GameTimer.stop()
+	$GameTimer.hide()
 
 func start():
 	emit_signal("game_started")
 
-func try_pause():
-	if _users_playing():
-		emit_signal("game_paused")
+func pause():
+	get_tree().set_pause(true)
 
-func try_resume():
-	if not _users_playing(): return
-	emit_signal("game_resumed")
-	if $GameTimer.in_countdown_mode():
-		$PlayerManager.freeze_players()
-
-func _users_playing():
-	for player in Global.Players:
-		if not player.is_controlled_by_ai():
-			return true
-	return false
-
-func _reset_platforms():
-	for p in Global.Platforms:
-		p.reset()
+func resume():
+	get_tree().set_pause(false)
 
 func end():
 	emit_signal("game_over")
@@ -45,15 +43,13 @@ func _ready():
 	emit_signal("game_loaded")
 
 func _show_winner():
-	$PlayerManager.freeze_players()
-	Global.crocodile.get_node("FreezeTimer").stop()
 	showing_winner = true
 	winners = $PlayerManager.players_with_highest_score()
-	$ControlHint.show()
 
-func _clear_coins():
-	for coin in Global.Coins:
-		coin.queue_free()
+func _stop_showing_winner():
+	showing_winner = false
+	for p in winners:
+		p.hide_winner_label()
 
 func _process(delta):
 	if showing_winner:
@@ -61,6 +57,6 @@ func _process(delta):
 			p.show_winner_label()
 			p.jump()
 
-
-func resume():
-	pass # replace with function body
+func _unfreeze_if_in_game():
+	if $GameTimer.in_round_mode():
+		$PlayerManager.unfreeze_players()

@@ -21,6 +21,7 @@ tracks/0/path = NodePath("Shape/Sprite:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0, 0.2 ),
 "transitions": PoolRealArray( 1, 1 ),
@@ -39,6 +40,7 @@ tracks/0/path = NodePath("Shape/Sprite:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0, 0.2 ),
 "transitions": PoolRealArray( 1, 1 ),
@@ -60,19 +62,19 @@ bounce = 0.0
 script = ExtResource( 1 )
 _sections_unfolded = [ "Collision", "Transform", "Visibility" ]
 
-[node name="Shape" type="CollisionShape2D" parent="."]
+[node name="Shape" type="CollisionShape2D" parent="." index="0"]
 
 shape = SubResource( 1 )
 _sections_unfolded = [ "Transform", "Visibility" ]
 
-[node name="Sprite" type="Sprite" parent="Shape"]
+[node name="Sprite" type="Sprite" parent="Shape" index="0"]
 
 self_modulate = Color( 0.0103455, 0.882813, 0.289808, 1 )
 scale = Vector2( 0.64, 0.64 )
 texture = ExtResource( 2 )
 _sections_unfolded = [ "Transform", "Visibility" ]
 
-[node name="Area" type="Area2D" parent="Shape"]
+[node name="Area" type="Area2D" parent="Shape" index="1"]
 
 scale = Vector2( 1.05, 1.05 )
 input_pickable = true
@@ -85,13 +87,13 @@ audio_bus_override = false
 audio_bus_name = "Master"
 _sections_unfolded = [ "Transform" ]
 
-[node name="Shape" type="CollisionShape2D" parent="Shape/Area"]
+[node name="Shape" type="CollisionShape2D" parent="Shape/Area" index="0"]
 
 visible = false
 shape = SubResource( 1 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="AllowSound" type="AudioStreamPlayer2D" parent="."]
+[node name="AllowSound" type="AudioStreamPlayer2D" parent="." index="1"]
 
 stream = ExtResource( 3 )
 volume_db = -10.0
@@ -101,7 +103,7 @@ attenuation = 1.0
 bus = "Master"
 area_mask = 1
 
-[node name="ColorChanger" type="AnimationPlayer" parent="."]
+[node name="ColorChanger" type="AnimationPlayer" parent="." index="2"]
 
 playback_process_mode = 1
 playback_default_blend_time = 0.0
@@ -113,7 +115,7 @@ playback/speed = 2.0
 blend_times = [  ]
 autoplay = ""
 
-[node name="FeeTimer" type="Timer" parent="."]
+[node name="FeeTimer" type="Timer" parent="." index="3"]
 
 process_mode = 1
 wait_time = 0.5

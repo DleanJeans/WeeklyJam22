@@ -47,6 +47,9 @@ func _all_platforms_occupied():
 
 func _crocodile_blocks_way_to_platform():
 	var platform = Locator.find_most_desired_platform(player)
+	if platform == null:
+		return true
+	
 	var to_platform = (platform.position - player.position).normalized()
 	var to_crocodile = (Global.crocodile.position - player.position).normalized()
 	var dot = to_platform.dot(to_crocodile)
@@ -60,6 +63,8 @@ func _should_get_on_platform():
 	return not _all_platforms_occupied()
 
 func _should_flee():
+	if Global.crocodile == null: return false
+	
 	var should_be_panicking = steering.get_node("Flee").is_panicking(Global.crocodile)
 	var crocodile_not_frozen = not Global.crocodile.frozen
 	

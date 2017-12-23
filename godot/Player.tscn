@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=2]
+[gd_scene load_steps=41 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://InputAction.gd" type="Script" id=2]
@@ -8,18 +8,16 @@
 [ext_resource path="res://assets/Tongue.png" type="Texture" id=6]
 [ext_resource path="res://assets/Crown.png" type="Texture" id=7]
 [ext_resource path="res://BebasNeue.otf" type="DynamicFontData" id=8]
-[ext_resource path="res://assets/Crocodile.png" type="Texture" id=9]
-[ext_resource path="res://assets/Circle.png" type="Texture" id=10]
-[ext_resource path="res://assets/CrocodileArm.png" type="Texture" id=11]
-[ext_resource path="res://assets/Freezing.ogg" type="AudioStream" id=12]
-[ext_resource path="res://assets/Tap.ogg" type="AudioStream" id=13]
-[ext_resource path="res://assets/Groan.ogg" type="AudioStream" id=14]
-[ext_resource path="res://assets/CartoonJump.ogg" type="AudioStream" id=15]
-[ext_resource path="res://assets/screams/Crowd.ogg" type="AudioStream" id=16]
-[ext_resource path="res://assets/Pop.ogg" type="AudioStream" id=17]
-[ext_resource path="res://MovementVisualizer.tscn" type="PackedScene" id=18]
+[ext_resource path="res://Crocodile.tscn" type="PackedScene" id=9]
+[ext_resource path="res://assets/Freezing.ogg" type="AudioStream" id=10]
+[ext_resource path="res://assets/Tap.ogg" type="AudioStream" id=11]
+[ext_resource path="res://assets/Groan.ogg" type="AudioStream" id=12]
+[ext_resource path="res://assets/CartoonJump.ogg" type="AudioStream" id=13]
+[ext_resource path="res://assets/screams/Crowd.ogg" type="AudioStream" id=14]
+[ext_resource path="res://assets/Pop.ogg" type="AudioStream" id=15]
+[ext_resource path="res://MovementVisualizer.tscn" type="PackedScene" id=16]
 
-[sub_resource type="Animation" id=21]
+[sub_resource type="Animation" id=1]
 
 length = 0.8
 loop = false
@@ -29,6 +27,7 @@ tracks/0/path = NodePath("CoinChangeLabel:rect_position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0, 0.8 ),
 "transitions": PoolRealArray( 1, 1 ),
@@ -40,6 +39,7 @@ tracks/1/path = NodePath("CoinChangeLabel:self_modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
+tracks/1/enabled = true
 tracks/1/keys = {
 "times": PoolRealArray( 0, 0.8 ),
 "transitions": PoolRealArray( 1, 1 ),
@@ -47,7 +47,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=2]
 
 length = 1.0
 loop = false
@@ -57,6 +57,7 @@ tracks/0/path = NodePath("Sprite:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0, 0.3, 0.4, 0.6, 0.8, 0.9, 1 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
@@ -68,6 +69,7 @@ tracks/1/path = NodePath("Sprite:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
+tracks/1/enabled = true
 tracks/1/keys = {
 "times": PoolRealArray( 0, 0.3, 0.4, 0.6, 0.8, 0.9, 1 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
@@ -79,6 +81,7 @@ tracks/2/path = NodePath("Shadow:scale")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
+tracks/2/enabled = true
 tracks/2/keys = {
 "times": PoolRealArray( 0, 0.3, 0.4, 0.6, 0.8, 0.9, 1 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
@@ -86,7 +89,7 @@ tracks/2/keys = {
 "values": [ Vector2( 0.6, 0.2 ), Vector2( 0.7, 0.2 ), Vector2( 0.6, 0.2 ), Vector2( 0.4, 0.1 ), Vector2( 0.6, 0.2 ), Vector2( 0.7, 0.2 ), Vector2( 0.6, 0.2 ) ]
 }
 
-[sub_resource type="Animation" id=22]
+[sub_resource type="Animation" id=3]
 
 resource_name = "PopOut"
 length = 0.3
@@ -97,6 +100,7 @@ tracks/0/path = NodePath("Sprite/Crown:scale")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0, 0.2, 0.3 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
@@ -108,6 +112,7 @@ tracks/1/path = NodePath("Sprite/Crown:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
+tracks/1/enabled = true
 tracks/1/keys = {
 "times": PoolRealArray( 0, 0.3 ),
 "transitions": PoolRealArray( 1, 1 ),
@@ -115,7 +120,7 @@ tracks/1/keys = {
 "values": [ true, false ]
 }
 
-[sub_resource type="Animation" id=23]
+[sub_resource type="Animation" id=4]
 
 resource_name = "PopUp"
 length = 0.3
@@ -126,6 +131,7 @@ tracks/0/path = NodePath("Sprite/Crown:scale")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0, 0.2, 0.3 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
@@ -137,6 +143,7 @@ tracks/1/path = NodePath("Sprite/Crown:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
+tracks/1/enabled = true
 tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -144,7 +151,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="GDScript" id=13]
+[sub_resource type="GDScript" id=5]
 
 script/source = "extends Node2D
 
@@ -157,6 +164,9 @@ func _physics_process(delta):
 func _flip_crocodile():
 	var moving_right = player.velocity.x > 0 and sign(player.velocity.x) == sign(player.heading.x)
 	
+	if player.get_name() == \"Player5\":
+		pass
+	
 	if player.is_crocodile():
 		_reset_Sprite_color()
 		if player.is_close_to_at_least_3_others():
@@ -167,7 +177,6 @@ func _flip_crocodile():
 			_play_animation_if_not_playing(\"CrocodileRight\")
 		else:
 			_play_animation_if_not_playing(\"CrocodileLeft\")
-		
 	elif player.is_panicking():
 		ScreamSound.play_random_individual()
 		if moving_right:
@@ -188,197 +197,7 @@ func _play_animation_if_not_playing(animation_name):
 func _reset_Sprite_color():
 	$'../Sprite'.self_modulate = player.color"
 
-[sub_resource type="Animation" id=26]
-
-resource_name = "ClawLeft"
-length = 0.8
-loop = true
-step = 0.1
-tracks/0/type = "value"
-tracks/0/path = NodePath("../Sprite/Crocodile/FarArm:position")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( -10, 10 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("../Sprite/Crocodile/FarArm:rotation_degrees")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.2, 0.6 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ 0.0, 15.0, -15.0 ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("../Sprite/Crocodile/CloseArm:position")
-tracks/2/interp = 2
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 40, 20.3044 ) ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("../Sprite/Crocodile/CloseArm:rotation_degrees")
-tracks/3/interp = 2
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/keys = {
-"times": PoolRealArray( 0, 0.2, 0.6 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ 0.0, -15.0, 15.0 ]
-}
-tracks/4/type = "value"
-tracks/4/path = NodePath("../Sprite/Crocodile/CloseArm:flip_h")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
-tracks/5/type = "value"
-tracks/5/path = NodePath("../Sprite/Crocodile/FarArm:flip_h")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
-tracks/6/type = "value"
-tracks/6/path = NodePath("../Sprite/Crocodile/FarArm:offset")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/imported = false
-tracks/6/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( -80, 0 ) ]
-}
-tracks/7/type = "value"
-tracks/7/path = NodePath("../Sprite/Crocodile/CloseArm:offset")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/imported = false
-tracks/7/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( -80, 0 ) ]
-}
-
-[sub_resource type="Animation" id=27]
-
-resource_name = "ClawRight"
-length = 0.8
-loop = true
-step = 0.1
-tracks/0/type = "value"
-tracks/0/path = NodePath("../Sprite/Crocodile/FarArm:position")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 10, 10.1522 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("../Sprite/Crocodile/FarArm:rotation_degrees")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.2, 0.6 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ 0.0, 15.0, -15.0 ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("../Sprite/Crocodile/CloseArm:position")
-tracks/2/interp = 2
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( -40, 20.3044 ) ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("../Sprite/Crocodile/CloseArm:rotation_degrees")
-tracks/3/interp = 2
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/keys = {
-"times": PoolRealArray( 0, 0.2, 0.6 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ 0.0, -15.0, 15.0 ]
-}
-tracks/4/type = "value"
-tracks/4/path = NodePath("../Sprite/Crocodile/CloseArm:flip_h")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
-tracks/5/type = "value"
-tracks/5/path = NodePath("../Sprite/Crocodile/FarArm:flip_h")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
-tracks/6/type = "value"
-tracks/6/path = NodePath("../Sprite/Crocodile/CloseArm:offset")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/imported = false
-tracks/6/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 80, 0 ) ]
-}
-tracks/7/type = "value"
-tracks/7/path = NodePath("../Sprite/Crocodile/FarArm:offset")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/imported = false
-tracks/7/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 80, 0 ) ]
-}
-
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=6]
 
 resource_name = "CrocodileLeft"
 length = 0.8
@@ -389,6 +208,7 @@ tracks/0/path = NodePath("../Panic:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -400,6 +220,7 @@ tracks/1/path = NodePath("../Sprite:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
+tracks/1/enabled = true
 tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -411,6 +232,7 @@ tracks/2/path = NodePath("../Sprite/Crocodile:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
+tracks/2/enabled = true
 tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -422,6 +244,7 @@ tracks/3/path = NodePath("../Sprite/Crocodile:flip_h")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
+tracks/3/enabled = true
 tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -433,6 +256,7 @@ tracks/4/path = NodePath("../Sprite/Crocodile:position")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
+tracks/4/enabled = true
 tracks/4/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -444,6 +268,7 @@ tracks/5/path = NodePath("../Sprite/Crocodile/Shadow:position")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
+tracks/5/enabled = true
 tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -455,6 +280,7 @@ tracks/6/path = NodePath("../Sprite/Crocodile/CloseArm:position")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
+tracks/6/enabled = true
 tracks/6/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -466,6 +292,7 @@ tracks/7/path = NodePath("../Sprite/Crocodile/CloseArm:rotation_degrees")
 tracks/7/interp = 2
 tracks/7/loop_wrap = true
 tracks/7/imported = false
+tracks/7/enabled = true
 tracks/7/keys = {
 "times": PoolRealArray( 0, 0.2, 0.6 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
@@ -477,6 +304,7 @@ tracks/8/path = NodePath("../Sprite/Crocodile/CloseArm:flip_h")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/imported = false
+tracks/8/enabled = true
 tracks/8/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -488,6 +316,7 @@ tracks/9/path = NodePath("../Sprite/Crocodile/CloseArm:offset")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/imported = false
+tracks/9/enabled = true
 tracks/9/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -499,6 +328,7 @@ tracks/10/path = NodePath("../Sprite/Crocodile/FarArm:offset")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/imported = false
+tracks/10/enabled = true
 tracks/10/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -510,6 +340,7 @@ tracks/11/path = NodePath("../Sprite/Crocodile/FarArm:flip_h")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/imported = false
+tracks/11/enabled = true
 tracks/11/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -521,6 +352,7 @@ tracks/12/path = NodePath("../Sprite/Crocodile/FarArm:position")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/imported = false
+tracks/12/enabled = true
 tracks/12/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -532,6 +364,7 @@ tracks/13/path = NodePath("../Sprite/Crocodile/FarArm:rotation_degrees")
 tracks/13/interp = 2
 tracks/13/loop_wrap = true
 tracks/13/imported = false
+tracks/13/enabled = true
 tracks/13/keys = {
 "times": PoolRealArray( 0, 0.2, 0.6 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
@@ -539,7 +372,7 @@ tracks/13/keys = {
 "values": [ 0.0, 15.0, -15.0 ]
 }
 
-[sub_resource type="Animation" id=15]
+[sub_resource type="Animation" id=7]
 
 resource_name = "CrocodileRight"
 length = 0.8
@@ -550,6 +383,7 @@ tracks/0/path = NodePath("../Panic:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -561,6 +395,7 @@ tracks/1/path = NodePath("../Sprite:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
+tracks/1/enabled = true
 tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -572,6 +407,7 @@ tracks/2/path = NodePath("../Sprite/Crocodile:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
+tracks/2/enabled = true
 tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -583,6 +419,7 @@ tracks/3/path = NodePath("../Sprite/Crocodile:flip_h")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
+tracks/3/enabled = true
 tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -594,6 +431,7 @@ tracks/4/path = NodePath("../Sprite/Crocodile:position")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
+tracks/4/enabled = true
 tracks/4/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -605,6 +443,7 @@ tracks/5/path = NodePath("../Sprite/Crocodile/Shadow:position")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
+tracks/5/enabled = true
 tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -616,6 +455,7 @@ tracks/6/path = NodePath("../Sprite/Crocodile/CloseArm:offset")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
+tracks/6/enabled = true
 tracks/6/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -627,6 +467,7 @@ tracks/7/path = NodePath("../Sprite/Crocodile/CloseArm:flip_h")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/imported = false
+tracks/7/enabled = true
 tracks/7/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -638,6 +479,7 @@ tracks/8/path = NodePath("../Sprite/Crocodile/CloseArm:position")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/imported = false
+tracks/8/enabled = true
 tracks/8/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -649,6 +491,7 @@ tracks/9/path = NodePath("../Sprite/Crocodile/CloseArm:rotation_degrees")
 tracks/9/interp = 2
 tracks/9/loop_wrap = true
 tracks/9/imported = false
+tracks/9/enabled = true
 tracks/9/keys = {
 "times": PoolRealArray( 0, 0.2, 0.6 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
@@ -660,6 +503,7 @@ tracks/10/path = NodePath("../Sprite/Crocodile/FarArm:rotation_degrees")
 tracks/10/interp = 2
 tracks/10/loop_wrap = true
 tracks/10/imported = false
+tracks/10/enabled = true
 tracks/10/keys = {
 "times": PoolRealArray( 0, 0.2, 0.6 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
@@ -671,6 +515,7 @@ tracks/11/path = NodePath("../Sprite/Crocodile/FarArm:position")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/imported = false
+tracks/11/enabled = true
 tracks/11/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -682,6 +527,7 @@ tracks/12/path = NodePath("../Sprite/Crocodile/FarArm:offset")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/imported = false
+tracks/12/enabled = true
 tracks/12/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -693,6 +539,7 @@ tracks/13/path = NodePath("../Sprite/Crocodile/FarArm:flip_h")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/imported = false
+tracks/13/enabled = true
 tracks/13/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -700,7 +547,7 @@ tracks/13/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=25]
+[sub_resource type="Animation" id=8]
 
 resource_name = "EditorReset"
 length = 0.01
@@ -711,6 +558,7 @@ tracks/0/path = NodePath("../Sprite:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -718,7 +566,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=19]
+[sub_resource type="Animation" id=9]
 
 resource_name = "Normal"
 length = 0.01
@@ -729,14 +577,27 @@ tracks/0/path = NodePath("../Panic:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ false ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("../Sprite/Crocodile:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=10]
 
 resource_name = "PanicLeft"
 length = 0.01
@@ -747,6 +608,7 @@ tracks/0/path = NodePath("../Panic:flip_h")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -758,6 +620,7 @@ tracks/1/path = NodePath("../Panic/Tongue:flip_h")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
+tracks/1/enabled = true
 tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -769,6 +632,7 @@ tracks/2/path = NodePath("../Panic/Tongue:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
+tracks/2/enabled = true
 tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -780,6 +644,7 @@ tracks/3/path = NodePath("../Panic:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
+tracks/3/enabled = true
 tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -791,6 +656,7 @@ tracks/4/path = NodePath("../Sprite:self_modulate")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
+tracks/4/enabled = true
 tracks/4/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -802,6 +668,7 @@ tracks/5/path = NodePath("../Sprite/Crocodile:visible")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
+tracks/5/enabled = true
 tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -809,7 +676,7 @@ tracks/5/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=17]
+[sub_resource type="Animation" id=11]
 
 resource_name = "PanicRight"
 length = 0.01
@@ -820,6 +687,7 @@ tracks/0/path = NodePath("../Panic:flip_h")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -831,6 +699,7 @@ tracks/1/path = NodePath("../Panic/Tongue:flip_h")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
+tracks/1/enabled = true
 tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -842,6 +711,7 @@ tracks/2/path = NodePath("../Panic/Tongue:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
+tracks/2/enabled = true
 tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -853,6 +723,7 @@ tracks/3/path = NodePath("../Panic:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
+tracks/3/enabled = true
 tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -864,6 +735,7 @@ tracks/4/path = NodePath("../Sprite:self_modulate")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
+tracks/4/enabled = true
 tracks/4/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -875,6 +747,7 @@ tracks/5/path = NodePath("../Sprite/Crocodile:visible")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
+tracks/5/enabled = true
 tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -882,7 +755,7 @@ tracks/5/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="DynamicFont" id=12]
 
 size = 40
 use_mipmaps = false
@@ -890,7 +763,7 @@ use_filter = false
 font_data = ExtResource( 8 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=13]
 
 size = 40
 use_mipmaps = false
@@ -898,28 +771,28 @@ use_filter = false
 font_data = ExtResource( 8 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=14]
 
 custom_solver_bias = 0.0
 extents = Vector2( 20, 10 )
 
-[sub_resource type="CapsuleShape2D" id=4]
+[sub_resource type="CapsuleShape2D" id=15]
 
 custom_solver_bias = 0.0
 radius = 50.0
 height = 40.0
 
-[sub_resource type="RectangleShape2D" id=5]
+[sub_resource type="RectangleShape2D" id=16]
 
 custom_solver_bias = 0.0
 extents = Vector2( 20, 10 )
 
-[sub_resource type="CircleShape2D" id=18]
+[sub_resource type="CircleShape2D" id=17]
 
 custom_solver_bias = 0.0
 radius = 150.0
 
-[sub_resource type="GDScript" id=6]
+[sub_resource type="GDScript" id=18]
 
 script/source = "extends Timer
 
@@ -934,7 +807,7 @@ func _ready():
 
 func start():
 	.start()
-	player.toggle_frozen()
+	player.frozen = true
 	jumped = false
 
 func _process(delta):
@@ -948,7 +821,7 @@ func _process(delta):
 		jumped = true
 		player.break_unfrozen()"
 
-[sub_resource type="GDScript" id=20]
+[sub_resource type="GDScript" id=19]
 
 script/source = "extends AudioStreamPlayer2D
 
@@ -974,12 +847,12 @@ func stop():
 	if playing:
 		.stop()"
 
-[sub_resource type="AudioStreamRandomPitch" id=24]
+[sub_resource type="AudioStreamRandomPitch" id=20]
 
-audio_stream = ExtResource( 17 )
+audio_stream = ExtResource( 15 )
 random_pitch = 1.1
 
-[sub_resource type="DynamicFont" id=9]
+[sub_resource type="DynamicFont" id=21]
 
 size = 40
 use_mipmaps = false
@@ -987,7 +860,7 @@ use_filter = false
 font_data = ExtResource( 8 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[sub_resource type="DynamicFont" id=10]
+[sub_resource type="DynamicFont" id=22]
 
 size = 30
 use_mipmaps = false
@@ -995,18 +868,18 @@ use_filter = false
 font_data = ExtResource( 8 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[sub_resource type="DynamicFont" id=11]
+[sub_resource type="DynamicFont" id=23]
 
 size = 30
 use_mipmaps = false
 use_filter = false
 font_data = ExtResource( 8 )
 
-[sub_resource type="Theme" id=12]
+[sub_resource type="Theme" id=24]
 
-default_font = SubResource( 11 )
+default_font = SubResource( 23 )
 
-[node name="Player" type="KinematicBody2D" groups=[
+[node name="Player" type="KinematicBody2D" index="0" groups=[
 "Players",
 ]]
 
@@ -1018,75 +891,73 @@ script = ExtResource( 1 )
 _sections_unfolded = [ "Collision", "collision" ]
 color = Color( 1, 1, 1, 1 )
 
-[node name="PointsAnimation" type="AnimationPlayer" parent="."]
+[node name="PointsAnimation" type="AnimationPlayer" parent="." index="0"]
 
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 root_node = NodePath("..")
-anims/CoinChanged = SubResource( 21 )
+anims/CoinChanged = SubResource( 1 )
 playback/active = true
 playback/speed = 1.25
 blend_times = [  ]
 autoplay = "Grounded"
 
-[node name="JumpAnimation" type="AnimationPlayer" parent="."]
+[node name="JumpAnimation" type="AnimationPlayer" parent="." index="1"]
 
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 root_node = NodePath("..")
-anims/Jump = SubResource( 8 )
+anims/Jump = SubResource( 2 )
 playback/active = true
 playback/speed = 1.25
 blend_times = [  ]
 autoplay = "Grounded"
 
-[node name="CrownAnimation" type="AnimationPlayer" parent="."]
+[node name="CrownAnimation" type="AnimationPlayer" parent="." index="2"]
 
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 root_node = NodePath("..")
-anims/PopOut = SubResource( 22 )
-anims/PopUp = SubResource( 23 )
+anims/PopOut = SubResource( 3 )
+anims/PopUp = SubResource( 4 )
 playback/active = true
 playback/speed = 1.25
 blend_times = [  ]
 autoplay = "Grounded"
 
-[node name="InputAction" type="Node2D" parent="."]
+[node name="InputAction" type="Node2D" parent="." index="3"]
 
 visible = false
 position = Vector2( 0, -40 )
 script = ExtResource( 2 )
 _sections_unfolded = [ "Visibility" ]
 
-[node name="AI" parent="." instance=ExtResource( 3 )]
+[node name="AI" parent="." index="4" instance=ExtResource( 3 )]
 
 visible = false
 
-[node name="SpriteFlipper" type="Node2D" parent="."]
+[node name="SpriteFlipper" type="Node2D" parent="." index="5"]
 
 visible = false
-script = SubResource( 13 )
+script = SubResource( 5 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="SpriteFlipper"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="SpriteFlipper" index="0"]
 
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 root_node = NodePath("..")
-anims/ClawLeft = SubResource( 26 )
-anims/ClawRight = SubResource( 27 )
-anims/CrocodileLeft = SubResource( 14 )
-anims/CrocodileRight = SubResource( 15 )
-anims/EditorReset = SubResource( 25 )
-anims/Normal = SubResource( 19 )
-anims/PanicLeft = SubResource( 16 )
-anims/PanicRight = SubResource( 17 )
+anims/CrocodileLeft = SubResource( 6 )
+anims/CrocodileRight = SubResource( 7 )
+anims/EditorReset = SubResource( 8 )
+anims/Normal = SubResource( 9 )
+anims/PanicLeft = SubResource( 10 )
+anims/PanicRight = SubResource( 11 )
 playback/active = true
 playback/speed = 1.25
 blend_times = [  ]
 autoplay = ""
 
-[node name="Shadow" type="Sprite" parent="."]
+[node name="Shadow" type="Sprite" parent="." index="6"]
 
 modulate = Color( 0, 0, 0, 0.160235 )
 show_behind_parent = true
@@ -1094,7 +965,7 @@ scale = Vector2( 0.6, 0.2 )
 texture = ExtResource( 4 )
 _sections_unfolded = [ "Transform", "Z" ]
 
-[node name="Panic" type="Sprite" parent="."]
+[node name="Panic" type="Sprite" parent="." index="7"]
 
 visible = false
 position = Vector2( -50, -100 )
@@ -1102,14 +973,14 @@ scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 5 )
 centered = false
 
-[node name="Tongue" type="Sprite" parent="Panic"]
+[node name="Tongue" type="Sprite" parent="Panic" index="0"]
 
 show_behind_parent = true
 position = Vector2( 80, 90 )
 texture = ExtResource( 6 )
 centered = false
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="Sprite" type="Sprite" parent="." index="8"]
 
 show_behind_parent = true
 position = Vector2( 0, -40 )
@@ -1117,14 +988,14 @@ scale = Vector2( 0.4, 0.8 )
 texture = ExtResource( 4 )
 _sections_unfolded = [ "Animation", "Transform" ]
 
-[node name="Crown" type="Sprite" parent="Sprite"]
+[node name="Crown" type="Sprite" parent="Sprite" index="0"]
 
 visible = false
 position = Vector2( 0, -75 )
 scale = Vector2( 1e-05, 1e-05 )
 texture = ExtResource( 7 )
 
-[node name="CoinLabel" type="Label" parent="Sprite"]
+[node name="CoinLabel" type="Label" parent="Sprite" index="1"]
 
 anchor_left = 1.0
 anchor_top = 0.5
@@ -1136,11 +1007,10 @@ margin_right = -114.0
 margin_bottom = -144.0
 rect_scale = Vector2( 2.5, 1.25 )
 rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 12 )
 text = "0"
 align = 1
 percent_visible = 1.0
@@ -1148,7 +1018,7 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Rect", "custom_fonts" ]
 
-[node name="NameTag" type="Label" parent="Sprite"]
+[node name="NameTag" type="Label" parent="Sprite" index="2"]
 
 visible = false
 anchor_left = 0.0
@@ -1161,11 +1031,10 @@ margin_right = -10.0
 margin_bottom = -137.0
 rect_scale = Vector2( 2.5, 1.2 )
 rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 13 )
 text = "P0"
 align = 1
 percent_visible = 1.0
@@ -1173,60 +1042,32 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Anchor", "Rect", "custom_fonts" ]
 
-[node name="Crocodile" type="Sprite" parent="Sprite"]
+[node name="Crocodile" parent="Sprite" index="3" instance=ExtResource( 9 )]
 
+visible = false
 position = Vector2( 12.5, -6.25 )
-scale = Vector2( 1.25, 0.61563 )
-texture = ExtResource( 9 )
+scale = Vector2( 1.25, 0.625 )
 flip_h = true
-_sections_unfolded = [ "Animation", "Offset", "Region", "Transform" ]
+_sections_unfolded = [ "Animation", "Offset", "Region", "Transform", "Visibility" ]
 
-[node name="Shadow" type="Sprite" parent="Sprite/Crocodile"]
-
-modulate = Color( 0, 0, 0, 0.160235 )
-show_behind_parent = true
-position = Vector2( -10, 101.522 )
-scale = Vector2( 2.25, 1 )
-texture = ExtResource( 10 )
-_sections_unfolded = [ "Offset", "Transform" ]
-
-[node name="CloseArm" type="Sprite" parent="Sprite/Crocodile"]
-
-position = Vector2( -40, 20.3044 )
-rotation = 0.173851
-scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 11 )
-offset = Vector2( 80, 0 )
-flip_h = true
-
-[node name="FarArm" type="Sprite" parent="Sprite/Crocodile"]
-
-show_behind_parent = true
-position = Vector2( 10, 10.1522 )
-rotation = -0.173851
-scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 11 )
-offset = Vector2( 80, 0 )
-flip_h = true
-flip_v = true
-
-[node name="Shape" type="CollisionShape2D" parent="."]
+[node name="Shape" type="CollisionShape2D" parent="." index="9"]
 
 visible = false
 position = Vector2( 0, -5 )
-shape = SubResource( 3 )
+shape = SubResource( 14 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="CrocodileShape" type="CollisionShape2D" parent="."]
+[node name="CrocodileShape" type="CollisionShape2D" parent="." index="10"]
 
 visible = false
 position = Vector2( 0.2, -0.199993 )
 rotation = 1.5708
-scale = Vector2( 0.5, 0.492504 )
-shape = SubResource( 4 )
+scale = Vector2( 0.5, 0.5 )
+shape = SubResource( 15 )
 disabled = true
+_sections_unfolded = [ "Transform" ]
 
-[node name="TouchArea" type="Area2D" parent="."]
+[node name="TouchArea" type="Area2D" parent="." index="11"]
 
 editor/display_folded = true
 visible = false
@@ -1240,14 +1081,14 @@ audio_bus_override = false
 audio_bus_name = "Master"
 _sections_unfolded = [ "Pickable", "Transform" ]
 
-[node name="Shape" type="CollisionShape2D" parent="TouchArea"]
+[node name="Shape" type="CollisionShape2D" parent="TouchArea" index="0"]
 
 position = Vector2( 0, 35 )
 scale = Vector2( 1.2, 1.2 )
-shape = SubResource( 5 )
+shape = SubResource( 16 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="PanicRadius" type="Area2D" parent="."]
+[node name="PanicRadius" type="Area2D" parent="." index="12"]
 
 editor/display_folded = true
 visible = false
@@ -1260,22 +1101,22 @@ collision_layer = 0
 audio_bus_override = false
 audio_bus_name = "Master"
 
-[node name="Shape" type="CollisionShape2D" parent="PanicRadius"]
+[node name="Shape" type="CollisionShape2D" parent="PanicRadius" index="0"]
 
-shape = SubResource( 18 )
+shape = SubResource( 17 )
 
-[node name="FreezeTimer" type="Timer" parent="."]
+[node name="FreezeTimer" type="Timer" parent="." index="13"]
 
 process_mode = 1
 wait_time = 3.0
 one_shot = true
 autostart = false
-script = SubResource( 6 )
+script = SubResource( 18 )
 
-[node name="FreezingSound" type="AudioStreamPlayer2D" parent="."]
+[node name="FreezingSound" type="AudioStreamPlayer2D" parent="." index="14"]
 
 visible = false
-stream = ExtResource( 12 )
+stream = ExtResource( 10 )
 volume_db = 0.0
 autoplay = false
 max_distance = 2000.0
@@ -1283,7 +1124,29 @@ attenuation = 1.0
 bus = "Master"
 area_mask = 1
 
-[node name="TapSound" type="AudioStreamPlayer2D" parent="."]
+[node name="TapSound" type="AudioStreamPlayer2D" parent="." index="15"]
+
+visible = false
+stream = ExtResource( 11 )
+volume_db = 0.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Master"
+area_mask = 1
+
+[node name="GroaningSound" type="AudioStreamPlayer2D" parent="." index="16"]
+
+visible = false
+stream = ExtResource( 12 )
+volume_db = 10.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Master"
+area_mask = 1
+
+[node name="JumpSound" type="AudioStreamPlayer2D" parent="." index="17"]
 
 visible = false
 stream = ExtResource( 13 )
@@ -1294,21 +1157,22 @@ attenuation = 1.0
 bus = "Master"
 area_mask = 1
 
-[node name="GroaningSound" type="AudioStreamPlayer2D" parent="."]
+[node name="ScreamSound" type="AudioStreamPlayer2D" parent="." index="18"]
 
 visible = false
 stream = ExtResource( 14 )
-volume_db = 10.0
+volume_db = 0.0
 autoplay = false
 max_distance = 2000.0
 attenuation = 1.0
 bus = "Master"
 area_mask = 1
+script = SubResource( 19 )
 
-[node name="JumpSound" type="AudioStreamPlayer2D" parent="."]
+[node name="PopSound" type="AudioStreamPlayer2D" parent="." index="19"]
 
 visible = false
-stream = ExtResource( 15 )
+stream = SubResource( 20 )
 volume_db = 0.0
 autoplay = false
 max_distance = 2000.0
@@ -1316,30 +1180,7 @@ attenuation = 1.0
 bus = "Master"
 area_mask = 1
 
-[node name="ScreamSound" type="AudioStreamPlayer2D" parent="."]
-
-visible = false
-stream = ExtResource( 16 )
-volume_db = 0.0
-autoplay = false
-max_distance = 2000.0
-attenuation = 1.0
-bus = "Master"
-area_mask = 1
-script = SubResource( 20 )
-
-[node name="PopSound" type="AudioStreamPlayer2D" parent="."]
-
-visible = false
-stream = SubResource( 24 )
-volume_db = 0.0
-autoplay = false
-max_distance = 2000.0
-attenuation = 1.0
-bus = "Master"
-area_mask = 1
-
-[node name="TimerLabel" type="Label" parent="."]
+[node name="TimerLabel" type="Label" parent="." index="20"]
 
 visible = false
 anchor_left = 0.0
@@ -1351,11 +1192,10 @@ margin_top = -60.0
 margin_right = 8.0
 margin_bottom = -12.0
 rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 9 )
+custom_fonts/font = SubResource( 21 )
 text = "3"
 align = 1
 percent_visible = 1.0
@@ -1363,7 +1203,7 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "custom_fonts" ]
 
-[node name="CoinChangeLabel" type="Label" parent="."]
+[node name="CoinChangeLabel" type="Label" parent="." index="21"]
 
 modulate = Color( 0.0618048, 0.894531, 0.0349426, 1 )
 self_modulate = Color( 1, 1, 1, 0 )
@@ -1375,18 +1215,17 @@ margin_top = -150.0
 margin_right = 40.0
 margin_bottom = -114.0
 rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 10 )
+custom_fonts/font = SubResource( 22 )
 text = "+10"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Rect", "Visibility", "custom_fonts" ]
 
-[node name="WinnerLabel" type="Label" parent="."]
+[node name="WinnerLabel" type="Label" parent="." index="22"]
 
 visible = false
 anchor_left = 0.0
@@ -1398,18 +1237,17 @@ margin_top = 15.0
 margin_right = 37.0
 margin_bottom = 51.0
 rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
-theme = SubResource( 12 )
+theme = SubResource( 24 )
 text = "Winner"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Rect", "custom_fonts" ]
 
-[node name="DebugLabel" type="Label" parent="."]
+[node name="DebugLabel" type="Label" parent="." index="23"]
 
 visible = false
 anchor_left = 0.0
@@ -1421,7 +1259,6 @@ margin_top = -80.0
 margin_right = 143.0
 margin_bottom = -15.0
 rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
@@ -1431,19 +1268,21 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="MovementVisualizer" parent="." instance=ExtResource( 18 )]
+[node name="MovementVisualizer" parent="." index="24" instance=ExtResource( 16 )]
 
 visible = false
 
+[connection signal="jump" from="." to="JumpSound" method="play"]
+
+[connection signal="jump" from="." to="JumpAnimation" method="play" binds= [ "Jump" ]]
+
+[connection signal="turning_crocodile" from="." to="." method="start_freezing"]
+
 [connection signal="turning_crocodile" from="." to="CrocodileShape" method="set_disabled" binds= [ false ]]
 
-[connection signal="turning_crocodile" from="." to="Sprite/Crocodile" method="show"]
-
-[connection signal="turning_crocodile" from="." to="ScreamSound" method="stop"]
+[connection signal="turning_normal" from="." to="SpriteFlipper/AnimationPlayer" method="play" binds= [ "PanicLeft" ]]
 
 [connection signal="turning_normal" from="." to="CrocodileShape" method="set_disabled" binds= [ true ]]
-
-[connection signal="turning_normal" from="." to="Sprite/Crocodile" method="hide"]
 
 [connection signal="body_entered" from="TouchArea" to="." method="tag_crocodile"]
 

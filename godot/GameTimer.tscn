@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://GameTimer.gd" type="Script" id=1]
 [ext_resource path="res://BebasNeue.otf" type="DynamicFontData" id=2]
@@ -19,14 +19,6 @@ use_filter = false
 font_data = ExtResource( 2 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[sub_resource type="DynamicFont" id=3]
-
-size = 30
-use_mipmaps = false
-use_filter = false
-font_data = ExtResource( 2 )
-_sections_unfolded = [ "Font", "Settings" ]
-
 [node name="GameTimer" type="Timer"]
 
 process_mode = 1
@@ -35,9 +27,8 @@ one_shot = true
 autostart = false
 script = ExtResource( 1 )
 countdown_duration = 5
-countdown_hint = "Press to join"
 
-[node name="RoundLabel" type="Label" parent="."]
+[node name="RoundLabel" type="Label" parent="." index="0"]
 
 visible = false
 anchor_left = 0.5
@@ -48,7 +39,6 @@ margin_left = -35.0
 margin_right = 34.0
 margin_bottom = 60.0
 rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
@@ -59,7 +49,7 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Rect" ]
 
-[node name="CountdownLabel" type="Label" parent="."]
+[node name="CountdownLabel" type="Label" parent="." index="1"]
 
 visible = false
 anchor_left = 0.5
@@ -69,43 +59,19 @@ anchor_bottom = 0.5
 margin_left = -213.0
 margin_top = -62.0
 margin_right = 212.0
-margin_bottom = 181.0
+margin_bottom = 58.0
 rect_rotation = -0.136255
 rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
 custom_fonts/font = SubResource( 2 )
-text = "5
-Press to Join"
+text = "5"
 align = 1
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Anchor", "Rect", "custom_fonts" ]
-
-[node name="ControlHint" type="Label" parent="CountdownLabel"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = -15.0
-margin_top = 232.0
-margin_right = 442.0
-margin_bottom = 268.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-size_flags_horizontal = 1
-size_flags_vertical = 4
-custom_fonts/font = SubResource( 3 )
-text = "Space|Enter|USB 3|PS X|Xbox A|Nintendo B"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "custom_fonts" ]
 
 [connection signal="timeout" from="." to="." method="_on_timeout"]
 

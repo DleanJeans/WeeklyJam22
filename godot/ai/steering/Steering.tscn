@@ -17,38 +17,37 @@ radius = 50.0
 custom_solver_bias = 0.0
 radius = 50.0
 
-[node name="Steering" type="Node2D"]
+[node name="Steering" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
 total_force = 200
 
-[node name="Seek" type="Node2D" parent="."]
+[node name="Seek" type="Node2D" parent="." index="0"]
 
 script = ExtResource( 2 )
 multiplier = 1
 
-[node name="Arrive" type="Node2D" parent="."]
+[node name="Arrive" type="Node2D" parent="." index="1"]
 
 script = ExtResource( 3 )
 multiplier = 1.0
 deceleration = 0.5
 
-[node name="Pursuit" type="Node2D" parent="."]
+[node name="Pursuit" type="Node2D" parent="." index="2"]
 
 script = ExtResource( 4 )
 multiplier = 0.5
 look_ahead_time_tweaker = 0.75
 
-[node name="Separation" type="Node2D" parent="."]
+[node name="Separation" type="Node2D" parent="." index="3"]
 
 editor/display_folded = true
-visible = false
 rotation = 0.000271485
 script = ExtResource( 5 )
 multiplier = 1.0
 separation_range = 50
 
-[node name="SeparationCircle" type="Area2D" parent="Separation"]
+[node name="SeparationCircle" type="Area2D" parent="Separation" index="0"]
 
 rotation = -0.000271485
 input_pickable = true
@@ -60,12 +59,12 @@ audio_bus_override = false
 audio_bus_name = "Master"
 _sections_unfolded = [ "Transform" ]
 
-[node name="Shape" type="CollisionShape2D" parent="Separation/SeparationCircle"]
+[node name="Shape" type="CollisionShape2D" parent="Separation/SeparationCircle" index="0"]
 
 rotation = 0.000271485
 shape = SubResource( 1 )
 
-[node name="Flee" type="Node2D" parent="."]
+[node name="Flee" type="Node2D" parent="." index="4"]
 
 editor/display_folded = true
 visible = false
@@ -74,7 +73,7 @@ _sections_unfolded = [ "Transform" ]
 multiplier = 1
 panic_radius = 200
 
-[node name="PanicRadius" type="Area2D" parent="Flee"]
+[node name="PanicRadius" type="Area2D" parent="Flee" index="0"]
 
 scale = Vector2( 4, 4 )
 input_pickable = true
@@ -86,7 +85,7 @@ audio_bus_override = false
 audio_bus_name = "Master"
 _sections_unfolded = [ "Transform" ]
 
-[node name="Shape" type="CollisionShape2D" parent="Flee/PanicRadius"]
+[node name="Shape" type="CollisionShape2D" parent="Flee/PanicRadius" index="0"]
 
 shape = SubResource( 2 )
 

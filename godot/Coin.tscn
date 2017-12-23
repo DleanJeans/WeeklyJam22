@@ -20,6 +20,7 @@ tracks/0/path = NodePath("Sprite:position")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0, 0.5 ),
 "transitions": PoolRealArray( 1, 1 ),
@@ -31,6 +32,7 @@ tracks/1/path = NodePath("Shape/Shadow:scale")
 tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/imported = false
+tracks/1/enabled = true
 tracks/1/keys = {
 "times": PoolRealArray( 0, 0.5 ),
 "transitions": PoolRealArray( 1, 1 ),
@@ -49,6 +51,7 @@ tracks/0/path = NodePath("Sprite:position")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0, 0.3, 0.5 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
@@ -60,6 +63,7 @@ tracks/1/path = NodePath("Sprite:modulate")
 tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/imported = false
+tracks/1/enabled = true
 tracks/1/keys = {
 "times": PoolRealArray( 0, 0.5 ),
 "transitions": PoolRealArray( 1, 1 ),
@@ -71,6 +75,7 @@ tracks/2/path = NodePath("Shape:scale")
 tracks/2/interp = 2
 tracks/2/loop_wrap = true
 tracks/2/imported = false
+tracks/2/enabled = true
 tracks/2/keys = {
 "times": PoolRealArray( 0, 0.5 ),
 "transitions": PoolRealArray( 1, 1 ),
@@ -83,7 +88,7 @@ tracks/2/keys = {
 custom_solver_bias = 0.0
 radius = 50.0
 
-[node name="Coin" type="Area2D" groups=[
+[node name="Coin" type="Area2D" index="0" groups=[
 "Coins",
 ]]
 
@@ -98,7 +103,7 @@ script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
 magnet_speed = 100
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="Sprite" type="Sprite" parent="." index="0"]
 
 modulate = Color( 1, 0.843137, 0, 1 )
 position = Vector2( 0, -30 )
@@ -106,33 +111,33 @@ scale = Vector2( 0.2, 0.24 )
 texture = ExtResource( 2 )
 _sections_unfolded = [ "Transform", "Visibility" ]
 
-[node name="Sprite" type="Sprite" parent="Sprite"]
+[node name="Sprite" type="Sprite" parent="Sprite" index="0"]
 
 self_modulate = Color( 0, 0, 0, 0.196078 )
 scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 2 )
 _sections_unfolded = [ "Transform", "Visibility" ]
 
-[node name="Sprite2" type="Sprite" parent="Sprite"]
+[node name="Sprite2" type="Sprite" parent="Sprite" index="1"]
 
 position = Vector2( 7.5, 0 )
 scale = Vector2( 0.45, 0.3 )
 texture = ExtResource( 2 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Shape" type="CollisionShape2D" parent="."]
+[node name="Shape" type="CollisionShape2D" parent="." index="1"]
 
 shape = SubResource( 1 )
 _sections_unfolded = [ "Transform", "Visibility" ]
 
-[node name="Shadow" type="Sprite" parent="Shape"]
+[node name="Shadow" type="Sprite" parent="Shape" index="0"]
 
 modulate = Color( 0, 0, 0, 0.196078 )
 scale = Vector2( 0.2, 0.1 )
 texture = ExtResource( 2 )
 _sections_unfolded = [ "Transform", "Visibility" ]
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="2"]
 
 playback_process_mode = 1
 playback_default_blend_time = 0.0
@@ -144,7 +149,7 @@ playback/speed = 1.0
 blend_times = [  ]
 autoplay = "Bobbing"
 
-[node name="PickupSound" type="AudioStreamPlayer2D" parent="."]
+[node name="PickupSound" type="AudioStreamPlayer2D" parent="." index="3"]
 
 visible = false
 stream = ExtResource( 3 )
@@ -156,8 +161,9 @@ bus = "Master"
 area_mask = 1
 _sections_unfolded = [ "Transform" ]
 
-[node name="MagnetRadius" type="Area2D" parent="."]
+[node name="MagnetRadius" type="Area2D" parent="." index="4"]
 
+visible = false
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
@@ -166,7 +172,7 @@ angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
 
-[node name="Shape" type="CollisionShape2D" parent="MagnetRadius"]
+[node name="Shape" type="CollisionShape2D" parent="MagnetRadius" index="0"]
 
 shape = SubResource( 4 )
 

@@ -27,7 +27,7 @@ var on_platform = false
 
 var velocity = Vector2()
 var heading = Vector2()
-var frozen = false
+var frozen = false setget _set_frozen
 
 var coins = 0 setget _set_coins
 
@@ -35,6 +35,7 @@ var _debug_text = ""
 
 signal turning_crocodile
 signal turning_normal
+signal jump
 
 func reset():
 	turn_normal()
@@ -62,6 +63,8 @@ func out_of_coins():
 	return coins <= 0
 
 func is_panicking():
+	if self.crocodile == null: return false
+	
 	var crocodile_in_panic_radius = $PanicRadius.get_overlapping_bodies().has(self.crocodile)
 	var crocodile_not_frozen = not self.crocodile.frozen
 	return not on_platform and crocodile_in_panic_radius and crocodile_not_frozen
@@ -81,10 +84,12 @@ func is_close_to_at_least_3_others():
 func show_winner_label():
 	$WinnerLabel.show()
 
+func hide_winner_label():
+	$WinnerLabel.hide()
+
 func jump():
 	if not $JumpAnimation.is_playing():
-		$JumpAnimation.play("Jump")
-		$JumpSound.play()
+		emit_signal("jump")
 
 func break_unfrozen():
 	$Sprite.modulate = get_node("/root/Global").WHITE
@@ -92,10 +97,7 @@ func break_unfrozen():
 	jump()
 
 func toggle_frozen():
-	frozen = not frozen
-	if is_crocodile() and frozen:
-		$Sprite.modulate = get_node("/root/Global").ICY_BLUE
-		$FreezingSound.play()
+	self.frozen = not frozen
 
 func groan():
 	if not $GroaningSound.playing:
@@ -146,12 +148,17 @@ func tag_crocodile(player):
 	_transfer_coins(player)
 	$TapSound.play()
 
+func _not_taggable(player):
+	return not is_crocodile() or not player is load("res://Player.gd") or frozen or player.on_platform
+
+func start_freezing():
+	$FreezeTimer.start()
+
 func _transfer_coins(player):
 	var coins_lost = _coins_lost(player)
 	var coins_gained = _coins_gained(coins_lost)
 	
 	player.turn_crocodile()
-	player.get_node("FreezeTimer").start()
 	player.take_away_coins(coins_lost)
 	
 	self.turn_normal()
@@ -167,9 +174,6 @@ func _coins_gained(coins_lost):
 
 func _round_to_nearest_5(value):
 	return round(value / 5) * 5
-
-func _not_taggable(player):
-	return not is_crocodile() or not player is load("res://Player.gd") or frozen or player.on_platform
 
 func _physics_process(delta):
 	$DebugLabel.text = "[Debug:%s]\n" % get_name()
@@ -236,3 +240,9 @@ func _set_crocodile(value):
 
 func _get_crocodile():
 	return get_node("/root/Global").crocodile
+
+func _set_frozen(value):
+	frozen = value
+	if is_crocodile() and frozen:
+		$Sprite.modulate = get_node("/root/Global").ICY_BLUE
+		$FreezingSound.play()

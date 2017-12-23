@@ -1,7 +1,6 @@
 extends Timer
 
 export(int) var countdown_duration = 5
-export(String) var countdown_hint = "Press to join"
 
 var durations = [1, 2, 3, 5, 10]
 var duration_index = 2
@@ -58,11 +57,14 @@ func _process(delta):
 	var time_left = get_time_left()
 	
 	if in_countdown_mode():
-		$CountdownLabel.text = "%s\n%s" % [round(time_left), countdown_hint]
+		$CountdownLabel.text = "%s" % round(time_left)
 	elif in_round_mode():
 		var minutes = floor(time_left / 60)
 		var seconds = floor(time_left - 60 * minutes)
 		$RoundLabel.text = "%s:%s" % [minutes, String(seconds).pad_zeros(2)]
+
+func is_counting_down():
+	return in_countdown_mode() and get_time_left() > 0
 
 func in_countdown_mode():
 	return wait_time == countdown_duration

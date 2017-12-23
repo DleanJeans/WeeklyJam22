@@ -38,7 +38,7 @@ func find_most_desired_platform(me):
 	return _find_max(me, Global.Platforms, "_filter_platform", "_platform_desirability")
 
 func _filter_platform(me, platform):
-	return platform.occupied
+	return platform.occupied or Global.crocodile == null
 
 func _platform_desirability(me, platform):
 	var distance = distance_squared(me, platform)
@@ -64,8 +64,9 @@ func find_most_desired_coin(me):
 	return _find_max(me, Global.Coins, "_filter_coin", "_coin_desirability")
 
 func _filter_coin(me, coin):
-	if coin.collected:
-		return coin.collected
+	var first_conditions = coin.collected or Global.crocodile == null
+	if first_conditions:
+		return first_conditions
 	
 	for player in Global.Players:
 		if player == me: continue

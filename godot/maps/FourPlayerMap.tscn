@@ -11,58 +11,58 @@
 script = ExtResource( 1 )
 name = "Twin Island - 4 Players"
 
-[node name="BoxWall" parent="." instance=ExtResource( 2 )]
+[node name="BoxWall" parent="." index="0" instance=ExtResource( 2 )]
 
-[node name="Platforms" type="Node2D" parent="."]
+[node name="Platforms" type="Node2D" parent="." index="1"]
 
-[node name="Platform" parent="Platforms" instance=ExtResource( 3 )]
+[node name="Platform" parent="Platforms" index="0" instance=ExtResource( 3 )]
 
 position = Vector2( 250, 300 )
 scale = Vector2( 3, 2 )
 
-[node name="Platform2" parent="Platforms" instance=ExtResource( 3 )]
+[node name="Platform2" parent="Platforms" index="1" instance=ExtResource( 3 )]
 
 position = Vector2( 710, 295 )
 scale = Vector2( 3, 2 )
 
-[node name="CoinSpawners" type="Node2D" parent="."]
+[node name="CoinSpawners" type="Node2D" parent="." index="2"]
 
 _sections_unfolded = [ "Transform" ]
 
-[node name="CoinSpawner" parent="CoinSpawners" instance=ExtResource( 4 )]
+[node name="CoinSpawner" parent="CoinSpawners" index="0" instance=ExtResource( 4 )]
 
 position = Vector2( 480, 300 )
 scale = Vector2( 2, 3.75 )
 _sections_unfolded = [ "Transform" ]
 spawn_interval = 2.0
 
-[node name="CoinSpawner2" parent="CoinSpawners" instance=ExtResource( 4 )]
+[node name="CoinSpawner2" parent="CoinSpawners" index="1" instance=ExtResource( 4 )]
 
 position = Vector2( 885, 300 )
 scale = Vector2( 1, 6 )
 _sections_unfolded = [ "Transform" ]
 spawn_interval = 4.0
 
-[node name="CoinSpawner4" parent="CoinSpawners" instance=ExtResource( 4 )]
+[node name="CoinSpawner4" parent="CoinSpawners" index="2" instance=ExtResource( 4 )]
 
 position = Vector2( 483.75, 460 )
 scale = Vector2( 11.5234, 1 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="CoinSpawner5" parent="CoinSpawners" instance=ExtResource( 4 )]
+[node name="CoinSpawner5" parent="CoinSpawners" index="3" instance=ExtResource( 4 )]
 
-position = Vector2( 480, 140 )
+position = Vector2( 475, 140 )
 scale = Vector2( 11.4844, 1 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="CoinSpawner3" parent="CoinSpawners" instance=ExtResource( 4 )]
+[node name="CoinSpawner3" parent="CoinSpawners" index="4" instance=ExtResource( 4 )]
 
 position = Vector2( 80, 300 )
 scale = Vector2( 1, 6 )
 _sections_unfolded = [ "Transform" ]
 spawn_interval = 4.0
 
-[node name="Objects" type="TileMap" parent="."]
+[node name="Objects" type="TileMap" parent="." index="3"]
 
 mode = 0
 tile_set = null
@@ -83,24 +83,24 @@ format = 1
 tile_data = PoolIntArray(  )
 _sections_unfolded = [ "Cell", "Collision" ]
 
-[node name="Player1" parent="Objects" instance=ExtResource( 5 )]
+[node name="Player1" parent="Objects" index="0" instance=ExtResource( 5 )]
 
-position = Vector2( 150, 210 )
+position = Vector2( 240, 205 )
 color = Color( 0.953125, 0.0670166, 0.399307, 1 )
 
-[node name="Player2" parent="Objects" instance=ExtResource( 5 )]
+[node name="Player2" parent="Objects" index="1" instance=ExtResource( 5 )]
 
-position = Vector2( 820, 200 )
+position = Vector2( 710, 205 )
 color = Color( 0.441249, 0.0397797, 0.925781, 1 )
 
-[node name="Player3" parent="Objects" instance=ExtResource( 5 )]
+[node name="Player3" parent="Objects" index="2" instance=ExtResource( 5 )]
 
-position = Vector2( 820, 390 )
-color = Color( 0.14801, 0.757813, 0.514844, 1 )
+position = Vector2( 715, 405 )
+color = Color( 0.104248, 0.953125, 0.6149, 1 )
 
-[node name="Player4" parent="Objects" instance=ExtResource( 5 )]
+[node name="Player4" parent="Objects" index="3" instance=ExtResource( 5 )]
 
-position = Vector2( 135, 405 )
+position = Vector2( 230, 405 )
 color = Color( 0.164063, 0.164063, 0.164063, 1 )
 
 

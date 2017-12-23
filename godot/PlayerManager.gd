@@ -1,5 +1,7 @@
 extends Node2D
 
+signal player_jump(player)
+
 var positions = []
 
 func _ready():
@@ -28,10 +30,12 @@ func activate_controller(player_num, controller_name):
 	random_player.controller = controller_name
 	random_player.set_name_tag( "P%s" % player_num)
 	random_player.jump()
+	emit_signal("player_jump", random_player)
 
 func choose_crocodile_randomly():
 	var random_player = _find_random_player()
 	random_player.turn_crocodile()
+	random_player.start_freezing()
 
 func _find_random_player():
 	var random_player_index = randi() % Global.Players.size()
@@ -48,8 +52,15 @@ func unfreeze_players():
 		p.frozen = false
 
 func reset():
+	Global.crocodile = null
 	for p in Global.Players:
 		p.reset()
+
+func resume_freeze_timer():
+	Global.crocodile.get_node("FreezeTimer").set_paused(false)
+
+func pause_freeze_timer():
+	Global.crocodile.get_node("FreezeTimer").set_paused(true)
 
 func players_with_highest_score():
 	var winners = []
