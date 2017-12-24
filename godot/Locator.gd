@@ -38,19 +38,27 @@ func find_most_desired_platform(me):
 	return _find_max(me, Global.Platforms, "_filter_platform", "_platform_desirability")
 
 func _filter_platform(me, platform):
-	return platform.occupied or Global.crocodile == null
+	return Global.crocodile == null
 
 func _platform_desirability(me, platform):
 	var distance = distance_squared(me, platform)
 	var distance_to_crocodile = distance_squared(platform, Global.crocodile)
 	var crocodile_relative_direction = _relative_direction(me.position, platform.position, Global.crocodile.position)
+	var platform_total_distance_to_peers = _platform_total_distance_to_peers(me, platform)
 	
-	var good = distance_to_crocodile
+	var good = distance_to_crocodile * platform_total_distance_to_peers
 	var bad = (1 + crocodile_relative_direction) + distance
 	
 	var desirability = good / bad
 	
 	return desirability
+
+func _platform_total_distance_to_peers(me, platform):
+	var distance = 0
+	for player in Global.Players:
+		if player == me or player.is_crocodile(): continue
+		distance += distance_squared(player, platform)
+	return distance
 
 func _relative_direction(origin, position1, position2):
 	var to_position1 = (position1 - origin).normalized()

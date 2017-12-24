@@ -29,12 +29,15 @@ func _relocate_platform():
 func process():
 	.process()
 	
-	if platform == null or player.out_of_coins():
+	if platform == null:
 		state = GOAL_FAILED
-	elif Locator.distance(player, platform) <= 50 and not steering.get_node("Flee").is_panicking(Global.crocodile):
+	elif Locator.distance(player, platform) <= 40 and not player.is_panicking():
 		state = GOAL_COMPLETED
-	elif platform.occupied and not player.on_platform:
-		state = GOAL_FAILED
+	elif _blocked_out_of_platform():
+		player.jump()
+
+func _blocked_out_of_platform():
+	return player.collision_layer == Global.COLLISION_BLOCKED
 
 func terminate():
 	.terminate()

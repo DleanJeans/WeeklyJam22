@@ -1,6 +1,11 @@
 tool
 extends Node
 
+const COLLISION_NORMAL = 1 + 16
+const COLLISION_BLOCKED = 1 + 2 + 16
+const COLLISION_AIRBORNE = 16
+
+var Game
 var Players setget , _get_players 
 var Platforms setget, _get_platforms
 var Coins setget , _get_coins

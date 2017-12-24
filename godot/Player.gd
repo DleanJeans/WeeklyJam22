@@ -13,6 +13,7 @@ const BONUS_COINS_ON_TAG = 10
 
 var crocodile setget _set_crocodile, _get_crocodile
 
+export(bool) var just_landed = false
 export(Color) var color = Color("#ffffff") setget _set_color
 var max_velocity = 300
 var drag_scale = 0.8
@@ -47,6 +48,12 @@ func reset():
 	$WinnerLabel.hide()
 	$ScreamSound.choose_random_sound()
 
+func enable_ai():
+	$AI.enable()
+
+func disable_ai():
+	$AI.disable()
+
 func show_crown():
 	if $Sprite/Crown.visible or $CrownAnimation.is_playing(): return
 	
@@ -67,6 +74,7 @@ func is_panicking():
 	
 	var crocodile_in_panic_radius = $PanicRadius.get_overlapping_bodies().has(self.crocodile)
 	var crocodile_not_frozen = not self.crocodile.frozen
+	
 	return not on_platform and crocodile_in_panic_radius and crocodile_not_frozen
 
 func is_close_to_at_least_3_others():
@@ -88,6 +96,10 @@ func hide_winner_label():
 	$WinnerLabel.hide()
 
 func jump():
+	if not frozen:
+		force_jump()
+
+func force_jump():
 	if not $JumpAnimation.is_playing():
 		emit_signal("jump")
 
@@ -145,11 +157,13 @@ func tag_crocodile(player):
 	if _not_taggable(player):
 		return
 	
+	turn_normal()
+	player.turn_crocodile()
 	_transfer_coins(player)
 	$TapSound.play()
 
 func _not_taggable(player):
-	return not is_crocodile() or not player is load("res://Player.gd") or frozen or player.on_platform
+	return player == self or not is_crocodile() or not player is load("res://Player.gd") or frozen or player.on_platform
 
 func start_freezing():
 	$FreezeTimer.start()
@@ -158,10 +172,7 @@ func _transfer_coins(player):
 	var coins_lost = _coins_lost(player)
 	var coins_gained = _coins_gained(coins_lost)
 	
-	player.turn_crocodile()
 	player.take_away_coins(coins_lost)
-	
-	self.turn_normal()
 	self.collect_coins(coins_gained)
 
 func _coins_lost(player):
@@ -187,6 +198,7 @@ func _physics_process(delta):
 	heading = velocity.normalized()
 	
 	_steer_ai_crocodile_if_blocked()
+	debug("Frozen: %s" % frozen)
 
 func _steer_ai_crocodile_if_blocked():
 	if get_slide_count() > 0 and is_crocodile() and is_controlled_by_ai():

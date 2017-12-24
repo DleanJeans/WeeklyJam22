@@ -20,7 +20,7 @@ func process():
 	if _should_flee():
 		var subgoal_to_add
 		
-		if _all_platforms_occupied() or _crocodile_blocks_way_to_platform() or player.out_of_coins():
+		if _all_platforms_occupied() or _crocodile_blocks_way_to_platform():
 			subgoal_to_add = FleeCrocodile
 		else:
 			subgoal_to_add = ArriveAtPlatform

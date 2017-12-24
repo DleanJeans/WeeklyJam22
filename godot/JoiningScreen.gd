@@ -26,7 +26,15 @@ func _move_label_to_players():
 		var label = $Labels.get_child(i)
 		player_label_dict[player] = label
 		
-		label.rect_position = player.position + Vector2(35, -50)
+		_set_label_position(label, player)
+
+func _stick_label_to_players():
+	for player in players_joined:
+		var label = player_label_dict[player]
+		_set_label_position(label, player)
+
+func _set_label_position(label, player):
+	label.rect_position = player.position + Vector2(35, -50)
 
 func hide():
 	.hide()
@@ -42,6 +50,8 @@ func _process(delta):
 	if _all_ready():
 		game.start_counting_down()
 	else: game.stop_counting_down()
+	
+	_stick_label_to_players()
 
 func _all_ready():
 	if players_joined.size() == 0:

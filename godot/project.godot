@@ -32,7 +32,7 @@ debug_goal_tree=true
 debug_steering=true
 slo_mo_scale=0.1
 version="1.0.0"
-enable_slo_mo=false
+enable_slo_mo=true
 
 [gdnative]
 
@@ -213,6 +213,8 @@ ui_start=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":2,"button_index":11,"pressure":0.0,"pressed":false,"script":null)
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":3,"button_index":11,"pressure":0.0,"pressed":false,"script":null)
  ]
+reset_controllers=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":73,"unicode":0,"echo":false,"script":null)
+ ]
 
 [layer_names]
 
@@ -220,6 +222,7 @@ ui_start=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":
 2d_physics/layer_2="BlockedPlayers"
 2d_physics/layer_3="Platforms"
 2d_physics/layer_4="Walls"
+2d_physics/layer_5="Walled"
 
 [rendering]
 

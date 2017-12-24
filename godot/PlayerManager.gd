@@ -7,6 +7,14 @@ var positions = []
 func _ready():
 	record_positions()
 
+func enable_ai():
+	for player in Global.Players:
+		player.enable_ai()
+
+func disable_ai():
+	for player in Global.Players:
+		player.disable_ai()
+
 func record_positions():
 	positions.clear()
 	for player in Global.Players:

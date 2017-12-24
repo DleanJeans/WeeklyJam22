@@ -39,6 +39,7 @@ func end():
 	emit_signal("game_over")
 
 func _ready():
+	Global.Game = self
 	randomize()
 	emit_signal("game_loaded")
 
@@ -48,14 +49,14 @@ func _show_winner():
 
 func _stop_showing_winner():
 	showing_winner = false
-#	for p in winners:
-#		p.hide_winner_label()
 
 func _process(delta):
 	if showing_winner:
 		for p in winners:
 			p.show_winner_label()
-			p.jump()
+			p.force_jump()
+	if Input.is_action_just_pressed("reset_controllers"):
+		$PlayerManager.reset_controllers()
 
 func _unfreeze_if_in_game():
 	if $GameTimer.in_round_mode():

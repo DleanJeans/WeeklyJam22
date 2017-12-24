@@ -4,10 +4,11 @@ extends StaticBody2D
 # a lil bit larget than $Shape itself
 # because only then _on_player_enter() can be called
 
-var coins_per_second_rates = 10
+var pushing_speed = 500
 
 var to_screen_center
-var occupied
+var occupied setget , _get_occupied
+
 var _player
 var _occupier
 
@@ -29,7 +30,9 @@ func _on_player_enter(body):
 	
 	_player = body
 	
-	if _player_not_allowed():
+	if _player.just_landed:
+		_unblock_player()
+	elif _player_not_allowed():
 		_block_player()
 	else:
 		_unblock_player()
@@ -38,26 +41,26 @@ func _is_player(body):
 	return body.is_in_group(Global.PLAYERS_GROUP)
 
 func _player_not_allowed():
-	return occupied or _player.is_crocodile() or _player.out_of_coins()
+	return _player.is_crocodile() or self.occupied
 
 func _block_player():
-	_player.collision_layer |= collision_mask
+	_player.collision_layer = Global.COLLISION_BLOCKED
 
 func _unblock_player():
-	occupied = true
 	_occupier = _player
-	$AllowSound.play()
-	_player.collision_layer = 1
 	_player.on_platform = true
+	_player.collision_layer = Global.COLLISION_NORMAL
+	_player.frozen = false
 	_turn_red()
-	$FeeTimer.start()
+	$AllowSound.play()
 
 func _on_player_exited(player):
-	if occupied and player.on_platform:
-		occupied = false
+	player.frozen = false
+	if self.occupied and player.on_platform:
+		_occupier = null
 		player.on_platform = false
+		player.collision_layer = Global.COLLISION_NORMAL
 		_turn_green()
-		$FeeTimer.stop()
 
 func _turn_red():
 	$ColorChanger.play("TurnRed")
@@ -68,23 +71,23 @@ func _process(delta):
 		_player = body
 		if _player.is_crocodile():
 			_block_player()
-		elif _player.coins <= 0 and _player.on_platform:
-			_push_player_out()
-		elif not occupied:
+		elif _no_one_here():
 			_unblock_player()
+		elif _player_pushed_out_by_others():
+			_push_player_out()
+
+func _no_one_here():
+	return not self.occupied
+
+func _player_pushed_out_by_others():
+	return _player != _occupier and _player.collision_layer == Global.COLLISION_NORMAL
 
 func _push_player_out():
-	$FeeTimer.stop()
-	_player.move_and_slide(to_screen_center * 500)
-
-func _steer_player():
-	var heading_angle = _player.velocity.angle_to_point(Vector2())
-	var new_angle = round(heading_angle / 45) * 45
-	
-	_player.velocity = _player.velocity.rotated(new_angle - heading_angle)
+	_player.move_and_slide(to_screen_center * pushing_speed)
+	_player.frozen = true
 
 func _turn_green():
 	$ColorChanger.play("TurnGreen")
 
-func _on_FeeTimer_timeout():
-	_occupier.take_away_coins(coins_per_second_rates * $FeeTimer.wait_time)
+func _get_occupied():
+	return _occupier != null
