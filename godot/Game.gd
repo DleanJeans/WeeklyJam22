@@ -48,8 +48,8 @@ func _show_winner():
 
 func _stop_showing_winner():
 	showing_winner = false
-	for p in winners:
-		p.hide_winner_label()
+#	for p in winners:
+#		p.hide_winner_label()
 
 func _process(delta):
 	if showing_winner:
