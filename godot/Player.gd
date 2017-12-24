@@ -233,7 +233,7 @@ func _set_color(value):
 		$Sprite/CoinLabel.self_modulate = color
 		$Sprite/NameTag.self_modulate = color
 		$WinnerLabel.self_modulate = color
-		$Panic.self_modulate = color
+		$Sprite/Panic.self_modulate = color
 
 func _set_crocodile(value):
 	get_node("/root/Global").crocodile = value

@@ -4,7 +4,7 @@
 [ext_resource path="res://assets/Circle.png" type="Texture" id=2]
 [ext_resource path="res://assets/CrocodileArm.png" type="Texture" id=3]
 
-[node name="Crocodile" type="Sprite" index="0"]
+[node name="Crocodile" type="Sprite"]
 
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 1 )
@@ -14,8 +14,8 @@ _sections_unfolded = [ "Animation", "Offset", "Region", "Transform" ]
 
 modulate = Color( 0, 0, 0, 0.160235 )
 show_behind_parent = true
-position = Vector2( 10, 90 )
-scale = Vector2( 2.25, 1 )
+position = Vector2( 10, 110 )
+scale = Vector2( 2.25, 0.75 )
 texture = ExtResource( 2 )
 _sections_unfolded = [ "Offset", "Transform" ]
 
