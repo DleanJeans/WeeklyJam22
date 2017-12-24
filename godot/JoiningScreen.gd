@@ -56,15 +56,20 @@ func _on_player_jump(player):
 	
 	if players_ready.has(player):
 		players_ready[player] = not players_ready[player]
-		
-		if players_ready[player]:
-			label.text = "Ready!"
-			label.modulate = player.color
-		else:
-			label.text = "Not Ready?"
-			label.modulate = Global.WHITE
+		_update_label(player)
 	else:
-		label.show()
 		players_ready[player] = false
 		players_joined.append(player)
 		player.connect("jump", self, "_on_player_jump", [player])
+		
+		label.show()
+		_update_label(player)
+
+func _update_label(player):
+	var label = player_label_dict[player]
+	if players_ready[player]:
+		label.text = "Ready!"
+		label.modulate = player.color
+	else:
+		label.text = "Not Ready?"
+		label.modulate = Global.WHITE
