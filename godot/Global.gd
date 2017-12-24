@@ -34,7 +34,7 @@ func _get_coin_spawners():
 	return get_tree().get_nodes_in_group("CoinSpawners")
 
 func _process(delta):
-	if Input.is_action_just_pressed("slo_mo_toggle"):
+	if Input.is_action_just_pressed("slo_mo_toggle") and ProjectSettings.get_setting("game/enable_slo_mo") and OS.is_debug_build():
 		Engine.set_time_scale(ProjectSettings.get_setting("game/slo_mo_scale") if Engine.get_time_scale() == 1 else 1)
 	elif Input.is_action_just_pressed("toggle_fullscreen"):
 		toggle_fullscreen()

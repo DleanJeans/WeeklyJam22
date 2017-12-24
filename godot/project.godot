@@ -32,6 +32,7 @@ debug_goal_tree=true
 debug_steering=true
 slo_mo_scale=0.1
 version="1.0.0"
+enable_slo_mo=false
 
 [gdnative]
 
