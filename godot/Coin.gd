@@ -23,7 +23,7 @@ func _on_animation_finished(name):
 func _physics_process(delta):
 	var bodies = $MagnetRadius.get_overlapping_bodies()
 	for body in bodies:
-		if not body in Global.Players or body == Global.crocodile: continue
+		if not body in Global.Players: continue
 		
 		var to_player = (body.position - position).normalized()
 		var movement = to_player * delta * magnet_speed
