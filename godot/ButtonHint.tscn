@@ -95,7 +95,7 @@ use_filter = false
 font_data = ExtResource( 3 )
 _sections_unfolded = [ "Font", "Font/fallback", "Settings" ]
 
-[node name="ButtonHint" type="Container" index="0"]
+[node name="ButtonHint" type="Container"]
 
 anchor_left = 0.0
 anchor_top = 0.0

@@ -38,6 +38,7 @@ signal turning_crocodile
 signal turning_normal
 signal jump
 signal frozen_as_crocodile
+signal hit_wall(player, bounce)
 
 func reset():
 	turn_normal()
@@ -198,19 +199,34 @@ func _round_to_nearest_5(value):
 func _physics_process(delta):
 	$DebugLabel.text = "[Debug:%s]\n" % get_name()
 	
-	debug("Frozen: %s" % frozen)
+	_emit_signal_if_hit_wall()
+	
 	if frozen: return
 	
+	_move_player()
+	_steer_ai_if_blocked()
+
+func _move_player():
 	clamp_velocity()
 	velocity *= drag_scale
 	move_and_slide(velocity)
 	
 	heading = velocity.normalized()
-	
-	_steer_ai_crocodile_if_blocked()
 
-func _steer_ai_crocodile_if_blocked():
-	if get_slide_count() > 0 and is_crocodile() and is_controlled_by_ai():
+func _emit_signal_if_hit_wall():
+	if get_slide_count() > 0:
+		var collision = get_slide_collision(0)
+		if not collision.collider is load("res://Wall.gd"): return
+		
+		var normal = collision.normal
+		
+		if abs(normal.x) == 1:
+			emit_signal("hit_wall", self, Vector2(-1, 1))
+		elif abs(normal.y) == 1:
+			emit_signal("hit_wall", self, Vector2(1, -1))
+
+func _steer_ai_if_blocked():
+	if get_slide_count() > 0 and is_controlled_by_ai():
 		var collision = get_slide_collision(0)
 		var normal = collision.normal
 		var tangent = velocity.tangent()

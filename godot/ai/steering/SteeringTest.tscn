@@ -72,7 +72,7 @@ script = SubResource( 1 )
 
 [node name="Platform" parent="." index="0" instance=ExtResource( 1 )]
 
-position = Vector2( 490, 250 )
+position = Vector2( 860, 120 )
 scale = Vector2( 3, 2 )
 
 [node name="TileMap" type="TileMap" parent="." index="1"]
@@ -99,21 +99,20 @@ _sections_unfolded = [ "Cell" ]
 [node name="TestSubject" parent="TileMap" index="0" instance=ExtResource( 2 )]
 
 editor/display_folded = true
-position = Vector2( 490, 270 )
+position = Vector2( 820, 120 )
 
 [node name="DebugLabel" parent="TileMap/TestSubject" index="22"]
 
 text = "[Debug:TestSubject]
-Layer: 17
 "
 
 [node name="ControlSubject" parent="TileMap" index="1" instance=ExtResource( 2 )]
 
-position = Vector2( 470, 170 )
+position = Vector2( 730, 140 )
 
 [node name="Target" type="StaticBody2D" parent="." index="2"]
 
-position = Vector2( 660, 250 )
+position = Vector2( 920, 90 )
 input_pickable = false
 collision_layer = 1
 collision_mask = 0
@@ -121,6 +120,9 @@ constant_linear_velocity = Vector2( 0, 0 )
 constant_angular_velocity = 0.0
 friction = 1.0
 bounce = 0.0
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Target" index="0"]
 

@@ -13,6 +13,7 @@ func show():
 
 func _ready():
 	$PlayButton.grab_focus()
+	$Version.text = ProjectSettings.get_setting("game/version")
 
 func _on_FullScreenButton_pressed():
 	Global.toggle_fullscreen()

@@ -4,13 +4,15 @@ extends StaticBody2D
 # a lil bit larget than $Shape itself
 # because only then _on_player_enter() can be called
 
-var pushing_speed = 500
+var bounce_speed = 400
 
 var to_screen_center
 var occupied setget , _get_occupied
 
 var _player
 var _occupier
+var _bounced_players = []
+var _bounce_velocities = {}
 
 func _ready():
 	var screen_center = Vector2(ProjectSettings.get_setting("display/window/size/width"), ProjectSettings.get_setting("display/window/size/height")) / 2
@@ -61,6 +63,9 @@ func _on_player_exited(player):
 		player.on_platform = false
 		player.collision_layer = Global.COLLISION_NORMAL
 		_turn_green()
+	if player.is_connected("hit_wall", self, "_on_player_hit_wall"):
+		player.disconnect("hit_wall", self, "_on_player_hit_wall")
+	_bounce_velocities.erase(player)
 
 func _turn_red():
 	$ColorChanger.play("TurnRed")
@@ -83,8 +88,25 @@ func _player_pushed_out_by_others():
 	return _player != _occupier and _player.collision_layer == Global.COLLISION_NORMAL
 
 func _push_player_out():
-	_player.move_and_slide(to_screen_center * pushing_speed)
-	_player.frozen = true
+	var velocity
+	
+	if not _bounce_velocities.has(_player):
+		var to_player = (_player.position - _occupier.position).normalized()
+		velocity = to_player * bounce_speed
+		
+		_bounced_players.append(_player)
+		_bounce_velocities[_player] = velocity
+		
+		_player.connect("hit_wall", self, "_on_player_hit_wall")
+	
+	velocity = _bounce_velocities[_player]
+	_player.move_and_slide(velocity)
+
+func _on_player_hit_wall(player, bounce_vector):
+	if not _bounce_velocities.has(player): pass
+	
+	print("%s Hit Wall" % player.get_name())
+	_bounce_velocities[player] *= bounce_vector
 
 func _turn_green():
 	$ColorChanger.play("TurnGreen")

@@ -884,7 +884,7 @@ font_data = ExtResource( 6 )
 
 default_font = SubResource( 23 )
 
-[node name="Player" type="KinematicBody2D" index="0" groups=[
+[node name="Player" type="KinematicBody2D" groups=[
 "Players",
 ]]
 
@@ -1273,7 +1273,6 @@ mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
 text = "[Debug:Player]
-Frozen: False
 "
 percent_visible = 1.0
 lines_skipped = 0
@@ -1291,19 +1290,19 @@ margin_right = 23.9334
 margin_bottom = 49.9258
 button = "A"
 
-[connection signal="jump" from="." to="ButtonHint" method="pop_out"]
+[connection signal="jump" from="." to="JumpAnimation" method="play" binds= [ "Jump" ]]
 
 [connection signal="jump" from="." to="JumpSound" method="play"]
 
-[connection signal="jump" from="." to="JumpAnimation" method="play" binds= [ "Jump" ]]
-
-[connection signal="turning_crocodile" from="." to="CrocodileShape" method="set_disabled" binds= [ false ]]
+[connection signal="jump" from="." to="ButtonHint" method="pop_out"]
 
 [connection signal="turning_crocodile" from="." to="." method="start_freezing"]
 
-[connection signal="turning_normal" from="." to="CrocodileShape" method="set_disabled" binds= [ true ]]
+[connection signal="turning_crocodile" from="." to="CrocodileShape" method="set_disabled" binds= [ false ]]
 
 [connection signal="turning_normal" from="." to="SpriteFlipper/AnimationPlayer" method="play" binds= [ "PanicLeft" ]]
+
+[connection signal="turning_normal" from="." to="CrocodileShape" method="set_disabled" binds= [ true ]]
 
 [connection signal="body_entered" from="TouchArea" to="." method="tag_crocodile"]
 

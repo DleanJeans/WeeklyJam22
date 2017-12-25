@@ -81,6 +81,7 @@ _sections_unfolded = [ "Anchor", "Grow Direction", "Margin", "Rect", "Visibility
 
 [node name="Title" type="Label" parent="." index="2"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -212,43 +213,45 @@ flat = true
 align = 1
 _sections_unfolded = [ "Rect", "custom_fonts" ]
 
-[node name="Container" type="HBoxContainer" parent="FullScreenButton" index="0"]
+[node name="HBoxContainer" type="HBoxContainer" parent="FullScreenButton" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 30.0
 margin_top = 30.0
-margin_right = 154.0
+margin_right = 200.0
 margin_bottom = 90.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-alignment = 0
+alignment = 1
+_sections_unfolded = [ "Rect" ]
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="F11" parent="FullScreenButton/Container" index="0" instance=ExtResource( 8 )]
+[node name="F11" parent="FullScreenButton/HBoxContainer" index="0" instance=ExtResource( 8 )]
 
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 0.0
+margin_left = 38.0
 margin_top = 0.0
-margin_right = 60.0
+margin_right = 98.0
 margin_bottom = 60.0
+size_flags_horizontal = 4
 button = "F11"
 
-[node name="R1" parent="FullScreenButton/Container" index="1" instance=ExtResource( 8 )]
+[node name="R1" parent="FullScreenButton/HBoxContainer" index="1" instance=ExtResource( 8 )]
 
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 64.0
+margin_left = 102.0
 margin_top = 0.0
-margin_right = 124.0
+margin_right = 162.0
 margin_bottom = 60.0
+size_flags_horizontal = 4
 button = "R1"
 
 [node name="PlayButton" type="Button" parent="." index="4"]
@@ -257,10 +260,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 305.0
-margin_top = 225.0
-margin_right = 470.0
-margin_bottom = 351.0
+margin_left = 30.0
+margin_top = 260.0
+margin_right = 195.0
+margin_bottom = 386.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
 size_flags_horizontal = 1
@@ -283,10 +286,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 305.0
-margin_top = 360.0
-margin_right = 673.0
-margin_bottom = 414.0
+margin_left = 30.0
+margin_top = 395.0
+margin_right = 398.0
+margin_bottom = 449.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
 size_flags_horizontal = 1
@@ -310,10 +313,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 305.0
-margin_top = 420.0
-margin_right = 600.0
-margin_bottom = 474.0
+margin_left = 30.0
+margin_top = 455.0
+margin_right = 325.0
+margin_bottom = 509.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
 size_flags_horizontal = 1
@@ -337,9 +340,9 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 15.0
+margin_left = 720.0
 margin_top = 425.0
-margin_right = 242.0
+margin_right = 947.0
 margin_bottom = 530.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 2
@@ -350,6 +353,7 @@ text = "Developer: Dlean Jeans
 Music: OurMusicBox.com
 SFX: Zapslat.com
 Game Engine: Godot 3"
+align = 2
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
@@ -361,19 +365,21 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 905.0
-margin_top = 500.0
-margin_right = 953.0
-margin_bottom = 536.0
+margin_left = 815.0
+margin_top = 240.0
+margin_right = 900.0
+margin_bottom = 276.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
 custom_fonts/font = SubResource( 5 )
-text = "1.0.0"
+text = "v1.0"
+align = 1
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
+_sections_unfolded = [ "Anchor", "Margin" ]
 
 [connection signal="shown" from="." to="PlayButton" method="grab_focus"]
 

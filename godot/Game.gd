@@ -50,6 +50,12 @@ func _resume_tree():
 func end():
 	emit_signal("game_over")
 
+func show_mouse():
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+
+func hide_mouse():
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+
 func _ready():
 	Global.Game = self
 	randomize()
