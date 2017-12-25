@@ -57,7 +57,8 @@ func _set_label_position(label, player):
 
 func _disconnnect_jump_signals():
 	for player in players_joined:
-		player.disconnect("jump", self, "_on_player_jump")
+		if player.is_connected("jump", self, "_on_player_jump"):
+			player.disconnect("jump", self, "_on_player_jump")
 
 func _process(delta):
 	if not visible: return

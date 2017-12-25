@@ -341,15 +341,16 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 720.0
-margin_top = 425.0
+margin_top = 400.0
 margin_right = 947.0
-margin_bottom = 530.0
+margin_bottom = 532.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
 custom_fonts/font = SubResource( 4 )
 text = "Developer: Dlean Jeans
+Concept Art: Das Billige Alien
 Music: OurMusicBox.com
 SFX: Zapslat.com
 Game Engine: Godot 3"
@@ -383,22 +384,22 @@ _sections_unfolded = [ "Anchor", "Margin" ]
 
 [connection signal="shown" from="." to="PlayButton" method="grab_focus"]
 
+[connection signal="pressed" from="FullScreenButton" to="SelectSound" method="play"]
+
 [connection signal="pressed" from="FullScreenButton" to="." method="_on_FullScreenButton_pressed"]
 
-[connection signal="pressed" from="FullScreenButton" to="SelectSound" method="play"]
+[connection signal="pressed" from="PlayButton" to="SelectSound" method="play"]
 
 [connection signal="pressed" from="PlayButton" to="." method="hide"]
 
 [connection signal="pressed" from="PlayButton" to="." method="_on_PlayButton_pressed"]
 
-[connection signal="pressed" from="PlayButton" to="SelectSound" method="play"]
+[connection signal="pressed" from="MapButton" to="SelectSound" method="play"]
 
 [connection signal="pressed" from="MapButton" to="." method="_on_MapButton_pressed"]
 
-[connection signal="pressed" from="MapButton" to="SelectSound" method="play"]
+[connection signal="pressed" from="RoundDurationButton" to="SelectSound" method="play"]
 
 [connection signal="pressed" from="RoundDurationButton" to="." method="_on_RoundDurationButton_pressed"]
-
-[connection signal="pressed" from="RoundDurationButton" to="SelectSound" method="play"]
 
 

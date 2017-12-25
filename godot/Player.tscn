@@ -884,7 +884,7 @@ font_data = ExtResource( 6 )
 
 default_font = SubResource( 23 )
 
-[node name="Player" type="KinematicBody2D" groups=[
+[node name="Player" type="KinematicBody2D" index="0" groups=[
 "Players",
 ]]
 
