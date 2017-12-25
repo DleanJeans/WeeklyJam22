@@ -6,10 +6,11 @@
 [ext_resource path="res://CoinSpawner.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=5]
 
-[node name="FivePlayerMap" type="Node2D"]
+[node name="Map" type="Node2D"]
 
 script = ExtResource( 1 )
 name = "Tripolar - 5 Players"
+position_tween_time = 0.5
 
 [node name="BoxWall" parent="." index="0" instance=ExtResource( 2 )]
 
@@ -80,27 +81,27 @@ _sections_unfolded = [ "Cell" ]
 
 [node name="Player" parent="Objects" index="0" instance=ExtResource( 5 )]
 
-position = Vector2( 235, 140 )
+position = Vector2( 260, 190 )
 color = Color( 0.441249, 0.0397797, 0.925781, 1 )
 
 [node name="Player2" parent="Objects" index="1" instance=ExtResource( 5 )]
 
-position = Vector2( 480, 250 )
+position = Vector2( 480, 300 )
 color = Color( 0.953125, 0.0670166, 0.399307, 1 )
 
 [node name="Player3" parent="Objects" index="2" instance=ExtResource( 5 )]
 
-position = Vector2( 320, 390 )
+position = Vector2( 310, 470 )
 color = Color( 1, 0.703125, 0, 1 )
 
 [node name="Player4" parent="Objects" index="3" instance=ExtResource( 5 )]
 
-position = Vector2( 640, 395 )
+position = Vector2( 640, 480 )
 color = Color( 0.164063, 0.164063, 0.164063, 1 )
 
 [node name="Player5" parent="Objects" index="4" instance=ExtResource( 5 )]
 
-position = Vector2( 720, 130 )
+position = Vector2( 700, 190 )
 color = Color( 0.104248, 0.953125, 0.6149, 1 )
 
 

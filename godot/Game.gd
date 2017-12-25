@@ -1,9 +1,15 @@
 extends Node2D
 
 signal game_loaded
+
 signal countdown_started
+
 signal game_started
 signal game_over
+
+signal game_paused
+signal game_resumed
+
 signal joining_screen_opened
 signal main_menu_opened
 
@@ -30,9 +36,15 @@ func start():
 	emit_signal("game_started")
 
 func pause():
+	emit_signal("game_paused")
+
+func _pause_tree():
 	get_tree().set_pause(true)
 
 func resume():
+	emit_signal("game_resumed")
+
+func _resume_tree():
 	get_tree().set_pause(false)
 
 func end():
@@ -55,6 +67,7 @@ func _process(delta):
 		for p in winners:
 			p.show_winner_label()
 			p.force_jump()
+			p.hide_button_hint()
 	if Input.is_action_just_pressed("reset_controllers"):
 		$PlayerManager.reset_controllers()
 

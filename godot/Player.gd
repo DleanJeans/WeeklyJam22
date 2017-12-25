@@ -37,6 +37,7 @@ var _debug_text = ""
 signal turning_crocodile
 signal turning_normal
 signal jump
+signal frozen_as_crocodile
 
 func reset():
 	turn_normal()
@@ -53,6 +54,9 @@ func enable_ai():
 
 func disable_ai():
 	$AI.disable()
+
+func hide_button_hint():
+	$ButtonHint.hide()
 
 func show_crown():
 	if $Sprite/Crown.visible or $CrownAnimation.is_playing(): return
@@ -103,6 +107,15 @@ func force_jump():
 	if not $JumpAnimation.is_playing():
 		emit_signal("jump")
 
+func groan():
+	if not $GroaningSound.playing:
+		$GroaningSound.play()
+		$ButtonHint.pop_out()
+
+func _finished_playing(name):
+	if name == "Jump" or name == "Groan":
+		$ButtonHint.pop_up()
+
 func break_unfrozen():
 	$Sprite.modulate = get_node("/root/Global").WHITE
 	groan()
@@ -110,10 +123,6 @@ func break_unfrozen():
 
 func toggle_frozen():
 	self.frozen = not frozen
-
-func groan():
-	if not $GroaningSound.playing:
-		$GroaningSound.play()
 
 func collect_coins(amount = 10):
 	self.coins += amount
@@ -189,6 +198,7 @@ func _round_to_nearest_5(value):
 func _physics_process(delta):
 	$DebugLabel.text = "[Debug:%s]\n" % get_name()
 	
+	debug("Frozen: %s" % frozen)
 	if frozen: return
 	
 	clamp_velocity()
@@ -198,7 +208,6 @@ func _physics_process(delta):
 	heading = velocity.normalized()
 	
 	_steer_ai_crocodile_if_blocked()
-	debug("Frozen: %s" % frozen)
 
 func _steer_ai_crocodile_if_blocked():
 	if get_slide_count() > 0 and is_crocodile() and is_controlled_by_ai():
@@ -233,6 +242,27 @@ func _set_controller(value):
 	if value == "AI":
 		$Sprite/NameTag.hide()
 	else: $Sprite/NameTag.show()
+	
+	_toggle_button_hint_visible()
+	_choose_button_hint()
+
+func _toggle_button_hint_visible():
+	if controller == "AI":
+		$ButtonHint.hide()
+	else: $ButtonHint.show()
+
+func _choose_button_hint():
+	match controller:
+		"P1": $ButtonHint.button = "Space"
+		"P2": $ButtonHint.button = "Enter"
+		"P3", "P4", "P5", "P6": $ButtonHint.button = _get_gamepad_bottom_button_name()
+
+func _get_gamepad_bottom_button_name():
+	var device_id = int(controller.substr(1, 1)) - 3 # P3 -> 0 and so on
+	var device_name = Input.get_joy_name(device_id)
+	if device_name.find("USB") > -1:
+		return "3"
+	else: return "A"
 
 func _set_coins(value):
 	coins = value
@@ -256,5 +286,6 @@ func _get_crocodile():
 func _set_frozen(value):
 	frozen = value
 	if is_crocodile() and frozen:
+		emit_signal("frozen_as_crocodile")
 		$Sprite.modulate = get_node("/root/Global").ICY_BLUE
 		$FreezingSound.play()

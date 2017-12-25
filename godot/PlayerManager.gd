@@ -4,9 +4,6 @@ signal player_jump(player)
 
 var positions = []
 
-func _ready():
-	record_positions()
-
 func enable_ai():
 	for player in Global.Players:
 		player.enable_ai()
@@ -15,16 +12,8 @@ func disable_ai():
 	for player in Global.Players:
 		player.disable_ai()
 
-func record_positions():
-	positions.clear()
-	for player in Global.Players:
-		positions.append(player.position)
-
 func reset_positions():
-	var i = 0
-	for player in Global.Players:
-		player.position = positions[i]
-		i += 1
+	$"../Map".reset_positions()
 
 func reset_controllers():
 	for player in Global.Players:
@@ -36,8 +25,8 @@ func activate_controller(player_num, controller_name):
 		random_player = _find_random_player()
 		
 	random_player.controller = controller_name
-	random_player.set_name_tag( "P%s" % player_num)
-	random_player.jump()
+	random_player.set_name_tag("P%s" % player_num)
+	random_player.force_jump()
 	emit_signal("player_jump", random_player)
 
 func choose_crocodile_randomly():

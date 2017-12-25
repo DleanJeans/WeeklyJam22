@@ -48,7 +48,6 @@ var maps = [
 ]
 
 var index = 2
-var map_name = \"SixPlayerMap\"
 
 func next_map():
 	index += 1
@@ -58,9 +57,8 @@ func next_map():
 	game.get_node(\"PlayerManager\").disable_ai()
 	game.get_node(\"GameTimer\").stop()
 	
-	game.get_node(map_name).free()
+	game.get_node(\"Map\").free()
 	var map = maps[index].instance()
-	map_name = map.get_name()
 	game.add_child(map)
 	game.move_child(map, 0)
 	game.get_node(\"MainMenu/MapButton\").text = \"Map: %s\" % map.name
@@ -73,7 +71,7 @@ func next_map():
 script = ExtResource( 1 )
 _sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
 
-[node name="SixPlayerMap" parent="." index="0" instance=ExtResource( 2 )]
+[node name="Map" parent="." index="0" instance=ExtResource( 2 )]
 
 [node name="MainMenu" parent="." index="1" instance=ExtResource( 3 )]
 
@@ -163,13 +161,9 @@ _sections_unfolded = [ "custom_fonts", "custom_styles" ]
 
 [connection signal="countdown_started" from="." to="GameTimer" method="start_counting_down"]
 
-[connection signal="game_loaded" from="." to="PlayerManager" method="record_positions"]
-
-[connection signal="game_loaded" from="." to="PlayerManager" method="reset_controllers"]
-
-[connection signal="game_loaded" from="." to="PlayerManager" method="choose_crocodile_randomly"]
-
 [connection signal="game_loaded" from="." to="PlayerManager" method="reset"]
+
+[connection signal="game_loaded" from="." to="PlayerManager" method="choose_crocodile_randomly" flags=3]
 
 [connection signal="game_over" from="." to="." method="_show_winner"]
 
@@ -177,43 +171,49 @@ _sections_unfolded = [ "custom_fonts", "custom_styles" ]
 
 [connection signal="game_over" from="." to="PlayerManager" method="pause_freeze_timer"]
 
-[connection signal="game_over" from="." to="MenuButton" method="grab_focus"]
-
 [connection signal="game_over" from="." to="MenuButton" method="show"]
 
-[connection signal="game_started" from="." to="CoinManager" method="resume_spawners"]
+[connection signal="game_over" from="." to="MenuButton" method="grab_focus"]
 
-[connection signal="game_started" from="." to="PlayerManager" method="unfreeze_players"]
+[connection signal="game_paused" from="." to="." method="_pause_tree"]
 
-[connection signal="game_started" from="." to="PlayerManager" method="reset_positions"]
+[connection signal="game_paused" from="." to="JoiningScreen" method="hide"]
 
-[connection signal="game_started" from="." to="PlayerManager" method="choose_crocodile_randomly" flags=3]
+[connection signal="game_resumed" from="." to="." method="_resume_tree"]
+
+[connection signal="game_resumed" from="." to="JoiningScreen" method="show_if_not_closed"]
 
 [connection signal="game_started" from="." to="PlayerManager" method="enable_ai"]
 
-[connection signal="game_started" from="." to="JoiningScreen" method="hide"]
+[connection signal="game_started" from="." to="PlayerManager" method="reset_positions"]
+
+[connection signal="game_started" from="." to="PlayerManager" method="unfreeze_players"]
+
+[connection signal="game_started" from="." to="PlayerManager" method="choose_crocodile_randomly" flags=3]
+
+[connection signal="game_started" from="." to="CoinManager" method="resume_spawners"]
+
+[connection signal="game_started" from="." to="JoiningScreen" method="close"]
 
 [connection signal="joining_screen_opened" from="." to="." method="_stop_showing_winner"]
 
-[connection signal="joining_screen_opened" from="." to="CoinManager" method="stop_spawners"]
-
-[connection signal="joining_screen_opened" from="." to="CoinManager" method="clear"]
-
-[connection signal="joining_screen_opened" from="." to="ControllerAssigner" method="reset"]
-
-[connection signal="joining_screen_opened" from="." to="PlayerManager" method="unfreeze_players"]
-
-[connection signal="joining_screen_opened" from="." to="PlayerManager" method="reset_positions"]
+[connection signal="joining_screen_opened" from="." to="PlayerManager" method="reset"]
 
 [connection signal="joining_screen_opened" from="." to="PlayerManager" method="disable_ai"]
 
-[connection signal="joining_screen_opened" from="." to="PlayerManager" method="reset"]
+[connection signal="joining_screen_opened" from="." to="PlayerManager" method="reset_positions"]
+
+[connection signal="joining_screen_opened" from="." to="PlayerManager" method="unfreeze_players"]
+
+[connection signal="joining_screen_opened" from="." to="CoinManager" method="clear"]
+
+[connection signal="joining_screen_opened" from="." to="CoinManager" method="stop_spawners"]
+
+[connection signal="joining_screen_opened" from="." to="ControllerAssigner" method="reset"]
 
 [connection signal="joining_screen_opened" from="." to="JoiningScreen" method="open" flags=3]
 
 [connection signal="main_menu_opened" from="." to="PlayerManager" method="reset_controllers"]
-
-[connection signal="main_menu_opened" from="." to="PlayerManager" method="disable_ai"]
 
 [connection signal="duration_pressed" from="MainMenu" to="GameTimer" method="next_duration"]
 

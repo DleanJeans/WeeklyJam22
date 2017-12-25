@@ -1,12 +1,13 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://MainMenu.gd" type="Script" id=1]
 [ext_resource path="res://SelectSound.tscn" type="PackedScene" id=2]
 [ext_resource path="res://BebasNeue.otf" type="DynamicFontData" id=3]
-[ext_resource path="res://Crocodile.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Sprite.png" type="Texture" id=5]
-[ext_resource path="res://FocusStyle.tres" type="StyleBox" id=6]
-[ext_resource path="res://BebasNeue.tres" type="DynamicFont" id=7]
+[ext_resource path="res://assets/Crocodile.png" type="Texture" id=4]
+[ext_resource path="res://assets/CrocodileArm.png" type="Texture" id=5]
+[ext_resource path="res://Sprite.png" type="Texture" id=6]
+[ext_resource path="res://FocusStyle.tres" type="StyleBox" id=7]
+[ext_resource path="res://ButtonHint.tscn" type="PackedScene" id=8]
 
 [sub_resource type="DynamicFont" id=1]
 
@@ -16,7 +17,7 @@ use_filter = false
 font_data = ExtResource( 3 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[sub_resource type="DynamicFont" id=6]
+[sub_resource type="DynamicFont" id=2]
 
 size = 30
 use_mipmaps = false
@@ -86,7 +87,7 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 254.0
 margin_top = 20.0
-margin_right = 892.0
+margin_right = 896.0
 margin_bottom = 146.0
 rect_rotation = 11.5041
 rect_pivot_offset = Vector2( 0, 0 )
@@ -94,23 +95,78 @@ mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 custom_fonts/font = SubResource( 1 )
-text = "Crocodile      Swim!"
+text = "Crocodile        Swim!"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Rect", "custom_fonts" ]
+__meta__ = {
+"_edit_group_": true
+}
 
-[node name="Crocodile" parent="Title" index="0" instance=ExtResource( 4 )]
+[node name="Crocodile" type="TextureRect" parent="Title" index="0"]
 
-editor/display_folded = true
-position = Vector2( 379.788, 47.0626 )
-scale = Vector2( 0.8, 0.8 )
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 282.0
+margin_top = -82.0
+margin_right = 532.0
+margin_bottom = 188.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 1
+size_flags_horizontal = 1
+size_flags_vertical = 1
+texture = ExtResource( 4 )
+stretch_mode = 0
+_sections_unfolded = [ "Animation", "Offset", "Region", "Transform" ]
+__meta__ = {
+"_edit_group_": true
+}
 
-[node name="Shadow" parent="Title/Crocodile" index="0"]
+[node name="CloseArm" type="TextureRect" parent="Title/Crocodile" index="0"]
 
-visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 73.0
+margin_top = 138.0
+margin_right = 233.0
+margin_bottom = 210.0
+rect_rotation = -15.0
+rect_scale = Vector2( 0.5, 0.5 )
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 1
+size_flags_horizontal = 1
+size_flags_vertical = 1
+texture = ExtResource( 5 )
+stretch_mode = 0
+_sections_unfolded = [ "Rect" ]
 
-[node name="TextureRect" type="TextureRect" parent="Title/Crocodile" index="3"]
+[node name="FarArm" type="TextureRect" parent="Title/Crocodile" index="1"]
+
+show_behind_parent = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 36.0
+margin_top = 104.0
+margin_right = 196.0
+margin_bottom = 176.0
+rect_rotation = 15.0
+rect_scale = Vector2( 0.5, 0.5 )
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 1
+size_flags_horizontal = 1
+size_flags_vertical = 1
+texture = ExtResource( 5 )
+stretch_mode = 0
+_sections_unfolded = [ "Rect" ]
+
+[node name="Mouth" type="TextureRect" parent="Title/Crocodile" index="2"]
 
 self_modulate = Color( 0.394531, 0.126373, 0.126373, 1 )
 show_behind_parent = true
@@ -118,16 +174,16 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = -36.0
-margin_top = -84.0
-margin_right = 64.0
-margin_bottom = 16.0
+margin_left = 83.0
+margin_top = 47.0
+margin_right = 183.0
+margin_bottom = 147.0
 rect_scale = Vector2( 0.75, 0.75 )
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 1
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = ExtResource( 5 )
+texture = ExtResource( 6 )
 stretch_mode = 0
 
 [node name="FullScreenButton" type="Button" parent="." index="3"]
@@ -144,9 +200,9 @@ rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_styles/hover = ExtResource( 6 )
-custom_styles/focus = ExtResource( 6 )
-custom_fonts/font = SubResource( 6 )
+custom_styles/hover = ExtResource( 7 )
+custom_styles/focus = ExtResource( 7 )
+custom_fonts/font = SubResource( 2 )
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
@@ -156,26 +212,44 @@ flat = true
 align = 1
 _sections_unfolded = [ "Rect", "custom_fonts" ]
 
-[node name="ControlHint" type="Label" parent="FullScreenButton" index="0"]
+[node name="Container" type="HBoxContainer" parent="FullScreenButton" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 35.0
-margin_right = 200.0
-margin_bottom = 66.0
+margin_left = 30.0
+margin_top = 30.0
+margin_right = 154.0
+margin_bottom = 90.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_fonts/font = ExtResource( 7 )
-text = "F11|R1"
-align = 1
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Rect", "custom_fonts" ]
+alignment = 0
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="F11" parent="FullScreenButton/Container" index="0" instance=ExtResource( 8 )]
+
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 0.0
+margin_right = 60.0
+margin_bottom = 60.0
+button = "F11"
+
+[node name="R1" parent="FullScreenButton/Container" index="1" instance=ExtResource( 8 )]
+
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 64.0
+margin_top = 0.0
+margin_right = 124.0
+margin_bottom = 60.0
+button = "R1"
 
 [node name="PlayButton" type="Button" parent="." index="4"]
 
@@ -191,8 +265,8 @@ rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_styles/hover = ExtResource( 6 )
-custom_styles/focus = ExtResource( 6 )
+custom_styles/hover = ExtResource( 7 )
+custom_styles/focus = ExtResource( 7 )
 custom_fonts/font = SubResource( 1 )
 toggle_mode = false
 enabled_focus_mode = 2
@@ -217,8 +291,8 @@ rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_styles/hover = ExtResource( 6 )
-custom_styles/focus = ExtResource( 6 )
+custom_styles/hover = ExtResource( 7 )
+custom_styles/focus = ExtResource( 7 )
 custom_fonts/font = SubResource( 3 )
 toggle_mode = false
 action_mode = 0
@@ -244,8 +318,8 @@ rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_styles/hover = ExtResource( 6 )
-custom_styles/focus = ExtResource( 6 )
+custom_styles/hover = ExtResource( 7 )
+custom_styles/focus = ExtResource( 7 )
 custom_fonts/font = SubResource( 3 )
 toggle_mode = false
 action_mode = 0
@@ -305,13 +379,20 @@ max_lines_visible = -1
 
 [connection signal="pressed" from="FullScreenButton" to="." method="_on_FullScreenButton_pressed"]
 
+[connection signal="pressed" from="FullScreenButton" to="SelectSound" method="play"]
+
 [connection signal="pressed" from="PlayButton" to="." method="hide"]
 
 [connection signal="pressed" from="PlayButton" to="." method="_on_PlayButton_pressed"]
 
+[connection signal="pressed" from="PlayButton" to="SelectSound" method="play"]
+
 [connection signal="pressed" from="MapButton" to="." method="_on_MapButton_pressed"]
+
+[connection signal="pressed" from="MapButton" to="SelectSound" method="play"]
 
 [connection signal="pressed" from="RoundDurationButton" to="." method="_on_RoundDurationButton_pressed"]
 
+[connection signal="pressed" from="RoundDurationButton" to="SelectSound" method="play"]
 
-[editable path="Title/Crocodile"]
+

@@ -6,7 +6,14 @@ var player_label_dict = {}
 var players_ready = {}
 var players_joined = []
 
+var closed = true
+
+func show_if_not_closed():
+	if not closed:
+		show()
+
 func open():
+	closed = false
 	show()
 	
 	players_joined = []
@@ -14,6 +21,18 @@ func open():
 	
 	_hide_labels()
 	_move_label_to_players()
+	
+	if Input.get_connected_joypads().size() > 0:
+		$Hints/A.show()
+		$Hints/B3.show()
+	else:
+		$Hints/A.hide()
+		$Hints/B3.hide()
+
+func close():
+	closed = true
+	_disconnnect_jump_signals()
+	hide()
 
 func _hide_labels():
 	for label in $Labels.get_children():
@@ -35,10 +54,6 @@ func _stick_label_to_players():
 
 func _set_label_position(label, player):
 	label.rect_position = player.position + Vector2(35, -50)
-
-func hide():
-	.hide()
-	_disconnnect_jump_signals()
 
 func _disconnnect_jump_signals():
 	for player in players_joined:
