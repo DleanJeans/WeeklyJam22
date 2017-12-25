@@ -30,6 +30,8 @@ func activate_controller(player_num, controller_name):
 	emit_signal("player_jump", random_player)
 
 func choose_crocodile_randomly():
+	if Global.crocodile != null: return
+	
 	var random_player = _find_random_player()
 	random_player.turn_crocodile()
 	random_player.start_freezing()
