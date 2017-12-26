@@ -1,22 +1,23 @@
-[gd_scene load_steps=42 format=2]
+[gd_scene load_steps=44 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://InputAction.gd" type="Script" id=2]
 [ext_resource path="res://ai/AI.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Sprite.png" type="Texture" id=4]
-[ext_resource path="res://assets/Crown.png" type="Texture" id=5]
-[ext_resource path="res://BebasNeue.otf" type="DynamicFontData" id=6]
-[ext_resource path="res://Crocodile.tscn" type="PackedScene" id=7]
-[ext_resource path="res://assets/PanicKid.png" type="Texture" id=8]
-[ext_resource path="res://assets/Tongue.png" type="Texture" id=9]
-[ext_resource path="res://assets/Freezing.ogg" type="AudioStream" id=10]
-[ext_resource path="res://assets/Tap.ogg" type="AudioStream" id=11]
-[ext_resource path="res://assets/Groan.ogg" type="AudioStream" id=12]
-[ext_resource path="res://assets/CartoonJump.ogg" type="AudioStream" id=13]
-[ext_resource path="res://assets/screams/Crowd.ogg" type="AudioStream" id=14]
-[ext_resource path="res://assets/Pop.ogg" type="AudioStream" id=15]
-[ext_resource path="res://MovementVisualizer.tscn" type="PackedScene" id=16]
-[ext_resource path="res://ButtonHint.tscn" type="PackedScene" id=17]
+[ext_resource path="res://assets/Shockwave.png" type="Texture" id=4]
+[ext_resource path="res://Sprite.png" type="Texture" id=5]
+[ext_resource path="res://assets/Crown.png" type="Texture" id=6]
+[ext_resource path="res://BebasNeue.otf" type="DynamicFontData" id=7]
+[ext_resource path="res://Crocodile.tscn" type="PackedScene" id=8]
+[ext_resource path="res://assets/PanicKid.png" type="Texture" id=9]
+[ext_resource path="res://assets/Tongue.png" type="Texture" id=10]
+[ext_resource path="res://assets/Freezing.ogg" type="AudioStream" id=11]
+[ext_resource path="res://assets/Tap.ogg" type="AudioStream" id=12]
+[ext_resource path="res://assets/Groan.ogg" type="AudioStream" id=13]
+[ext_resource path="res://assets/CartoonJump.ogg" type="AudioStream" id=14]
+[ext_resource path="res://assets/screams/Crowd.ogg" type="AudioStream" id=15]
+[ext_resource path="res://assets/Pop.ogg" type="AudioStream" id=16]
+[ext_resource path="res://MovementVisualizer.tscn" type="PackedScene" id=17]
+[ext_resource path="res://ButtonHint.tscn" type="PackedScene" id=18]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -34,11 +35,11 @@ height = 40.0
 custom_solver_bias = 0.0
 extents = Vector2( 20, 10 )
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=4]
 
 length = 1.0
 loop = false
-step = 0.1
+step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:position")
 tracks/0/interp = 1
@@ -88,31 +89,69 @@ tracks/3/keys = {
 "values": [ false, true, false ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath(".:just_landed")
+tracks/4/path = NodePath(".:collision_layer")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0, 0.8, 1 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 0.3, 0.75 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 2,
-"values": [ false, true, false ]
+"values": [ 16, 17 ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath(".:collision_layer")
+tracks/5/path = NodePath(".:just_landed")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
-"times": PoolRealArray( 0.3, 0.9 ),
+"times": PoolRealArray( 0, 0.75, 0.95 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 2,
+"values": [ false, true, false ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath(".:pushing_out")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 2,
-"values": [ 16, 17 ]
+"values": [ false, true ]
+}
+tracks/7/type = "method"
+tracks/7/path = NodePath(".")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0.75 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_start_shockwave"
+} ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Shockwave:visible")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=5]
 
 length = 0.8
 loop = false
@@ -202,7 +241,38 @@ tracks/1/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="GDScript" id=8]
+[sub_resource type="Animation" id=8]
+
+resource_name = "."
+length = 0.4
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Shockwave:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1e-05, 1e-05 ), Vector2( 2, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Shockwave:modulate")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.5 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="GDScript" id=9]
 
 script/source = "extends Node2D
 
@@ -248,7 +318,7 @@ func _play_animation_if_not_playing(animation_name):
 func _reset_Sprite_color():
 	$'../Sprite'.self_modulate = player.color"
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=10]
 
 length = 0.8
 loop = true
@@ -410,7 +480,7 @@ tracks/12/keys = {
 "values": [ 0.0, 15.0, -15.0 ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=11]
 
 length = 0.8
 loop = true
@@ -572,7 +642,7 @@ tracks/12/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=12]
 
 length = 0.01
 loop = false
@@ -590,7 +660,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=13]
 
 length = 0.01
 loop = false
@@ -620,84 +690,6 @@ tracks/1/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=13]
-
-length = 0.01
-loop = false
-step = 0.1
-tracks/0/type = "value"
-tracks/0/path = NodePath("../Sprite/Panic:flip_h")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("../Sprite/Panic/Tongue:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 80, 90 ) ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("../Sprite/Panic/Tongue:flip_h")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ false ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("../Sprite/Panic:visible")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
-tracks/4/type = "value"
-tracks/4/path = NodePath("../Sprite:self_modulate")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Color( 0, 0, 0, 0 ) ]
-}
-tracks/5/type = "value"
-tracks/5/path = NodePath("../Sprite/Crocodile:visible")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
-
 [sub_resource type="Animation" id=14]
 
 length = 0.01
@@ -713,6 +705,84 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
+"values": [ false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../Sprite/Panic/Tongue:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 80, 90 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("../Sprite/Panic/Tongue:flip_h")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("../Sprite/Panic:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("../Sprite:self_modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("../Sprite/Crocodile:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=15]
+
+length = 0.01
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("../Sprite/Panic:flip_h")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
 "values": [ true ]
 }
 tracks/1/type = "value"
@@ -776,28 +846,28 @@ tracks/5/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="DynamicFont" id=15]
-
-size = 40
-use_mipmaps = false
-use_filter = false
-font_data = ExtResource( 6 )
-_sections_unfolded = [ "Font", "Settings" ]
-
 [sub_resource type="DynamicFont" id=16]
 
 size = 40
 use_mipmaps = false
 use_filter = false
-font_data = ExtResource( 6 )
+font_data = ExtResource( 7 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[sub_resource type="CircleShape2D" id=17]
+[sub_resource type="DynamicFont" id=17]
+
+size = 40
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 7 )
+_sections_unfolded = [ "Font", "Settings" ]
+
+[sub_resource type="CircleShape2D" id=18]
 
 custom_solver_bias = 0.0
 radius = 150.0
 
-[sub_resource type="GDScript" id=18]
+[sub_resource type="GDScript" id=19]
 
 script/source = "extends Timer
 
@@ -826,7 +896,7 @@ func _process(delta):
 		jumped = true
 		player.break_unfrozen()"
 
-[sub_resource type="GDScript" id=19]
+[sub_resource type="GDScript" id=20]
 
 script/source = "extends AudioStreamPlayer2D
 
@@ -852,25 +922,17 @@ func stop():
 	if playing:
 		.stop()"
 
-[sub_resource type="AudioStreamRandomPitch" id=20]
+[sub_resource type="AudioStreamRandomPitch" id=21]
 
-audio_stream = ExtResource( 15 )
+audio_stream = ExtResource( 16 )
 random_pitch = 1.1
 
-[sub_resource type="DynamicFont" id=21]
+[sub_resource type="DynamicFont" id=22]
 
 size = 40
 use_mipmaps = false
 use_filter = false
-font_data = ExtResource( 6 )
-_sections_unfolded = [ "Font", "Settings" ]
-
-[sub_resource type="DynamicFont" id=22]
-
-size = 30
-use_mipmaps = false
-use_filter = false
-font_data = ExtResource( 6 )
+font_data = ExtResource( 7 )
 _sections_unfolded = [ "Font", "Settings" ]
 
 [sub_resource type="DynamicFont" id=23]
@@ -878,13 +940,21 @@ _sections_unfolded = [ "Font", "Settings" ]
 size = 30
 use_mipmaps = false
 use_filter = false
-font_data = ExtResource( 6 )
+font_data = ExtResource( 7 )
+_sections_unfolded = [ "Font", "Settings" ]
 
-[sub_resource type="Theme" id=24]
+[sub_resource type="DynamicFont" id=24]
 
-default_font = SubResource( 23 )
+size = 30
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 7 )
 
-[node name="Player" type="KinematicBody2D" index="0" groups=[
+[sub_resource type="Theme" id=25]
+
+default_font = SubResource( 24 )
+
+[node name="Player" type="KinematicBody2D" groups=[
 "Players",
 ]]
 
@@ -894,6 +964,7 @@ collision_mask = 0
 collision/safe_margin = 1.0
 script = ExtResource( 1 )
 _sections_unfolded = [ "Collision", "collision" ]
+pushing_out = true
 just_landed = false
 color = Color( 1, 1, 1, 1 )
 
@@ -940,19 +1011,18 @@ _sections_unfolded = [ "Transform" ]
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 root_node = NodePath("..")
-anims/Jump = SubResource( 5 )
+anims/Jump = SubResource( 4 )
 playback/active = true
 playback/speed = 1.25
 blend_times = [  ]
 autoplay = "Grounded"
-_sections_unfolded = [ "Playback Options" ]
 
 [node name="PointsAnimation" type="AnimationPlayer" parent="." index="4"]
 
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 root_node = NodePath("..")
-anims/CoinChanged = SubResource( 4 )
+anims/CoinChanged = SubResource( 5 )
 playback/active = true
 playback/speed = 1.25
 blend_times = [  ]
@@ -970,61 +1040,82 @@ playback/speed = 1.25
 blend_times = [  ]
 autoplay = "Grounded"
 
-[node name="InputAction" type="Node2D" parent="." index="6"]
+[node name="ShockwaveAnimation" type="AnimationPlayer" parent="." index="6"]
+
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+root_node = NodePath("..")
+anims/. = SubResource( 8 )
+playback/active = true
+playback/speed = 2.0
+blend_times = [  ]
+autoplay = ""
+_sections_unfolded = [ "Playback Options", "playback" ]
+
+[node name="InputAction" type="Node2D" parent="." index="7"]
 
 visible = false
 position = Vector2( 0, -40 )
 script = ExtResource( 2 )
 _sections_unfolded = [ "Visibility" ]
 
-[node name="AI" parent="." index="7" instance=ExtResource( 3 )]
+[node name="AI" parent="." index="8" instance=ExtResource( 3 )]
 
 visible = false
 
-[node name="SpriteFlipper" type="Node2D" parent="." index="8"]
+[node name="SpriteFlipper" type="Node2D" parent="." index="9"]
 
+editor/display_folded = true
 visible = false
-script = SubResource( 8 )
+script = SubResource( 9 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="SpriteFlipper" index="0"]
 
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 root_node = NodePath("..")
-anims/CrocodileLeft = SubResource( 9 )
-anims/CrocodileRight = SubResource( 10 )
-anims/EditorReset = SubResource( 11 )
-anims/Normal = SubResource( 12 )
-anims/PanicLeft = SubResource( 13 )
-anims/PanicRight = SubResource( 14 )
+anims/CrocodileLeft = SubResource( 10 )
+anims/CrocodileRight = SubResource( 11 )
+anims/EditorReset = SubResource( 12 )
+anims/Normal = SubResource( 13 )
+anims/PanicLeft = SubResource( 14 )
+anims/PanicRight = SubResource( 15 )
 playback/active = true
 playback/speed = 1.25
 blend_times = [  ]
 autoplay = ""
 
-[node name="Shadow" type="Sprite" parent="." index="9"]
+[node name="Shockwave" type="Sprite" parent="." index="10"]
+
+visible = false
+modulate = Color( 1, 1, 1, 0 )
+show_behind_parent = true
+scale = Vector2( 2, 1 )
+texture = ExtResource( 4 )
+_sections_unfolded = [ "Transform", "Visibility", "Z" ]
+
+[node name="Shadow" type="Sprite" parent="." index="11"]
 
 modulate = Color( 0, 0, 0, 0.160235 )
 show_behind_parent = true
 scale = Vector2( 0.6, 0.2 )
-texture = ExtResource( 4 )
+texture = ExtResource( 5 )
 _sections_unfolded = [ "Transform", "Z" ]
 
-[node name="Sprite" type="Sprite" parent="." index="10"]
+[node name="Sprite" type="Sprite" parent="." index="12"]
 
-editor/display_folded = true
 show_behind_parent = true
 position = Vector2( 0, -40 )
 scale = Vector2( 0.4, 0.8 )
-texture = ExtResource( 4 )
+texture = ExtResource( 5 )
 _sections_unfolded = [ "Animation", "Transform" ]
 
 [node name="Crown" type="Sprite" parent="Sprite" index="0"]
 
 visible = false
 position = Vector2( 0, -75 )
-scale = Vector2( 1.25, 0.625 )
-texture = ExtResource( 5 )
+scale = Vector2( 1e-05, 1e-05 )
+texture = ExtResource( 6 )
 
 [node name="CoinLabel" type="Label" parent="Sprite" index="1"]
 
@@ -1041,7 +1132,7 @@ rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 15 )
+custom_fonts/font = SubResource( 16 )
 text = "0"
 align = 1
 percent_visible = 1.0
@@ -1065,7 +1156,7 @@ rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 16 )
+custom_fonts/font = SubResource( 17 )
 text = "P0"
 align = 1
 percent_visible = 1.0
@@ -1073,20 +1164,19 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Anchor", "Rect", "custom_fonts" ]
 
-[node name="Crocodile" parent="Sprite" index="3" instance=ExtResource( 7 )]
+[node name="Crocodile" parent="Sprite" index="3" instance=ExtResource( 8 )]
 
-visible = false
-position = Vector2( 0, -3.75 )
+position = Vector2( 0, -6.25 )
 scale = Vector2( 1.25, 0.625 )
-flip_h = true
 _sections_unfolded = [ "Animation", "Offset", "Region", "Transform", "Visibility" ]
 
 [node name="Panic" type="Sprite" parent="Sprite" index="4"]
 
+editor/display_folded = true
 visible = false
 position = Vector2( -125, -75 )
 scale = Vector2( 1.25, 0.625 )
-texture = ExtResource( 8 )
+texture = ExtResource( 9 )
 centered = false
 flip_h = true
 _sections_unfolded = [ "Transform" ]
@@ -1095,10 +1185,10 @@ _sections_unfolded = [ "Transform" ]
 
 show_behind_parent = true
 position = Vector2( 80, 90 )
-texture = ExtResource( 9 )
+texture = ExtResource( 10 )
 centered = false
 
-[node name="PanicRadius" type="Area2D" parent="." index="11"]
+[node name="PanicRadius" type="Area2D" parent="." index="13"]
 
 editor/display_folded = true
 visible = false
@@ -1113,28 +1203,17 @@ audio_bus_name = "Master"
 
 [node name="Shape" type="CollisionShape2D" parent="PanicRadius" index="0"]
 
-shape = SubResource( 17 )
+shape = SubResource( 18 )
 
-[node name="FreezeTimer" type="Timer" parent="." index="12"]
+[node name="FreezeTimer" type="Timer" parent="." index="14"]
 
 process_mode = 1
 wait_time = 3.0
 one_shot = true
 autostart = false
-script = SubResource( 18 )
+script = SubResource( 19 )
 
-[node name="FreezingSound" type="AudioStreamPlayer2D" parent="." index="13"]
-
-visible = false
-stream = ExtResource( 10 )
-volume_db = 0.0
-autoplay = false
-max_distance = 2000.0
-attenuation = 1.0
-bus = "Master"
-area_mask = 1
-
-[node name="TapSound" type="AudioStreamPlayer2D" parent="." index="14"]
+[node name="FreezingSound" type="AudioStreamPlayer2D" parent="." index="15"]
 
 visible = false
 stream = ExtResource( 11 )
@@ -1145,21 +1224,10 @@ attenuation = 1.0
 bus = "Master"
 area_mask = 1
 
-[node name="GroaningSound" type="AudioStreamPlayer2D" parent="." index="15"]
+[node name="TapSound" type="AudioStreamPlayer2D" parent="." index="16"]
 
 visible = false
 stream = ExtResource( 12 )
-volume_db = 10.0
-autoplay = false
-max_distance = 2000.0
-attenuation = 1.0
-bus = "Master"
-area_mask = 1
-
-[node name="JumpSound" type="AudioStreamPlayer2D" parent="." index="16"]
-
-visible = false
-stream = ExtResource( 13 )
 volume_db = 0.0
 autoplay = false
 max_distance = 2000.0
@@ -1167,7 +1235,18 @@ attenuation = 1.0
 bus = "Master"
 area_mask = 1
 
-[node name="ScreamSound" type="AudioStreamPlayer2D" parent="." index="17"]
+[node name="GroaningSound" type="AudioStreamPlayer2D" parent="." index="17"]
+
+visible = false
+stream = ExtResource( 13 )
+volume_db = 10.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Master"
+area_mask = 1
+
+[node name="JumpSound" type="AudioStreamPlayer2D" parent="." index="18"]
 
 visible = false
 stream = ExtResource( 14 )
@@ -1177,12 +1256,23 @@ max_distance = 2000.0
 attenuation = 1.0
 bus = "Master"
 area_mask = 1
-script = SubResource( 19 )
 
-[node name="PopSound" type="AudioStreamPlayer2D" parent="." index="18"]
+[node name="ScreamSound" type="AudioStreamPlayer2D" parent="." index="19"]
 
 visible = false
-stream = SubResource( 20 )
+stream = ExtResource( 15 )
+volume_db = 0.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Master"
+area_mask = 1
+script = SubResource( 20 )
+
+[node name="PopSound" type="AudioStreamPlayer2D" parent="." index="20"]
+
+visible = false
+stream = SubResource( 21 )
 volume_db = 0.0
 autoplay = false
 max_distance = 2000.0
@@ -1190,7 +1280,7 @@ attenuation = 1.0
 bus = "Master"
 area_mask = 1
 
-[node name="TimerLabel" type="Label" parent="." index="19"]
+[node name="TimerLabel" type="Label" parent="." index="21"]
 
 visible = false
 anchor_left = 0.0
@@ -1205,7 +1295,7 @@ rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 21 )
+custom_fonts/font = SubResource( 22 )
 text = "3"
 align = 1
 percent_visible = 1.0
@@ -1213,7 +1303,7 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "custom_fonts" ]
 
-[node name="CoinChangeLabel" type="Label" parent="." index="20"]
+[node name="CoinChangeLabel" type="Label" parent="." index="22"]
 
 modulate = Color( 0.0618048, 0.894531, 0.0349426, 1 )
 self_modulate = Color( 1, 1, 1, 0 )
@@ -1228,14 +1318,14 @@ rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 22 )
+custom_fonts/font = SubResource( 23 )
 text = "+10"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Rect", "Visibility", "custom_fonts" ]
 
-[node name="WinnerLabel" type="Label" parent="." index="21"]
+[node name="WinnerLabel" type="Label" parent="." index="23"]
 
 visible = false
 anchor_left = 0.0
@@ -1250,14 +1340,14 @@ rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
-theme = SubResource( 24 )
+theme = SubResource( 25 )
 text = "Winner"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Rect", "custom_fonts" ]
 
-[node name="DebugLabel" type="Label" parent="." index="22"]
+[node name="DebugLabel" type="Label" parent="." index="24"]
 
 visible = false
 anchor_left = 0.0
@@ -1278,11 +1368,11 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="MovementVisualizer" parent="." index="23" instance=ExtResource( 16 )]
+[node name="MovementVisualizer" parent="." index="25" instance=ExtResource( 17 )]
 
 visible = false
 
-[node name="ButtonHint" parent="." index="24" instance=ExtResource( 17 )]
+[node name="ButtonHint" parent="." index="26" instance=ExtResource( 18 )]
 
 visible = false
 margin_top = 0.0
@@ -1290,19 +1380,19 @@ margin_right = 23.9334
 margin_bottom = 49.9258
 button = "A"
 
-[connection signal="jump" from="." to="JumpAnimation" method="play" binds= [ "Jump" ]]
+[connection signal="jump" from="." to="ButtonHint" method="pop_out"]
 
 [connection signal="jump" from="." to="JumpSound" method="play"]
 
-[connection signal="jump" from="." to="ButtonHint" method="pop_out"]
+[connection signal="jump" from="." to="JumpAnimation" method="play" binds= [ "Jump" ]]
 
 [connection signal="turning_crocodile" from="." to="." method="start_freezing"]
 
 [connection signal="turning_crocodile" from="." to="CrocodileShape" method="set_disabled" binds= [ false ]]
 
-[connection signal="turning_normal" from="." to="SpriteFlipper/AnimationPlayer" method="play" binds= [ "PanicLeft" ]]
-
 [connection signal="turning_normal" from="." to="CrocodileShape" method="set_disabled" binds= [ true ]]
+
+[connection signal="turning_normal" from="." to="SpriteFlipper/AnimationPlayer" method="play" binds= [ "PanicLeft" ]]
 
 [connection signal="body_entered" from="TouchArea" to="." method="tag_crocodile"]
 

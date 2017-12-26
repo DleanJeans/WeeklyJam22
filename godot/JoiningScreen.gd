@@ -21,8 +21,10 @@ func open():
 	
 	_hide_labels()
 	_move_label_to_players()
-	
-	if Input.get_connected_joypads().size() > 0:
+	_toggle_joypad_hints()
+
+func _toggle_joypad_hints():
+	if game.joypad_connected():
 		$Hints/A.show()
 		$Hints/B3.show()
 	else:

@@ -74,6 +74,7 @@ func _process(delta):
 	for body in $Shape/Area.get_overlapping_bodies():
 		if not _is_player(body): continue
 		_player = body
+		
 		if _player.is_crocodile():
 			_block_player()
 		elif _no_one_here():
@@ -85,7 +86,7 @@ func _no_one_here():
 	return not self.occupied
 
 func _player_pushed_out_by_others():
-	return _player != _occupier and _player.collision_layer == Global.COLLISION_NORMAL
+	return _player != _occupier and _player.collision_layer == Global.COLLISION_NORMAL and _occupier.pushing_out
 
 func _push_player_out():
 	var velocity
@@ -105,7 +106,6 @@ func _push_player_out():
 func _on_player_hit_wall(player, bounce_vector):
 	if not _bounce_velocities.has(player): pass
 	
-	print("%s Hit Wall" % player.get_name())
 	_bounce_velocities[player] *= bounce_vector
 
 func _turn_green():

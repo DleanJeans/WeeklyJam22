@@ -20,7 +20,7 @@ func open_joining_screen():
 	emit_signal("joining_screen_opened")
 
 func open_main_menu():
-	$MainMenu.show()
+	$MainMenu.open()
 	emit_signal("main_menu_opened")
 
 func start_counting_down():
@@ -80,3 +80,6 @@ func _process(delta):
 func _unfreeze_if_in_game():
 	if $GameTimer.in_round_mode():
 		$PlayerManager.unfreeze_players()
+
+func joypad_connected():
+	return Input.get_connected_joypads().size() > 0

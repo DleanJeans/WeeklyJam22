@@ -2,18 +2,24 @@ extends Container
 
 onready var game = get_parent()
 
-signal shown
 signal play_pressed
 signal map_pressed
 signal duration_pressed
 
-func show():
-	.show()
-	emit_signal("shown")
+func open():
+	show()
+	$PlayButton.grab_focus()
+	_toggle_joypad_hint()
+	
+func _toggle_joypad_hint():
+	if game.joypad_connected():
+		$FullScreenButton/Hints/R1.show()
+	else: $FullScreenButton/Hints/R1.hide()
 
 func _ready():
 	$PlayButton.grab_focus()
 	$Version.text = ProjectSettings.get_setting("game/version")
+	_toggle_joypad_hint()
 
 func _on_FullScreenButton_pressed():
 	Global.toggle_fullscreen()

@@ -1,13 +1,131 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://assets/Crocodile.png" type="Texture" id=1]
 [ext_resource path="res://assets/Circle.png" type="Texture" id=2]
 [ext_resource path="res://assets/CrocodileArm.png" type="Texture" id=3]
+[ext_resource path="res://BebasNeue.otf" type="DynamicFontData" id=4]
+
+[sub_resource type="GDScript" id=3]
+
+script/source = "extends Sprite
+
+var blend_time = 0.1
+
+func rawr():
+	if flip_h:
+		$RawrAnimation.play(\"Right\")
+	else: $RawrAnimation.play(\"Left\")
+
+func _process(delta):
+	if $RawrAnimation.is_playing():
+		var current_position = $RawrAnimation.get_current_animation_position()
+		
+		var playing_animation = $RawrAnimation.get_current_animation()
+		if flip_h and playing_animation != \"Right\":
+			$RawrAnimation.play(\"Right\", blend_time)
+		elif not flip_h and playing_animation != \"Left\":
+			$RawrAnimation.play(\"Left\", blend_time)
+		$RawrAnimation.seek(current_position)"
+
+[sub_resource type="DynamicFont" id=1]
+
+size = 100
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 4 )
+_sections_unfolded = [ "Font", "Settings" ]
+
+[sub_resource type="Animation" id=2]
+
+resource_name = "Left"
+length = 1.2
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Rawr:rect_scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.9, 1.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 1, 1 ), Vector2( 1, 1 ), Vector2( 0, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Rawr:rect_pivot_offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.9 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 2,
+"values": [ Vector2( 200, 60 ), Vector2( 0, 60 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Rawr:rect_position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( -210, -100 ), Vector2( -320, -100 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+
+resource_name = "Right"
+length = 1.2
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Rawr:rect_scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.9, 1.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 1, 1 ), Vector2( 1, 1 ), Vector2( 0, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Rawr:rect_pivot_offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.9 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 2,
+"values": [ Vector2( 0, 60 ), Vector2( 200, 60 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Rawr:rect_position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 20, -100 ), Vector2( 140, -100 ) ]
+}
 
 [node name="Crocodile" type="Sprite"]
 
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 1 )
+script = SubResource( 3 )
 _sections_unfolded = [ "Animation", "Offset", "Region", "Transform" ]
 
 [node name="Shadow" type="Sprite" parent="." index="0"]
@@ -37,5 +155,39 @@ scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 3 )
 offset = Vector2( -80, 0 )
 flip_v = true
+
+[node name="Rawr" type="Label" parent="." index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -320.0
+margin_top = -100.0
+margin_right = -124.0
+margin_bottom = 20.0
+rect_scale = Vector2( 0, 1 )
+rect_pivot_offset = Vector2( 0, 60 )
+mouse_filter = 2
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 1 )
+text = "RAWR!"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Grow Direction", "Rect", "custom_fonts" ]
+
+[node name="RawrAnimation" type="AnimationPlayer" parent="." index="4"]
+
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+root_node = NodePath("..")
+anims/Left = SubResource( 2 )
+anims/Right = SubResource( 4 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = ""
 
 

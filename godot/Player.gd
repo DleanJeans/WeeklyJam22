@@ -13,8 +13,10 @@ const BONUS_COINS_ON_TAG = 10
 
 var crocodile setget _set_crocodile, _get_crocodile
 
+export(bool) var pushing_out = false
 export(bool) var just_landed = false
 export(Color) var color = Color("#ffffff") setget _set_color
+
 var max_velocity = 300
 var drag_scale = 0.8
 var crocodile_speed = 400
@@ -112,10 +114,14 @@ func groan():
 	if not $GroaningSound.playing:
 		$GroaningSound.play()
 		$ButtonHint.pop_out()
+		$Sprite/Crocodile.rawr()
 
 func _finished_playing(name):
 	if name == "Jump" or name == "Groan":
 		$ButtonHint.pop_up()
+
+func _start_shockwave():
+	$ShockwaveAnimation.play(".")
 
 func break_unfrozen():
 	$Sprite.modulate = get_node("/root/Global").WHITE
@@ -212,6 +218,10 @@ func _move_player():
 	move_and_slide(velocity)
 	
 	heading = velocity.normalized()
+	
+	if on_platform:
+		$Shockwave.show()
+	else: $Shockwave.hide()
 
 func _emit_signal_if_hit_wall():
 	if get_slide_count() > 0:

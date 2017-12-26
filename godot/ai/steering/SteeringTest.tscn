@@ -30,6 +30,7 @@ func _physics_process(delta):
 func _process(delta):
 	if Input.is_mouse_button_pressed(BUTTON_RIGHT):
 		$Target.position = get_global_mouse_position()
+	$Label2.text = String(Engine.get_frames_per_second())
 	
 func _on_Behavior_toggled(pressed, name):
 	print(\"%s Toggled\" % name)
@@ -77,6 +78,7 @@ scale = Vector2( 3, 2 )
 
 [node name="TileMap" type="TileMap" parent="." index="1"]
 
+editor/display_folded = true
 mode = 0
 tile_set = null
 cell_size = Vector2( 64, 64 )
@@ -101,7 +103,7 @@ _sections_unfolded = [ "Cell" ]
 editor/display_folded = true
 position = Vector2( 820, 120 )
 
-[node name="DebugLabel" parent="TileMap/TestSubject" index="22"]
+[node name="DebugLabel" parent="TileMap/TestSubject" index="24"]
 
 text = "[Debug:TestSubject]
 "
@@ -112,6 +114,7 @@ position = Vector2( 730, 140 )
 
 [node name="Target" type="StaticBody2D" parent="." index="2"]
 
+editor/display_folded = true
 position = Vector2( 920, 90 )
 input_pickable = false
 collision_layer = 1
@@ -136,6 +139,7 @@ shape = SubResource( 2 )
 
 [node name="Container" type="Container" parent="." index="3"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -279,9 +283,9 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = 248.0
+margin_left = 298.0
 margin_top = 426.0
-margin_right = 527.0
+margin_right = 577.0
 margin_bottom = 457.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 2
@@ -295,6 +299,22 @@ max_lines_visible = -1
 _sections_unfolded = [ "custom_fonts" ]
 
 [node name="BoxWall" parent="." index="5" instance=ExtResource( 5 )]
+
+[node name="Label2" type="Label" parent="." index="6"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 40.0
+margin_bottom = 14.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 2
+size_flags_horizontal = 1
+size_flags_vertical = 4
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
 
 [connection signal="toggled" from="Container/Seek" to="." method="_on_Behavior_toggled" binds= [ "Seek" ]]
 
