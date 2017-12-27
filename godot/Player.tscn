@@ -27,8 +27,8 @@ extents = Vector2( 20, 10 )
 [sub_resource type="CapsuleShape2D" id=2]
 
 custom_solver_bias = 0.0
-radius = 50.0
-height = 40.0
+radius = 25.0
+height = 20.0
 
 [sub_resource type="RectangleShape2D" id=3]
 
@@ -690,7 +690,7 @@ tracks/1/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=26]
 
 length = 0.01
 loop = false
@@ -768,7 +768,7 @@ tracks/5/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=15]
+[sub_resource type="Animation" id=27]
 
 length = 0.01
 loop = false
@@ -846,7 +846,7 @@ tracks/5/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="DynamicFont" id=16]
+[sub_resource type="DynamicFont" id=28]
 
 size = 40
 use_mipmaps = false
@@ -854,7 +854,7 @@ use_filter = false
 font_data = ExtResource( 7 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[sub_resource type="DynamicFont" id=17]
+[sub_resource type="DynamicFont" id=29]
 
 size = 40
 use_mipmaps = false
@@ -862,12 +862,12 @@ use_filter = false
 font_data = ExtResource( 7 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[sub_resource type="CircleShape2D" id=18]
+[sub_resource type="CircleShape2D" id=30]
 
 custom_solver_bias = 0.0
 radius = 150.0
 
-[sub_resource type="GDScript" id=19]
+[sub_resource type="GDScript" id=31]
 
 script/source = "extends Timer
 
@@ -896,7 +896,7 @@ func _process(delta):
 		jumped = true
 		player.break_unfrozen()"
 
-[sub_resource type="GDScript" id=20]
+[sub_resource type="GDScript" id=32]
 
 script/source = "extends AudioStreamPlayer2D
 
@@ -922,12 +922,12 @@ func stop():
 	if playing:
 		.stop()"
 
-[sub_resource type="AudioStreamRandomPitch" id=21]
+[sub_resource type="AudioStreamRandomPitch" id=33]
 
 audio_stream = ExtResource( 16 )
 random_pitch = 1.1
 
-[sub_resource type="DynamicFont" id=22]
+[sub_resource type="DynamicFont" id=34]
 
 size = 40
 use_mipmaps = false
@@ -935,7 +935,7 @@ use_filter = false
 font_data = ExtResource( 7 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[sub_resource type="DynamicFont" id=23]
+[sub_resource type="DynamicFont" id=35]
 
 size = 30
 use_mipmaps = false
@@ -954,7 +954,7 @@ font_data = ExtResource( 7 )
 
 default_font = SubResource( 24 )
 
-[node name="Player" type="KinematicBody2D" groups=[
+[node name="Player" type="KinematicBody2D" index="0" groups=[
 "Players",
 ]]
 
@@ -977,10 +977,8 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="CrocodileShape" type="CollisionShape2D" parent="." index="1"]
 
-visible = false
 position = Vector2( 0.2, -0.199993 )
 rotation = 1.5708
-scale = Vector2( 0.5, 0.5 )
 shape = SubResource( 2 )
 disabled = true
 _sections_unfolded = [ "Transform" ]
@@ -1078,8 +1076,8 @@ anims/CrocodileLeft = SubResource( 10 )
 anims/CrocodileRight = SubResource( 11 )
 anims/EditorReset = SubResource( 12 )
 anims/Normal = SubResource( 13 )
-anims/PanicLeft = SubResource( 14 )
-anims/PanicRight = SubResource( 15 )
+anims/PanicLeft = SubResource( 26 )
+anims/PanicRight = SubResource( 27 )
 playback/active = true
 playback/speed = 1.25
 blend_times = [  ]
@@ -1104,6 +1102,7 @@ _sections_unfolded = [ "Transform", "Z" ]
 
 [node name="Sprite" type="Sprite" parent="." index="12"]
 
+editor/display_folded = true
 show_behind_parent = true
 position = Vector2( 0, -40 )
 scale = Vector2( 0.4, 0.8 )
@@ -1132,7 +1131,7 @@ rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 16 )
+custom_fonts/font = SubResource( 28 )
 text = "0"
 align = 1
 percent_visible = 1.0
@@ -1156,7 +1155,7 @@ rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 17 )
+custom_fonts/font = SubResource( 29 )
 text = "P0"
 align = 1
 percent_visible = 1.0
@@ -1166,6 +1165,7 @@ _sections_unfolded = [ "Anchor", "Rect", "custom_fonts" ]
 
 [node name="Crocodile" parent="Sprite" index="3" instance=ExtResource( 8 )]
 
+visible = false
 position = Vector2( 0, -6.25 )
 scale = Vector2( 1.25, 0.625 )
 _sections_unfolded = [ "Animation", "Offset", "Region", "Transform", "Visibility" ]
@@ -1203,7 +1203,7 @@ audio_bus_name = "Master"
 
 [node name="Shape" type="CollisionShape2D" parent="PanicRadius" index="0"]
 
-shape = SubResource( 18 )
+shape = SubResource( 30 )
 
 [node name="FreezeTimer" type="Timer" parent="." index="14"]
 
@@ -1211,7 +1211,7 @@ process_mode = 1
 wait_time = 3.0
 one_shot = true
 autostart = false
-script = SubResource( 19 )
+script = SubResource( 31 )
 
 [node name="FreezingSound" type="AudioStreamPlayer2D" parent="." index="15"]
 
@@ -1267,12 +1267,12 @@ max_distance = 2000.0
 attenuation = 1.0
 bus = "Master"
 area_mask = 1
-script = SubResource( 20 )
+script = SubResource( 32 )
 
 [node name="PopSound" type="AudioStreamPlayer2D" parent="." index="20"]
 
 visible = false
-stream = SubResource( 21 )
+stream = SubResource( 33 )
 volume_db = 0.0
 autoplay = false
 max_distance = 2000.0
@@ -1295,7 +1295,7 @@ rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 22 )
+custom_fonts/font = SubResource( 34 )
 text = "3"
 align = 1
 percent_visible = 1.0
@@ -1318,7 +1318,7 @@ rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 23 )
+custom_fonts/font = SubResource( 35 )
 text = "+10"
 percent_visible = 1.0
 lines_skipped = 0
@@ -1382,9 +1382,9 @@ button = "A"
 
 [connection signal="jump" from="." to="ButtonHint" method="pop_out"]
 
-[connection signal="jump" from="." to="JumpSound" method="play"]
-
 [connection signal="jump" from="." to="JumpAnimation" method="play" binds= [ "Jump" ]]
+
+[connection signal="jump" from="." to="JumpSound" method="play"]
 
 [connection signal="turning_crocodile" from="." to="." method="start_freezing"]
 

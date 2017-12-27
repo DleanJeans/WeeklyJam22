@@ -1,16 +1,17 @@
 tool
 extends Node2D
 
-export(int) var vicinity = 100 setget _set_vicinity
-
 func find_most_desired_player(me):
-	return _find_max(me, Global.Players, "_filter_player", "_player_desirability")
+	var compute_player_desirability = funcref(self, "_player_desirability")
+	var filter_player = funcref(self, "_filter_player")
+	
+	return Utility.find_max(me, Global.Players, compute_player_desirability, filter_player)
 
 func _filter_player(me, player):
 	return player == me or player.on_platform
 
 func _player_desirability(me, player):
-	var distance = distance(player, me)
+	var distance = Utility.distance(player, me)
 	var distance_to_peers = _total_distance_to_peers(player) * 0.2
 	var coins_collected = player.coins / 5
 	
@@ -25,25 +26,22 @@ func _total_distance_to_peers(me):
 	var distance = 0
 	for player in Global.Players:
 		if player == me or player.is_crocodile(): continue
-		distance += distance_squared(player, me)
+		distance += Utility.distance_squared(player, me)
 	return distance
 
-func distance(node1, node2):
-	return node1.position.distance_to(node2.position)
-
-func distance_squared(node1, node2):
-	return node1.position.distance_squared_to(node2.position)
-
 func find_most_desired_platform(me):
-	return _find_max(me, Global.Platforms, "_filter_platform", "_platform_desirability")
+	var compute_platform_desirability = funcref(self, "_platform_desirability")
+	var filter_platform = funcref(self, "_filter_platform")
+	
+	return Utility.find_max(me, Global.Platforms, compute_platform_desirability, filter_platform)
 
 func _filter_platform(me, platform):
 	return Global.crocodile == null
 
 func _platform_desirability(me, platform):
-	var distance = distance_squared(me, platform)
-	var distance_to_crocodile = distance_squared(platform, Global.crocodile)
-	var crocodile_relative_direction = _relative_direction(me.position, platform.position, Global.crocodile.position)
+	var distance = Utility.distance_squared(me, platform)
+	var distance_to_crocodile = Utility.distance_squared(platform, Global.crocodile)
+	var crocodile_relative_direction = Utility.relative_direction(me.position, platform.position, Global.crocodile.position)
 	var platform_total_distance_to_peers = _platform_total_distance_to_peers(me, platform)
 	
 	var good = distance_to_crocodile * platform_total_distance_to_peers
@@ -57,19 +55,14 @@ func _platform_total_distance_to_peers(me, platform):
 	var distance = 0
 	for player in Global.Players:
 		if player == me or player.is_crocodile(): continue
-		distance += distance_squared(player, platform)
+		distance += Utility.distance_squared(player, platform)
 	return distance
 
-func _relative_direction(origin, position1, position2):
-	var to_position1 = (position1 - origin).normalized()
-	var to_position2 = (position2 - origin).normalized()
-	var dot = to_position1.dot(to_position2)
-	var relative_direction = acos(dot)
-	
-	return relative_direction
-
 func find_most_desired_coin(me):
-	return _find_max(me, Global.Coins, "_filter_coin", "_coin_desirability")
+	var compute_coin_desirability = funcref(self, "_coin_desirability")
+	var filter_coin = funcref(self, "_filter_coin")
+	
+	return Utility.find_max(me, Global.Coins, compute_coin_desirability, filter_coin)
 
 func _filter_coin(me, coin):
 	var first_conditions = coin.collected or Global.crocodile == null
@@ -79,8 +72,8 @@ func _filter_coin(me, coin):
 	for player in Global.Players:
 		if player == me: continue
 
-		var their_distance_to_coin = distance(player, coin)
-		var my_distance_to_coin = distance(me, coin)
+		var their_distance_to_coin = Utility.distance(player, coin)
+		var my_distance_to_coin = Utility.distance(me, coin)
 
 		var their_duration_to_coin = their_distance_to_coin / (player.velocity.length() + 1)
 		var my_duration_to_coin = my_distance_to_coin / player.max_velocity
@@ -92,8 +85,8 @@ func _filter_coin(me, coin):
 
 func _coin_desirability(me, coin):
 	var distance_to_peers = _distance_to_peers(me, coin)
-	var distance_to_crocodile = distance_squared(coin, Global.crocodile)
-	var distance = distance_squared(me, coin)
+	var distance_to_crocodile = Utility.distance_squared(coin, Global.crocodile)
+	var distance = Utility.distance_squared(me, coin)
 	var distance_to_other_coins = _distance_to_other_coins(me, coin)
 	
 	var good = distance_to_peers * distance_to_crocodile
@@ -107,7 +100,7 @@ func _distance_to_peers(me, coin):
 	for player in Global.Players:
 		if player == me or player.is_crocodile(): continue
 		
-		var distance = distance_squared(player, coin)
+		var distance = Utility.distance_squared(player, coin)
 		total_distance += distance
 	
 	return total_distance
@@ -118,46 +111,19 @@ func _distance_to_other_coins(me, coin):
 	for c in Global.Coins:
 		if c == coin or c.collected: continue
 		
-		var distance = distance_squared(c, coin)
+		var distance = Utility.distance_squared(c, coin)
 		total_distance += distance
 	
 	return total_distance
 
 func find_closest_coin(me):
-	return _find_min(me, Global.Coins, "_filter_coin", "distance_squared")
+	var compute_distance_squared = funcref(Utility, "distance_squared")
+	var filter_coin = funcref(self, "_filter_coin")
+	
+	return Utility.find_min(me, Global.Coins, compute_distance_squared, filter_coin)
 
 func find_closest_platform(me):
-	return _find_min(me, Global.Platforms, "_filter_platform", "distance_squared")
-
-func _find_max(me, objects, filter, calculate_points):
-	var highest_points = -INF
-	var best_candidate
+	var compute_distance_squared = funcref(Utility, "distance_squared")
+	var filter_platform = funcref(self, "_filter_platform")
 	
-	for object in objects:
-		if call(filter, me, object): continue
-		
-		var points = call(calculate_points, me, object)
-		if points > highest_points:
-			highest_points = points
-			best_candidate = object
-	
-	return best_candidate
-
-func _find_min(me, objects, filter, calculate_points):
-	var lowest_points = INF
-	var best_candidate
-	
-	for object in objects:
-		if call(filter, me, object): continue
-		
-		var points = call(calculate_points, me, object)
-		if points < lowest_points:
-			lowest_points = points
-			best_candidate = object
-	
-	return best_candidate
-
-func _set_vicinity(value):
-	vicinity = value
-	if has("Vicinity/Shape"):
-		$Vicinity/Shape.shape.radius = value / 2
+	return Utility.find_min(me, Global.Platforms, "distance_squared", "_filter_platform")

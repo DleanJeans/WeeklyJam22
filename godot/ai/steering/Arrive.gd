@@ -3,12 +3,13 @@ extends "res://ai/steering/SteeringBehavior.gd"
 export(float) var deceleration = 0.5
 
 func execute():
-	if target == null or target.is_queued_for_deletion():
+	if target == null:
 		return Vector2()
 	return arrive() * multiplier
 
 func arrive():
-	var to_target = target.position - player.position
+	var target = Utility.get_position(self.target)
+	var to_target = target - player.position
 	var distance = to_target.length()
 	
 	if distance > 0:

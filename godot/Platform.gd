@@ -18,6 +18,23 @@ func _ready():
 	var screen_center = Vector2(ProjectSettings.get_setting("display/window/size/width"), ProjectSettings.get_setting("display/window/size/height")) / 2
 	to_screen_center = (screen_center - position).normalized()
 
+#func find_closest_path_point_to_player(player):
+#	_recreate_path_curve()
+#	var points = $Path.curve.get_baked_points()
+#
+#	for i in range(0, points.size()):
+#		points[i] += position
+#
+#	return Locator._find_min(player, points, "distance_squared")
+#
+#func _recreate_path_curve():
+#	$Path.curve.clear_points()
+#	$Path.curve.add_point(Vector2(50, -45) * scale)
+#	$Path.curve.add_point(Vector2(-50, -45) * scale)
+#	$Path.curve.add_point(Vector2(-50, 45) * scale)
+#	$Path.curve.add_point(Vector2(50, 45) * scale)
+#	$Path.curve.add_point(Vector2(50, -45) * scale)
+
 func enable():
 	set_process(true)
 

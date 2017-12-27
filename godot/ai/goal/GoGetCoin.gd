@@ -10,7 +10,7 @@ func activate():
 	coin = Locator.find_most_desired_coin(player)
 	if coin == null or not coin is load("res://Coin.gd"):
 		state = GOAL_FAILED
-	steering.seek_on(coin)
+	else: steering.seek_on(coin)
 
 func process():
 	.process()

@@ -1,12 +1,13 @@
 extends "res://ai/steering/SteeringBehavior.gd"
 
 func execute():
+	if target == null:
+		return Vector2()
 	return seek_target() * multiplier
 
 func seek_target():
-	if target == null:
-		return Vector2()
-	return seek(target.position)
+	var target = Utility.get_position(self.target)
+	return seek(target)
 
 func seek(target_position):
 	var velocity = player.moving_vector(target_position - player.position)

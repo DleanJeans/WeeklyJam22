@@ -128,9 +128,6 @@ func break_unfrozen():
 	groan()
 	jump()
 
-func toggle_frozen():
-	self.frozen = not frozen
-
 func collect_coins(amount = 10):
 	self.coins += amount
 	$CoinChangeLabel.text = "+%s" % amount
@@ -210,7 +207,6 @@ func _physics_process(delta):
 	if frozen: return
 	
 	_move_player()
-	_steer_ai_if_blocked()
 
 func _move_player():
 	clamp_velocity()
@@ -234,19 +230,6 @@ func _emit_signal_if_hit_wall():
 			emit_signal("hit_wall", self, Vector2(-1, 1))
 		elif abs(normal.y) == 1:
 			emit_signal("hit_wall", self, Vector2(1, -1))
-
-func _steer_ai_if_blocked():
-	if get_slide_count() > 0 and is_controlled_by_ai():
-		var collision = get_slide_collision(0)
-		var normal = collision.normal
-		var tangent = velocity.tangent()
-		var velocity_dot = heading.dot(normal)
-		var tangent_dot = tangent.normalized().dot(normal)
-		
-		if abs(velocity_dot) > 0.25 and abs(velocity_dot) < 0.75 and tangent_dot < 0:
-			tangent *= -1
-		velocity = tangent
-		move_and_slide(velocity)
 
 func debug(info):
 	$DebugLabel.text += "%s\n" % info

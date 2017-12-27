@@ -1,5 +1,7 @@
 extends "res://ai/goal/Goal.gd"
 
+var GoAroundPlatform = load("res://ai/goal/GoAroundPlatform.gd")
+
 var target
 var relocating_timer
 
@@ -26,6 +28,21 @@ func process():
 		state = GOAL_COMPLETED
 	elif target == null or target.on_platform:
 		_relocate_target()
+	
+	go_around_platform_if_needed()
+
+func go_around_platform_if_needed():
+	if _has_subgoals() or player.get_slide_count() == 0: return
+	
+	var collision = player.get_slide_collision(0)
+	
+	var normal = collision.normal
+	var heading = player.heading
+	var dot = normal.dot(heading)
+	if dot > -0.75: return
+	
+	if collision.collider is load("res://Platform.gd"):
+		add_subgoal(GoAroundPlatform.new(collision.collider, target))
 
 func terminate():
 	.terminate()

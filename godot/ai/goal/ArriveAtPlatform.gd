@@ -31,7 +31,7 @@ func process():
 	
 	if platform == null:
 		state = GOAL_FAILED
-	elif Locator.distance(player, platform) <= 40 and not player.is_panicking():
+	elif Utility.distance(player, platform) <= 40 and not player.is_panicking():
 		state = GOAL_COMPLETED
 	elif _blocked_out_of_platform():
 		player.jump()

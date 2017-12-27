@@ -19,3 +19,21 @@ func _physics_process(delta):
 		$WinGame.process()
 	
 	player.velocity += $Steering.steer()
+	
+#	if not player.frozen:
+#		_steer_if_blocked()
+
+#func _steer_if_blocked():
+#	if player.get_slide_count() > 0:
+#		var velocity = player.velocity
+#
+#		var collision = player.get_slide_collision(0)
+#		var normal = collision.normal
+#		var tangent = velocity.tangent()
+#		var velocity_dot = player.heading.dot(normal)
+#		var tangent_dot = tangent.normalized().dot(normal)
+#
+#		if abs(velocity_dot) > 0.25 and abs(velocity_dot) < 0.9 and tangent_dot < 0:
+#			tangent *= -1
+#		velocity = tangent
+#		player.move_and_slide(velocity)

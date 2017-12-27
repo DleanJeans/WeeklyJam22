@@ -10,7 +10,7 @@ func open():
 	show()
 	$PlayButton.grab_focus()
 	_toggle_joypad_hint()
-	
+
 func _toggle_joypad_hint():
 	if game.joypad_connected():
 		$FullScreenButton/Hints/R1.show()
@@ -20,6 +20,12 @@ func _ready():
 	$PlayButton.grab_focus()
 	$Version.text = ProjectSettings.get_setting("game/version")
 	_toggle_joypad_hint()
+
+func _process(delta):
+	if Input.is_action_just_pressed("toggle_main_menu"):
+		if visible:
+			hide()
+		else: show()
 
 func _on_FullScreenButton_pressed():
 	Global.toggle_fullscreen()

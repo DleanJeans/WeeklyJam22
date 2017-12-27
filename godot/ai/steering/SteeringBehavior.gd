@@ -8,7 +8,7 @@ var target
 
 func execute():
 	return Vector2()
-
+ 
 func on(target = null):
 	is_on = true
 	self.target = target

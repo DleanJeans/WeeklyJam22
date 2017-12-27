@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://ai/steering/Steering.gd" type="Script" id=1]
 [ext_resource path="res://ai/steering/Seek.gd" type="Script" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://ai/steering/Pursuit.gd" type="Script" id=4]
 [ext_resource path="res://ai/steering/Separation.gd" type="Script" id=5]
 [ext_resource path="res://ai/steering/Flee.gd" type="Script" id=6]
+[ext_resource path="res://ai/steering/PathFollow.gd" type="Script" id=7]
+[ext_resource path="res://Sprite.png" type="Texture" id=8]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -88,5 +90,19 @@ _sections_unfolded = [ "Transform" ]
 [node name="Shape" type="CollisionShape2D" parent="Flee/PanicRadius" index="0"]
 
 shape = SubResource( 2 )
+
+[node name="PathFollow" type="Node2D" parent="." index="5"]
+
+script = ExtResource( 7 )
+multiplier = 1
+reach_radius = 30
+direction = -1
+loop = true
+
+[node name="Sprite" type="Sprite" parent="PathFollow" index="0"]
+
+scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 8 )
+_sections_unfolded = [ "Transform", "Z" ]
 
 

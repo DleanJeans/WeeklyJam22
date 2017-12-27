@@ -14,15 +14,19 @@ onready var TestSubject = $TileMap/TestSubject
 onready var ControlSubject = $TileMap/ControlSubject
 onready var Steering = $TileMap/TestSubject/AI/Steering
 
+onready var initial_position = TestSubject.position
+
 func _ready():
 	Steering.player = TestSubject
 	for behavior in Steering.get_children():
 		behavior.player = TestSubject
+	
 	ControlSubject.controller = \"P1\"
-	$TileMap/TestSubject/AI.remove_child($TileMap/TestSubject/AI/WinGame)
-	TestSubject.turn_normal()
+	TestSubject.turn_crocodile()
 	ControlSubject.turn_normal()
-
+	TestSubject.get_node(\"FreezeTimer\").stop()
+	TestSubject.get_node(\"FreezeTimer\").emit_signal(\"timeout\")
+	
 func _physics_process(delta):
 	TestSubject.velocity += ($Target.position - TestSubject.position).normalized()
 	TestSubject.velocity += Steering.steer()
@@ -30,7 +34,7 @@ func _physics_process(delta):
 func _process(delta):
 	if Input.is_mouse_button_pressed(BUTTON_RIGHT):
 		$Target.position = get_global_mouse_position()
-	$Label2.text = String(Engine.get_frames_per_second())
+		$TileMap/ControlSubject2.position = get_global_mouse_position()
 	
 func _on_Behavior_toggled(pressed, name):
 	print(\"%s Toggled\" % name)
@@ -73,12 +77,11 @@ script = SubResource( 1 )
 
 [node name="Platform" parent="." index="0" instance=ExtResource( 1 )]
 
-position = Vector2( 860, 120 )
+position = Vector2( 500, 250 )
 scale = Vector2( 3, 2 )
 
 [node name="TileMap" type="TileMap" parent="." index="1"]
 
-editor/display_folded = true
 mode = 0
 tile_set = null
 cell_size = Vector2( 64, 64 )
@@ -100,17 +103,15 @@ _sections_unfolded = [ "Cell" ]
 
 [node name="TestSubject" parent="TileMap" index="0" instance=ExtResource( 2 )]
 
-editor/display_folded = true
-position = Vector2( 820, 120 )
-
-[node name="DebugLabel" parent="TileMap/TestSubject" index="24"]
-
-text = "[Debug:TestSubject]
-"
+position = Vector2( 870, 390 )
 
 [node name="ControlSubject" parent="TileMap" index="1" instance=ExtResource( 2 )]
 
-position = Vector2( 730, 140 )
+position = Vector2( 500, 250 )
+
+[node name="ControlSubject2" parent="TileMap" index="2" instance=ExtResource( 2 )]
+
+position = Vector2( 360, 210 )
 
 [node name="Target" type="StaticBody2D" parent="." index="2"]
 
@@ -300,22 +301,6 @@ _sections_unfolded = [ "custom_fonts" ]
 
 [node name="BoxWall" parent="." index="5" instance=ExtResource( 5 )]
 
-[node name="Label2" type="Label" parent="." index="6"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_right = 40.0
-margin_bottom = 14.0
-rect_pivot_offset = Vector2( 0, 0 )
-mouse_filter = 2
-size_flags_horizontal = 1
-size_flags_vertical = 4
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-
 [connection signal="toggled" from="Container/Seek" to="." method="_on_Behavior_toggled" binds= [ "Seek" ]]
 
 [connection signal="toggled" from="Container/Arrive" to="." method="_on_Behavior_toggled" binds= [ "Arrive" ]]
@@ -327,4 +312,3 @@ max_lines_visible = -1
 [connection signal="toggled" from="Container/Separation" to="." method="_on_Behavior_toggled" binds= [ "Separation" ]]
 
 
-[editable path="TileMap/TestSubject"]

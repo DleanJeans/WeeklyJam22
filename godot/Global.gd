@@ -4,6 +4,7 @@ extends Node
 const COLLISION_NORMAL = 1 + 16
 const COLLISION_BLOCKED = 1 + 2 + 16
 const COLLISION_AIRBORNE = 16
+const COLLISION_PLATFORM = 4
 
 var Game
 var Players setget , _get_players 
