@@ -4,36 +4,16 @@ extends StaticBody2D
 # a lil bit larget than $Shape itself
 # because only then _on_player_enter() can be called
 
+export(bool) var requires_path_around = false
+
 var bounce_speed = 400
 
-var to_screen_center
 var occupied setget , _get_occupied
 
 var _player
 var _occupier
 var _bounced_players = []
 var _bounce_velocities = {}
-
-func _ready():
-	var screen_center = Vector2(ProjectSettings.get_setting("display/window/size/width"), ProjectSettings.get_setting("display/window/size/height")) / 2
-	to_screen_center = (screen_center - position).normalized()
-
-#func find_closest_path_point_to_player(player):
-#	_recreate_path_curve()
-#	var points = $Path.curve.get_baked_points()
-#
-#	for i in range(0, points.size()):
-#		points[i] += position
-#
-#	return Locator._find_min(player, points, "distance_squared")
-#
-#func _recreate_path_curve():
-#	$Path.curve.clear_points()
-#	$Path.curve.add_point(Vector2(50, -45) * scale)
-#	$Path.curve.add_point(Vector2(-50, -45) * scale)
-#	$Path.curve.add_point(Vector2(-50, 45) * scale)
-#	$Path.curve.add_point(Vector2(50, 45) * scale)
-#	$Path.curve.add_point(Vector2(50, -45) * scale)
 
 func enable():
 	set_process(true)
@@ -74,15 +54,25 @@ func _unblock_player():
 	$AllowSound.play()
 
 func _on_player_exited(player):
-	player.frozen = false
+	_unfrozen(player)
+	_disconnect_signal(player)
+	
 	if self.occupied and player.on_platform:
 		_occupier = null
 		player.on_platform = false
 		player.collision_layer = Global.COLLISION_NORMAL
 		_turn_green()
+	
+	player._leave_platform()
+	_bounce_velocities.erase(player)
+
+func _unfrozen(player):
+	if not player.is_crocodile():
+		player.frozen = false
+
+func _disconnect_signal(player):
 	if player.is_connected("hit_wall", self, "_on_player_hit_wall"):
 		player.disconnect("hit_wall", self, "_on_player_hit_wall")
-	_bounce_velocities.erase(player)
 
 func _turn_red():
 	$ColorChanger.play("TurnRed")

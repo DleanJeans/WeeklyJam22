@@ -1,6 +1,7 @@
 extends Container
 
 onready var game = get_parent()
+onready var menu_button = game.get_node("MenuButton")
 
 signal play_pressed
 signal map_pressed
@@ -25,7 +26,11 @@ func _process(delta):
 	if Input.is_action_just_pressed("toggle_main_menu"):
 		if visible:
 			hide()
-		else: show()
+			menu_button.show()
+			menu_button.grab_focus()
+		else:
+			show()
+			menu_button.hide()
 
 func _on_FullScreenButton_pressed():
 	Global.toggle_fullscreen()

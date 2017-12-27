@@ -38,8 +38,12 @@ var _debug_text = ""
 
 signal turning_crocodile
 signal turning_normal
+
 signal jump
+
 signal frozen_as_crocodile
+signal unfrozen_as_crocodile
+
 signal hit_wall(player, bounce)
 
 func reset():
@@ -63,13 +67,13 @@ func hide_button_hint():
 
 func show_crown():
 	if $Sprite/Crown.visible or $CrownAnimation.is_playing(): return
-	
+
 	$CrownAnimation.play("PopUp")
 	$PopSound.play()
 
 func hide_crown():
 	if not $Sprite/Crown.visible or $CrownAnimation.is_playing(): return
-	
+
 	$CrownAnimation.play("PopOut")
 	$PopSound.play()
 
@@ -78,23 +82,25 @@ func out_of_coins():
 
 func is_panicking():
 	if self.crocodile == null: return false
-	
+
 	var crocodile_in_panic_radius = $PanicRadius.get_overlapping_bodies().has(self.crocodile)
 	var crocodile_not_frozen = not self.crocodile.frozen
-	
+
 	return not on_platform and crocodile_in_panic_radius and crocodile_not_frozen
 
 func is_close_to_at_least_3_others():
 	if frozen or not is_crocodile(): return
-	
+
 	var bodies = $PanicRadius.get_overlapping_bodies()
 	var players_count = 0
-	
+
 	for b in bodies:
-		if get_node("/root/Global").Players.has(b) and b != self:
+		if b is load("res://Player.gd") and b != self:
 			players_count += 1
-	
-	return players_count >= 3
+			if players_count == 3:
+				return true
+
+	return false
 
 func show_winner_label():
 	$WinnerLabel.show()
@@ -124,7 +130,6 @@ func _start_shockwave():
 	$ShockwaveAnimation.play(".")
 
 func break_unfrozen():
-	$Sprite.modulate = get_node("/root/Global").WHITE
 	groan()
 	jump()
 
@@ -137,9 +142,9 @@ func collect_coins(amount = 10):
 func take_away_coins(amount):
 	if amount > coins:
 		amount = coins
-	
+
 	self.coins -= amount
-	
+
 	if amount > 0:
 		$CoinChangeLabel.text = "%s" % amount
 		$CoinChangeLabel.modulate = get_node("/root/Global").RED
@@ -169,7 +174,7 @@ func is_crocodile():
 func tag_crocodile(player):
 	if _not_taggable(player):
 		return
-	
+
 	turn_normal()
 	player.turn_crocodile()
 	_transfer_coins(player)
@@ -184,7 +189,7 @@ func start_freezing():
 func _transfer_coins(player):
 	var coins_lost = _coins_lost(player)
 	var coins_gained = _coins_gained(coins_lost)
-	
+
 	player.take_away_coins(coins_lost)
 	self.collect_coins(coins_gained)
 
@@ -201,20 +206,20 @@ func _round_to_nearest_5(value):
 
 func _physics_process(delta):
 	$DebugLabel.text = "[Debug:%s]\n" % get_name()
-	
+
 	_emit_signal_if_hit_wall()
-	
+
 	if frozen: return
-	
+
 	_move_player()
 
 func _move_player():
 	clamp_velocity()
 	velocity *= drag_scale
 	move_and_slide(velocity)
-	
+
 	heading = velocity.normalized()
-	
+
 	if on_platform:
 		$Shockwave.show()
 	else: $Shockwave.hide()
@@ -223,9 +228,9 @@ func _emit_signal_if_hit_wall():
 	if get_slide_count() > 0:
 		var collision = get_slide_collision(0)
 		if not collision.collider is load("res://Wall.gd"): return
-		
+
 		var normal = collision.normal
-		
+
 		if abs(normal.x) == 1:
 			emit_signal("hit_wall", self, Vector2(-1, 1))
 		elif abs(normal.y) == 1:
@@ -246,12 +251,12 @@ func set_name_tag(name):
 func _set_controller(value):
 	controller = value
 	if $Sprite/NameTag == null: return
-	
+
 	$Sprite/NameTag.text = value
 	if value == "AI":
 		$Sprite/NameTag.hide()
 	else: $Sprite/NameTag.show()
-	
+
 	_toggle_button_hint_visible()
 	_choose_button_hint()
 
@@ -294,7 +299,16 @@ func _get_crocodile():
 
 func _set_frozen(value):
 	frozen = value
-	if is_crocodile() and frozen:
-		emit_signal("frozen_as_crocodile")
-		$Sprite.modulate = get_node("/root/Global").ICY_BLUE
-		$FreezingSound.play()
+	if is_crocodile():
+		if frozen:
+			emit_signal("frozen_as_crocodile")
+		else: emit_signal("unfrozen_as_crocodile")
+
+func _leave_platform():
+	if self.crocodile != null:
+		self.crocodile._tag_overlapping_player()
+
+func _tag_overlapping_player():
+	var bodies = $TouchArea.get_overlapping_bodies()
+	for body in bodies:
+		tag_crocodile(body)

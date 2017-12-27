@@ -16,9 +16,6 @@ func _process(delta):
 	
 	for child in get_children():
 		_check_key_list(child)
-	
-	if _room_full():
-		set_process(false)
 
 func _room_full():
 	var player_count = $"../Map/Objects".get_child_count()
@@ -31,8 +28,13 @@ func _check_key_list(controller_child):
 	for key in _current_controller.key_list:
 		if Input.is_action_pressed(key):
 			_activate_controller()
+			_lock_room()
 
 func _activate_controller():
 	_current_controller.activated = true
 	num_users += 1
 	player_manager.activate_controller(num_users, _current_controller.get_name())
+
+func _lock_room():
+	if _room_full():
+		set_process(false)

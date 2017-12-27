@@ -79,6 +79,7 @@ script = SubResource( 1 )
 
 position = Vector2( 500, 250 )
 scale = Vector2( 3, 2 )
+requires_path_around = false
 
 [node name="TileMap" type="TileMap" parent="." index="1"]
 

@@ -61,6 +61,7 @@ friction = 1.0
 bounce = 0.0
 script = ExtResource( 1 )
 _sections_unfolded = [ "Collision", "Transform", "Visibility" ]
+requires_path_around = false
 
 [node name="Shape" type="CollisionShape2D" parent="." index="0"]
 
@@ -70,6 +71,7 @@ _sections_unfolded = [ "Transform", "Visibility" ]
 [node name="Sprite" type="Sprite" parent="Shape" index="0"]
 
 self_modulate = Color( 0.0103455, 0.882813, 0.289808, 1 )
+show_behind_parent = true
 scale = Vector2( 0.64, 0.64 )
 texture = ExtResource( 2 )
 _sections_unfolded = [ "Transform", "Visibility" ]

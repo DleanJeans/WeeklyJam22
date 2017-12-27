@@ -41,7 +41,9 @@ func go_around_platform_if_needed():
 	var dot = normal.dot(heading)
 	if dot > -0.75: return
 	
-	if collision.collider is load("res://Platform.gd"):
+	var collider = collision.collider
+	
+	if collider is load("res://Platform.gd") and collider.requires_path_around:
 		add_subgoal(GoAroundPlatform.new(collision.collider, target))
 
 func terminate():

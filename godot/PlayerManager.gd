@@ -34,7 +34,6 @@ func choose_crocodile_randomly():
 	
 	var random_player = _find_random_player()
 	random_player.turn_crocodile()
-	random_player.start_freezing()
 
 func _find_random_player():
 	var random_player_index = randi() % Global.Players.size()

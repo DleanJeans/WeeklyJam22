@@ -7,21 +7,29 @@ var _target
 var _path = [Vector2()]
 var _path_direction = 1
 
-	#1. Create a path
-	#2. Find closest point
-	#3. Find closest point to target
-	#4. Find direction
-	#5. Terminate if raycast to target not hit platform
-
 func _init(platform, target):
 	_platform = platform
 	_target = target
 	_name = "GoAroundPlatform"
 
+func process():
+	.process()
+	
+	_update_goal_state()
+
+func _update_goal_state():
+	if _target == null or _target.on_platform:
+		state = GOAL_FAILED
+
 func activate():
 	.activate()
-	get_parent().relocating_timer.set_paused(true)
 	path_follow = steering.get_node("PathFollow")
+	
+	_update_goal_state()
+	if state != GOAL_ACTIVE:
+		return
+	
+	get_parent().relocating_timer.set_paused(true)
 	
 	_create_path()
 	_find_path_direction()
@@ -72,8 +80,15 @@ func _raycast_to_target_not_hit_platform(point):
 	return not hit_platform
 
 func terminate():
-	path_follow.disconnect("point_reached", self, "_terminate_if_not_blocked_anymore")
-	get_parent().relocating_timer.set_paused(false)
-	get_parent()._relocate_target()
+	_disconnect_signal()
+	_relocate_target()
 	steering.path_follow_off()
 	.terminate()
+
+func _disconnect_signal():
+	if path_follow.is_connected("point_reached", self, "_terminate_if_not_blocked_anymore"):
+		path_follow.disconnect("point_reached", self, "_terminate_if_not_blocked_anymore")
+
+func _relocate_target():
+	get_parent().relocating_timer.set_paused(false)
+	get_parent()._relocate_target()

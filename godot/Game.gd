@@ -25,7 +25,7 @@ func open_main_menu():
 
 func start_counting_down():
 	if $GameTimer.is_counting_down(): return
-	
+
 	emit_signal("countdown_started")
 
 func stop_counting_down():

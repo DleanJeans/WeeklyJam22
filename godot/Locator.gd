@@ -11,7 +11,7 @@ func _filter_player(me, player):
 	return player == me or player.on_platform
 
 func _player_desirability(me, player):
-	var distance = Utility.distance(player, me)
+	var distance = Utility.distance_squared(player, me)
 	var distance_to_peers = _total_distance_to_peers(player) * 0.2
 	var coins_collected = player.coins / 5
 	
@@ -39,13 +39,13 @@ func _filter_platform(me, platform):
 	return Global.crocodile == null
 
 func _platform_desirability(me, platform):
-	var distance = Utility.distance_squared(me, platform)
+	var distance_squared = Utility.distance_squared(me, platform)
 	var distance_to_crocodile = Utility.distance_squared(platform, Global.crocodile)
-	var crocodile_relative_direction = Utility.relative_direction(me.position, platform.position, Global.crocodile.position)
+	var crocodile_relative_angle = Utility.relative_angle_to(me.position, platform.position, Global.crocodile.position)
 	var platform_total_distance_to_peers = _platform_total_distance_to_peers(me, platform)
 	
 	var good = distance_to_crocodile * platform_total_distance_to_peers
-	var bad = (1 + crocodile_relative_direction) + distance
+	var bad = 1 + crocodile_relative_angle + distance_squared
 	
 	var desirability = good / bad
 	
@@ -65,23 +65,7 @@ func find_most_desired_coin(me):
 	return Utility.find_max(me, Global.Coins, compute_coin_desirability, filter_coin)
 
 func _filter_coin(me, coin):
-	var first_conditions = coin.collected or Global.crocodile == null
-	if first_conditions:
-		return first_conditions
-	
-	for player in Global.Players:
-		if player == me: continue
-
-		var their_distance_to_coin = Utility.distance(player, coin)
-		var my_distance_to_coin = Utility.distance(me, coin)
-
-		var their_duration_to_coin = their_distance_to_coin / (player.velocity.length() + 1)
-		var my_duration_to_coin = my_distance_to_coin / player.max_velocity
-
-		if their_distance_to_coin < my_duration_to_coin:
-			return true
-	
-	return false
+	return coin.collected or Global.crocodile == null
 
 func _coin_desirability(me, coin):
 	var distance_to_peers = _distance_to_peers(me, coin)
@@ -91,7 +75,7 @@ func _coin_desirability(me, coin):
 	
 	var good = distance_to_peers * distance_to_crocodile
 	var bad = distance * distance_to_other_coins + 1
-	
+
 	return good / bad
 
 func _distance_to_peers(me, coin):
@@ -102,7 +86,7 @@ func _distance_to_peers(me, coin):
 		
 		var distance = Utility.distance_squared(player, coin)
 		total_distance += distance
-	
+
 	return total_distance
 
 func _distance_to_other_coins(me, coin):
@@ -113,7 +97,7 @@ func _distance_to_other_coins(me, coin):
 		
 		var distance = Utility.distance_squared(c, coin)
 		total_distance += distance
-	
+
 	return total_distance
 
 func find_closest_coin(me):

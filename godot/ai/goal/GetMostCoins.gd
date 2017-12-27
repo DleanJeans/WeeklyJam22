@@ -1,5 +1,7 @@
 extends "res://ai/goal/Goal.gd"
 
+var fleeing_radius = 250
+
 var FleeCrocodile = load("res://ai/goal/FleeCrocodile.gd")
 var GoGetCoin = load("res://ai/goal/GoGetCoin.gd")
 var ArriveAtPlatform = load("res://ai/goal/ArriveAtPlatform.gd")
@@ -17,17 +19,9 @@ func process():
 	if player.is_crocodile():
 		state = GOAL_FAILED
 	
-	if _should_flee():
-		var subgoal_to_add
-		
-		if _all_platforms_occupied() or _crocodile_blocks_way_to_platform():
-			subgoal_to_add = FleeCrocodile
-		else:
-			subgoal_to_add = ArriveAtPlatform
-		
-		if _goal_not_active_already(subgoal_to_add):
+	if _should_flee() and _goal_not_active_already(ArriveAtPlatform):
 			clear_subgoals()
-			add_subgoal(subgoal_to_add.new())
+			add_subgoal(ArriveAtPlatform.new())
 	
 	if _has_subgoals(): return
 	
@@ -35,6 +29,14 @@ func process():
 		add_subgoal(GoGetCoin.new())
 	elif _should_get_on_platform():
 		add_subgoal(ArriveAtPlatform.new())
+
+func _should_flee():
+	if Global.crocodile == null: return false
+	
+	var should_be_panicking = Utility.distance_squared(player, Global.crocodile) < fleeing_radius * fleeing_radius
+	var crocodile_not_frozen = not Global.crocodile.frozen
+	
+	return should_be_panicking and crocodile_not_frozen
 
 func _goal_not_active_already(goal):
 	return _has_subgoals() and not _first_subgoal() is goal
@@ -61,14 +63,6 @@ func _should_get_on_platform():
 		return false
 	
 	return not _all_platforms_occupied()
-
-func _should_flee():
-	if Global.crocodile == null: return false
-	
-	var should_be_panicking = steering.get_node("Flee").is_panicking(Global.crocodile)
-	var crocodile_not_frozen = not Global.crocodile.frozen
-	
-	return should_be_panicking and crocodile_not_frozen
 
 func _should_go_after_coins():
 	if player.out_of_coins():

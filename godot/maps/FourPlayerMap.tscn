@@ -10,6 +10,7 @@
 
 script = ExtResource( 1 )
 name = "Twin Island - 4 Players"
+position_tween_time = 0.5
 
 [node name="BoxWall" parent="." index="0" instance=ExtResource( 2 )]
 
@@ -19,11 +20,13 @@ name = "Twin Island - 4 Players"
 
 position = Vector2( 250, 300 )
 scale = Vector2( 3, 2 )
+requires_path_around = true
 
 [node name="Platform2" parent="Platforms" index="1" instance=ExtResource( 3 )]
 
 position = Vector2( 710, 295 )
 scale = Vector2( 3, 2 )
+requires_path_around = true
 
 [node name="CoinSpawners" type="Node2D" parent="." index="2"]
 

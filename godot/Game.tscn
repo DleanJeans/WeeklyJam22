@@ -64,7 +64,7 @@ func next_map():
 	game.showing_winner = false
 	game.get_node(\"PlayerManager\").enable_ai()"
 
-[node name="Game" type="Node2D" index="0"]
+[node name="Game" type="Node2D"]
 
 script = ExtResource( 1 )
 _sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
@@ -189,9 +189,9 @@ _sections_unfolded = [ "custom_fonts", "custom_styles" ]
 
 [connection signal="game_started" from="." to="PlayerManager" method="reset_positions"]
 
-[connection signal="game_started" from="." to="PlayerManager" method="choose_crocodile_randomly" flags=3]
-
 [connection signal="game_started" from="." to="PlayerManager" method="unfreeze_players"]
+
+[connection signal="game_started" from="." to="PlayerManager" method="choose_crocodile_randomly" flags=3]
 
 [connection signal="game_started" from="." to="CoinManager" method="resume_spawners"]
 
