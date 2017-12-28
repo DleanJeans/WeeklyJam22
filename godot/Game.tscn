@@ -64,7 +64,7 @@ func next_map():
 	game.showing_winner = false
 	game.get_node(\"PlayerManager\").enable_ai()"
 
-[node name="Game" type="Node2D"]
+[node name="Game" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
 _sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
@@ -135,8 +135,9 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 400.0
 margin_top = 500.0
-margin_right = 567.0
-margin_bottom = 537.0
+margin_right = 718.0
+margin_bottom = 566.0
+rect_scale = Vector2( 0.5, 0.5 )
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
 size_flags_horizontal = 1
@@ -155,25 +156,25 @@ _sections_unfolded = [ "custom_fonts", "custom_styles" ]
 
 [connection signal="countdown_started" from="." to="GameTimer" method="start_counting_down"]
 
-[connection signal="game_loaded" from="." to="PlayerManager" method="reset"]
-
 [connection signal="game_loaded" from="." to="PlayerManager" method="choose_crocodile_randomly" flags=3]
 
-[connection signal="game_over" from="." to="." method="show_mouse"]
+[connection signal="game_loaded" from="." to="PlayerManager" method="reset"]
 
-[connection signal="game_over" from="." to="." method="_show_winner"]
+[connection signal="game_over" from="." to="PlayerManager" method="freeze_players"]
 
 [connection signal="game_over" from="." to="PlayerManager" method="pause_freeze_timer"]
 
-[connection signal="game_over" from="." to="PlayerManager" method="freeze_players"]
+[connection signal="game_over" from="." to="." method="_show_winner"]
+
+[connection signal="game_over" from="." to="." method="show_mouse"]
 
 [connection signal="game_over" from="." to="MenuButton" method="show"]
 
 [connection signal="game_over" from="." to="MenuButton" method="grab_focus"]
 
-[connection signal="game_paused" from="." to="." method="_pause_tree"]
-
 [connection signal="game_paused" from="." to="." method="show_mouse"]
+
+[connection signal="game_paused" from="." to="." method="_pause_tree"]
 
 [connection signal="game_paused" from="." to="JoiningScreen" method="hide"]
 
@@ -183,21 +184,21 @@ _sections_unfolded = [ "custom_fonts", "custom_styles" ]
 
 [connection signal="game_resumed" from="." to="JoiningScreen" method="show_if_not_closed"]
 
-[connection signal="game_started" from="." to="." method="hide_mouse"]
+[connection signal="game_started" from="." to="PlayerManager" method="choose_crocodile_randomly" flags=3]
+
+[connection signal="game_started" from="." to="PlayerManager" method="unfreeze_players"]
 
 [connection signal="game_started" from="." to="PlayerManager" method="enable_ai"]
 
 [connection signal="game_started" from="." to="PlayerManager" method="reset_positions"]
 
-[connection signal="game_started" from="." to="PlayerManager" method="unfreeze_players"]
-
-[connection signal="game_started" from="." to="PlayerManager" method="choose_crocodile_randomly" flags=3]
-
 [connection signal="game_started" from="." to="CoinManager" method="resume_spawners"]
+
+[connection signal="game_started" from="." to="." method="hide_mouse"]
 
 [connection signal="game_started" from="." to="JoiningScreen" method="close"]
 
-[connection signal="joining_screen_opened" from="." to="." method="_stop_showing_winner"]
+[connection signal="joining_screen_opened" from="." to="PlayerManager" method="unfreeze_players"]
 
 [connection signal="joining_screen_opened" from="." to="PlayerManager" method="reset"]
 
@@ -205,27 +206,27 @@ _sections_unfolded = [ "custom_fonts", "custom_styles" ]
 
 [connection signal="joining_screen_opened" from="." to="PlayerManager" method="reset_positions"]
 
-[connection signal="joining_screen_opened" from="." to="PlayerManager" method="unfreeze_players"]
-
 [connection signal="joining_screen_opened" from="." to="ControllerAssigner" method="reset"]
-
-[connection signal="joining_screen_opened" from="." to="CoinManager" method="clear"]
 
 [connection signal="joining_screen_opened" from="." to="CoinManager" method="stop_spawners"]
 
+[connection signal="joining_screen_opened" from="." to="CoinManager" method="clear"]
+
+[connection signal="joining_screen_opened" from="." to="." method="_stop_showing_winner"]
+
 [connection signal="joining_screen_opened" from="." to="JoiningScreen" method="open" flags=3]
-
-[connection signal="main_menu_opened" from="." to="." method="resume"]
-
-[connection signal="main_menu_opened" from="." to="." method="show_mouse"]
-
-[connection signal="main_menu_opened" from="." to="PlayerManager" method="enable_ai"]
 
 [connection signal="main_menu_opened" from="." to="PlayerManager" method="choose_crocodile_randomly"]
 
 [connection signal="main_menu_opened" from="." to="PlayerManager" method="reset_controllers"]
 
+[connection signal="main_menu_opened" from="." to="PlayerManager" method="enable_ai"]
+
 [connection signal="main_menu_opened" from="." to="CoinManager" method="resume_spawners"]
+
+[connection signal="main_menu_opened" from="." to="." method="resume"]
+
+[connection signal="main_menu_opened" from="." to="." method="show_mouse"]
 
 [connection signal="main_menu_opened" from="." to="JoiningScreen" method="close"]
 
@@ -233,9 +234,9 @@ _sections_unfolded = [ "custom_fonts", "custom_styles" ]
 
 [connection signal="map_pressed" from="MainMenu" to="MapSelector" method="next_map"]
 
-[connection signal="play_pressed" from="MainMenu" to="." method="hide_mouse"]
-
 [connection signal="play_pressed" from="MainMenu" to="." method="open_joining_screen"]
+
+[connection signal="play_pressed" from="MainMenu" to="." method="hide_mouse"]
 
 [connection signal="player_jump" from="PlayerManager" to="JoiningScreen" method="_on_player_jump"]
 

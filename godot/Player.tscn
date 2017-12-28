@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=2]
+[gd_scene load_steps=42 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://InputAction.gd" type="Script" id=2]
@@ -149,36 +149,6 @@ tracks/8/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ false ]
-}
-
-[sub_resource type="Animation" id=5]
-
-length = 0.8
-loop = false
-step = 0.1
-tracks/0/type = "value"
-tracks/0/path = NodePath("CoinChangeLabel:rect_position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.8 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( 0, -150 ), Vector2( 0, -245 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("CoinChangeLabel:self_modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.8 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
 [sub_resource type="Animation" id=6]
@@ -824,15 +794,15 @@ tracks/5/keys = {
 
 [sub_resource type="DynamicFont" id=16]
 
-size = 40
-use_mipmaps = false
+size = 80
+use_mipmaps = true
 use_filter = false
 font_data = ExtResource( 7 )
 _sections_unfolded = [ "Font", "Settings" ]
 
 [sub_resource type="DynamicFont" id=17]
 
-size = 40
+size = 80
 use_mipmaps = false
 use_filter = false
 font_data = ExtResource( 7 )
@@ -909,7 +879,7 @@ random_pitch = 1.1
 
 [sub_resource type="DynamicFont" id=22]
 
-size = 40
+size = 80
 use_mipmaps = false
 use_filter = false
 font_data = ExtResource( 7 )
@@ -917,22 +887,14 @@ _sections_unfolded = [ "Font", "Settings" ]
 
 [sub_resource type="DynamicFont" id=23]
 
-size = 30
-use_mipmaps = false
-use_filter = false
-font_data = ExtResource( 7 )
-_sections_unfolded = [ "Font", "Settings" ]
-
-[sub_resource type="DynamicFont" id=24]
-
-size = 30
+size = 60
 use_mipmaps = false
 use_filter = false
 font_data = ExtResource( 7 )
 
-[sub_resource type="Theme" id=25]
+[sub_resource type="Theme" id=24]
 
-default_font = SubResource( 24 )
+default_font = SubResource( 23 )
 
 [node name="Player" type="KinematicBody2D" groups=[
 "Players",
@@ -995,18 +957,7 @@ playback/speed = 1.25
 blend_times = [  ]
 autoplay = "Grounded"
 
-[node name="PointsAnimation" type="AnimationPlayer" parent="." index="4"]
-
-playback_process_mode = 1
-playback_default_blend_time = 0.0
-root_node = NodePath("..")
-anims/CoinChanged = SubResource( 5 )
-playback/active = true
-playback/speed = 1.25
-blend_times = [  ]
-autoplay = "Grounded"
-
-[node name="CrownAnimation" type="AnimationPlayer" parent="." index="5"]
+[node name="CrownAnimation" type="AnimationPlayer" parent="." index="4"]
 
 playback_process_mode = 1
 playback_default_blend_time = 0.0
@@ -1018,7 +969,7 @@ playback/speed = 1.25
 blend_times = [  ]
 autoplay = "Grounded"
 
-[node name="ShockwaveAnimation" type="AnimationPlayer" parent="." index="6"]
+[node name="ShockwaveAnimation" type="AnimationPlayer" parent="." index="5"]
 
 playback_process_mode = 1
 playback_default_blend_time = 0.0
@@ -1030,18 +981,18 @@ blend_times = [  ]
 autoplay = ""
 _sections_unfolded = [ "Playback Options", "playback" ]
 
-[node name="InputAction" type="Node2D" parent="." index="7"]
+[node name="InputAction" type="Node2D" parent="." index="6"]
 
 visible = false
 position = Vector2( 0, -40 )
 script = ExtResource( 2 )
 _sections_unfolded = [ "Visibility" ]
 
-[node name="AI" parent="." index="8" instance=ExtResource( 3 )]
+[node name="AI" parent="." index="7" instance=ExtResource( 3 )]
 
 visible = false
 
-[node name="SpriteFlipper" type="Node2D" parent="." index="9"]
+[node name="SpriteFlipper" type="Node2D" parent="." index="8"]
 
 visible = false
 script = SubResource( 9 )
@@ -1062,7 +1013,7 @@ playback/speed = 1.25
 blend_times = [  ]
 autoplay = ""
 
-[node name="Shockwave" type="Sprite" parent="." index="10"]
+[node name="Shockwave" type="Sprite" parent="." index="9"]
 
 visible = false
 modulate = Color( 1, 1, 1, 0 )
@@ -1071,7 +1022,7 @@ scale = Vector2( 2, 1 )
 texture = ExtResource( 4 )
 _sections_unfolded = [ "Transform", "Visibility", "Z" ]
 
-[node name="Shadow" type="Sprite" parent="." index="11"]
+[node name="Shadow" type="Sprite" parent="." index="10"]
 
 modulate = Color( 0, 0, 0, 0.160235 )
 show_behind_parent = true
@@ -1079,9 +1030,8 @@ scale = Vector2( 0.6, 0.2 )
 texture = ExtResource( 5 )
 _sections_unfolded = [ "Transform", "Z" ]
 
-[node name="Sprite" type="Sprite" parent="." index="12"]
+[node name="Sprite" type="Sprite" parent="." index="11"]
 
-editor/display_folded = true
 show_behind_parent = true
 position = Vector2( 0, -40 )
 scale = Vector2( 0.4, 0.8 )
@@ -1101,11 +1051,11 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-margin_left = -180.0
+margin_left = -187.0
 margin_top = -194.0
-margin_right = -116.0
-margin_bottom = -146.0
-rect_scale = Vector2( 2.5, 1.25 )
+margin_right = -47.0
+margin_bottom = -98.0
+rect_scale = Vector2( 1.25, 0.625 )
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 2
 size_flags_horizontal = 1
@@ -1113,6 +1063,7 @@ size_flags_vertical = 4
 custom_fonts/font = SubResource( 16 )
 text = "0"
 align = 1
+valign = 1
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
@@ -1125,11 +1076,11 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = -50.0
-margin_top = -185.0
-margin_right = -10.0
-margin_bottom = -137.0
-rect_scale = Vector2( 2.5, 1.2 )
+margin_left = -37.0
+margin_top = -187.0
+margin_right = 25.0
+margin_bottom = -91.0
+rect_scale = Vector2( 1.25, 0.6 )
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 2
 size_flags_horizontal = 1
@@ -1168,7 +1119,7 @@ position = Vector2( 80, 90 )
 texture = ExtResource( 10 )
 centered = false
 
-[node name="PanicRadius" type="Area2D" parent="." index="13"]
+[node name="PanicRadius" type="Area2D" parent="." index="12"]
 
 editor/display_folded = true
 visible = false
@@ -1185,7 +1136,7 @@ audio_bus_name = "Master"
 
 shape = SubResource( 18 )
 
-[node name="FreezeTimer" type="Timer" parent="." index="14"]
+[node name="FreezeTimer" type="Timer" parent="." index="13"]
 
 process_mode = 1
 wait_time = 3.0
@@ -1193,7 +1144,7 @@ one_shot = true
 autostart = false
 script = SubResource( 19 )
 
-[node name="FreezingSound" type="AudioStreamPlayer2D" parent="." index="15"]
+[node name="FreezingSound" type="AudioStreamPlayer2D" parent="." index="14"]
 
 visible = false
 stream = ExtResource( 11 )
@@ -1204,7 +1155,7 @@ attenuation = 1.0
 bus = "Master"
 area_mask = 1
 
-[node name="TapSound" type="AudioStreamPlayer2D" parent="." index="16"]
+[node name="TapSound" type="AudioStreamPlayer2D" parent="." index="15"]
 
 visible = false
 stream = ExtResource( 12 )
@@ -1215,7 +1166,7 @@ attenuation = 1.0
 bus = "Master"
 area_mask = 1
 
-[node name="GroaningSound" type="AudioStreamPlayer2D" parent="." index="17"]
+[node name="GroaningSound" type="AudioStreamPlayer2D" parent="." index="16"]
 
 visible = false
 stream = ExtResource( 13 )
@@ -1226,7 +1177,7 @@ attenuation = 1.0
 bus = "Master"
 area_mask = 1
 
-[node name="JumpSound" type="AudioStreamPlayer2D" parent="." index="18"]
+[node name="JumpSound" type="AudioStreamPlayer2D" parent="." index="17"]
 
 visible = false
 stream = ExtResource( 14 )
@@ -1237,7 +1188,7 @@ attenuation = 1.0
 bus = "Master"
 area_mask = 1
 
-[node name="ScreamSound" type="AudioStreamPlayer2D" parent="." index="19"]
+[node name="ScreamSound" type="AudioStreamPlayer2D" parent="." index="18"]
 
 visible = false
 stream = ExtResource( 15 )
@@ -1249,7 +1200,7 @@ bus = "Master"
 area_mask = 1
 script = SubResource( 20 )
 
-[node name="PopSound" type="AudioStreamPlayer2D" parent="." index="20"]
+[node name="PopSound" type="AudioStreamPlayer2D" parent="." index="19"]
 
 visible = false
 stream = SubResource( 21 )
@@ -1260,7 +1211,7 @@ attenuation = 1.0
 bus = "Master"
 area_mask = 1
 
-[node name="TimerLabel" type="Label" parent="." index="21"]
+[node name="TimerLabel" type="Label" parent="." index="20"]
 
 visible = false
 anchor_left = 0.0
@@ -1271,6 +1222,7 @@ margin_left = -8.0
 margin_top = -60.0
 margin_right = 8.0
 margin_bottom = -12.0
+rect_scale = Vector2( 0.5, 0.5 )
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 2
 size_flags_horizontal = 1
@@ -1283,51 +1235,32 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "custom_fonts" ]
 
-[node name="CoinChangeLabel" type="Label" parent="." index="22"]
-
-modulate = Color( 0.0618048, 0.894531, 0.0349426, 1 )
-self_modulate = Color( 1, 1, 1, 0 )
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_top = -150.0
-margin_right = 40.0
-margin_bottom = -114.0
-rect_pivot_offset = Vector2( 0, 0 )
-mouse_filter = 2
-size_flags_horizontal = 1
-size_flags_vertical = 4
-custom_fonts/font = SubResource( 23 )
-text = "+10"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Rect", "Visibility", "custom_fonts" ]
-
-[node name="WinnerLabel" type="Label" parent="." index="23"]
+[node name="WinnerLabel" type="Label" parent="." index="21"]
 
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = -35.0
+margin_left = -40.0
 margin_top = 15.0
-margin_right = 37.0
-margin_bottom = 51.0
+margin_right = 120.0
+margin_bottom = 87.0
+rect_scale = Vector2( 0.5, 0.5 )
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
-theme = SubResource( 25 )
+theme = SubResource( 24 )
 text = "Winner"
+align = 1
+valign = 1
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Rect", "custom_fonts" ]
 
-[node name="DebugLabel" type="Label" parent="." index="24"]
+[node name="DebugLabel" type="Label" parent="." index="22"]
 
 visible = false
 anchor_left = 0.0
@@ -1348,11 +1281,11 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="MovementVisualizer" parent="." index="25" instance=ExtResource( 17 )]
+[node name="MovementVisualizer" parent="." index="23" instance=ExtResource( 17 )]
 
 visible = false
 
-[node name="ButtonHint" parent="." index="26" instance=ExtResource( 18 )]
+[node name="ButtonHint" parent="." index="24" instance=ExtResource( 18 )]
 
 visible = false
 margin_top = 0.0
@@ -1364,13 +1297,13 @@ button = "A"
 
 [connection signal="jump" from="." to="JumpSound" method="play"]
 
-[connection signal="jump" from="." to="JumpAnimation" method="play" binds= [ "Jump" ]]
-
 [connection signal="jump" from="." to="ButtonHint" method="pop_out"]
 
-[connection signal="turning_crocodile" from="." to="." method="start_freezing"]
+[connection signal="jump" from="." to="JumpAnimation" method="play" binds= [ "Jump" ]]
 
 [connection signal="turning_crocodile" from="." to="CrocodileShape" method="set_disabled" binds= [ false ]]
+
+[connection signal="turning_crocodile" from="." to="." method="start_freezing"]
 
 [connection signal="turning_normal" from="." to="SpriteFlipper/AnimationPlayer" method="play" binds= [ "PanicLeft" ]]
 

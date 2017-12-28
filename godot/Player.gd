@@ -135,20 +135,12 @@ func break_unfrozen():
 
 func collect_coins(amount = 10):
 	self.coins += amount
-	$CoinChangeLabel.text = "+%s" % amount
-	$CoinChangeLabel.modulate = get_node("/root/Global").CASHY_GREEN
-	$PointsAnimation.play("CoinChanged")
 
 func take_away_coins(amount):
 	if amount > coins:
 		amount = coins
 
 	self.coins -= amount
-
-	if amount > 0:
-		$CoinChangeLabel.text = "%s" % amount
-		$CoinChangeLabel.modulate = get_node("/root/Global").RED
-		$PointsAnimation.play("CoinChanged")
 
 func is_controlled_by_ai():
 	return controller == "AI"
