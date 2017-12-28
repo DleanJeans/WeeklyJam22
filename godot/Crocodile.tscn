@@ -124,9 +124,9 @@ tracks/2/keys = {
 "values": [ Vector2( 20, -100 ), Vector2( 140, -100 ) ]
 }
 
-[node name="Crocodile" type="Sprite" index="0"]
+[node name="Crocodile" type="Sprite"]
 
-scale = Vector2( 0.5, 0.5 )
+scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 1 )
 script = SubResource( 1 )
 _sections_unfolded = [ "Animation", "Offset", "Region", "Transform" ]
