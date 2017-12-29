@@ -22,19 +22,17 @@ func _ready():
 		behavior.player = TestSubject
 	
 	ControlSubject.controller = \"P1\"
-	TestSubject.turn_crocodile()
+	TestSubject.controller = \"P2\"
+	TestSubject.turn_normal()
 	ControlSubject.turn_normal()
-	TestSubject.get_node(\"FreezeTimer\").stop()
-	TestSubject.get_node(\"FreezeTimer\").emit_signal(\"timeout\")
 	
-func _physics_process(delta):
-	TestSubject.velocity += ($Target.position - TestSubject.position).normalized()
-	TestSubject.velocity += Steering.steer()
+#func _physics_process(delta):
+#	TestSubject.velocity += ($Target.position - TestSubject.position).normalized()
+#	TestSubject.velocity += Steering.steer()
 
 func _process(delta):
 	if Input.is_mouse_button_pressed(BUTTON_RIGHT):
 		$Target.position = get_global_mouse_position()
-		$TileMap/ControlSubject2.position = get_global_mouse_position()
 	
 func _on_Behavior_toggled(pressed, name):
 	print(\"%s Toggled\" % name)
@@ -79,9 +77,13 @@ script = SubResource( 1 )
 
 position = Vector2( 500, 250 )
 scale = Vector2( 3, 2 )
-requires_path_around = false
 
-[node name="TileMap" type="TileMap" parent="." index="1"]
+[node name="Platform2" parent="." index="1" instance=ExtResource( 1 )]
+
+position = Vector2( 860, 120 )
+scale = Vector2( 3, 2 )
+
+[node name="TileMap" type="TileMap" parent="." index="2"]
 
 mode = 0
 tile_set = null
@@ -104,20 +106,16 @@ _sections_unfolded = [ "Cell" ]
 
 [node name="TestSubject" parent="TileMap" index="0" instance=ExtResource( 2 )]
 
-position = Vector2( 870, 390 )
+position = Vector2( 480, 260 )
 
 [node name="ControlSubject" parent="TileMap" index="1" instance=ExtResource( 2 )]
 
-position = Vector2( 500, 250 )
+position = Vector2( 320, 270 )
 
-[node name="ControlSubject2" parent="TileMap" index="2" instance=ExtResource( 2 )]
-
-position = Vector2( 360, 210 )
-
-[node name="Target" type="StaticBody2D" parent="." index="2"]
+[node name="Target" type="StaticBody2D" parent="." index="3"]
 
 editor/display_folded = true
-position = Vector2( 920, 90 )
+position = Vector2( 760, 360 )
 input_pickable = false
 collision_layer = 1
 collision_mask = 0
@@ -139,7 +137,7 @@ _sections_unfolded = [ "Transform" ]
 
 shape = SubResource( 2 )
 
-[node name="Container" type="Container" parent="." index="3"]
+[node name="Container" type="Container" parent="." index="4"]
 
 editor/display_folded = true
 anchor_left = 0.0
@@ -279,7 +277,7 @@ flat = false
 align = 0
 _sections_unfolded = [ "custom_fonts" ]
 
-[node name="Label" type="Label" parent="." index="4"]
+[node name="Label" type="Label" parent="." index="5"]
 
 anchor_left = 0.5
 anchor_top = 1.0
@@ -300,7 +298,7 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "custom_fonts" ]
 
-[node name="BoxWall" parent="." index="5" instance=ExtResource( 5 )]
+[node name="BoxWall" parent="." index="6" instance=ExtResource( 5 )]
 
 [connection signal="toggled" from="Container/Seek" to="." method="_on_Behavior_toggled" binds= [ "Seek" ]]
 

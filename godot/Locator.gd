@@ -13,7 +13,7 @@ func _filter_player(me, player):
 func _player_desirability(me, player):
 	var distance = Utility.distance_squared(player, me)
 	var distance_to_peers = _total_distance_to_peers(player) * 0.2
-	var coins_collected = player.coins / 5
+	var coins_collected = player.coins
 	
 	var good = coins_collected
 	var bad = distance * distance_to_peers + 1

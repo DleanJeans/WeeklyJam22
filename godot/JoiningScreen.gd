@@ -55,7 +55,7 @@ func _stick_label_to_players():
 		_set_label_position(label, player)
 
 func _set_label_position(label, player):
-	label.rect_position = player.position + Vector2(35, -50)
+	label.rect_position = player.position * 0.8 + Vector2(30, -40)
 
 func _disconnnect_jump_signals():
 	for player in players_joined:

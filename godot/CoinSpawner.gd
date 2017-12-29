@@ -10,7 +10,7 @@ onready var container = get_node(container_path)
 var Coin = preload("res://Coin.tscn")
 
 func _ready():
-	$Timer.wait_time = spawn_interval + rand_range(-0.5, 0.5)
+	$Timer.wait_time = spawn_interval + rand_range(-0.25, 0.25)
 	$Timer.start()
 
 func stop():

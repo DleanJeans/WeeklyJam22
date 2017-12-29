@@ -151,7 +151,7 @@ tracks/8/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=5]
 
 length = 0.3
 loop = false
@@ -181,7 +181,7 @@ tracks/1/keys = {
 "values": [ true, false ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=6]
 
 length = 0.3
 loop = false
@@ -211,7 +211,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=7]
 
 resource_name = "."
 length = 0.4
@@ -242,7 +242,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.5 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="GDScript" id=9]
+[sub_resource type="GDScript" id=8]
 
 script/source = "extends Node2D
 
@@ -288,7 +288,7 @@ func _play_animation_if_not_playing(animation_name):
 func _reset_Sprite_color():
 	$'../Sprite'.self_modulate = player.color"
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=9]
 
 length = 0.8
 loop = true
@@ -438,7 +438,7 @@ tracks/11/keys = {
 "values": [ 0.0, 15.0, -15.0 ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=10]
 
 length = 0.8
 loop = true
@@ -588,7 +588,7 @@ tracks/11/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=11]
 
 length = 0.01
 loop = false
@@ -606,7 +606,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=12]
 
 length = 0.01
 loop = false
@@ -636,6 +636,72 @@ tracks/1/keys = {
 "values": [ false ]
 }
 
+[sub_resource type="Animation" id=13]
+
+length = 0.01
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("../Sprite/Panic:flip_h")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../Sprite/Panic/Tongue:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("../Sprite/Panic:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("../Sprite:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("../Sprite/Crocodile:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
 [sub_resource type="Animation" id=14]
 
 length = 0.01
@@ -651,72 +717,6 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ false ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("../Sprite/Panic/Tongue:flip_h")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ false ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("../Sprite/Panic:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("../Sprite:self_modulate")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Color( 0, 0, 0, 0 ) ]
-}
-tracks/4/type = "value"
-tracks/4/path = NodePath("../Sprite/Crocodile:visible")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
-
-[sub_resource type="Animation" id=15]
-
-length = 0.01
-loop = false
-step = 0.1
-tracks/0/type = "value"
-tracks/0/path = NodePath("../Sprite/Panic:flip_h")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
 "values": [ true ]
 }
 tracks/1/type = "value"
@@ -768,7 +768,7 @@ tracks/4/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="DynamicFont" id=16]
+[sub_resource type="DynamicFont" id=15]
 
 size = 80
 use_mipmaps = true
@@ -776,7 +776,7 @@ use_filter = false
 font_data = ExtResource( 7 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[sub_resource type="DynamicFont" id=17]
+[sub_resource type="DynamicFont" id=16]
 
 size = 80
 use_mipmaps = false
@@ -784,12 +784,12 @@ use_filter = false
 font_data = ExtResource( 7 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[sub_resource type="CircleShape2D" id=18]
+[sub_resource type="CircleShape2D" id=17]
 
 custom_solver_bias = 0.0
 radius = 150.0
 
-[sub_resource type="GDScript" id=19]
+[sub_resource type="GDScript" id=18]
 
 script/source = "extends Timer
 
@@ -822,7 +822,7 @@ func _process(delta):
 		jumped = true
 		player.break_unfrozen()"
 
-[sub_resource type="GDScript" id=20]
+[sub_resource type="GDScript" id=19]
 
 script/source = "extends AudioStreamPlayer2D
 
@@ -848,12 +848,12 @@ func stop():
 	if playing:
 		.stop()"
 
-[sub_resource type="AudioStreamRandomPitch" id=21]
+[sub_resource type="AudioStreamRandomPitch" id=20]
 
 audio_stream = ExtResource( 16 )
 random_pitch = 1.1
 
-[sub_resource type="DynamicFont" id=22]
+[sub_resource type="DynamicFont" id=21]
 
 size = 80
 use_mipmaps = false
@@ -861,16 +861,16 @@ use_filter = false
 font_data = ExtResource( 7 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[sub_resource type="DynamicFont" id=23]
+[sub_resource type="DynamicFont" id=22]
 
 size = 60
 use_mipmaps = false
 use_filter = false
 font_data = ExtResource( 7 )
 
-[sub_resource type="Theme" id=24]
+[sub_resource type="Theme" id=23]
 
-default_font = SubResource( 23 )
+default_font = SubResource( 22 )
 
 [node name="Player" type="KinematicBody2D" index="0" groups=[
 "Players",
@@ -938,8 +938,8 @@ autoplay = "Grounded"
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 root_node = NodePath("..")
-anims/PopOut = SubResource( 6 )
-anims/PopUp = SubResource( 7 )
+anims/PopOut = SubResource( 5 )
+anims/PopUp = SubResource( 6 )
 playback/active = true
 playback/speed = 1.25
 blend_times = [  ]
@@ -950,7 +950,7 @@ autoplay = "Grounded"
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 root_node = NodePath("..")
-anims/. = SubResource( 8 )
+anims/. = SubResource( 7 )
 playback/active = true
 playback/speed = 2.0
 blend_times = [  ]
@@ -971,19 +971,19 @@ visible = false
 [node name="SpriteFlipper" type="Node2D" parent="." index="8"]
 
 visible = false
-script = SubResource( 9 )
+script = SubResource( 8 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="SpriteFlipper" index="0"]
 
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 root_node = NodePath("..")
-anims/CrocodileLeft = SubResource( 10 )
-anims/CrocodileRight = SubResource( 11 )
-anims/EditorReset = SubResource( 12 )
-anims/Normal = SubResource( 13 )
-anims/PanicLeft = SubResource( 14 )
-anims/PanicRight = SubResource( 15 )
+anims/CrocodileLeft = SubResource( 9 )
+anims/CrocodileRight = SubResource( 10 )
+anims/EditorReset = SubResource( 11 )
+anims/Normal = SubResource( 12 )
+anims/PanicLeft = SubResource( 13 )
+anims/PanicRight = SubResource( 14 )
 playback/active = true
 playback/speed = 1.25
 blend_times = [  ]
@@ -1008,7 +1008,6 @@ _sections_unfolded = [ "Transform", "Z" ]
 
 [node name="Sprite" type="Sprite" parent="." index="11"]
 
-self_modulate = Color( 0, 0, 0, 0 )
 show_behind_parent = true
 position = Vector2( 0, -40 )
 scale = Vector2( 0.4, 0.8 )
@@ -1037,7 +1036,7 @@ rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 16 )
+custom_fonts/font = SubResource( 15 )
 text = "0"
 align = 1
 valign = 1
@@ -1062,7 +1061,7 @@ rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 17 )
+custom_fonts/font = SubResource( 16 )
 text = "P0"
 align = 1
 percent_visible = 1.0
@@ -1079,11 +1078,11 @@ _sections_unfolded = [ "Animation", "Offset", "Region", "Transform", "Visibility
 
 [node name="Panic" type="Sprite" parent="Sprite" index="4"]
 
+visible = false
 position = Vector2( -125, -75 )
 scale = Vector2( 1.25, 0.625 )
 texture = ExtResource( 9 )
 centered = false
-flip_h = true
 _sections_unfolded = [ "Transform" ]
 
 [node name="Tongue" type="Sprite" parent="Sprite/Panic" index="0"]
@@ -1092,7 +1091,6 @@ show_behind_parent = true
 position = Vector2( 70, 90 )
 texture = ExtResource( 10 )
 centered = false
-flip_h = true
 
 [node name="PanicRadius" type="Area2D" parent="." index="12"]
 
@@ -1109,7 +1107,7 @@ audio_bus_name = "Master"
 
 [node name="Shape" type="CollisionShape2D" parent="PanicRadius" index="0"]
 
-shape = SubResource( 18 )
+shape = SubResource( 17 )
 
 [node name="FreezeTimer" type="Timer" parent="." index="13"]
 
@@ -1117,7 +1115,7 @@ process_mode = 1
 wait_time = 3.0
 one_shot = true
 autostart = false
-script = SubResource( 19 )
+script = SubResource( 18 )
 
 [node name="FreezingSound" type="AudioStreamPlayer2D" parent="." index="14"]
 
@@ -1173,12 +1171,12 @@ max_distance = 2000.0
 attenuation = 1.0
 bus = "Master"
 area_mask = 1
-script = SubResource( 20 )
+script = SubResource( 19 )
 
 [node name="PopSound" type="AudioStreamPlayer2D" parent="." index="19"]
 
 visible = false
-stream = SubResource( 21 )
+stream = SubResource( 20 )
 volume_db = 0.0
 autoplay = false
 max_distance = 2000.0
@@ -1202,7 +1200,7 @@ rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 22 )
+custom_fonts/font = SubResource( 21 )
 text = "3"
 align = 1
 percent_visible = 1.0
@@ -1226,7 +1224,7 @@ rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
-theme = SubResource( 24 )
+theme = SubResource( 23 )
 text = "Winner"
 align = 1
 valign = 1
@@ -1266,23 +1264,24 @@ visible = false
 margin_top = 0.0
 margin_right = 23.9334
 margin_bottom = 49.9258
+rect_scale = Vector2( 1, 1 )
 button = "A"
 
 [connection signal="frozen_as_crocodile" from="." to="FreezingSound" method="play"]
 
-[connection signal="jump" from="." to="JumpAnimation" method="play" binds= [ "Jump" ]]
+[connection signal="jump" from="." to="ButtonHint" method="pop_out"]
 
 [connection signal="jump" from="." to="JumpSound" method="play"]
 
-[connection signal="jump" from="." to="ButtonHint" method="pop_out"]
+[connection signal="jump" from="." to="JumpAnimation" method="play" binds= [ "Jump" ]]
 
 [connection signal="turning_crocodile" from="." to="CrocodileShape" method="set_disabled" binds= [ false ]]
 
 [connection signal="turning_crocodile" from="." to="." method="start_freezing"]
 
-[connection signal="turning_normal" from="." to="SpriteFlipper/AnimationPlayer" method="play" binds= [ "PanicLeft" ]]
-
 [connection signal="turning_normal" from="." to="CrocodileShape" method="set_disabled" binds= [ true ]]
+
+[connection signal="turning_normal" from="." to="SpriteFlipper/AnimationPlayer" method="play" binds= [ "PanicLeft" ]]
 
 [connection signal="unfrozen_as_crocodile" from="." to="." method="_tag_overlapping_player"]
 

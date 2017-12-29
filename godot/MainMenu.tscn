@@ -58,9 +58,10 @@ margin_right = -960.0
 margin_bottom = -540.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource( 1 )
+_sections_unfolded = [ "Rect" ]
 
 [node name="SelectSound" parent="." index="0" instance=ExtResource( 2 )]
 
@@ -257,6 +258,7 @@ margin_left = 38.0
 margin_top = 0.0
 margin_right = 98.0
 margin_bottom = 60.0
+rect_scale = Vector2( 1, 1 )
 size_flags_horizontal = 4
 button = "F11"
 
@@ -268,6 +270,7 @@ margin_left = 102.0
 margin_top = 0.0
 margin_right = 162.0
 margin_bottom = 60.0
+rect_scale = Vector2( 1, 1 )
 size_flags_horizontal = 4
 button = "R1"
 

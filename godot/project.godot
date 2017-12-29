@@ -24,16 +24,19 @@ Utility="*res://Utility.gd"
 
 window/size/width=960
 window/size/height=540
+window/dpi/allow_hidpi=true
 window/stretch/mode="2d"
-window/stretch/aspect="expand"
+window/stretch/aspect="keep"
+window/stretch/shrink="0.8"
 
 [game]
 
-debug_goal_tree=true
-debug_steering=true
+debug_goal_tree=false
+debug_steering=false
 slo_mo_scale=0.1
 version="v1.1"
 enable_slo_mo=true
+debug_player=true
 
 [gdnative]
 

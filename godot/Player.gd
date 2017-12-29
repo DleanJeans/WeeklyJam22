@@ -8,9 +8,6 @@ var GAMEPAD_DEVICE_MAP = {
 	"P6": 3
 }
 
-const COINS_PERCENT_TRANSFERRED_ON_TAG = 50
-const BONUS_COINS_ON_TAG = 10
-
 var crocodile setget _set_crocodile, _get_crocodile
 
 export(bool) var pushing_out = false
@@ -31,6 +28,7 @@ var on_platform = false
 var velocity = Vector2()
 var heading = Vector2()
 var frozen = false setget _set_frozen
+var jump_frozen = false
 
 var coins = 0 setget _set_coins
 
@@ -109,7 +107,7 @@ func hide_winner_label():
 	$WinnerLabel.hide()
 
 func jump():
-	if not frozen:
+	if not (frozen or jump_frozen):
 		force_jump()
 
 func force_jump():
@@ -186,24 +184,22 @@ func _transfer_coins(player):
 	self.collect_coins(coins_gained)
 
 func _coins_lost(player):
-	var coins = ceil(player.coins * 0.5)
-	coins = _round_to_nearest_5(coins)
+	var coins = player.coins - self.coins
 	return coins
 
 func _coins_gained(coins_lost):
-	return _round_to_nearest_5(coins_lost / 2) + BONUS_COINS_ON_TAG
-
-func _round_to_nearest_5(value):
-	return round(value / 5) * 5
+	return coins_lost
 
 func _physics_process(delta):
-	$DebugLabel.text = "[Debug:%s]\n" % get_name()
-
+	_reset_debug_label()
 	_emit_signal_if_hit_wall()
 
 	if frozen: return
 
 	_move_player()
+
+func _reset_debug_label():
+	$DebugLabel.text = "[Debug:%s]\n" % get_name()
 
 func _move_player():
 	clamp_velocity()

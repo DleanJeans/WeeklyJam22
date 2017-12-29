@@ -61,7 +61,7 @@ friction = 1.0
 bounce = 0.0
 script = ExtResource( 1 )
 _sections_unfolded = [ "Collision", "Transform", "Visibility" ]
-requires_path_around = false
+requires_path_around = true
 
 [node name="Shape" type="CollisionShape2D" parent="." index="0"]
 
@@ -78,6 +78,7 @@ _sections_unfolded = [ "Transform", "Visibility" ]
 
 [node name="Area" type="Area2D" parent="Shape" index="1"]
 
+visible = false
 scale = Vector2( 1.05, 1.05 )
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
