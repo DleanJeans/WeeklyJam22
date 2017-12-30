@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
 [ext_resource path="res://maps/SixPlayerMap.tscn" type="PackedScene" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://assets/OurMusicBox _CanCan.ogg" type="AudioStream" id=11]
 [ext_resource path="res://FocusStyle.tres" type="StyleBox" id=12]
 [ext_resource path="res://BebasNeue.tres" type="DynamicFont" id=13]
+[ext_resource path="res://BebasNeue.otf" type="DynamicFontData" id=14]
 
 [sub_resource type="GDScript" id=1]
 
@@ -63,6 +64,14 @@ func next_map():
 	game.emit_signal(\"game_loaded\")
 	game.showing_winner = false
 	game.get_node(\"PlayerManager\").enable_ai()"
+
+[sub_resource type="DynamicFont" id=3]
+
+size = 40
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 14 )
+_sections_unfolded = [ "Font", "Settings" ]
 
 [node name="Game" type="Node2D"]
 
@@ -157,6 +166,29 @@ flat = true
 align = 1
 _sections_unfolded = [ "custom_fonts", "custom_styles" ]
 
+[node name="DebugLabel" type="Label" parent="." index="13"]
+
+anchor_left = 0.0
+anchor_top = 1.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = -54.0
+margin_right = 150.0
+margin_bottom = 1256.0
+rect_scale = Vector2( 0.5, 0.5 )
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 2
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 3 )
+text = "Debug"
+valign = 2
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = 35
+_sections_unfolded = [ "Rect", "custom_fonts" ]
+
 [connection signal="countdown_started" from="." to="GameTimer" method="start_counting_down"]
 
 [connection signal="game_loaded" from="." to="PlayerManager" method="reset"]
@@ -167,13 +199,13 @@ _sections_unfolded = [ "custom_fonts", "custom_styles" ]
 
 [connection signal="game_over" from="." to="MenuButton" method="grab_focus"]
 
-[connection signal="game_over" from="." to="." method="_show_winner"]
-
-[connection signal="game_over" from="." to="." method="show_mouse"]
-
 [connection signal="game_over" from="." to="PlayerManager" method="freeze_players"]
 
 [connection signal="game_over" from="." to="PlayerManager" method="pause_freeze_timer"]
+
+[connection signal="game_over" from="." to="." method="_show_winner"]
+
+[connection signal="game_over" from="." to="." method="show_mouse"]
 
 [connection signal="game_paused" from="." to="JoiningScreen" method="hide"]
 
@@ -189,8 +221,6 @@ _sections_unfolded = [ "custom_fonts", "custom_styles" ]
 
 [connection signal="game_started" from="." to="JoiningScreen" method="close"]
 
-[connection signal="game_started" from="." to="." method="hide_mouse"]
-
 [connection signal="game_started" from="." to="CoinManager" method="resume_spawners"]
 
 [connection signal="game_started" from="." to="PlayerManager" method="enable_ai"]
@@ -201,9 +231,9 @@ _sections_unfolded = [ "custom_fonts", "custom_styles" ]
 
 [connection signal="game_started" from="." to="PlayerManager" method="reset_positions"]
 
-[connection signal="joining_screen_opened" from="." to="JoiningScreen" method="open" flags=3]
+[connection signal="game_started" from="." to="." method="hide_mouse"]
 
-[connection signal="joining_screen_opened" from="." to="." method="_stop_showing_winner"]
+[connection signal="joining_screen_opened" from="." to="JoiningScreen" method="open" flags=3]
 
 [connection signal="joining_screen_opened" from="." to="CoinManager" method="clear"]
 
@@ -219,11 +249,9 @@ _sections_unfolded = [ "custom_fonts", "custom_styles" ]
 
 [connection signal="joining_screen_opened" from="." to="ControllerAssigner" method="reset"]
 
+[connection signal="joining_screen_opened" from="." to="." method="_stop_showing_winner"]
+
 [connection signal="main_menu_opened" from="." to="JoiningScreen" method="close"]
-
-[connection signal="main_menu_opened" from="." to="." method="resume"]
-
-[connection signal="main_menu_opened" from="." to="." method="show_mouse"]
 
 [connection signal="main_menu_opened" from="." to="CoinManager" method="resume_spawners"]
 
@@ -232,6 +260,10 @@ _sections_unfolded = [ "custom_fonts", "custom_styles" ]
 [connection signal="main_menu_opened" from="." to="PlayerManager" method="reset_controllers"]
 
 [connection signal="main_menu_opened" from="." to="PlayerManager" method="choose_crocodile_randomly"]
+
+[connection signal="main_menu_opened" from="." to="." method="resume"]
+
+[connection signal="main_menu_opened" from="." to="." method="show_mouse"]
 
 [connection signal="duration_pressed" from="MainMenu" to="GameTimer" method="next_duration"]
 

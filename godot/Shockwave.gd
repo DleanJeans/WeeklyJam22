@@ -7,6 +7,7 @@ var platform
 var stomper
 
 var _affected_players = {}
+var _exited_players = []
 var _current_player
 
 func init(platform, stomper):
@@ -41,19 +42,22 @@ func _platform_across_length():
 
 func _on_player_exited_platform(player):
 	_current_player = player
-	if _player_is_stomper() or not _player_being_affected() or _player_is_crocodile(): return
+	if _player_is_stomper() or _player_is_crocodile(): return
 	
-	_remove_player_from_list()
+	_remove_player_from_affected_list()
+	_add_player_to_exited_list()
 	_disconnect_hit_wall_signal()
-	disconnect_signal_player_exited()
 	_unfreeze_player()
 	_free_if_shockwave_ended()
 
 func _player_is_crocodile():
 	return _current_player.is_crocodile()
 
-func _remove_player_from_list():
+func _remove_player_from_affected_list():
 	_affected_players.erase(_current_player)
+
+func _add_player_to_exited_list():
+	_exited_players.append(_current_player)
 
 func _disconnect_hit_wall_signal():
 	if _current_player.is_connected("hit_wall", self, "_on_player_hit_wall"):
@@ -65,6 +69,7 @@ func _unfreeze_player():
 func _free_if_shockwave_ended():
 	if _shockwave_ended():
 		queue_free()
+		_disconnect_signal_player_exited()
 
 func _shockwave_ended():
 	var list_empty = _affected_players.empty()
@@ -72,14 +77,14 @@ func _shockwave_ended():
 	
 	return list_empty and animation_finished
 
-func disconnect_signal_player_exited():
+func _disconnect_signal_player_exited():
 	if platform.is_connected("player_exited", self, "_on_player_exited_platform"): 
 		platform.disconnect("player_exited", self, "_on_player_exited_platform")
 
 func _physics_process(delta):
 	for player in platform.get_players_inside():
 		_current_player = player
-		if _player_is_stomper() or _player_is_crocodile(): continue
+		if _filter_player(): continue
 		
 		if _player_in_radius_first_time():
 			_add_player_to_list()
@@ -88,8 +93,14 @@ func _physics_process(delta):
 		elif _player_being_affected():
 			_push_player_out()
 
+func _filter_player():
+	return _player_is_stomper() or _player_already_exited() or _player_is_crocodile()
+
 func _player_is_stomper():
 	return _current_player == stomper
+
+func _player_already_exited():
+	return _exited_players.has(_current_player)
 
 func _player_in_radius_first_time():
 	var not_in_the_list = not _player_being_affected()

@@ -45,8 +45,22 @@ tracks/2/keys = {
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.5 ), Color( 1, 1, 1, 0 ) ]
 }
+tracks/3/type = "method"
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_free_if_shockwave_ended"
+} ]
+}
 
-[node name="Shockwave" type="Area2D" index="0"]
+[node name="Shockwave" type="Area2D"]
 
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
@@ -69,6 +83,7 @@ playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
 autoplay = "."
+_sections_unfolded = [ "playback" ]
 
 [node name="Sprite" type="Sprite" parent="." index="1"]
 

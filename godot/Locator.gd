@@ -44,8 +44,8 @@ func _platform_desirability(me, platform):
 	var crocodile_relative_angle = Utility.relative_angle_to(me.position, platform.position, Global.crocodile.position)
 	var platform_total_distance_to_peers = _platform_total_distance_to_peers(me, platform)
 	
-	var good = distance_to_crocodile * platform_total_distance_to_peers
-	var bad = 1 + crocodile_relative_angle + distance_squared
+	var good = (1 + crocodile_relative_angle) * distance_to_crocodile * platform_total_distance_to_peers
+	var bad = distance_squared
 	
 	var desirability = good / bad
 	

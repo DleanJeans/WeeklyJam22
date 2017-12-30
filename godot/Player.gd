@@ -193,6 +193,8 @@ func _coins_gained(coins_lost):
 func _physics_process(delta):
 	_reset_debug_label()
 	_emit_signal_if_hit_wall()
+	debug("On Platform: %s" % on_platform)
+	debug("Frozen: %s" % frozen)
 
 	if frozen: return
 

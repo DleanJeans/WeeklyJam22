@@ -20,8 +20,8 @@ func process():
 		state = GOAL_FAILED
 	
 	if _should_flee() and _goal_not_active_already(ArriveAtPlatform):
-			clear_subgoals()
-			add_subgoal(ArriveAtPlatform.new())
+		clear_subgoals()
+		add_subgoal(ArriveAtPlatform.new())
 	
 	if _has_subgoals(): return
 	
@@ -39,7 +39,12 @@ func _should_flee():
 	return should_be_panicking and crocodile_not_frozen
 
 func _goal_not_active_already(goal):
-	return _has_subgoals() and not _first_subgoal() is goal
+	var has_subgoals = _has_subgoals()
+	
+	if has_subgoals:
+		var first_subgoal_not_this_goal = not _first_subgoal() is goal
+		return first_subgoal_not_this_goal
+	else: return not has_subgoals
 
 func _all_platforms_occupied():
 	for plat in Global.Platforms:
