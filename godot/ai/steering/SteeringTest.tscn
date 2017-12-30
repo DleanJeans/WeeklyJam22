@@ -25,7 +25,7 @@ func _ready():
 	TestSubject1.turn_normal()
 	TestSubject2.turn_normal()
 	TestSubject3.turn_normal()
-	ControlSubject.turn_crocodile()
+	ControlSubject.turn_normal()
 	
 #func _physics_process(delta):
 #	TestSubject.velocity += ($Target.position - TestSubject.position).normalized()
@@ -70,7 +70,7 @@ use_filter = false
 font_data = ExtResource( 4 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[node name="SteeringTest" type="Node2D" index="0"]
+[node name="SteeringTest" type="Node2D"]
 
 script = SubResource( 1 )
 

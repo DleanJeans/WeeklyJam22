@@ -813,10 +813,14 @@ func _process(delta):
 		label.text = String(time + 1).substr(0, 1)
 	else: label.text = \"\"
 	
-	if label.text == \"4\" or label.text == \"3\" and not player.frozen:
+	var frozen = player.frozen
+	if label.text == \"4\" or label.text == \"3\" and not frozen:
 		print(\"Gotcha! %s\" % label.text)
 		print(\"Paused: %s\" % is_paused())
 		print(\"Stopped: %s\" % is_stopped())
+	
+	if label.text == \"4\":
+		set_paused(false)
 	
 	if time < jump_duration / 2 and player.is_crocodile() and not jumped:
 		jumped = true
@@ -872,7 +876,7 @@ font_data = ExtResource( 7 )
 
 default_font = SubResource( 22 )
 
-[node name="Player" type="KinematicBody2D" groups=[
+[node name="Player" type="KinematicBody2D" index="0" groups=[
 "Players",
 ]]
 
@@ -1235,6 +1239,7 @@ _sections_unfolded = [ "Rect", "custom_fonts" ]
 
 [node name="DebugLabel" type="Label" parent="." index="22"]
 
+visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -1250,6 +1255,7 @@ size_flags_vertical = 4
 text = "[Debug:Player]
 On Platform: False
 Frozen: False
+Layer: 17
 "
 percent_visible = 1.0
 lines_skipped = 0

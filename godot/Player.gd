@@ -191,28 +191,11 @@ func _coins_gained(coins_lost):
 	return coins_lost
 
 func _physics_process(delta):
-	_reset_debug_label()
 	_emit_signal_if_hit_wall()
-	debug("On Platform: %s" % on_platform)
-	debug("Frozen: %s" % frozen)
 
 	if frozen: return
 
 	_move_player()
-
-func _reset_debug_label():
-	$DebugLabel.text = "[Debug:%s]\n" % get_name()
-
-func _move_player():
-	clamp_velocity()
-	velocity *= drag_scale
-	move_and_slide(velocity)
-
-	heading = velocity.normalized()
-
-	if on_platform:
-		$Shockwave.show()
-	else: $Shockwave.hide()
 
 func _emit_signal_if_hit_wall():
 	if get_slide_count() > 0:
@@ -225,6 +208,27 @@ func _emit_signal_if_hit_wall():
 			emit_signal("hit_wall", self, Vector2(-1, 1))
 		elif abs(normal.y) == 1:
 			emit_signal("hit_wall", self, Vector2(1, -1))
+
+func _move_player():
+	clamp_velocity()
+	velocity *= drag_scale
+	move_and_slide(velocity)
+
+	heading = velocity.normalized()
+
+	if on_platform:
+		$Shockwave.show()
+	else: $Shockwave.hide()
+
+func _process(delta):
+	_reset_debug_label()
+	debug("On Platform: %s" % on_platform)
+	debug("Frozen: %s" % frozen)
+	debug("Layer: %s" % collision_layer)
+
+func _reset_debug_label():
+	if $DebugLabel.visible:
+		$DebugLabel.text = "[Debug:%s]\n" % get_name()
 
 func debug(info):
 	$DebugLabel.text += "%s\n" % info

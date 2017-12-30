@@ -42,16 +42,16 @@ func _platform_desirability(me, platform):
 	var distance_squared = Utility.distance_squared(me, platform)
 	var distance_to_crocodile = Utility.distance_squared(platform, Global.crocodile)
 	var crocodile_relative_angle = Utility.relative_angle_to(me.position, platform.position, Global.crocodile.position)
-	var platform_total_distance_to_peers = _platform_total_distance_to_peers(me, platform)
+	var distance_to_peers = _platform_distance_to_peers(me, platform) * 10
 	
-	var good = (1 + crocodile_relative_angle) * distance_to_crocodile * platform_total_distance_to_peers
+	var good = (1 + crocodile_relative_angle) * distance_to_crocodile * distance_to_peers
 	var bad = distance_squared
 	
 	var desirability = good / bad
 	
 	return desirability
 
-func _platform_total_distance_to_peers(me, platform):
+func _platform_distance_to_peers(me, platform):
 	var distance = 0
 	for player in Global.Players:
 		if player == me or player.is_crocodile(): continue

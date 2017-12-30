@@ -1,6 +1,6 @@
 extends StaticBody2D
 
-# ALWAYS keep $Shape/Area/Shape
+# ALWAYS keep $Shape/EnterArea/Shape
 # a lil bit larget than $Shape itself
 # because only then _on_player_enter() can be called
 
@@ -10,21 +10,21 @@ export(bool) var requires_path_around = true
 
 var occupied setget , _get_occupied
 
-var _player
+var _current_player
 var _occupier
 
 func get_players_inside():
-	return $Shape/Area.get_overlapping_bodies()
+	return $Shape/EnterArea.get_overlapping_bodies()
 
 func reset():
 	_turn_green()
 
 func _on_player_enter(body):
 	if not _is_player(body): return
-	_player = body
-	if _player.is_crocodile(): return
+	_current_player = body
+	if _current_player.is_crocodile(): return
 	
-	if _player.just_landed:
+	if _current_player.just_landed:
 		_unblock_player()
 		_create_shockwave()
 	elif _player_not_allowed():
@@ -33,9 +33,9 @@ func _on_player_enter(body):
 		_unblock_player()
 
 func _unblock_player():
-	_occupier = _player
-	_player.on_platform = true
-	_player.collision_layer = Global.COLLISION_NORMAL
+	_occupier = _current_player
+	_current_player.on_platform = true
+	_current_player.collision_layer = Global.COLLISION_NORMAL
 	_turn_red()
 	$AllowSound.play()
 
@@ -44,14 +44,14 @@ func _is_player(body):
 
 func _create_shockwave():
 	var shockwave = load("res://Shockwave.tscn").instance()
-	shockwave.init(self, _player)
+	shockwave.init(self, _current_player)
 	add_child(shockwave)
 
 func _player_not_allowed():
-	return _player.is_crocodile() or self.occupied
+	return _current_player.is_crocodile() or self.occupied
 
 func _block_player():
-	_player.collision_layer = Global.COLLISION_BLOCKED
+	_current_player.collision_layer = Global.COLLISION_BLOCKED
 
 func _on_player_exited(player):
 	emit_signal("player_exited", player) 
@@ -68,14 +68,20 @@ func _turn_red():
 	$ColorChanger.play("TurnRed")
 
 func _process(delta):
-	for body in $Shape/Area.get_overlapping_bodies():
+	for body in get_players_inside():
 		if not _is_player(body): continue
-		_player = body
+		_current_player = body
 		
-		if _player.is_crocodile():
+		if _current_player.is_crocodile() or _player_inside_platform_but_not_registered():
 			_block_player()
 		elif _no_one_here():
 			_unblock_player()
+
+func _player_inside_platform_but_not_registered():
+	var inside_platform = $Shape/InsideArea.get_overlapping_bodies().has(_current_player)
+	var not_registered = not _current_player.on_platform
+	
+	return inside_platform and not_registered
 
 func _no_one_here():
 	return not self.occupied
