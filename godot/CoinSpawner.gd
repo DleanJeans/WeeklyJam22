@@ -10,7 +10,6 @@ onready var container = get_node(container_path)
 var Coin = preload("res://Coin.tscn")
 
 func _ready():
-	$Timer.wait_time = spawn_interval + rand_range(-0.25, 0.25)
 	$Timer.start()
 
 func stop():
@@ -20,6 +19,10 @@ func resume():
 	$Timer.start()
 
 func spawn():
+	_spawn_coin()
+	_flutuate_spawn_time()
+
+func _spawn_coin():
 	var random_position = Vector2(_random_x(), _random_y())
 	var coin = Coin.instance()
 	
@@ -32,6 +35,5 @@ func _random_x():
 func _random_y():
 	return randi() % int(size.y)
 
-func clear_coins():
-	for c in get_tree().get_nodes_in_group("Coins"):
-		c.queue_free()
+func _flutuate_spawn_time():
+	$Timer.wait_time = spawn_interval + rand_range(-0.5, 0.5)
