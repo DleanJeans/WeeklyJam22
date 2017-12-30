@@ -1,0 +1,60 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://maps/Map.gd" type="Script" id=1]
+[ext_resource path="res://BoxWall.tscn" type="PackedScene" id=2]
+[ext_resource path="res://CoinSpawner.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=4]
+
+[node name="Map" type="Node2D"]
+
+script = ExtResource( 1 )
+name = "Open Sea - 2 Players"
+position_tween_time = 0.5
+
+[node name="BoxWall" parent="." index="0" instance=ExtResource( 2 )]
+
+[node name="Platforms" type="Node2D" parent="." index="1"]
+
+[node name="CoinSpawners" type="Node2D" parent="." index="2"]
+
+_sections_unfolded = [ "Transform" ]
+
+[node name="CoinSpawner2" parent="CoinSpawners" index="0" instance=ExtResource( 3 )]
+
+position = Vector2( 480, 300 )
+scale = Vector2( 12, 5 )
+_sections_unfolded = [ "Transform" ]
+spawn_interval = 1.0
+
+[node name="Objects" type="TileMap" parent="." index="3"]
+
+mode = 0
+tile_set = null
+cell_size = Vector2( 64, 64 )
+cell_quadrant_size = 16
+cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+cell_half_offset = 2
+cell_tile_origin = 0
+cell_y_sort = true
+cell_clip_uv = false
+collision_use_kinematic = false
+collision_friction = 1.0
+collision_bounce = 0.0
+collision_layer = 1
+collision_mask = 1
+occluder_light_mask = 1
+format = 1
+tile_data = PoolIntArray(  )
+_sections_unfolded = [ "Cell", "Collision" ]
+
+[node name="Player1" parent="Objects" index="0" instance=ExtResource( 4 )]
+
+position = Vector2( 580, 320 )
+color = Color( 0.104248, 0.953125, 0.6149, 1 )
+
+[node name="Player2" parent="Objects" index="1" instance=ExtResource( 4 )]
+
+position = Vector2( 380, 320 )
+color = Color( 0.164063, 0.164063, 0.164063, 1 )
+
+

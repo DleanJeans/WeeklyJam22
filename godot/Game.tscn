@@ -1,18 +1,18 @@
 [gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
-[ext_resource path="res://maps/SixPlayerMap.tscn" type="PackedScene" id=2]
+[ext_resource path="res://maps/6PlayerMap.tscn" type="PackedScene" id=2]
 [ext_resource path="res://MainMenu.tscn" type="PackedScene" id=3]
 [ext_resource path="res://PauseScreen.tscn" type="PackedScene" id=4]
 [ext_resource path="res://JoiningScreen.tscn" type="PackedScene" id=5]
-[ext_resource path="res://ControllerAssigner.tscn" type="PackedScene" id=6]
-[ext_resource path="res://PlayerManager.gd" type="Script" id=7]
-[ext_resource path="res://CoinManager.gd" type="Script" id=8]
-[ext_resource path="res://PlatformManager.gd" type="Script" id=9]
-[ext_resource path="res://GameTimer.tscn" type="PackedScene" id=10]
-[ext_resource path="res://assets/OurMusicBox _CanCan.ogg" type="AudioStream" id=11]
-[ext_resource path="res://FocusStyle.tres" type="StyleBox" id=12]
-[ext_resource path="res://BebasNeue.tres" type="DynamicFont" id=13]
+[ext_resource path="res://FocusStyle.tres" type="StyleBox" id=6]
+[ext_resource path="res://BebasNeue.tres" type="DynamicFont" id=7]
+[ext_resource path="res://ControllerAssigner.tscn" type="PackedScene" id=8]
+[ext_resource path="res://PlayerManager.gd" type="Script" id=9]
+[ext_resource path="res://CoinManager.gd" type="Script" id=10]
+[ext_resource path="res://PlatformManager.gd" type="Script" id=11]
+[ext_resource path="res://GameTimer.tscn" type="PackedScene" id=12]
+[ext_resource path="res://assets/OurMusicBox _CanCan.ogg" type="AudioStream" id=13]
 
 [sub_resource type="GDScript" id=1]
 
@@ -38,14 +38,26 @@ script/source = "extends Node2D
 
 onready var game = get_parent()
 
-var maps = [
-	load(\"res://maps/ThreePlayerMap.tscn\"),
-	load(\"res://maps/FourPlayerMap.tscn\"),
-	load(\"res://maps/FivePlayerMap.tscn\"),
-	load(\"res://maps/SixPlayerMap.tscn\")
-]
+var maps = []
 
 var index = maps.size() - 1
+
+func _ready():
+	var maps_path = \"res://maps\"
+	
+	var directory = Directory.new()
+	directory.open(maps_path)
+	directory.list_dir_begin()
+	
+	while true:
+		var file = directory.get_next()
+		if file.ends_with(\".tscn\"):
+			var map_path = \"%s/%s\" % [maps_path, file]
+			maps.append(load(map_path))
+		elif file == \"\":
+			break
+	
+	directory.list_dir_end()
 
 func next_map():
 	index += 1
@@ -75,7 +87,6 @@ _sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
 
 margin_right = -64.0
 margin_bottom = -64.0
-rect_scale = Vector2( 1.25, 1.25 )
 
 [node name="PauseScreen" parent="." index="2" instance=ExtResource( 4 )]
 
@@ -84,70 +95,30 @@ margin_left = -32.0
 margin_top = -32.0
 margin_right = 928.0
 margin_bottom = 508.0
-rect_scale = Vector2( 1.25, 1.25 )
 
 [node name="JoiningScreen" parent="." index="3" instance=ExtResource( 5 )]
 
 visible = false
-rect_scale = Vector2( 1.25, 1.25 )
 
-[node name="ControllerAssigner" parent="." index="4" instance=ExtResource( 6 )]
-
-[node name="CrownManager" type="Node2D" parent="." index="5"]
+[node name="MenuButton" type="Button" parent="." index="4"]
 
 visible = false
-script = SubResource( 1 )
-
-[node name="PlayerManager" type="Node2D" parent="." index="6"]
-
-visible = false
-script = ExtResource( 7 )
-
-[node name="MapSelector" type="Node2D" parent="." index="7"]
-
-visible = false
-script = SubResource( 2 )
-
-[node name="CoinManager" type="Node2D" parent="." index="8"]
-
-script = ExtResource( 8 )
-
-[node name="PlatformManager" type="Node2D" parent="." index="9"]
-
-script = ExtResource( 9 )
-
-[node name="GameTimer" parent="." index="10" instance=ExtResource( 10 )]
-
-countdown_duration = 3
-
-[node name="MusicBox" type="AudioStreamPlayer" parent="." index="11"]
-
-stream = ExtResource( 11 )
-volume_db = 0.0
-autoplay = true
-mix_target = 0
-bus = "Master"
-_sections_unfolded = [ "Transform" ]
-
-[node name="MenuButton" type="Button" parent="." index="12"]
-
-visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 526.0
-margin_top = 640.0
-margin_right = 844.0
-margin_bottom = 706.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 368.0
+margin_top = 468.0
+margin_right = 686.0
+margin_bottom = 534.0
 rect_scale = Vector2( 0.5, 0.5 )
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_styles/hover = ExtResource( 12 )
-custom_styles/focus = ExtResource( 12 )
-custom_fonts/font = ExtResource( 13 )
+custom_styles/hover = ExtResource( 6 )
+custom_styles/focus = ExtResource( 6 )
+custom_fonts/font = ExtResource( 7 )
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
@@ -155,7 +126,47 @@ group = null
 text = "Back to Main Menu"
 flat = true
 align = 1
-_sections_unfolded = [ "custom_fonts", "custom_styles" ]
+_sections_unfolded = [ "Margin", "custom_fonts", "custom_styles" ]
+
+[node name="ControllerAssigner" parent="." index="5" instance=ExtResource( 8 )]
+
+[node name="CrownManager" type="Node2D" parent="." index="6"]
+
+visible = false
+script = SubResource( 1 )
+
+[node name="PlayerManager" type="Node2D" parent="." index="7"]
+
+visible = false
+script = ExtResource( 9 )
+
+[node name="MapSelector" type="Node2D" parent="." index="8"]
+
+visible = false
+script = SubResource( 2 )
+
+[node name="CoinManager" type="Node2D" parent="." index="9"]
+
+visible = false
+script = ExtResource( 10 )
+
+[node name="PlatformManager" type="Node2D" parent="." index="10"]
+
+visible = false
+script = ExtResource( 11 )
+
+[node name="GameTimer" parent="." index="11" instance=ExtResource( 12 )]
+
+countdown_duration = 3
+
+[node name="MusicBox" type="AudioStreamPlayer" parent="." index="12"]
+
+stream = ExtResource( 13 )
+volume_db = 0.0
+autoplay = true
+mix_target = 0
+bus = "Master"
+_sections_unfolded = [ "Transform" ]
 
 [connection signal="countdown_started" from="." to="GameTimer" method="start_counting_down"]
 
@@ -163,43 +174,47 @@ _sections_unfolded = [ "custom_fonts", "custom_styles" ]
 
 [connection signal="game_loaded" from="." to="PlayerManager" method="choose_crocodile_randomly" flags=3]
 
-[connection signal="game_over" from="." to="MenuButton" method="show"]
+[connection signal="game_over" from="." to="." method="show_mouse"]
 
-[connection signal="game_over" from="." to="MenuButton" method="grab_focus"]
+[connection signal="game_over" from="." to="." method="_show_winner"]
 
 [connection signal="game_over" from="." to="PlayerManager" method="freeze_players"]
 
 [connection signal="game_over" from="." to="PlayerManager" method="pause_freeze_timer"]
 
-[connection signal="game_over" from="." to="." method="_show_winner"]
+[connection signal="game_over" from="." to="MenuButton" method="show"]
 
-[connection signal="game_over" from="." to="." method="show_mouse"]
-
-[connection signal="game_paused" from="." to="JoiningScreen" method="hide"]
+[connection signal="game_over" from="." to="MenuButton" method="grab_focus"]
 
 [connection signal="game_paused" from="." to="." method="show_mouse"]
 
 [connection signal="game_paused" from="." to="." method="_pause_tree"]
 
-[connection signal="game_resumed" from="." to="JoiningScreen" method="show_if_not_closed"]
+[connection signal="game_paused" from="." to="JoiningScreen" method="hide"]
 
 [connection signal="game_resumed" from="." to="." method="_resume_tree"]
 
 [connection signal="game_resumed" from="." to="." method="hide_mouse"]
 
-[connection signal="game_started" from="." to="PlayerManager" method="enable_ai"]
+[connection signal="game_resumed" from="." to="JoiningScreen" method="show_if_not_closed"]
 
-[connection signal="game_started" from="." to="PlayerManager" method="unfreeze_players"]
-
-[connection signal="game_started" from="." to="PlayerManager" method="choose_crocodile_randomly" flags=3]
-
-[connection signal="game_started" from="." to="PlayerManager" method="reset_positions"]
-
-[connection signal="game_started" from="." to="CoinManager" method="resume_spawners"]
+[connection signal="game_started" from="." to="." method="hide_mouse"]
 
 [connection signal="game_started" from="." to="JoiningScreen" method="close"]
 
-[connection signal="game_started" from="." to="." method="hide_mouse"]
+[connection signal="game_started" from="." to="PlayerManager" method="enable_ai"]
+
+[connection signal="game_started" from="." to="PlayerManager" method="reset_positions"]
+
+[connection signal="game_started" from="." to="PlayerManager" method="choose_crocodile_randomly" flags=3]
+
+[connection signal="game_started" from="." to="PlayerManager" method="unfreeze_players"]
+
+[connection signal="game_started" from="." to="CoinManager" method="resume_spawners"]
+
+[connection signal="joining_screen_opened" from="." to="." method="_stop_showing_winner"]
+
+[connection signal="joining_screen_opened" from="." to="JoiningScreen" method="open" flags=3]
 
 [connection signal="joining_screen_opened" from="." to="ControllerAssigner" method="reset"]
 
@@ -207,44 +222,38 @@ _sections_unfolded = [ "custom_fonts", "custom_styles" ]
 
 [connection signal="joining_screen_opened" from="." to="PlayerManager" method="disable_ai"]
 
-[connection signal="joining_screen_opened" from="." to="PlayerManager" method="unfreeze_players"]
-
 [connection signal="joining_screen_opened" from="." to="PlayerManager" method="reset_positions"]
+
+[connection signal="joining_screen_opened" from="." to="PlayerManager" method="unfreeze_players"]
 
 [connection signal="joining_screen_opened" from="." to="CoinManager" method="clear"]
 
 [connection signal="joining_screen_opened" from="." to="CoinManager" method="stop_spawners"]
 
-[connection signal="joining_screen_opened" from="." to="JoiningScreen" method="open" flags=3]
-
-[connection signal="joining_screen_opened" from="." to="." method="_stop_showing_winner"]
-
-[connection signal="main_menu_opened" from="." to="PlayerManager" method="enable_ai"]
-
-[connection signal="main_menu_opened" from="." to="PlayerManager" method="reset_controllers"]
-
-[connection signal="main_menu_opened" from="." to="PlayerManager" method="choose_crocodile_randomly"]
-
-[connection signal="main_menu_opened" from="." to="CoinManager" method="resume_spawners"]
-
-[connection signal="main_menu_opened" from="." to="JoiningScreen" method="close"]
-
 [connection signal="main_menu_opened" from="." to="." method="resume"]
 
 [connection signal="main_menu_opened" from="." to="." method="show_mouse"]
+
+[connection signal="main_menu_opened" from="." to="JoiningScreen" method="close"]
+
+[connection signal="main_menu_opened" from="." to="PlayerManager" method="enable_ai"]
+
+[connection signal="main_menu_opened" from="." to="PlayerManager" method="choose_crocodile_randomly"]
+
+[connection signal="main_menu_opened" from="." to="PlayerManager" method="reset_controllers"]
+
+[connection signal="main_menu_opened" from="." to="CoinManager" method="resume_spawners"]
 
 [connection signal="duration_pressed" from="MainMenu" to="GameTimer" method="next_duration"]
 
 [connection signal="map_pressed" from="MainMenu" to="MapSelector" method="next_map"]
 
-[connection signal="play_pressed" from="MainMenu" to="." method="hide_mouse"]
-
 [connection signal="play_pressed" from="MainMenu" to="." method="open_joining_screen"]
 
-[connection signal="player_jump" from="PlayerManager" to="JoiningScreen" method="_on_player_jump"]
-
-[connection signal="pressed" from="MenuButton" to="MenuButton" method="hide"]
+[connection signal="play_pressed" from="MainMenu" to="." method="hide_mouse"]
 
 [connection signal="pressed" from="MenuButton" to="." method="open_main_menu"]
+
+[connection signal="pressed" from="MenuButton" to="MenuButton" method="hide"]
 
 

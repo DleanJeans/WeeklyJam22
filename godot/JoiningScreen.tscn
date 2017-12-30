@@ -2,19 +2,12 @@
 
 [ext_resource path="res://JoiningScreen.gd" type="Script" id=1]
 [ext_resource path="res://BebasNeue.otf" type="DynamicFontData" id=2]
-[ext_resource path="res://ButtonHint.tscn" type="PackedScene" id=3]
+[ext_resource path="res://ReadyLabel.tscn" type="PackedScene" id=3]
+[ext_resource path="res://ButtonHint.tscn" type="PackedScene" id=4]
 
 [sub_resource type="DynamicFont" id=1]
 
 size = 80
-use_mipmaps = false
-use_filter = false
-font_data = ExtResource( 2 )
-_sections_unfolded = [ "Font", "Settings" ]
-
-[sub_resource type="DynamicFont" id=2]
-
-size = 60
 use_mipmaps = false
 use_filter = false
 font_data = ExtResource( 2 )
@@ -72,131 +65,29 @@ mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 
-[node name="Ready" type="Label" parent="Labels" index="0"]
+[node name="Ready1" parent="Labels" index="0" instance=ExtResource( 3 )]
 
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_right = 132.0
-margin_bottom = 48.0
-rect_scale = Vector2( 0.5, 0.5 )
-rect_pivot_offset = Vector2( 0, 0 )
-mouse_filter = 2
-size_flags_horizontal = 1
-size_flags_vertical = 4
-custom_fonts/font = SubResource( 2 )
-text = "Not Ready?"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Rect", "custom_fonts" ]
 
-[node name="Ready2" type="Label" parent="Labels" index="1"]
+[node name="Ready2" parent="Labels" index="1" instance=ExtResource( 3 )]
 
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_right = 132.0
-margin_bottom = 48.0
-rect_scale = Vector2( 0.5, 0.5 )
-rect_pivot_offset = Vector2( 0, 0 )
-mouse_filter = 2
-size_flags_horizontal = 1
-size_flags_vertical = 4
-custom_fonts/font = SubResource( 2 )
-text = "Not Ready?"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "custom_fonts" ]
 
-[node name="Ready3" type="Label" parent="Labels" index="2"]
+[node name="Ready3" parent="Labels" index="2" instance=ExtResource( 3 )]
 
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_right = 132.0
-margin_bottom = 48.0
-rect_scale = Vector2( 0.5, 0.5 )
-rect_pivot_offset = Vector2( 0, 0 )
-mouse_filter = 2
-size_flags_horizontal = 1
-size_flags_vertical = 4
-custom_fonts/font = SubResource( 2 )
-text = "Not Ready?"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "custom_fonts" ]
 
-[node name="Ready4" type="Label" parent="Labels" index="3"]
+[node name="Ready4" parent="Labels" index="3" instance=ExtResource( 3 )]
 
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_right = 132.0
-margin_bottom = 48.0
-rect_scale = Vector2( 0.5, 0.5 )
-rect_pivot_offset = Vector2( 0, 0 )
-mouse_filter = 2
-size_flags_horizontal = 1
-size_flags_vertical = 4
-custom_fonts/font = SubResource( 2 )
-text = "Not Ready?"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "custom_fonts" ]
 
-[node name="Ready5" type="Label" parent="Labels" index="4"]
+[node name="Ready5" parent="Labels" index="4" instance=ExtResource( 3 )]
 
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_right = 132.0
-margin_bottom = 48.0
-rect_scale = Vector2( 0.5, 0.5 )
-rect_pivot_offset = Vector2( 0, 0 )
-mouse_filter = 2
-size_flags_horizontal = 1
-size_flags_vertical = 4
-custom_fonts/font = SubResource( 2 )
-text = "Not Ready?"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "custom_fonts" ]
 
-[node name="Ready6" type="Label" parent="Labels" index="5"]
+[node name="Ready6" parent="Labels" index="5" instance=ExtResource( 3 )]
 
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_right = 132.0
-margin_bottom = 48.0
-rect_scale = Vector2( 0.5, 0.5 )
-rect_pivot_offset = Vector2( 0, 0 )
-mouse_filter = 2
-size_flags_horizontal = 1
-size_flags_vertical = 4
-custom_fonts/font = SubResource( 2 )
-text = "Not Ready?"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "custom_fonts" ]
 
 [node name="Hints" type="HBoxContainer" parent="." index="2"]
 
@@ -216,7 +107,7 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="A" parent="Hints" index="0" instance=ExtResource( 3 )]
+[node name="A" parent="Hints" index="0" instance=ExtResource( 4 )]
 
 anchor_right = 0.0
 anchor_bottom = 0.0
@@ -229,7 +120,7 @@ size_flags_vertical = 3
 _sections_unfolded = [ "Hint", "Mouse", "Rect", "Size Flags" ]
 button = "A"
 
-[node name="B3" parent="Hints" index="1" instance=ExtResource( 3 )]
+[node name="B3" parent="Hints" index="1" instance=ExtResource( 4 )]
 
 anchor_right = 0.0
 anchor_bottom = 0.0
@@ -242,7 +133,7 @@ size_flags_vertical = 3
 _sections_unfolded = [ "Hint", "Mouse", "Rect", "Size Flags" ]
 button = "3"
 
-[node name="Enter" parent="Hints" index="2" instance=ExtResource( 3 )]
+[node name="Enter" parent="Hints" index="2" instance=ExtResource( 4 )]
 
 anchor_right = 0.0
 anchor_bottom = 0.0
@@ -255,7 +146,7 @@ size_flags_vertical = 3
 _sections_unfolded = [ "Hint", "Mouse", "Rect", "Size Flags" ]
 button = "Enter"
 
-[node name="Space" parent="Hints" index="3" instance=ExtResource( 3 )]
+[node name="Space" parent="Hints" index="3" instance=ExtResource( 4 )]
 
 anchor_right = 0.0
 anchor_bottom = 0.0
