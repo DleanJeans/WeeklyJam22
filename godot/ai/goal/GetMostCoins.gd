@@ -19,9 +19,16 @@ func process():
 	if player.is_crocodile():
 		state = GOAL_FAILED
 	
-	if _should_flee() and _goal_not_active_already(ArriveAtPlatform):
-		clear_subgoals()
-		add_subgoal(ArriveAtPlatform.new())
+	if _should_flee():
+		var subgoal
+		
+		if _all_platforms_occupied():
+			subgoal = FleeCrocodile
+		else: subgoal = ArriveAtPlatform
+		
+		if _goal_not_active_already(subgoal):
+			clear_subgoals()
+			add_subgoal(subgoal.new())
 	
 	if _has_subgoals(): return
 	
