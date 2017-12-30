@@ -14,8 +14,8 @@ func open():
 
 func _toggle_joypad_hint():
 	if game.joypad_connected():
-		$FullScreenHints/R1.show()
-	else: $FullScreenHints/R1.hide()
+		$FullScreenHints/L1.show()
+	else: $FullScreenHints/L1.hide()
 
 func _ready():
 	$PlayButton.grab_focus()

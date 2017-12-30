@@ -124,9 +124,6 @@ func _finished_playing(name):
 	if name == "Jump" or name == "Groan":
 		$ButtonHint.pop_up()
 
-func _start_shockwave():
-	$ShockwaveAnimation.play(".")
-
 func break_unfrozen():
 	groan()
 	jump()
@@ -216,10 +213,6 @@ func _move_player():
 
 	heading = velocity.normalized()
 
-	if on_platform:
-		$Shockwave.show()
-	else: $Shockwave.hide()
-
 func _process(delta):
 	_reset_debug_label()
 	debug("On Platform: %s" % on_platform)
@@ -227,7 +220,6 @@ func _process(delta):
 	debug("Layer: %s" % collision_layer)
 
 func _reset_debug_label():
-	if $DebugLabel.visible:
 		$DebugLabel.text = "[Debug:%s]\n" % get_name()
 
 func debug(info):

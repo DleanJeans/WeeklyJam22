@@ -44,3 +44,4 @@ func _blocked_out_of_platform():
 func terminate():
 	.terminate()
 	steering.arrive_off()
+	fail_timer.queue_free()

@@ -1,7 +1,7 @@
 tool
 extends Control
 
-export(String, "A", "3", "Enter", "R1", "Space", "Start", "F11") var button = "Space" setget set_button
+export(String, "A", "3", "Enter", "L1", "Space", "Start", "F11") var button = "Space" setget set_button
 
 func set_button(name):
 	button = name

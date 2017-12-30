@@ -49,3 +49,4 @@ func go_around_platform_if_needed():
 func terminate():
 	.terminate()
 	steering.seek_off()
+	relocating_timer.queue_free()

@@ -33,5 +33,6 @@ func _got_away():
 	return on_platform or not_panicking_anymore or crocodile_frozen
 
 func terminate():
-	steering.flee_off()
 	.terminate()
+	steering.flee_off()
+	timer.queue_free()

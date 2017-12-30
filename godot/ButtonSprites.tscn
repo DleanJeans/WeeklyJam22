@@ -1,12 +1,4 @@
 [gd_scene load_steps=10 format=2]
-
-[ext_resource path="res://assets/ui/A.png" type="Texture" id=1]
-[ext_resource path="res://BebasNeue.otf" type="DynamicFontData" id=2]
-[ext_resource path="res://assets/ui/Enter.png" type="Texture" id=3]
-[ext_resource path="res://assets/ui/R1.png" type="Texture" id=4]
-[ext_resource path="res://assets/ui/Space.png" type="Texture" id=5]
-[ext_resource path="res://assets/ui/Start.png" type="Texture" id=6]
-
 [sub_resource type="DynamicFont" id=1]
 
 size = 50
@@ -91,7 +83,7 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "custom_fonts" ]
 
-[node name="R1" type="Sprite" parent="." index="2"]
+[node name="L1" type="Sprite" parent="." index="2"]
 
 editor/display_folded = true
 visible = false
@@ -99,7 +91,7 @@ scale = Vector2( 0.8, 0.8 )
 texture = ExtResource( 4 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Label" type="Label" parent="R1" index="0"]
+[node name="Label" type="Label" parent="L1" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -114,7 +106,7 @@ mouse_filter = 2
 size_flags_horizontal = 1
 size_flags_vertical = 4
 custom_fonts/font = SubResource( 3 )
-text = "R1"
+text = "L1"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1

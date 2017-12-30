@@ -14,7 +14,7 @@ onready var TestSubject1 = $TileMap/TestSubject1
 onready var TestSubject2 = $TileMap/TestSubject2
 onready var TestSubject3 = $TileMap/TestSubject3
 onready var ControlSubject = $TileMap/ControlSubject
-onready var Steering = $TileMap/TestSubject/AI/Steering
+onready var Steering = $TileMap/TestSubject1/AI/Steering
 
 func _ready():
 #	Steering.player = TestSubject

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
 [ext_resource path="res://maps/6PlayerMap.tscn" type="PackedScene" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://PlatformManager.gd" type="Script" id=11]
 [ext_resource path="res://GameTimer.tscn" type="PackedScene" id=12]
 [ext_resource path="res://assets/OurMusicBox _CanCan.ogg" type="AudioStream" id=13]
+[ext_resource path="res://BebasNeue.otf" type="DynamicFontData" id=14]
 
 [sub_resource type="GDScript" id=1]
 
@@ -75,6 +76,14 @@ func next_map():
 	game.emit_signal(\"game_loaded\")
 	game.showing_winner = false
 	game.get_node(\"PlayerManager\").enable_ai()"
+
+[sub_resource type="DynamicFont" id=3]
+
+size = 30
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 14 )
+_sections_unfolded = [ "Font", "Settings" ]
 
 [node name="Game" type="Node2D"]
 
@@ -168,43 +177,63 @@ mix_target = 0
 bus = "Master"
 _sections_unfolded = [ "Transform" ]
 
+[node name="FPS" type="Label" parent="." index="13"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 930.0
+margin_right = 954.0
+margin_bottom = 36.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 2
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 3 )
+text = "60"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts" ]
+
 [connection signal="countdown_started" from="." to="GameTimer" method="start_counting_down"]
 
 [connection signal="game_loaded" from="." to="PlayerManager" method="reset"]
 
 [connection signal="game_loaded" from="." to="PlayerManager" method="choose_crocodile_randomly" flags=3]
 
+[connection signal="game_over" from="." to="MenuButton" method="show"]
+
+[connection signal="game_over" from="." to="MenuButton" method="grab_focus"]
+
 [connection signal="game_over" from="." to="." method="show_mouse"]
 
 [connection signal="game_over" from="." to="." method="_show_winner"]
 
-[connection signal="game_over" from="." to="PlayerManager" method="freeze_players"]
-
 [connection signal="game_over" from="." to="PlayerManager" method="pause_freeze_timer"]
 
-[connection signal="game_over" from="." to="MenuButton" method="show"]
+[connection signal="game_over" from="." to="PlayerManager" method="freeze_players"]
 
-[connection signal="game_over" from="." to="MenuButton" method="grab_focus"]
+[connection signal="game_paused" from="." to="JoiningScreen" method="hide"]
 
 [connection signal="game_paused" from="." to="." method="show_mouse"]
 
 [connection signal="game_paused" from="." to="." method="_pause_tree"]
 
-[connection signal="game_paused" from="." to="JoiningScreen" method="hide"]
-
-[connection signal="game_resumed" from="." to="." method="_resume_tree"]
+[connection signal="game_resumed" from="." to="JoiningScreen" method="show_if_not_closed"]
 
 [connection signal="game_resumed" from="." to="." method="hide_mouse"]
 
-[connection signal="game_resumed" from="." to="JoiningScreen" method="show_if_not_closed"]
-
-[connection signal="game_started" from="." to="." method="hide_mouse"]
+[connection signal="game_resumed" from="." to="." method="_resume_tree"]
 
 [connection signal="game_started" from="." to="JoiningScreen" method="close"]
 
-[connection signal="game_started" from="." to="PlayerManager" method="enable_ai"]
+[connection signal="game_started" from="." to="." method="hide_mouse"]
 
 [connection signal="game_started" from="." to="PlayerManager" method="reset_positions"]
+
+[connection signal="game_started" from="." to="PlayerManager" method="enable_ai"]
 
 [connection signal="game_started" from="." to="PlayerManager" method="choose_crocodile_randomly" flags=3]
 
@@ -212,17 +241,15 @@ _sections_unfolded = [ "Transform" ]
 
 [connection signal="game_started" from="." to="CoinManager" method="resume_spawners"]
 
-[connection signal="joining_screen_opened" from="." to="." method="_stop_showing_winner"]
-
 [connection signal="joining_screen_opened" from="." to="JoiningScreen" method="open" flags=3]
 
-[connection signal="joining_screen_opened" from="." to="ControllerAssigner" method="reset"]
+[connection signal="joining_screen_opened" from="." to="." method="_stop_showing_winner"]
 
 [connection signal="joining_screen_opened" from="." to="PlayerManager" method="reset"]
 
-[connection signal="joining_screen_opened" from="." to="PlayerManager" method="disable_ai"]
-
 [connection signal="joining_screen_opened" from="." to="PlayerManager" method="reset_positions"]
+
+[connection signal="joining_screen_opened" from="." to="PlayerManager" method="disable_ai"]
 
 [connection signal="joining_screen_opened" from="." to="PlayerManager" method="unfreeze_players"]
 
@@ -230,11 +257,13 @@ _sections_unfolded = [ "Transform" ]
 
 [connection signal="joining_screen_opened" from="." to="CoinManager" method="stop_spawners"]
 
+[connection signal="joining_screen_opened" from="." to="ControllerAssigner" method="reset"]
+
+[connection signal="main_menu_opened" from="." to="JoiningScreen" method="close"]
+
 [connection signal="main_menu_opened" from="." to="." method="resume"]
 
 [connection signal="main_menu_opened" from="." to="." method="show_mouse"]
-
-[connection signal="main_menu_opened" from="." to="JoiningScreen" method="close"]
 
 [connection signal="main_menu_opened" from="." to="PlayerManager" method="enable_ai"]
 
@@ -248,12 +277,12 @@ _sections_unfolded = [ "Transform" ]
 
 [connection signal="map_pressed" from="MainMenu" to="MapSelector" method="next_map"]
 
-[connection signal="play_pressed" from="MainMenu" to="." method="open_joining_screen"]
-
 [connection signal="play_pressed" from="MainMenu" to="." method="hide_mouse"]
 
-[connection signal="pressed" from="MenuButton" to="." method="open_main_menu"]
+[connection signal="play_pressed" from="MainMenu" to="." method="open_joining_screen"]
 
 [connection signal="pressed" from="MenuButton" to="MenuButton" method="hide"]
+
+[connection signal="pressed" from="MenuButton" to="." method="open_main_menu"]
 
 
