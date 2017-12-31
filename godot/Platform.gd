@@ -6,8 +6,6 @@ extends StaticBody2D
 
 signal player_exited(player)
 
-export(bool) var requires_path_around = true
-
 var occupied setget , _get_occupied
 
 var _current_player

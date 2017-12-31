@@ -19,7 +19,6 @@ func process():
 		state = GOAL_FAILED
 	elif coin.collected:
 		state = GOAL_COMPLETED
-		steering.seek_off()
 
 func terminate():
 	.terminate()

@@ -12,12 +12,11 @@ func _filter_player(me, player):
 
 func _player_desirability(me, player):
 	var distance = Utility.distance_squared(player, me)
-	var distance_to_peers = _total_distance_to_peers(player) * 0.2
-	var coins_collected = player.coins
+	var distance_to_peers = _total_distance_to_peers(player) * 0.5
+	var coins_collected = pow(player.coins, 3) + 100
 	
 	var good = coins_collected
-	var bad = distance * distance_to_peers + 1
-	
+	var bad = distance + distance_to_peers
 	var desirability = good / bad
 	
 	return desirability
@@ -41,12 +40,11 @@ func _filter_platform(me, platform):
 func _platform_desirability(me, platform):
 	var distance_squared = Utility.distance_squared(me, platform)
 	var distance_to_crocodile = Utility.distance_squared(platform, Global.crocodile)
-	var crocodile_relative_angle = Utility.relative_angle_to(me.position, platform.position, Global.crocodile.position)
+	var crocodile_relative_dot = Utility.relative_dot_to(me.position, platform.position, Global.crocodile.position)
 	var distance_to_peers = _platform_distance_to_peers(me, platform) * 10
 	
-	var good = (1 + crocodile_relative_angle) * distance_to_crocodile * distance_to_peers
-	var bad = distance_squared
-	
+	var good = (distance_to_crocodile + distance_to_peers)
+	var bad = (1 + crocodile_relative_dot) * distance_squared
 	var desirability = good / bad
 	
 	return desirability
@@ -73,10 +71,11 @@ func _coin_desirability(me, coin):
 	var distance = Utility.distance_squared(me, coin)
 	var distance_to_other_coins = _distance_to_other_coins(me, coin)
 	
-	var good = distance_to_peers * distance_to_crocodile
-	var bad = distance * distance_to_other_coins + 1
-
-	return good / bad
+	var good = distance_to_peers + distance_to_crocodile
+	var bad = distance + distance_to_other_coins
+	var desirability = good / bad
+	
+	return desirability
 
 func _distance_to_peers(me, coin):
 	var total_distance = 0

@@ -61,7 +61,6 @@ friction = 1.0
 bounce = 0.0
 script = ExtResource( 1 )
 _sections_unfolded = [ "Collision", "Transform", "Visibility" ]
-requires_path_around = true
 
 [node name="Shape" type="CollisionShape2D" parent="." index="0"]
 

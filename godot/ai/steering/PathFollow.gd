@@ -35,9 +35,6 @@ func follow_path():
 		_seek_next_point()
 		if self.current_point == null:
 			Steering.seek_off()
-	
-	if self.current_point != null:
-		$Sprite.position = player.to_local(self.current_point)
 		
 	return Vector2()
 

@@ -22,7 +22,7 @@ func process():
 	if _should_flee():
 		var subgoal
 		
-		if _all_platforms_occupied():
+		if _no_platform():
 			subgoal = FleeCrocodile
 		else: subgoal = ArriveAtPlatform
 		
@@ -45,6 +45,9 @@ func _should_flee():
 	
 	return should_be_panicking and crocodile_not_frozen
 
+func _no_platform():
+	return Global.Platforms.size() == 0
+
 func _goal_not_active_already(goal):
 	var has_subgoals = _has_subgoals()
 	
@@ -53,22 +56,11 @@ func _goal_not_active_already(goal):
 		return first_subgoal_not_this_goal
 	else: return not has_subgoals
 
-func _all_platforms_occupied():
-	for plat in Global.Platforms:
-		if not plat.occupied:
-			return false
-	return true
-
-func _crocodile_blocks_way_to_platform():
-	var platform = Locator.find_most_desired_platform(player)
-	if platform == null:
+func _should_go_after_coins():
+	if player.out_of_coins():
 		return true
-	
-	var to_platform = (platform.position - player.position).normalized()
-	var to_crocodile = (Global.crocodile.position - player.position).normalized()
-	var dot = to_platform.dot(to_crocodile)
-	
-	return dot > 0
+	for coin in Global.Coins:
+		return not Locator._filter_coin(player, coin)
 
 func _should_get_on_platform():
 	if player.on_platform:
@@ -76,11 +68,11 @@ func _should_get_on_platform():
 	
 	return not _all_platforms_occupied()
 
-func _should_go_after_coins():
-	if player.out_of_coins():
-		return true
-	for coin in Global.Coins:
-		return not Locator._filter_coin(player, coin)
+func _all_platforms_occupied():
+	for plat in Global.Platforms:
+		if not plat.occupied:
+			return false
+	return true
 
 func terminate():
 	.terminate()

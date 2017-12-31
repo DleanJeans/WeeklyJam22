@@ -1,12 +1,11 @@
 extends Node
 
-func relative_angle_to(from, point1, point2):
+func relative_dot_to(from, point1, point2):
 	var to_point1 = unit_vector_from(from, point1)
 	var to_point2 = unit_vector_from(from, point2)
 	var dot = to_point1.dot(to_point2)
-	var relative_angle = acos(dot)
 
-	return relative_angle
+	return dot
 
 func find_max(me, objects, calculate_points, filter = null):
 	var highest_points = -INF

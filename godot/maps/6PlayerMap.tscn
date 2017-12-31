@@ -19,7 +19,7 @@ position_tween_time = 0.5
 [node name="CoinSpawner" parent="CoinSpawners" index="0" instance=ExtResource( 3 )]
 
 position = Vector2( 480, 300 )
-scale = Vector2( 8, 3 )
+scale = Vector2( 6, 3 )
 _sections_unfolded = [ "Transform" ]
 spawn_interval = 0.5
 

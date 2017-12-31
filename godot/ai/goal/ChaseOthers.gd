@@ -26,8 +26,6 @@ func process():
 	
 	if not player.is_crocodile():
 		state = GOAL_COMPLETED
-	elif target == null or target.on_platform:
-		_relocate_target()
 	
 	go_around_platform_if_needed()
 
@@ -43,7 +41,7 @@ func go_around_platform_if_needed():
 	
 	var collider = collision.collider
 	
-	if collider is load("res://Platform.gd") and collider.requires_path_around:
+	if collider is load("res://Platform.gd"):
 		add_subgoal(GoAroundPlatform.new(collision.collider, target))
 
 func terminate():
