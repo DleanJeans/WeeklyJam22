@@ -69,8 +69,6 @@ func _stop_showing_winner():
 	showing_winner = false
 
 func _process(delta):
-	$FPS.text = "%s" % Engine.get_frames_per_second()
-	
 	if showing_winner:
 		for p in winners:
 			p.show_winner_label()

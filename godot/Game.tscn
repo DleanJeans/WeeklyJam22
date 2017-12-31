@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
 [ext_resource path="res://maps/6PlayerMap.tscn" type="PackedScene" id=2]
@@ -85,7 +85,15 @@ use_filter = false
 font_data = ExtResource( 14 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[node name="Game" type="Node2D"]
+[sub_resource type="GDScript" id=4]
+
+script/source = "extends Label
+
+func update():
+	text = \"%s\" % Engine.get_frames_per_second()
+"
+
+[node name="Game" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
 _sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
@@ -195,7 +203,15 @@ text = "60"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
+script = SubResource( 4 )
 _sections_unfolded = [ "custom_fonts" ]
+
+[node name="Timer" type="Timer" parent="FPS" index="0"]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = false
+autostart = true
 
 [connection signal="countdown_started" from="." to="GameTimer" method="start_counting_down"]
 
@@ -207,13 +223,13 @@ _sections_unfolded = [ "custom_fonts" ]
 
 [connection signal="game_over" from="." to="MenuButton" method="grab_focus"]
 
-[connection signal="game_over" from="." to="." method="show_mouse"]
-
-[connection signal="game_over" from="." to="." method="_show_winner"]
-
 [connection signal="game_over" from="." to="PlayerManager" method="freeze_players"]
 
 [connection signal="game_over" from="." to="PlayerManager" method="pause_freeze_timer"]
+
+[connection signal="game_over" from="." to="." method="show_mouse"]
+
+[connection signal="game_over" from="." to="." method="_show_winner"]
 
 [connection signal="game_paused" from="." to="JoiningScreen" method="hide"]
 
@@ -229,8 +245,6 @@ _sections_unfolded = [ "custom_fonts" ]
 
 [connection signal="game_started" from="." to="JoiningScreen" method="close"]
 
-[connection signal="game_started" from="." to="." method="hide_mouse"]
-
 [connection signal="game_started" from="." to="PlayerManager" method="reset_positions"]
 
 [connection signal="game_started" from="." to="PlayerManager" method="enable_ai"]
@@ -241,9 +255,11 @@ _sections_unfolded = [ "custom_fonts" ]
 
 [connection signal="game_started" from="." to="CoinManager" method="resume_spawners"]
 
+[connection signal="game_started" from="." to="." method="hide_mouse"]
+
 [connection signal="joining_screen_opened" from="." to="JoiningScreen" method="open" flags=3]
 
-[connection signal="joining_screen_opened" from="." to="." method="_stop_showing_winner"]
+[connection signal="joining_screen_opened" from="." to="ControllerAssigner" method="reset"]
 
 [connection signal="joining_screen_opened" from="." to="PlayerManager" method="reset"]
 
@@ -257,13 +273,9 @@ _sections_unfolded = [ "custom_fonts" ]
 
 [connection signal="joining_screen_opened" from="." to="CoinManager" method="stop_spawners"]
 
-[connection signal="joining_screen_opened" from="." to="ControllerAssigner" method="reset"]
+[connection signal="joining_screen_opened" from="." to="." method="_stop_showing_winner"]
 
 [connection signal="main_menu_opened" from="." to="JoiningScreen" method="close"]
-
-[connection signal="main_menu_opened" from="." to="." method="resume"]
-
-[connection signal="main_menu_opened" from="." to="." method="show_mouse"]
 
 [connection signal="main_menu_opened" from="." to="PlayerManager" method="enable_ai"]
 
@@ -272,6 +284,10 @@ _sections_unfolded = [ "custom_fonts" ]
 [connection signal="main_menu_opened" from="." to="PlayerManager" method="reset_controllers"]
 
 [connection signal="main_menu_opened" from="." to="CoinManager" method="resume_spawners"]
+
+[connection signal="main_menu_opened" from="." to="." method="resume"]
+
+[connection signal="main_menu_opened" from="." to="." method="show_mouse"]
 
 [connection signal="duration_pressed" from="MainMenu" to="GameTimer" method="next_duration"]
 
@@ -284,5 +300,7 @@ _sections_unfolded = [ "custom_fonts" ]
 [connection signal="pressed" from="MenuButton" to="MenuButton" method="hide"]
 
 [connection signal="pressed" from="MenuButton" to="." method="open_main_menu"]
+
+[connection signal="timeout" from="FPS/Timer" to="FPS" method="update"]
 
 

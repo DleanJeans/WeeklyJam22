@@ -53,12 +53,14 @@ func _block_player():
 
 func _on_player_exited(player):
 	emit_signal("player_exited", player) 
-	if self.occupied and player.on_platform:
-		if _occupier == player:
-			_occupier = null
+	
+	if player.on_platform:
 		player.on_platform = false
 		player.collision_layer = Global.COLLISION_NORMAL
-		_turn_green()
+		
+		if _occupier == player:
+			_occupier = null
+			_turn_green()
 	
 	player._leave_platform()
 

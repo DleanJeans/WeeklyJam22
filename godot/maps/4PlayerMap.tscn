@@ -35,7 +35,7 @@ _sections_unfolded = [ "Transform" ]
 position = Vector2( 480, 300 )
 scale = Vector2( 4, 4 )
 _sections_unfolded = [ "Transform" ]
-spawn_interval = 2.0
+spawn_interval = 0.5
 
 [node name="Objects" type="TileMap" parent="." index="3"]
 

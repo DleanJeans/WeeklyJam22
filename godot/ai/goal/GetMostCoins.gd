@@ -20,13 +20,11 @@ func process():
 		state = GOAL_FAILED
 	
 	if _should_flee():
-		var subgoal
+		var subgoal = ArriveAtPlatform
 		
-		if _no_platform():
-			subgoal = FleeCrocodile
-		else: subgoal = ArriveAtPlatform
-		
-		if _goal_not_active_already(subgoal):
+		if player.on_platform:
+			return
+		elif _goal_not_active_already(subgoal):
 			clear_subgoals()
 			add_subgoal(subgoal.new())
 	
@@ -40,13 +38,27 @@ func process():
 func _should_flee():
 	if Global.crocodile == null: return false
 	
-	var should_be_panicking = Utility.distance_squared(player, Global.crocodile) < fleeing_radius * fleeing_radius
-	var crocodile_not_frozen = not Global.crocodile.frozen
+	var targeted_by_crocodile = _targeted_by_crocodile()
+	var crocodile_is_close = _crocodile_is_close()
+	var crocodile_almost_unfrozen = Global.crocodile.almost_unfrozen()
 	
-	return should_be_panicking and crocodile_not_frozen
+	return crocodile_almost_unfrozen and (crocodile_is_close or targeted_by_crocodile)
 
-func _no_platform():
-	return Global.Platforms.size() == 0
+func _crocodile_is_close():
+	var distance_squared = Utility.distance_squared(player, Global.crocodile) 
+	var fleeing_radius_squared = fleeing_radius * fleeing_radius
+	
+	return distance_squared < fleeing_radius_squared
+
+func _targeted_by_crocodile():
+	var crocodile = Global.crocodile
+	if crocodile == null: return false
+	
+	var crocodile_heading = crocodile.heading
+	var crocodile_to_player = Utility.unit_vector_from(crocodile, player)
+	var dot = crocodile_heading.dot(crocodile_to_player)
+	
+	return dot > 0.95
 
 func _goal_not_active_already(goal):
 	var has_subgoals = _has_subgoals()
@@ -57,8 +69,6 @@ func _goal_not_active_already(goal):
 	else: return not has_subgoals
 
 func _should_go_after_coins():
-	if player.out_of_coins():
-		return true
 	for coin in Global.Coins:
 		return not Locator._filter_coin(player, coin)
 

@@ -44,6 +44,10 @@ signal unfrozen_as_crocodile
 
 signal hit_wall(player, bounce)
 
+func almost_unfrozen():
+	var time_left = $FreezeTimer.get_time_left()
+	return time_left < 1
+
 func reset():
 	turn_normal()
 	self.coins = 0
@@ -216,8 +220,6 @@ func _move_player():
 func _process(delta):
 	_reset_debug_label()
 	debug("On Platform: %s" % on_platform)
-	debug("Frozen: %s" % frozen)
-	debug("Layer: %s" % collision_layer)
 
 func _reset_debug_label():
 		$DebugLabel.text = "[Debug:%s]\n" % get_name()

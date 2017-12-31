@@ -3,7 +3,7 @@ extends Node2D
 export(int) var total_force = 350
 onready var player = get_parent().get_parent()
 
-var priorities = ["Separation", "PathFollow", "Arrive", "Flee", "Pursuit", "Seek"]
+var priorities = ["PathFollow", "Arrive", "Flee", "Pursuit", "Seek"]
 
 func steer():
 	var steering_velocity = Vector2()

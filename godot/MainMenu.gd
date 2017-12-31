@@ -23,7 +23,7 @@ func _ready():
 	_toggle_joypad_hint()
 
 func _process(delta):
-	if Input.is_action_just_pressed("toggle_main_menu"):
+	if Input.is_action_just_pressed("toggle_main_menu") and OS.is_debug_build():
 		if visible:
 			hide()
 			menu_button.show()

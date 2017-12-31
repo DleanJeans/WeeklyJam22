@@ -31,7 +31,7 @@ window/stretch/shrink="1"
 
 [game]
 
-debug_goal_tree=false
+debug_goal_tree=true
 debug_steering=false
 slo_mo_scale=0.1
 version="v1.1"

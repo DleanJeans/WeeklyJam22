@@ -17,7 +17,5 @@ func _physics_process(delta):
 	
 	if has_node("WinGame"):
 		$WinGame.process()
-	if not player.is_crocodile() and player.is_panicking():
-		player.jump()
 	
 	player.velocity += $Steering.steer()

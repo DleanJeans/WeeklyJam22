@@ -29,7 +29,7 @@ func activate():
 	if state != GOAL_ACTIVE:
 		return
 	
-	get_parent().relocating_timer.set_paused(true)
+	get_parent().pause_acquisition()
 	
 	_create_path()
 	_find_path_direction()
@@ -73,15 +73,12 @@ func _terminate_if_not_blocked_anymore(point_index, point):
 		pass
 
 func _raycast_to_target_not_hit_platform(point):
-#	var result = get_world_2d().get_direct_space_state().intersect_ray(point, _target.position, [], Global.COLLISION_PLATFORM)
-#	var not_hit_platform = result.empty() or result.collider != _platform
-#	return not_hit_platform
 	var hit_platform = player.test_move(player.transform, _target.position - player.position)
 	return not hit_platform
 
 func terminate():
 	_disconnect_signal()
-	_relocate_target()
+	_resume_parent_target_acquisition()
 	steering.path_follow_off()
 	.terminate()
 
@@ -89,6 +86,6 @@ func _disconnect_signal():
 	if path_follow.is_connected("point_reached", self, "_terminate_if_not_blocked_anymore"):
 		path_follow.disconnect("point_reached", self, "_terminate_if_not_blocked_anymore")
 
-func _relocate_target():
-	get_parent().relocating_timer.set_paused(false)
-	get_parent()._relocate_target()
+func _resume_parent_target_acquisition():
+	get_parent().resume_acquisition()
+	get_parent().reacquire_target()

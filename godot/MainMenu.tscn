@@ -48,7 +48,7 @@ use_mipmaps = false
 use_filter = false
 font_data = ExtResource( 6 )
 
-[node name="MainMenu" type="Container" index="0"]
+[node name="MainMenu" type="Container"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -412,9 +412,9 @@ _sections_unfolded = [ "Anchor", "Margin" ]
 
 [connection signal="pressed" from="PlayButton" to="SelectSound" method="play"]
 
-[connection signal="pressed" from="PlayButton" to="." method="_on_PlayButton_pressed"]
-
 [connection signal="pressed" from="PlayButton" to="." method="hide"]
+
+[connection signal="pressed" from="PlayButton" to="." method="_on_PlayButton_pressed"]
 
 [connection signal="pressed" from="MapButton" to="SelectSound" method="play"]
 

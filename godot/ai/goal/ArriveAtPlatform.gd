@@ -1,31 +1,31 @@
-extends "res://ai/goal/Goal.gd"
+extends "res://ai/goal/GoalWithTarget.gd"
 
 var platform
-var estimated_duration
 onready var fail_timer = Timer.new()
 
 func _ready():
 	_name = "ArriveAtPlatform"
-	_init_fail_timer()
+	_setup_fail_timer()
 
-func _init_fail_timer():
+func _setup_fail_timer():
 	fail_timer.one_shot = true
 	fail_timer.wait_time = 1.5
 	fail_timer.connect("timeout", self, "_goal_failed")
+	add_child(fail_timer)
 
 func _goal_failed():
 	state = GOAL_FAILED
 
 func activate():
 	.activate()
-	_relocate_platform()
 	fail_timer.start()
 
-func _relocate_platform():
+func reacquire_target():
 	platform = Locator.find_most_desired_platform(player)
 	if platform == null:
 		state = GOAL_FAILED
-		return
+
+func _target_acquired():
 	steering.arrive_on(platform)
 
 func process():
@@ -33,10 +33,15 @@ func process():
 
 	if platform == null:
 		state = GOAL_FAILED
-	elif Utility.distance_squared(player, platform) <= 1600 and not player.is_panicking():
+	elif _get_enough_on_platform() and not player.is_panicking():
 		state = GOAL_COMPLETED
 	elif _blocked_out_of_platform():
 		player.jump()
+
+func _get_enough_on_platform():
+	var distance_squared_to_platform = Utility.distance_squared(player, platform)
+	
+	return distance_squared_to_platform < 30 * 30
 
 func _blocked_out_of_platform():
 	return player.collision_layer == Global.COLLISION_BLOCKED

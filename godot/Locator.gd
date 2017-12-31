@@ -39,12 +39,12 @@ func _filter_platform(me, platform):
 
 func _platform_desirability(me, platform):
 	var distance_squared = Utility.distance_squared(me, platform)
-	var distance_to_crocodile = Utility.distance_squared(platform, Global.crocodile)
-	var crocodile_relative_dot = Utility.relative_dot_to(me.position, platform.position, Global.crocodile.position)
+	var distance_to_crocodile = 0 if Global.crocodile.frozen else Utility.distance_squared(platform, Global.crocodile)
+	var crocodile_relative_dot = Utility.relative_dot_to(me, platform, Global.crocodile)
 	var distance_to_peers = _platform_distance_to_peers(me, platform) * 10
 	
-	var good = (distance_to_crocodile + distance_to_peers)
-	var bad = (1 + crocodile_relative_dot) * distance_squared
+	var good = distance_to_crocodile + distance_to_peers
+	var bad = (crocodile_relative_dot + 1) * distance_squared + 1
 	var desirability = good / bad
 	
 	return desirability

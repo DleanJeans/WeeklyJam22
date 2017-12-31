@@ -1,15 +1,16 @@
 [gd_scene load_steps=3 format=2]
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="GDScript" id=1]
 
 script/source = "extends Node2D
 
 onready var parent = get_parent()
 
 func _process(delta):
+	if not visible: return
 	$VectorVisualizer.vector = parent.velocity"
 
-[sub_resource type="GDScript" id=1]
+[sub_resource type="GDScript" id=2]
 
 script/source = "extends Node2D
 
@@ -32,6 +33,7 @@ func _ready():
 	update()
 
 func _process(delta):
+	if not visible: return
 	update()
 
 func _draw():
@@ -56,11 +58,11 @@ func draw_triangle_equilateral(center=Vector2(), direction=Vector2(), radius=50,
 
 [node name="MovementVisualizer" type="Node2D"]
 
-script = SubResource( 2 )
-
-[node name="VectorVisualizer" type="Node2D" parent="."]
-
 script = SubResource( 1 )
+
+[node name="VectorVisualizer" type="Node2D" parent="." index="0"]
+
+script = SubResource( 2 )
 width = 4
 multiplier = 1
 
