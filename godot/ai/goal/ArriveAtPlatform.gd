@@ -21,9 +21,19 @@ func activate():
 	fail_timer.start()
 
 func reacquire_target():
+	undip_platform()
 	platform = Locator.find_most_desired_platform(player)
+	dip_platform()
 	if platform == null:
 		state = GOAL_FAILED
+
+func dip_platform():
+	if platform != null:
+		platform.dip(player)
+
+func undip_platform():
+	if platform != null:
+		platform.undip(player)
 
 func _target_acquired():
 	steering.arrive_on(platform)
@@ -50,3 +60,4 @@ func terminate():
 	.terminate()
 	steering.arrive_off()
 	fail_timer.queue_free()
+	undip_platform()

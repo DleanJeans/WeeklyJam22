@@ -8,14 +8,15 @@ func find_most_desired_player(me):
 	return Utility.find_max(me, Global.Players, compute_player_desirability, filter_player)
 
 func _filter_player(me, player):
-	return player == me or player.on_platform
+	return player == me
 
 func _player_desirability(me, player):
 	var distance = Utility.distance_squared(player, me)
 	var distance_to_peers = _total_distance_to_peers(player) * 0.5
 	var coins_collected = pow(player.coins, 3) + 100
+	var base = 0.85 if player.on_platform else 1
 	
-	var good = coins_collected
+	var good = coins_collected * base
 	var bad = distance + distance_to_peers
 	var desirability = good / bad
 	
@@ -35,7 +36,12 @@ func find_most_desired_platform(me):
 	return Utility.find_max(me, Global.Platforms, compute_platform_desirability, filter_platform)
 
 func _filter_platform(me, platform):
-	return Global.crocodile == null
+	if Global.crocodile == null:
+		return false
+	
+	var platform_dipped = platform.dipped()
+	
+	return platform_dipped
 
 func _platform_desirability(me, platform):
 	var distance_squared = Utility.distance_squared(me, platform)

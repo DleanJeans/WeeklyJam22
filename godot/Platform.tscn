@@ -48,7 +48,7 @@ tracks/0/keys = {
 "values": [ Color( 0.0103455, 0.882813, 0.289808, 1 ), Color( 1, 0.28125, 0, 1 ) ]
 }
 
-[node name="Platform" type="StaticBody2D" groups=[
+[node name="Platform" type="StaticBody2D" index="0" groups=[
 "Platforms",
 ]]
 

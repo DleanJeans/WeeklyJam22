@@ -11,6 +11,22 @@ var occupied setget , _get_occupied
 var _current_player
 var _occupier
 
+var dips = []
+
+func dip(player):
+	if not dipped() and not player_dipped(player):
+		dips.append(player)
+
+func undip(player):
+	if dips.has(player):
+		dips.erase(player)
+
+func dipped():
+	return dips.size() >= 2
+
+func player_dipped(player):
+	return dips.has(player)
+
 func get_players_inside():
 	return $Shape/EnterArea.get_overlapping_bodies()
 

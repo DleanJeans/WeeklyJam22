@@ -93,7 +93,7 @@ func update():
 	text = \"%s\" % Engine.get_frames_per_second()
 "
 
-[node name="Game" type="Node2D" index="0"]
+[node name="Game" type="Node2D"]
 
 script = ExtResource( 1 )
 _sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
@@ -104,6 +104,10 @@ _sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
 
 margin_right = -64.0
 margin_bottom = -64.0
+
+[node name="Version" parent="MainMenu" index="9"]
+
+visible = false
 
 [node name="PauseScreen" parent="." index="2" instance=ExtResource( 4 )]
 
@@ -187,6 +191,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="FPS" type="Label" parent="." index="13"]
 
+visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -304,3 +309,4 @@ autostart = true
 [connection signal="timeout" from="FPS/Timer" to="FPS" method="update"]
 
 
+[editable path="MainMenu"]
