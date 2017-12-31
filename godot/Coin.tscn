@@ -25,7 +25,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 0, -30 ), Vector2( 0, -50 ) ]
+"values": [ Vector2( 0, -20 ), Vector2( 0, -30 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Shape/Shadow:scale")
@@ -37,7 +37,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 0.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 0.2, 0.1 ), Vector2( 0.1, 0.05 ) ]
+"values": [ Vector2( 0.15, 0.05 ), Vector2( 0.1, 0.025 ) ]
 }
 
 [sub_resource type="Animation" id=3]
@@ -107,10 +107,13 @@ magnet_speed = 100
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
 modulate = Color( 1, 0.843137, 0, 1 )
-position = Vector2( 0, -30 )
-scale = Vector2( 0.2, 0.24 )
+position = Vector2( 0, -20 )
+scale = Vector2( 0.15, 0.2 )
 texture = ExtResource( 2 )
 _sections_unfolded = [ "Transform", "Visibility" ]
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Sprite" type="Sprite" parent="Sprite" index="0"]
 
@@ -121,8 +124,8 @@ _sections_unfolded = [ "Transform", "Visibility" ]
 
 [node name="Sprite2" type="Sprite" parent="Sprite" index="1"]
 
-position = Vector2( 7.5, 0 )
-scale = Vector2( 0.45, 0.3 )
+position = Vector2( 10, 0 )
+scale = Vector2( 0.4, 0.3 )
 texture = ExtResource( 2 )
 _sections_unfolded = [ "Transform" ]
 
@@ -134,7 +137,7 @@ _sections_unfolded = [ "Transform", "Visibility" ]
 [node name="Shadow" type="Sprite" parent="Shape" index="0"]
 
 modulate = Color( 0, 0, 0, 0.196078 )
-scale = Vector2( 0.2, 0.1 )
+scale = Vector2( 0.15, 0.05 )
 texture = ExtResource( 2 )
 _sections_unfolded = [ "Transform", "Visibility" ]
 

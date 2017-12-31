@@ -211,21 +211,21 @@ _sections_unfolded = [ "custom_fonts" ]
 
 [connection signal="game_over" from="." to="." method="_show_winner"]
 
-[connection signal="game_over" from="." to="PlayerManager" method="pause_freeze_timer"]
-
 [connection signal="game_over" from="." to="PlayerManager" method="freeze_players"]
+
+[connection signal="game_over" from="." to="PlayerManager" method="pause_freeze_timer"]
 
 [connection signal="game_paused" from="." to="JoiningScreen" method="hide"]
 
-[connection signal="game_paused" from="." to="." method="show_mouse"]
-
 [connection signal="game_paused" from="." to="." method="_pause_tree"]
+
+[connection signal="game_paused" from="." to="." method="show_mouse"]
 
 [connection signal="game_resumed" from="." to="JoiningScreen" method="show_if_not_closed"]
 
-[connection signal="game_resumed" from="." to="." method="hide_mouse"]
-
 [connection signal="game_resumed" from="." to="." method="_resume_tree"]
+
+[connection signal="game_resumed" from="." to="." method="hide_mouse"]
 
 [connection signal="game_started" from="." to="JoiningScreen" method="close"]
 
@@ -277,9 +277,9 @@ _sections_unfolded = [ "custom_fonts" ]
 
 [connection signal="map_pressed" from="MainMenu" to="MapSelector" method="next_map"]
 
-[connection signal="play_pressed" from="MainMenu" to="." method="hide_mouse"]
-
 [connection signal="play_pressed" from="MainMenu" to="." method="open_joining_screen"]
+
+[connection signal="play_pressed" from="MainMenu" to="." method="hide_mouse"]
 
 [connection signal="pressed" from="MenuButton" to="MenuButton" method="hide"]
 
