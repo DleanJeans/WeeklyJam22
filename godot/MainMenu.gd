@@ -19,7 +19,6 @@ func _toggle_joypad_hint():
 
 func _ready():
 	$PlayButton.grab_focus()
-	$Version.text = ProjectSettings.get_setting("game/version")
 	_toggle_joypad_hint()
 
 func _process(delta):

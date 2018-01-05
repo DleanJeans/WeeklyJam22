@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://MainMenu.gd" type="Script" id=1]
 [ext_resource path="res://SelectSound.tscn" type="PackedScene" id=2]
@@ -41,14 +41,7 @@ use_filter = false
 font_data = ExtResource( 6 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[sub_resource type="DynamicFont" id=5]
-
-size = 60
-use_mipmaps = false
-use_filter = false
-font_data = ExtResource( 6 )
-
-[node name="MainMenu" type="Container"]
+[node name="MainMenu" type="Container" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -383,38 +376,15 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "custom_fonts" ]
 
-[node name="Version" type="Label" parent="." index="9"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 815.0
-margin_top = 240.0
-margin_right = 955.0
-margin_bottom = 312.0
-rect_scale = Vector2( 0.5, 0.5 )
-rect_pivot_offset = Vector2( 0, 0 )
-mouse_filter = 2
-size_flags_horizontal = 1
-size_flags_vertical = 4
-custom_fonts/font = SubResource( 5 )
-text = "v1.0"
-align = 1
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Anchor", "Margin" ]
-
 [connection signal="pressed" from="FullScreenButton" to="SelectSound" method="play"]
 
 [connection signal="pressed" from="FullScreenButton" to="." method="_on_FullScreenButton_pressed"]
 
 [connection signal="pressed" from="PlayButton" to="SelectSound" method="play"]
 
-[connection signal="pressed" from="PlayButton" to="." method="hide"]
-
 [connection signal="pressed" from="PlayButton" to="." method="_on_PlayButton_pressed"]
+
+[connection signal="pressed" from="PlayButton" to="." method="hide"]
 
 [connection signal="pressed" from="MapButton" to="SelectSound" method="play"]
 

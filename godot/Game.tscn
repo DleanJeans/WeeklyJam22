@@ -100,14 +100,13 @@ _sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
 
 [node name="Map" parent="." index="0" instance=ExtResource( 2 )]
 
+editor/display_folded = true
+
 [node name="MainMenu" parent="." index="1" instance=ExtResource( 3 )]
 
+editor/display_folded = true
 margin_right = -64.0
 margin_bottom = -64.0
-
-[node name="Version" parent="MainMenu" index="9"]
-
-visible = false
 
 [node name="PauseScreen" parent="." index="2" instance=ExtResource( 4 )]
 
@@ -183,7 +182,7 @@ countdown_duration = 3
 [node name="MusicBox" type="AudioStreamPlayer" parent="." index="12"]
 
 stream = ExtResource( 13 )
-volume_db = 0.0
+volume_db = -5.0
 autoplay = true
 mix_target = 0
 bus = "Master"
@@ -220,21 +219,21 @@ autostart = true
 
 [connection signal="countdown_started" from="." to="GameTimer" method="start_counting_down"]
 
-[connection signal="game_loaded" from="." to="PlayerManager" method="reset"]
-
 [connection signal="game_loaded" from="." to="PlayerManager" method="choose_crocodile_randomly" flags=3]
+
+[connection signal="game_loaded" from="." to="PlayerManager" method="reset"]
 
 [connection signal="game_over" from="." to="MenuButton" method="show"]
 
 [connection signal="game_over" from="." to="MenuButton" method="grab_focus"]
 
-[connection signal="game_over" from="." to="PlayerManager" method="freeze_players"]
-
-[connection signal="game_over" from="." to="PlayerManager" method="pause_freeze_timer"]
-
 [connection signal="game_over" from="." to="." method="show_mouse"]
 
 [connection signal="game_over" from="." to="." method="_show_winner"]
+
+[connection signal="game_over" from="." to="PlayerManager" method="freeze_players"]
+
+[connection signal="game_over" from="." to="PlayerManager" method="pause_freeze_timer"]
 
 [connection signal="game_paused" from="." to="JoiningScreen" method="hide"]
 
@@ -244,55 +243,55 @@ autostart = true
 
 [connection signal="game_resumed" from="." to="JoiningScreen" method="show_if_not_closed"]
 
-[connection signal="game_resumed" from="." to="." method="_resume_tree"]
-
 [connection signal="game_resumed" from="." to="." method="hide_mouse"]
+
+[connection signal="game_resumed" from="." to="." method="_resume_tree"]
 
 [connection signal="game_started" from="." to="JoiningScreen" method="close"]
 
-[connection signal="game_started" from="." to="PlayerManager" method="reset_positions"]
-
-[connection signal="game_started" from="." to="PlayerManager" method="enable_ai"]
-
-[connection signal="game_started" from="." to="PlayerManager" method="choose_crocodile_randomly" flags=3]
-
-[connection signal="game_started" from="." to="PlayerManager" method="unfreeze_players"]
+[connection signal="game_started" from="." to="." method="hide_mouse"]
 
 [connection signal="game_started" from="." to="CoinManager" method="resume_spawners"]
 
-[connection signal="game_started" from="." to="." method="hide_mouse"]
+[connection signal="game_started" from="." to="PlayerManager" method="enable_ai"]
+
+[connection signal="game_started" from="." to="PlayerManager" method="reset_positions"]
+
+[connection signal="game_started" from="." to="PlayerManager" method="unfreeze_players"]
+
+[connection signal="game_started" from="." to="PlayerManager" method="choose_crocodile_randomly" flags=3]
 
 [connection signal="joining_screen_opened" from="." to="JoiningScreen" method="open" flags=3]
 
+[connection signal="joining_screen_opened" from="." to="." method="_stop_showing_winner"]
+
 [connection signal="joining_screen_opened" from="." to="ControllerAssigner" method="reset"]
-
-[connection signal="joining_screen_opened" from="." to="PlayerManager" method="reset"]
-
-[connection signal="joining_screen_opened" from="." to="PlayerManager" method="reset_positions"]
-
-[connection signal="joining_screen_opened" from="." to="PlayerManager" method="disable_ai"]
-
-[connection signal="joining_screen_opened" from="." to="PlayerManager" method="unfreeze_players"]
-
-[connection signal="joining_screen_opened" from="." to="CoinManager" method="clear"]
 
 [connection signal="joining_screen_opened" from="." to="CoinManager" method="stop_spawners"]
 
-[connection signal="joining_screen_opened" from="." to="." method="_stop_showing_winner"]
+[connection signal="joining_screen_opened" from="." to="CoinManager" method="clear"]
+
+[connection signal="joining_screen_opened" from="." to="PlayerManager" method="disable_ai"]
+
+[connection signal="joining_screen_opened" from="." to="PlayerManager" method="reset_positions"]
+
+[connection signal="joining_screen_opened" from="." to="PlayerManager" method="unfreeze_players"]
+
+[connection signal="joining_screen_opened" from="." to="PlayerManager" method="reset"]
 
 [connection signal="main_menu_opened" from="." to="JoiningScreen" method="close"]
 
-[connection signal="main_menu_opened" from="." to="PlayerManager" method="enable_ai"]
-
-[connection signal="main_menu_opened" from="." to="PlayerManager" method="choose_crocodile_randomly"]
-
-[connection signal="main_menu_opened" from="." to="PlayerManager" method="reset_controllers"]
-
-[connection signal="main_menu_opened" from="." to="CoinManager" method="resume_spawners"]
+[connection signal="main_menu_opened" from="." to="." method="show_mouse"]
 
 [connection signal="main_menu_opened" from="." to="." method="resume"]
 
-[connection signal="main_menu_opened" from="." to="." method="show_mouse"]
+[connection signal="main_menu_opened" from="." to="CoinManager" method="resume_spawners"]
+
+[connection signal="main_menu_opened" from="." to="PlayerManager" method="enable_ai"]
+
+[connection signal="main_menu_opened" from="." to="PlayerManager" method="reset_controllers"]
+
+[connection signal="main_menu_opened" from="." to="PlayerManager" method="choose_crocodile_randomly"]
 
 [connection signal="duration_pressed" from="MainMenu" to="GameTimer" method="next_duration"]
 
@@ -309,4 +308,4 @@ autostart = true
 [connection signal="timeout" from="FPS/Timer" to="FPS" method="update"]
 
 
-[editable path="MainMenu"]
+[editable path="Map"]
