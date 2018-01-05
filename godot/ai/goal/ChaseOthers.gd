@@ -32,6 +32,7 @@ func go_around_platform_if_needed():
 	var collider = collision.collider
 	
 	if collider is load("res://Platform.gd"):
+		player.groan()
 		add_subgoal(GoAroundPlatform.new(collision.collider, target))
 
 func terminate():
