@@ -786,10 +786,10 @@ func _process(delta):
 
 script/source = "extends AudioStreamPlayer2D
 
-var sounds = [load(\"res://assets/screams/FunnyScream.ogg\"), load(\"res://assets/screams/MaleScream.ogg\"), load(\"res://assets/screams/FemaleScream.ogg\")]
+var sounds = [load(\"res://assets/sfx/screams/FunnyScream.ogg\"), load(\"res://assets/sfx/screams/MaleScream.ogg\"), load(\"res://assets/sfx/screams/FemaleScream.ogg\")]
 
 var individual_scream
-var crowd_scream = load(\"res://assets/screams/Crowd.ogg\")
+var crowd_scream = load(\"res://assets/sfx/screams/Crowd.ogg\")
 
 func choose_random_sound():
 	individual_scream = sounds[randi() % sounds.size()]
@@ -1214,13 +1214,13 @@ button = "A"
 
 [connection signal="jump" from="." to="ButtonHint" method="pop_out"]
 
-[connection signal="turning_crocodile" from="." to="CrocodileShape" method="set_disabled" binds= [ false ]]
-
 [connection signal="turning_crocodile" from="." to="." method="start_freezing"]
 
-[connection signal="turning_normal" from="." to="SpriteFlipper/AnimationPlayer" method="play" binds= [ "PanicLeft" ]]
+[connection signal="turning_crocodile" from="." to="CrocodileShape" method="set_disabled" binds= [ false ]]
 
 [connection signal="turning_normal" from="." to="CrocodileShape" method="set_disabled" binds= [ true ]]
+
+[connection signal="turning_normal" from="." to="SpriteFlipper/AnimationPlayer" method="play" binds= [ "PanicLeft" ]]
 
 [connection signal="unfrozen_as_crocodile" from="." to="." method="_tag_overlapping_player"]
 
