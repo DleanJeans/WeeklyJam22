@@ -71,8 +71,8 @@ func _terminate_if_not_blocked_anymore(point_index, point):
 		state = GOAL_COMPLETED
 
 func _platform_not_blocking_way_to_target(point):
-	var hit_platform = player.test_move(player.transform, _target.position - player.position)
-	return not hit_platform
+	var raycast_result = Utility.raycast(player, _target, [], Global.COLLISION_PLATFORM)
+	return raycast_result.empty() or raycast_result.collider != _platform
 
 func terminate():
 	_disconnect_signal()

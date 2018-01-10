@@ -56,6 +56,14 @@ func distance_squared(node1, node2):
 	node2 = get_position(node2)
 	return node1.distance_squared_to(node2)
 
+func raycast(from, to, exclude = [], layer = null):
+	from = get_position(from)
+	to = get_position(to)
+	
+	var space_state = Global.Game.get_world_2d().get_direct_space_state()
+	var result = space_state.intersect_ray(from, to, exclude, layer)
+	return result
+
 func get_position(object):
 	if typeof(object) != TYPE_VECTOR2:
 		object = object.position
