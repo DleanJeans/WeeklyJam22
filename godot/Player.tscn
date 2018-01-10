@@ -1,22 +1,21 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=39 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://InputAction.gd" type="Script" id=2]
 [ext_resource path="res://ai/AI.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Sprite.png" type="Texture" id=4]
-[ext_resource path="res://assets/Crown.png" type="Texture" id=5]
+[ext_resource path="res://assets/png/Crown.png" type="Texture" id=5]
 [ext_resource path="res://BebasNeue.otf" type="DynamicFontData" id=6]
 [ext_resource path="res://Crocodile.tscn" type="PackedScene" id=7]
-[ext_resource path="res://assets/PanicKid.png" type="Texture" id=8]
-[ext_resource path="res://assets/Tongue.png" type="Texture" id=9]
-[ext_resource path="res://assets/Freezing.ogg" type="AudioStream" id=10]
-[ext_resource path="res://assets/Tap.ogg" type="AudioStream" id=11]
-[ext_resource path="res://assets/Groan.ogg" type="AudioStream" id=12]
-[ext_resource path="res://assets/CartoonJump.ogg" type="AudioStream" id=13]
-[ext_resource path="res://assets/screams/Crowd.ogg" type="AudioStream" id=14]
-[ext_resource path="res://assets/Pop.ogg" type="AudioStream" id=15]
-[ext_resource path="res://MovementVisualizer.tscn" type="PackedScene" id=16]
-[ext_resource path="res://ButtonHint.tscn" type="PackedScene" id=17]
+[ext_resource path="res://assets/png/PanicKid.png" type="Texture" id=8]
+[ext_resource path="res://assets/png/Tongue.png" type="Texture" id=9]
+[ext_resource path="res://assets/sfx/Tap.ogg" type="AudioStream" id=10]
+[ext_resource path="res://assets/sfx/Groan.ogg" type="AudioStream" id=11]
+[ext_resource path="res://assets/sfx/CartoonJump.ogg" type="AudioStream" id=12]
+[ext_resource path="res://assets/sfx/screams/Crowd.ogg" type="AudioStream" id=13]
+[ext_resource path="res://assets/sfx/Pop.ogg" type="AudioStream" id=14]
+[ext_resource path="res://MovementVisualizer.tscn" type="PackedScene" id=15]
+[ext_resource path="res://ButtonHint.tscn" type="PackedScene" id=16]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -811,7 +810,7 @@ func stop():
 
 [sub_resource type="AudioStreamRandomPitch" id=19]
 
-audio_stream = ExtResource( 15 )
+audio_stream = ExtResource( 14 )
 random_pitch = 1.1
 
 [sub_resource type="DynamicFont" id=20]
@@ -833,7 +832,7 @@ font_data = ExtResource( 6 )
 
 default_font = SubResource( 21 )
 
-[node name="Player" type="KinematicBody2D" groups=[
+[node name="Player" type="KinematicBody2D" index="0" groups=[
 "Players",
 ]]
 
@@ -1059,7 +1058,7 @@ script = SubResource( 17 )
 [node name="FreezingSound" type="AudioStreamPlayer2D" parent="." index="12"]
 
 visible = false
-stream = ExtResource( 10 )
+stream = null
 volume_db = 0.0
 autoplay = false
 max_distance = 2000.0
@@ -1070,7 +1069,7 @@ area_mask = 1
 [node name="TapSound" type="AudioStreamPlayer2D" parent="." index="13"]
 
 visible = false
-stream = ExtResource( 11 )
+stream = ExtResource( 10 )
 volume_db = 0.0
 autoplay = false
 max_distance = 2000.0
@@ -1081,7 +1080,7 @@ area_mask = 1
 [node name="GroaningSound" type="AudioStreamPlayer2D" parent="." index="14"]
 
 visible = false
-stream = ExtResource( 12 )
+stream = ExtResource( 11 )
 volume_db = 10.0
 autoplay = false
 max_distance = 2000.0
@@ -1092,7 +1091,7 @@ area_mask = 1
 [node name="JumpSound" type="AudioStreamPlayer2D" parent="." index="15"]
 
 visible = false
-stream = ExtResource( 13 )
+stream = ExtResource( 12 )
 volume_db = 0.0
 autoplay = false
 max_distance = 2000.0
@@ -1103,7 +1102,7 @@ area_mask = 1
 [node name="ScreamSound" type="AudioStreamPlayer2D" parent="." index="16"]
 
 visible = false
-stream = ExtResource( 14 )
+stream = ExtResource( 13 )
 volume_db = 0.0
 autoplay = false
 max_distance = 2000.0
@@ -1194,11 +1193,11 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="MovementVisualizer" parent="." index="21" instance=ExtResource( 16 )]
+[node name="MovementVisualizer" parent="." index="21" instance=ExtResource( 15 )]
 
 visible = false
 
-[node name="ButtonHint" parent="." index="22" instance=ExtResource( 17 )]
+[node name="ButtonHint" parent="." index="22" instance=ExtResource( 16 )]
 
 visible = false
 margin_top = 0.0
@@ -1219,9 +1218,9 @@ button = "A"
 
 [connection signal="turning_crocodile" from="." to="." method="start_freezing"]
 
-[connection signal="turning_normal" from="." to="CrocodileShape" method="set_disabled" binds= [ true ]]
-
 [connection signal="turning_normal" from="." to="SpriteFlipper/AnimationPlayer" method="play" binds= [ "PanicLeft" ]]
+
+[connection signal="turning_normal" from="." to="CrocodileShape" method="set_disabled" binds= [ true ]]
 
 [connection signal="unfrozen_as_crocodile" from="." to="." method="_tag_overlapping_player"]
 
