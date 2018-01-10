@@ -37,10 +37,9 @@ func find_most_desired_platform(me):
 
 func _filter_platform(me, platform):
 	if Global.crocodile == null:
-		return false
+		return true
 	
 	var platform_dipped = platform.dipped()
-	
 	return platform_dipped
 
 func _platform_desirability(me, platform):

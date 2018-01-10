@@ -1209,11 +1209,11 @@ button = "A"
 
 [connection signal="frozen_as_crocodile" from="." to="FreezingSound" method="play"]
 
+[connection signal="jump" from="." to="JumpSound" method="play"]
+
 [connection signal="jump" from="." to="JumpAnimation" method="play" binds= [ "Jump" ]]
 
 [connection signal="jump" from="." to="ButtonHint" method="pop_out"]
-
-[connection signal="jump" from="." to="JumpSound" method="play"]
 
 [connection signal="turning_crocodile" from="." to="CrocodileShape" method="set_disabled" binds= [ false ]]
 

@@ -6,6 +6,8 @@ const COLLISION_BLOCKED = 1 + 2 + 16
 const COLLISION_AIRBORNE = 16
 const COLLISION_PLATFORM = 4
 
+const JUMP_DURATION = 1
+
 var Game
 var Players setget , _get_players 
 var Platforms setget, _get_platforms
@@ -47,3 +49,6 @@ func _process(delta):
 
 func toggle_fullscreen():
 	OS.set_window_fullscreen(not OS.is_window_fullscreen())
+
+func timer(sec):
+	return get_tree().create_timer(sec)

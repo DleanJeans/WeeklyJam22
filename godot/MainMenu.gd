@@ -7,6 +7,9 @@ signal play_pressed
 signal map_pressed
 signal duration_pressed
 
+func update_duration_button(minutes):
+	$RoundDurationButton.text = "Duration: %s Minutes" % minutes
+
 func open():
 	show()
 	$PlayButton.grab_focus()

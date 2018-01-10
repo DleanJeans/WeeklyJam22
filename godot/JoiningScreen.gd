@@ -27,11 +27,11 @@ func open():
 
 func _toggle_joypad_hints():
 	if game.joypad_connected():
-		$Hints/A.show()
-		$Hints/B3.show()
+		$Hints/ButtonHints/A.show()
+		$Hints/ButtonHints/B3.show()
 	else:
-		$Hints/A.hide()
-		$Hints/B3.hide()
+		$Hints/ButtonHints/A.hide()
+		$Hints/ButtonHints/B3.hide()
 
 func close():
 	closed = true
@@ -69,10 +69,6 @@ func _disconnnect_jump_signals():
 func _process(delta):
 	if not visible: return
 	
-	if _all_ready():
-		game.start_counting_down()
-	else: game.stop_counting_down()
-	
 	_stick_label_to_players()
 
 func _all_ready():
@@ -96,6 +92,13 @@ func _on_player_jump(player):
 		
 		label.show()
 		_update_label(player)
+	
+	if _all_ready():
+		game.start_counting_down()
+		$Hints.hide()
+	else:
+		game.stop_counting_down()
+		$Hints.show()
 
 func _update_label(player):
 	var label = player_label_dict[player]

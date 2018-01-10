@@ -67,12 +67,10 @@ func _start_following():
 	steering.path_follow_on(_path)
 
 func _terminate_if_not_blocked_anymore(point_index, point):
-	if _raycast_to_target_not_hit_platform(point):
+	if _platform_not_blocking_way_to_target(point):
 		state = GOAL_COMPLETED
-	else:
-		pass
 
-func _raycast_to_target_not_hit_platform(point):
+func _platform_not_blocking_way_to_target(point):
 	var hit_platform = player.test_move(player.transform, _target.position - player.position)
 	return not hit_platform
 

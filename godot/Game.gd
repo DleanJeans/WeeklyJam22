@@ -64,16 +64,23 @@ func _ready():
 func _show_winner():
 	showing_winner = true
 	winners = $PlayerManager.players_with_highest_score()
+	
+	for p in winners:
+		p.show_winner_label()
+		p.hide_button_hint()
+	
+	_keep_winners_jumping()
+
+func _keep_winners_jumping():
+	while showing_winner:
+		for p in winners:
+			p.force_jump()
+		yield(Global.timer(Global.JUMP_DURATION), "timeout")
 
 func _stop_showing_winner():
 	showing_winner = false
 
 func _process(delta):
-	if showing_winner:
-		for p in winners:
-			p.show_winner_label()
-			p.force_jump()
-			p.hide_button_hint()
 	if Input.is_action_just_pressed("reset_controllers"):
 		$PlayerManager.reset_controllers()
 
