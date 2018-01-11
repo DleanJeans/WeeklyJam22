@@ -6,6 +6,7 @@ const COLLISION_AIRBORNE = 16
 const COLLISION_PLATFORM = 4
 
 const JUMP_DURATION = 1
+const BOUNCE_AIRBONE_TIME = 0.6
 
 const UP = Vector2(0, -1)
 const DOWN = Vector2(0, 1)

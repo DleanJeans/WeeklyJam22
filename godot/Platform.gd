@@ -27,8 +27,19 @@ func dipped():
 func player_dipped(player):
 	return dips.has(player)
 
-func get_players_inside():
+func get_players_touching():
 	return $Shape/EnterArea.get_overlapping_bodies()
+
+func get_players_fully_inside():
+	return $Shape/InsideArea.get_overlapping_bodies()
+
+func compute_average_radius():
+	var size = 100 * $Shape/Sprite.scale * scale
+	var width = size.x
+	var height = size.y
+	
+	var average_radius = sqrt(width * width + height * height)
+	return average_radius
 
 func reset():
 	_turn_green()
@@ -40,6 +51,7 @@ func _on_player_enter(body):
 	
 	if _current_player.just_landed:
 		_current_player.on_platform = true
+		$Bouncer.bounce_other_players_off(_current_player)
 
 func _is_player(body):
 	return body is Classes.Player

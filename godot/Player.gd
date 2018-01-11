@@ -38,6 +38,7 @@ signal turning_crocodile
 signal turning_normal
 
 signal jump
+signal bounce
 
 signal frozen_as_crocodile
 signal unfrozen_as_crocodile
@@ -109,6 +110,14 @@ func show_winner_label():
 
 func hide_winner_label():
 	$WinnerLabel.hide()
+
+func bounce():
+	if not $JumpAnimation.is_playing():
+		$JumpAnimation.play("Bounce")
+
+func play_jump_gui():
+	$JumpSound.play()
+	$ButtonHint.pop_out()
 
 func jump():
 	if not (frozen or jump_frozen):
