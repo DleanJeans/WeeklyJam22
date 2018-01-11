@@ -40,7 +40,6 @@ func _on_player_enter(body):
 	
 	if _current_player.just_landed:
 		_unblock_player()
-		_create_shockwave()
 	elif _player_not_allowed():
 		_block_player()
 	else:
@@ -55,11 +54,6 @@ func _unblock_player():
 
 func _is_player(body):
 	return body is load("res://Player.gd")
-
-func _create_shockwave():
-	var shockwave = load("res://Shockwave.tscn").instance()
-	shockwave.init(self, _current_player)
-	add_child(shockwave)
 
 func _player_not_allowed():
 	return _current_player.is_crocodile() or self.occupied

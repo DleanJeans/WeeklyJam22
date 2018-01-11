@@ -123,20 +123,6 @@ tracks/6/keys = {
 "update": 2,
 "values": [ false, true ]
 }
-tracks/7/type = "method"
-tracks/7/path = NodePath(".")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/keys = {
-"times": PoolRealArray( 0.75 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [  ],
-"method": "_start_shockwave"
-} ]
-}
 
 [sub_resource type="Animation" id=5]
 
