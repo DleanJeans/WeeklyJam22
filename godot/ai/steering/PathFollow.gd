@@ -66,7 +66,7 @@ func _path_smoothable():
 	var current_transform = player.transform
 	current_transform.origin -= player.heading
 	
-	var result = Utility.raycast(player.position, self.next_point, [], Global.COLLISION_PLATFORM)
+	var result = Utility.raycast(player.position, self.next_point, [], Const.COLLISION_PLATFORM)
 	var wont_collide = result.empty()
 	
 	return wont_collide

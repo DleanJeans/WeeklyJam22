@@ -20,6 +20,7 @@ Global="*res://Global.gd"
 Locator="*res://Locator.gd"
 Utility="*res://Utility.gd"
 Classes="*res://Classes.gd"
+Const="*res://Const.gd"
 
 [display]
 

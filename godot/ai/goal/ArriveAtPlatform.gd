@@ -44,7 +44,7 @@ func process():
 		state = GOAL_FAILED
 	elif _get_enough_on_platform() and not player.is_panicking():
 		state = GOAL_COMPLETED
-	elif Utility.player_blocked_by_platform(player):
+	elif Global.player_blocked_by_platform(player):
 		player.jump()
 
 func _get_enough_on_platform():

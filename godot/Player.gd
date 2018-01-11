@@ -52,7 +52,7 @@ func reset():
 	turn_normal()
 	self.coins = 0
 	self.controller = "AI"
-	$Sprite.modulate = get_node("/root/Global").WHITE
+	$Sprite.modulate = get_node("/root/Const").WHITE
 	$AI/WinGame.clear_subgoals()
 	$FreezeTimer.stop()
 	$WinnerLabel.hide()

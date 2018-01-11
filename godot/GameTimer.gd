@@ -44,7 +44,7 @@ func start_counting_down():
 	_go_off_1_sec_before()
 
 func _go_off_1_sec_before():
-	yield(Global.timer(wait_time - 1), "timeout")
+	yield(Utility.timer(wait_time - 1), "timeout")
 	if not is_stopped_or_paused():
 		emit_signal("timeout")
 

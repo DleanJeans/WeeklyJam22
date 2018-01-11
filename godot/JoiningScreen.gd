@@ -107,4 +107,4 @@ func _update_label(player):
 		label.modulate = player.color
 	else:
 		label.text = "Not Ready?"
-		label.modulate = Global.WHITE
+		label.modulate = Const.WHITE

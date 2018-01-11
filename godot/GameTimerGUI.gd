@@ -21,7 +21,7 @@ func hide():
 func update_round_label_every_sec():
 	while _rounded_time_left() > timer.round_end_countdown_duration:
 		_update_round_label()
-		yield(Global.timer(1), "timeout")
+		yield(Utility.timer(1), "timeout")
 	if not timer.is_stopped_or_paused():
 		$RoundLabel.hide()
 		play_countdown_sequence()
@@ -32,7 +32,7 @@ func play_countdown_sequence():
 	_update_countdown_label()
 	
 	while _rounded_time_left() > 0:
-		yield(Global.timer(1), "timeout")
+		yield(Utility.timer(1), "timeout")
 		_update_countdown_label()
 	if not timer.is_stopped_or_paused():
 		_play_last_sequence()
@@ -41,7 +41,7 @@ func _play_last_sequence():
 	_play_last_sound()
 	
 	var resist_duration = _countdown_label_resist_duration_after_timeout()
-	yield(Global.timer(1), "timeout")
+	yield(Utility.timer(1), "timeout")
 	
 	_stop_countdown_animation()
 	$CountdownLabel.hide()

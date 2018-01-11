@@ -6,13 +6,13 @@ func _process(delta):
 	if player.controller == "AI": return
 	
 	if _is_action_pressed("left"):
-		player.move(Global.LEFT)
+		player.move(Const.LEFT)
 	if _is_action_pressed("right"):
-		player.move(Global.RIGHT)
+		player.move(Const.RIGHT)
 	if _is_action_pressed("up"):
-		player.move(Global.UP)
+		player.move(Const.UP)
 	if _is_action_pressed("down"):
-		player.move(Global.DOWN)
+		player.move(Const.DOWN)
 	if _is_action_just_pressed("action"):
 		if not player.is_crocodile():
 			player.jump()

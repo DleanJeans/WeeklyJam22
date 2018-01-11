@@ -75,7 +75,7 @@ func _keep_winners_jumping():
 	while showing_winner:
 		for p in winners:
 			p.force_jump()
-		yield(Global.timer(Global.JUMP_DURATION), "timeout")
+		yield(Utility.timer(Const.JUMP_DURATION), "timeout")
 
 func _stop_showing_winner():
 	showing_winner = false
