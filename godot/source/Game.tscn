@@ -1,0 +1,317 @@
+[gd_scene load_steps=20 format=2]
+
+[ext_resource path="res://source/Game.gd" type="Script" id=1]
+[ext_resource path="res://source/maps/6PlayerMap.tscn" type="PackedScene" id=2]
+[ext_resource path="res://source/MainMenu.tscn" type="PackedScene" id=3]
+[ext_resource path="res://source/PauseScreen.tscn" type="PackedScene" id=4]
+[ext_resource path="res://source/JoiningScreen.tscn" type="PackedScene" id=5]
+[ext_resource path="res://FocusStyle.tres" type="StyleBox" id=6]
+[ext_resource path="res://BebasNeue.tres" type="DynamicFont" id=7]
+[ext_resource path="res://source/MenuButton.gd" type="Script" id=8]
+[ext_resource path="res://source/ControllerAssigner.tscn" type="PackedScene" id=9]
+[ext_resource path="res://source/PlayerManager.gd" type="Script" id=10]
+[ext_resource path="res://source/CoinManager.gd" type="Script" id=11]
+[ext_resource path="res://source/PlatformManager.gd" type="Script" id=12]
+[ext_resource path="res://source/GameTimer.tscn" type="PackedScene" id=13]
+[ext_resource path="res://assets/OurMusicBox _CanCan.ogg" type="AudioStream" id=14]
+[ext_resource path="res://BebasNeue.otf" type="DynamicFontData" id=15]
+
+
+[sub_resource type="GDScript" id=1]
+
+script/source = "extends Node2D
+
+func _process(delta):
+	show_crowns()
+
+func show_crowns():
+	var to_be_winners = $\"../PlayerManager\".players_with_highest_score()
+	var other_players = Global.Players
+	
+	for player in to_be_winners:
+		other_players.erase(player)
+		player.show_crown()
+	
+	for player in other_players:
+		player.hide_crown()"
+
+[sub_resource type="GDScript" id=2]
+
+script/source = "extends Node2D
+
+onready var game = get_parent()
+
+var maps = []
+
+var index = maps.size() - 1
+
+func _ready():
+	var maps_path = \"res://maps\"
+	
+	var directory = Directory.new()
+	directory.open(maps_path)
+	directory.list_dir_begin()
+	
+	while true:
+		var file = directory.get_next()
+		if file.ends_with(\".tscn\"):
+			var map_path = \"%s/%s\" % [maps_path, file]
+			maps.append(load(map_path))
+		elif file == \"\":
+			break
+	
+	directory.list_dir_end()
+
+func next_map():
+	index += 1
+	if index >= maps.size():
+		index = 0
+	
+	game.get_node(\"PlayerManager\").disable_ai()
+	game.get_node(\"GameTimer\").stop()
+	
+	game.get_node(\"Map\").free()
+	var map = maps[index].instance()
+	game.add_child(map)
+	game.move_child(map, 0)
+	game.get_node(\"MainMenu/MapButton\").text = \"Map: %s\" % map.name
+	game.emit_signal(\"game_loaded\")
+	game.showing_winner = false
+	game.get_node(\"PlayerManager\").enable_ai()"
+
+[sub_resource type="DynamicFont" id=3]
+
+size = 30
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 15 )
+_sections_unfolded = [ "Font", "Settings" ]
+
+[sub_resource type="GDScript" id=4]
+
+script/source = "extends Label
+
+func update():
+	text = \"%s\" % Engine.get_frames_per_second()
+"
+
+[node name="Game" type="Node2D" index="0"]
+
+script = ExtResource( 1 )
+_sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
+
+[node name="Map" parent="." index="0" instance=ExtResource( 2 )]
+
+editor/display_folded = true
+
+[node name="MainMenu" parent="." index="1" instance=ExtResource( 3 )]
+
+editor/display_folded = true
+margin_right = -64.0
+margin_bottom = -64.0
+
+[node name="PauseScreen" parent="." index="2" instance=ExtResource( 4 )]
+
+visible = false
+margin_left = -32.0
+margin_top = -32.0
+margin_right = 928.0
+margin_bottom = 508.0
+
+[node name="JoiningScreen" parent="." index="3" instance=ExtResource( 5 )]
+
+visible = false
+
+[node name="MenuButton" type="Button" parent="." index="4"]
+
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 368.0
+margin_top = 468.0
+margin_right = 686.0
+margin_bottom = 534.0
+rect_scale = Vector2( 0.5, 0.5 )
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_styles/hover = ExtResource( 6 )
+custom_styles/focus = ExtResource( 6 )
+custom_fonts/font = ExtResource( 7 )
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Back to Main Menu"
+flat = true
+align = 1
+script = ExtResource( 8 )
+_sections_unfolded = [ "Margin", "custom_fonts", "custom_styles" ]
+delay = 2
+
+[node name="ControllerAssigner" parent="." index="5" instance=ExtResource( 9 )]
+
+[node name="CrownManager" type="Node2D" parent="." index="6"]
+
+visible = false
+script = SubResource( 1 )
+
+[node name="PlayerManager" type="Node2D" parent="." index="7"]
+
+visible = false
+script = ExtResource( 10 )
+
+[node name="MapSelector" type="Node2D" parent="." index="8"]
+
+visible = false
+script = SubResource( 2 )
+
+[node name="CoinManager" type="Node2D" parent="." index="9"]
+
+visible = false
+script = ExtResource( 11 )
+
+[node name="PlatformManager" type="Node2D" parent="." index="10"]
+
+visible = false
+script = ExtResource( 12 )
+
+[node name="GameTimer" parent="." index="11" instance=ExtResource( 13 )]
+
+countdown_duration = 4
+
+[node name="MusicBox" type="AudioStreamPlayer" parent="." index="12"]
+
+stream = ExtResource( 14 )
+volume_db = -5.0
+autoplay = true
+mix_target = 0
+bus = "Master"
+_sections_unfolded = [ "Transform" ]
+
+[node name="FPS" type="Label" parent="." index="13"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 930.0
+margin_right = 954.0
+margin_bottom = 36.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 2
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 3 )
+text = "60"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+script = SubResource( 4 )
+_sections_unfolded = [ "custom_fonts" ]
+
+[node name="Timer" type="Timer" parent="FPS" index="0"]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = false
+autostart = true
+
+[connection signal="countdown_started" from="." to="GameTimer" method="start_counting_down"]
+
+[connection signal="game_loaded" from="." to="PlayerManager" method="reset"]
+
+[connection signal="game_loaded" from="." to="PlayerManager" method="choose_crocodile_randomly" flags=3]
+
+[connection signal="game_over" from="." to="PlayerManager" method="pause_freeze_timer"]
+
+[connection signal="game_over" from="." to="PlayerManager" method="freeze_players"]
+
+[connection signal="game_over" from="." to="CoinManager" method="stop_spawners"]
+
+[connection signal="game_over" from="." to="MenuButton" method="show_in_secs"]
+
+[connection signal="game_over" from="." to="." method="show_mouse"]
+
+[connection signal="game_over" from="." to="." method="_show_winner"]
+
+[connection signal="game_paused" from="." to="JoiningScreen" method="hide"]
+
+[connection signal="game_paused" from="." to="." method="_pause_tree"]
+
+[connection signal="game_paused" from="." to="." method="show_mouse"]
+
+[connection signal="game_resumed" from="." to="JoiningScreen" method="show_if_not_closed"]
+
+[connection signal="game_resumed" from="." to="." method="_resume_tree"]
+
+[connection signal="game_resumed" from="." to="." method="hide_mouse"]
+
+[connection signal="game_started" from="." to="PlayerManager" method="reset_positions"]
+
+[connection signal="game_started" from="." to="PlayerManager" method="enable_ai"]
+
+[connection signal="game_started" from="." to="PlayerManager" method="unfreeze_players"]
+
+[connection signal="game_started" from="." to="PlayerManager" method="choose_crocodile_randomly" flags=3]
+
+[connection signal="game_started" from="." to="CoinManager" method="resume_spawners"]
+
+[connection signal="game_started" from="." to="JoiningScreen" method="close"]
+
+[connection signal="game_started" from="." to="." method="hide_mouse"]
+
+[connection signal="joining_screen_opened" from="." to="PlayerManager" method="reset"]
+
+[connection signal="joining_screen_opened" from="." to="PlayerManager" method="reset_positions"]
+
+[connection signal="joining_screen_opened" from="." to="PlayerManager" method="disable_ai"]
+
+[connection signal="joining_screen_opened" from="." to="PlayerManager" method="unfreeze_players"]
+
+[connection signal="joining_screen_opened" from="." to="ControllerAssigner" method="reset"]
+
+[connection signal="joining_screen_opened" from="." to="CoinManager" method="clear"]
+
+[connection signal="joining_screen_opened" from="." to="CoinManager" method="stop_spawners"]
+
+[connection signal="joining_screen_opened" from="." to="JoiningScreen" method="open" flags=3]
+
+[connection signal="joining_screen_opened" from="." to="." method="_stop_showing_winner"]
+
+[connection signal="main_menu_opened" from="." to="PlayerManager" method="enable_ai"]
+
+[connection signal="main_menu_opened" from="." to="PlayerManager" method="choose_crocodile_randomly"]
+
+[connection signal="main_menu_opened" from="." to="PlayerManager" method="reset_controllers"]
+
+[connection signal="main_menu_opened" from="." to="CoinManager" method="resume_spawners"]
+
+[connection signal="main_menu_opened" from="." to="JoiningScreen" method="close"]
+
+[connection signal="main_menu_opened" from="." to="." method="resume"]
+
+[connection signal="main_menu_opened" from="." to="." method="show_mouse"]
+
+[connection signal="main_menu_opened" from="." to="." method="stop_counting_down"]
+
+[connection signal="duration_pressed" from="MainMenu" to="GameTimer" method="next_duration"]
+
+[connection signal="map_pressed" from="MainMenu" to="MapSelector" method="next_map"]
+
+[connection signal="play_pressed" from="MainMenu" to="." method="hide_mouse"]
+
+[connection signal="play_pressed" from="MainMenu" to="." method="open_joining_screen"]
+
+[connection signal="pressed" from="MenuButton" to="MenuButton" method="hide"]
+
+[connection signal="pressed" from="MenuButton" to="." method="open_main_menu"]
+
+[connection signal="timeout" from="FPS/Timer" to="FPS" method="update"]
+
+
+[editable path="Map"]

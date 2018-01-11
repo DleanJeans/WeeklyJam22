@@ -1,0 +1,109 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://source/ai/steering/Steering.gd" type="Script" id=1]
+[ext_resource path="res://source/ai/steering/Seek.gd" type="Script" id=2]
+[ext_resource path="res://source/ai/steering/Arrive.gd" type="Script" id=3]
+[ext_resource path="res://source/ai/steering/Pursuit.gd" type="Script" id=4]
+[ext_resource path="res://source/ai/steering/Separation.gd" type="Script" id=5]
+[ext_resource path="res://source/ai/steering/Flee.gd" type="Script" id=6]
+[ext_resource path="res://source/ai/steering/PathFollow.gd" type="Script" id=7]
+
+
+[sub_resource type="CircleShape2D" id=1]
+
+custom_solver_bias = 0.0
+radius = 50.0
+
+[sub_resource type="CircleShape2D" id=2]
+
+custom_solver_bias = 0.0
+radius = 50.0
+
+[node name="Steering" type="Node2D"]
+
+script = ExtResource( 1 )
+total_force = 200
+
+[node name="Seek" type="Node2D" parent="." index="0"]
+
+script = ExtResource( 2 )
+multiplier = 1
+is_on = false
+
+[node name="Arrive" type="Node2D" parent="." index="1"]
+
+script = ExtResource( 3 )
+multiplier = 1.0
+is_on = false
+deceleration = 0.5
+
+[node name="Pursuit" type="Node2D" parent="." index="2"]
+
+script = ExtResource( 4 )
+multiplier = 0.5
+is_on = false
+look_ahead_time_tweaker = 0.75
+
+[node name="Separation" type="Node2D" parent="." index="3"]
+
+editor/display_folded = true
+rotation = 0.000271485
+script = ExtResource( 5 )
+multiplier = 2.0
+is_on = false
+separation_range = 100
+
+[node name="SeparationCircle" type="Area2D" parent="Separation" index="0"]
+
+rotation = -0.000271485
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+_sections_unfolded = [ "Transform" ]
+
+[node name="Shape" type="CollisionShape2D" parent="Separation/SeparationCircle" index="0"]
+
+rotation = 0.000271485
+scale = Vector2( 2, 2 )
+shape = SubResource( 1 )
+
+[node name="Flee" type="Node2D" parent="." index="4"]
+
+editor/display_folded = true
+visible = false
+script = ExtResource( 6 )
+_sections_unfolded = [ "Transform" ]
+multiplier = 1
+is_on = false
+panic_radius = 200
+
+[node name="PanicRadius" type="Area2D" parent="Flee" index="0"]
+
+scale = Vector2( 4, 4 )
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+_sections_unfolded = [ "Transform" ]
+
+[node name="Shape" type="CollisionShape2D" parent="Flee/PanicRadius" index="0"]
+
+shape = SubResource( 2 )
+
+[node name="PathFollow" type="Node2D" parent="." index="5"]
+
+script = ExtResource( 7 )
+multiplier = 1
+is_on = false
+reach_radius = 30
+direction = -1
+loop = true
+
+

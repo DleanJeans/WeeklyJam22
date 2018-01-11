@@ -1,0 +1,131 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://source/Platform.gd" type="Script" id=1]
+[ext_resource path="res://source/PlatformBouncer.gd" type="Script" id=2]
+[ext_resource path="res://assets/png/Sprite.png" type="Texture" id=3]
+
+
+
+[sub_resource type="RectangleShape2D" id=1]
+
+resource_local_to_scene = true
+custom_solver_bias = 0.0
+extents = Vector2( 32, 32 )
+
+[sub_resource type="Animation" id=2]
+
+resource_name = "Bob"
+length = 1.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
+"update": 0,
+"values": [  ]
+}
+
+[node name="Platform" type="StaticBody2D" index="0" groups=[
+"Platforms",
+]]
+
+input_pickable = false
+collision_layer = 4
+collision_mask = 3
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+script = ExtResource( 1 )
+_sections_unfolded = [ "Collision", "Transform", "Visibility" ]
+
+[node name="Bouncer" type="Node2D" parent="." index="0"]
+
+editor/display_folded = true
+script = ExtResource( 2 )
+
+[node name="Tween" type="Tween" parent="Bouncer" index="0"]
+
+playback_process_mode = 1
+playback/active = false
+playback/repeat = false
+playback/speed = 1.0
+
+[node name="Shape" type="CollisionPolygon2D" parent="." index="1"]
+
+editor/display_folded = true
+build_mode = 0
+polygon = PoolVector2Array( -32, -32, 32, -32, 32, 32, -32, 32, -32, -30, -30, -30, -30, 30, 30, 30, 30, -30, -32, -30 )
+_sections_unfolded = [ "Transform", "Visibility" ]
+
+[node name="Sprite" type="Sprite" parent="Shape" index="0"]
+
+self_modulate = Color( 0.0103455, 0.882813, 0.289808, 1 )
+show_behind_parent = true
+scale = Vector2( 0.64, 0.64 )
+texture = ExtResource( 3 )
+_sections_unfolded = [ "Transform", "Visibility" ]
+
+[node name="EnterArea" type="Area2D" parent="Shape" index="1"]
+
+visible = false
+scale = Vector2( 1.05, 1.05 )
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+collision_layer = 0
+audio_bus_override = false
+audio_bus_name = "Master"
+_sections_unfolded = [ "Collision", "Transform" ]
+
+[node name="Shape" type="CollisionShape2D" parent="Shape/EnterArea" index="0"]
+
+shape = SubResource( 1 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="InsideArea" type="Area2D" parent="Shape" index="2"]
+
+scale = Vector2( 0.95, 0.95 )
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+collision_layer = 0
+audio_bus_override = false
+audio_bus_name = "Master"
+_sections_unfolded = [ "Collision", "Transform" ]
+
+[node name="Shape" type="CollisionShape2D" parent="Shape/InsideArea" index="0"]
+
+shape = SubResource( 1 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="2"]
+
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+root_node = NodePath("..")
+anims/Bob = SubResource( 2 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = ""
+
+[connection signal="body_entered" from="Shape/EnterArea" to="." method="_on_player_enter"]
+
+[connection signal="body_exited" from="Shape/EnterArea" to="." method="_on_player_exited"]
+
+[connection signal="body_entered" from="Shape/InsideArea" to="." method="_on_player_enter"]
+
+[connection signal="body_exited" from="Shape/InsideArea" to="." method="_on_player_exited"]
+
+
