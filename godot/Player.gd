@@ -97,7 +97,7 @@ func is_close_to_at_least_3_others():
 	var players_count = 0
 
 	for b in bodies:
-		if b is load("res://Player.gd") and b != self:
+		if b is Classes.Player and b != self:
 			players_count += 1
 			if players_count == 3:
 				return true
@@ -172,7 +172,7 @@ func tag_crocodile(player):
 	$TapSound.play()
 
 func _not_taggable(player):
-	return player == self or not is_crocodile() or not player is load("res://Player.gd") or frozen or player.on_platform
+	return player == self or not is_crocodile() or not player is Classes.Player or frozen or player.on_platform
 
 func start_freezing():
 	$FreezeTimer.start()
@@ -201,7 +201,7 @@ func _physics_process(delta):
 func _emit_signal_if_hit_wall():
 	if get_slide_count() > 0:
 		var collision = get_slide_collision(0)
-		if not collision.collider is load("res://Wall.gd"): return
+		if not collision.collider is Classes.Wall: return
 
 		var normal = collision.normal
 

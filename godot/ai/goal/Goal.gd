@@ -8,8 +8,6 @@ enum {
 	GOAL_FAILED #4
 }
 
-var Goal = load("res://ai/goal/Goal.gd")
-
 var player
 var steering
 var state = GOAL_INACTIVE
@@ -40,7 +38,7 @@ func add_subgoal(goal):
 
 func clear_subgoals():
 	for child in get_children():
-		if child is Goal:
+		if child is Classes.Goal:
 			_terminate_subgoal(child)
 
 func activate_if_inactive():
@@ -60,7 +58,7 @@ func process_subgoals():
 func _first_subgoal():
 	for i in range(0, get_child_count()):
 		var child = get_child(i)
-		if child is Goal:
+		if child is Classes.Goal:
 			return child
 	return null
 
@@ -82,7 +80,7 @@ func _has_no_subgoals():
 func _subgoal_count():
 	var count = 0
 	for child in get_children():
-		if child is Goal:
+		if child is Classes.Goal:
 			count += 1
 	return count
 

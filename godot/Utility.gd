@@ -6,7 +6,7 @@ func player_blocked_by_platform(player):
 		return false
 	
 	var collision = player.get_slide_collision(0)
-	return collision.collider is load("res://Platform.gd")
+	return collision.collider is Classes.Platform
 
 func relative_dot_to(from, point1, point2):
 	var to_point1 = unit_vector_from(from, point1)

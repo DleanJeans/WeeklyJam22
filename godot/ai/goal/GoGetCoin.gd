@@ -5,11 +5,11 @@ var coin
 func activate():
 	.activate()
 	coin = Locator.find_most_desired_coin(player)
-	if coin == null or not coin is load("res://Coin.gd"):
+	if coin == null or not coin is Classes.Coin:
 		state = GOAL_FAILED
 	else: steering.seek_on(coin)
 	
-	add_subgoal(load("res://ai/goal/LeavePlatform.gd").new())
+	add_subgoal(Classes.LeavePlatform.new())
 
 func process():
 	.process()

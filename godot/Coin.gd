@@ -14,7 +14,7 @@ func _on_collected(body):
 	body.collect_coins()
 
 func _is_not_player(body):
-	return not body is load("res://Player.gd")
+	return not body is Classes.Player
 
 func _on_animation_finished(name):
 	if name == "Collected":

@@ -19,6 +19,7 @@ config/icon="res://icon.png"
 Global="*res://Global.gd"
 Locator="*res://Locator.gd"
 Utility="*res://Utility.gd"
+Classes="*res://Classes.gd"
 
 [display]
 

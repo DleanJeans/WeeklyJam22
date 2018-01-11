@@ -7,8 +7,6 @@ onready var scaled_extents = $Shape.shape.extents * scale
 onready var size = scaled_extents * 2
 onready var container = get_node(container_path)
 
-var Coin = preload("res://Coin.tscn")
-
 func _ready():
 	$Timer.start()
 
@@ -24,7 +22,7 @@ func spawn():
 
 func _spawn_coin():
 	var random_position = Vector2(_random_x(), _random_y())
-	var coin = Coin.instance()
+	var coin = load("res://Coin.tscn").instance()
 	
 	container.add_child(coin)
 	coin.position = position - scaled_extents + random_position

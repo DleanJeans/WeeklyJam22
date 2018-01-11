@@ -11,7 +11,7 @@ func _ready():
 
 func _get_on_platform():
 	state = GOAL_COMPLETED
-	get_parent().add_subgoal(load("res://ai/goal/ArriveAtPlatform.gd").new())
+	get_parent().add_subgoal(Classes.ArriveAtPlatform.new())
 
 func activate():
 	.activate()

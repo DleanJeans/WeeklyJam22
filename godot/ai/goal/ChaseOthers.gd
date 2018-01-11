@@ -1,7 +1,5 @@
 extends "res://ai/goal/GoalWithTarget.gd"
 
-var GoAroundPlatform = load("res://ai/goal/GoAroundPlatform.gd")
-
 func reacquire_target():
 	target = Locator.find_most_desired_player(player)
 
@@ -28,9 +26,9 @@ func go_around_platform_if_needed():
 	
 	var collider = collision.collider
 	
-	if collider is load("res://Platform.gd"):
+	if collider is Classes.Platform:
 		player.groan()
-		add_subgoal(GoAroundPlatform.new(collision.collider, target))
+		add_subgoal(Classes.GoAroundPlatform.new(collision.collider, target))
 
 func terminate():
 	.terminate()

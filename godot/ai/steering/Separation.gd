@@ -19,7 +19,7 @@ func _get_players_in_range():
 	var players = []
 	
 	for body in $SeparationCircle.get_overlapping_bodies():
-		if body is preload("res://Player.gd") and body != player:
+		if body is Classes.Player and body != player:
 			players.append(body)
 	
 	return players

@@ -42,7 +42,7 @@ func _on_player_enter(body):
 		_current_player.on_platform = true
 
 func _is_player(body):
-	return body is load("res://Player.gd")
+	return body is Classes.Player
 
 func _player_not_allowed():
 	return _current_player.is_crocodile() or self.occupied

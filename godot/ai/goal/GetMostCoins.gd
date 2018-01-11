@@ -2,10 +2,6 @@ extends "res://ai/goal/Goal.gd"
 
 var fleeing_radius = 250
 
-var FleeCrocodile = load("res://ai/goal/FleeCrocodile.gd")
-var GoGetCoin = load("res://ai/goal/GoGetCoin.gd")
-var ArriveAtPlatform = load("res://ai/goal/ArriveAtPlatform.gd")
-
 func activate():
 	.activate()
 	steering.separation_on()
@@ -17,7 +13,7 @@ func process():
 		state = GOAL_FAILED
 	
 	if _should_flee():
-		var subgoal = ArriveAtPlatform
+		var subgoal = Classes.ArriveAtPlatform
 		
 		if player.on_platform:
 			return
@@ -28,9 +24,9 @@ func process():
 	if _has_subgoals(): return
 	
 	if _should_go_after_coins():
-		add_subgoal(GoGetCoin.new())
+		add_subgoal(Classes.GoGetCoin.new())
 	elif _should_get_on_platform():
-		add_subgoal(ArriveAtPlatform.new())
+		add_subgoal(Classes.ArriveAtPlatform.new())
 
 func _should_flee():
 	if Global.crocodile == null: return false

@@ -1,16 +1,13 @@
 extends "res://ai/goal/Goal.gd"
 
-var ChaseOthers = load("res://ai/goal/ChaseOthers.gd")
-var GetMostCoins = load("res://ai/goal/GetMostCoins.gd")
-
 func process():
 	.process()
 	
 	if _has_no_subgoals():
 		if not player.is_crocodile():
-			add_subgoal(GetMostCoins.new())
+			add_subgoal(Classes.GetMostCoins.new())
 		elif not player.frozen:
-			add_subgoal(ChaseOthers.new())
+			add_subgoal(Classes.ChaseOthers.new())
 
 func _process(delta):
 	if ProjectSettings.get_setting("game/debug_goal_tree"):
@@ -19,7 +16,7 @@ func _process(delta):
 
 func _debug_subgoals(subgoals, level):
 	for child in subgoals:
-		if not child is load("res://ai/goal/Goal.gd"): continue
+		if not child is Classes.Goal: continue
 		var tabs = ""
 		for i in range(0, level):
 			tabs += "    "
