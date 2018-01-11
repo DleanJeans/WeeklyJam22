@@ -3,9 +3,6 @@ extends "res://ai/goal/Goal.gd"
 var ChaseOthers = load("res://ai/goal/ChaseOthers.gd")
 var GetMostCoins = load("res://ai/goal/GetMostCoins.gd")
 
-func _ready():
-	_name = "WinGame"
-
 func process():
 	.process()
 	

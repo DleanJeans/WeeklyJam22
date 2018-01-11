@@ -1,9 +1,9 @@
 extends Node2D
 
 export(float) var multiplier = 1
+export(bool) var is_on = false
 
 onready var player = $"../../.."
-var is_on = false
 var target
 
 func execute():

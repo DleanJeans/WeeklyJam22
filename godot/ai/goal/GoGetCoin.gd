@@ -2,15 +2,14 @@ extends "res://ai/goal/Goal.gd"
 
 var coin
 
-func _ready():
-	_name = "GoGetCoin"
-
 func activate():
 	.activate()
 	coin = Locator.find_most_desired_coin(player)
 	if coin == null or not coin is load("res://Coin.gd"):
 		state = GOAL_FAILED
 	else: steering.seek_on(coin)
+	
+	add_subgoal(load("res://ai/goal/LeavePlatform.gd").new())
 
 func process():
 	.process()

@@ -4,7 +4,6 @@ var platform
 onready var fail_timer = Timer.new()
 
 func _ready():
-	_name = "ArriveAtPlatform"
 	_setup_fail_timer()
 
 func _setup_fail_timer():
@@ -36,7 +35,7 @@ func undip_platform():
 		platform.undip(player)
 
 func _target_acquired():
-	steering.arrive_on(platform)
+	steering.seek_on(platform)
 
 func process():
 	.process()
@@ -45,7 +44,7 @@ func process():
 		state = GOAL_FAILED
 	elif _get_enough_on_platform() and not player.is_panicking():
 		state = GOAL_COMPLETED
-	elif _blocked_out_of_platform():
+	elif Utility.player_blocked_by_platform(player):
 		player.jump()
 
 func _get_enough_on_platform():
@@ -53,11 +52,8 @@ func _get_enough_on_platform():
 	
 	return distance_squared_to_platform < 30 * 30
 
-func _blocked_out_of_platform():
-	return player.collision_layer == Global.COLLISION_BLOCKED
-
 func terminate():
 	.terminate()
-	steering.arrive_off()
+	steering.seek_off()
 	fail_timer.queue_free()
 	undip_platform()

@@ -10,7 +10,6 @@ var _path_direction = 1
 func _init(platform, target):
 	_platform = platform
 	_target = target
-	_name = "GoAroundPlatform"
 
 func process():
 	.process()

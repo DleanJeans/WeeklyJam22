@@ -4,7 +4,6 @@ var platform
 var timer
 
 func _ready():
-	_name = "FleeCrocodile"
 	timer = Timer.new()
 	timer.wait_time = 2
 	timer.connect("timeout", self, "_get_on_platform")

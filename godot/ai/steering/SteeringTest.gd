@@ -2,27 +2,30 @@ extends Node2D
 
 onready var TestSubject = $TileMap/TestSubject
 onready var ControlSubject = $TileMap/ControlSubject
-onready var Steering = $TileMap/TestSubject1/AI/Steering
+onready var Steering = $TileMap/TestSubject/AI/Steering
 
 func _ready():
 	Global.Game = self
-#	Steering.player = TestSubject
-#	for behavior in Steering.get_children():
-#		behavior.player = TestSubject
+	Steering.player = TestSubject
+	for behavior in Steering.get_children():
+		behavior.player = TestSubject
 	
 	ControlSubject.controller = "P1"
-	TestSubject.turn_crocodile()
+	TestSubject.turn_normal()
+	TestSubject.get_node("AI/WinGame").queue_free()
 	ControlSubject.turn_normal()
 	
-#func _physics_process(delta):
-#	TestSubject.velocity += ($Target.position - TestSubject.position).normalized()
-#	TestSubject.velocity += Steering.steer()
+func _physics_process(delta):
+	var slide_count = TestSubject.get_slide_count()
+#	if slide_count:
+	print("Slide count: %s" % slide_count)
+	
+	TestSubject.velocity += ($Target.position - TestSubject.position).normalized()
+	TestSubject.velocity += Steering.steer()
 
 func _process(delta):
 	var mouse_position = get_global_mouse_position()
 	
-	if Input.is_mouse_button_pressed(BUTTON_LEFT):
-		ControlSubject.position = mouse_position
 	if Input.is_mouse_button_pressed(BUTTON_RIGHT):
 		$Target.position = mouse_position
 	

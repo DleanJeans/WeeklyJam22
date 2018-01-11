@@ -1,5 +1,13 @@
 extends Node
 
+func player_blocked_by_platform(player):
+	var slide_count = player.get_slide_count()
+	if slide_count == 0:
+		return false
+	
+	var collision = player.get_slide_collision(0)
+	return collision.collider is load("res://Platform.gd")
+
 func relative_dot_to(from, point1, point2):
 	var to_point1 = unit_vector_from(from, point1)
 	var to_point2 = unit_vector_from(from, point2)

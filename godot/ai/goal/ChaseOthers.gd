@@ -2,9 +2,6 @@ extends "res://ai/goal/GoalWithTarget.gd"
 
 var GoAroundPlatform = load("res://ai/goal/GoAroundPlatform.gd")
 
-func _ready():
-	_name = "ChaseOthers"
-
 func reacquire_target():
 	target = Locator.find_most_desired_player(player)
 

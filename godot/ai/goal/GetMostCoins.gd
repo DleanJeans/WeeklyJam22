@@ -6,9 +6,6 @@ var FleeCrocodile = load("res://ai/goal/FleeCrocodile.gd")
 var GoGetCoin = load("res://ai/goal/GoGetCoin.gd")
 var ArriveAtPlatform = load("res://ai/goal/ArriveAtPlatform.gd")
 
-func _ready():
-	_name = "GetMostCoins"
-
 func activate():
 	.activate()
 	steering.separation_on()
@@ -42,7 +39,7 @@ func _should_flee():
 	var crocodile_is_close = _crocodile_is_close()
 	var crocodile_almost_unfrozen = Global.crocodile.almost_unfrozen()
 	
-	return crocodile_almost_unfrozen and (crocodile_is_close or targeted_by_crocodile)
+	return crocodile_almost_unfrozen and crocodile_is_close and targeted_by_crocodile
 
 func _crocodile_is_close():
 	var distance_squared = Utility.distance_squared(player, Global.crocodile) 

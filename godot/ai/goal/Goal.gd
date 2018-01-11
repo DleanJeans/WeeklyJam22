@@ -14,9 +14,9 @@ var player
 var steering
 var state = GOAL_INACTIVE
 
-var _name
+onready var _name = get_script().get_path().get_file().get_basename()
 
-func _ready():
+func _ready(): 
 	clear_subgoals()
 
 func activate():
@@ -40,7 +40,7 @@ func add_subgoal(goal):
 
 func clear_subgoals():
 	for child in get_children():
-		if child is load("res://ai/goal/Goal.gd"):
+		if child is Goal:
 			_terminate_subgoal(child)
 
 func activate_if_inactive():

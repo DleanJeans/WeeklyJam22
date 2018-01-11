@@ -4,7 +4,6 @@ onready var timer = Timer.new()
 var target
 
 func _ready():
-	_name = "GoalWithTarget"
 	_setup_timer()
 
 func _setup_timer():
