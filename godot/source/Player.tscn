@@ -1107,18 +1107,7 @@ one_shot = true
 autostart = false
 script = SubResource( 18 )
 
-[node name="FreezingSound" type="AudioStreamPlayer2D" parent="." index="12"]
-
-visible = false
-stream = null
-volume_db = 0.0
-autoplay = false
-max_distance = 2000.0
-attenuation = 1.0
-bus = "Master"
-area_mask = 1
-
-[node name="TapSound" type="AudioStreamPlayer2D" parent="." index="13"]
+[node name="TapSound" type="AudioStreamPlayer2D" parent="." index="12"]
 
 visible = false
 stream = ExtResource( 10 )
@@ -1129,7 +1118,7 @@ attenuation = 1.0
 bus = "Master"
 area_mask = 1
 
-[node name="GroaningSound" type="AudioStreamPlayer2D" parent="." index="14"]
+[node name="GroaningSound" type="AudioStreamPlayer2D" parent="." index="13"]
 
 visible = false
 stream = ExtResource( 11 )
@@ -1140,7 +1129,7 @@ attenuation = 1.0
 bus = "Master"
 area_mask = 1
 
-[node name="JumpSound" type="AudioStreamPlayer2D" parent="." index="15"]
+[node name="JumpSound" type="AudioStreamPlayer2D" parent="." index="14"]
 
 visible = false
 stream = ExtResource( 12 )
@@ -1151,7 +1140,7 @@ attenuation = 1.0
 bus = "Master"
 area_mask = 1
 
-[node name="ScreamSound" type="AudioStreamPlayer2D" parent="." index="16"]
+[node name="ScreamSound" type="AudioStreamPlayer2D" parent="." index="15"]
 
 visible = false
 stream = ExtResource( 13 )
@@ -1163,7 +1152,7 @@ bus = "Master"
 area_mask = 1
 script = SubResource( 19 )
 
-[node name="PopSound" type="AudioStreamPlayer2D" parent="." index="17"]
+[node name="PopSound" type="AudioStreamPlayer2D" parent="." index="16"]
 
 visible = false
 stream = SubResource( 20 )
@@ -1174,7 +1163,7 @@ attenuation = 1.0
 bus = "Master"
 area_mask = 1
 
-[node name="TimerLabel" type="Label" parent="." index="18"]
+[node name="TimerLabel" type="Label" parent="." index="17"]
 
 visible = false
 anchor_left = 0.0
@@ -1198,7 +1187,7 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Visibility", "custom_fonts" ]
 
-[node name="WinnerLabel" type="Label" parent="." index="19"]
+[node name="WinnerLabel" type="Label" parent="." index="18"]
 
 visible = false
 anchor_left = 0.0
@@ -1223,11 +1212,11 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Rect", "custom_fonts" ]
 
-[node name="MovementVisualizer" parent="." index="20" instance=ExtResource( 15 )]
+[node name="MovementVisualizer" parent="." index="19" instance=ExtResource( 15 )]
 
 visible = false
 
-[node name="ButtonHint" parent="." index="21" instance=ExtResource( 16 )]
+[node name="ButtonHint" parent="." index="20" instance=ExtResource( 16 )]
 
 visible = false
 margin_top = 0.0
@@ -1238,19 +1227,17 @@ button = "A"
 
 [connection signal="bounce" from="." to="." method="play_jump_gui"]
 
-[connection signal="frozen_as_crocodile" from="." to="FreezingSound" method="play"]
+[connection signal="jump" from="." to="." method="play_jump_gui"]
 
 [connection signal="jump" from="." to="JumpAnimation" method="play" binds= [ "Jump" ]]
-
-[connection signal="jump" from="." to="." method="play_jump_gui"]
 
 [connection signal="turning_crocodile" from="." to="CrocodileShape" method="set_disabled" binds= [ false ]]
 
 [connection signal="turning_crocodile" from="." to="." method="start_freezing"]
 
-[connection signal="turning_normal" from="." to="SpriteFlipper/AnimationPlayer" method="play" binds= [ "PanicLeft" ]]
-
 [connection signal="turning_normal" from="." to="CrocodileShape" method="set_disabled" binds= [ true ]]
+
+[connection signal="turning_normal" from="." to="SpriteFlipper/AnimationPlayer" method="play" binds= [ "PanicLeft" ]]
 
 [connection signal="unfrozen_as_crocodile" from="." to="." method="_tag_overlapping_player"]
 
