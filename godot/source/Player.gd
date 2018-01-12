@@ -1,6 +1,8 @@
 tool
 extends KinematicBody2D
 
+var debug_label_offset = Vector2(40, -100)
+
 var GAMEPAD_DEVICE_MAP = {
 	"P3": 0,
 	"P4": 1,
@@ -226,15 +228,18 @@ func _move_player():
 
 	heading = velocity.normalized()
 
+func _ready():
+	yield(Utility.timer(0.1), "timeout")
+	if Debug.Labels.node_not_added(self):
+		Debug.Labels.add_label(self, debug_label_offset)
+	else: Debug.Labels.set_offset(self, debug_label_offset)
+
 func _process(delta):
-	_reset_debug_label()
 	debug("On Platform: %s" % on_platform)
 
-func _reset_debug_label():
-		$DebugLabel.text = "[Debug:%s]\n" % get_name()
-
 func debug(info):
-	$DebugLabel.text += "%s\n" % info
+	if not Engine.is_editor_hint() and OS.is_debug_build() and Debug.Settings.debug_players:
+		Debug.Labels.add_line(self, info)
 
 func clamp_velocity():
 	var cap = max_velocity
@@ -309,3 +314,6 @@ func _tag_overlapping_player():
 	var bodies = $TouchArea.get_overlapping_bodies()
 	for body in bodies:
 		tag_crocodile(body)
+
+func _exit_tree():
+	Debug.Labels.remove_label(self)

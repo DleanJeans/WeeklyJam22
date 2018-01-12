@@ -21,23 +21,17 @@ Locator="*res://source/Locator.gd"
 Utility="*res://source/Utility.gd"
 Classes="*res://source/Classes.gd"
 Const="*res://source/Const.gd"
+Debug="*res://source/debug/Debug.gd"
 
 [display]
 
 window/size/width=960
 window/size/height=540
+window/size/resizable=false
 window/dpi/allow_hidpi=true
 window/stretch/mode="2d"
 window/stretch/aspect="expand"
 window/stretch/shrink="1"
-
-[game]
-
-debug_goal_tree=true
-debug_steering=false
-slo_mo_scale=0.1
-version="v1.1"
-enable_slo_mo=true
 
 [gdnative]
 

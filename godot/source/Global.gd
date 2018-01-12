@@ -20,12 +20,6 @@ func player_blocked_by_platform(player):
 	var collision = player.get_slide_collision(0)
 	return collision.collider is Classes.Platform
 
-func _process(delta):
-	if Input.is_action_just_pressed("slo_mo_toggle") and ProjectSettings.get_setting("game/enable_slo_mo") and OS.is_debug_build():
-		Engine.set_time_scale(ProjectSettings.get_setting("game/slo_mo_scale") if Engine.get_time_scale() == 1 else 1)
-	elif Input.is_action_just_pressed("toggle_fullscreen"):
-		toggle_fullscreen()
-
 func _get_coins():
 	return get_tree().get_nodes_in_group("Coins")
 
@@ -37,3 +31,15 @@ func _get_platforms():
 
 func _get_coin_spawners():
 	return get_tree().get_nodes_in_group("CoinSpawners")
+
+func _process(delta):
+	if _slo_mo_toggle_pressed():
+		_switch_time_scale_for_slo_mo()
+	elif Input.is_action_just_pressed("toggle_fullscreen"):
+		toggle_fullscreen()
+
+func _slo_mo_toggle_pressed():
+	return Input.is_action_just_pressed("slo_mo_toggle") and Debug.Settings.enable_slo_mo and OS.is_debug_build()
+
+func _switch_time_scale_for_slo_mo():
+	Engine.set_time_scale(Debug.Settings.slo_mo_scale if Engine.get_time_scale() == 1 else 1)

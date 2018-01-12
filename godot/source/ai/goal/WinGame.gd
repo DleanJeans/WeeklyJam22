@@ -10,7 +10,7 @@ func process():
 			add_subgoal(Classes.ChaseOthers.new())
 
 func _process(delta):
-	if ProjectSettings.get_setting("game/debug_goal_tree"):
+	if Debug.Settings.debug_goal_tree:
 		player.debug("WinGame")
 		_debug_subgoals(get_children(), 1)
 

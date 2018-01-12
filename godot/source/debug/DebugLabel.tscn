@@ -1,0 +1,90 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://source/debug/DebugLabel.gd" type="Script" id=1]
+
+[sub_resource type="GDScript" id=1]
+
+script/source = "extends Panel
+
+export(bool) var opaque = false setget set_opaque
+
+const OPAQUE_ALPHA = 1
+const HALF_OPAQUE_ALPHA = 0.5
+const TRANSPARENT_ALPHA = 0.1
+
+onready var label = get_parent()
+
+func set_opaque(value):
+	opaque = value
+	if opaque:
+		_set_alpha(OPAQUE_ALPHA)
+	else: _set_alpha(TRANSPARENT_ALPHA)
+
+func toggle_opaque():
+	self.opaque = not opaque
+
+func _gui_input(event):
+	if _is_mouse_just_pressed(event):
+		toggle_opaque()
+
+func _is_mouse_just_pressed(event):
+	return event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.is_pressed()
+
+func _on_mouse_entered():
+	if not opaque:
+		 _set_alpha(HALF_OPAQUE_ALPHA)
+
+func _on_mouse_exited():
+	if not opaque:
+		_set_alpha(TRANSPARENT_ALPHA)
+
+func _set_alpha(alpha):
+	if label == null:
+		yield(Utility.timer(0.1), \"timeout\")
+	label.modulate.a = alpha
+
+func _process(delta):
+	visible = label.text != \"\""
+
+[node name="DebugLabel" type="Label" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 40.0
+margin_bottom = 14.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 2
+size_flags_horizontal = 1
+size_flags_vertical = 4
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+script = ExtResource( 1 )
+_sections_unfolded = [ "custom_colors" ]
+
+[node name="Panel" type="Panel" parent="." index="0"]
+
+modulate = Color( 1, 1, 1, 0.5 )
+show_behind_parent = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -15.0
+margin_right = 15.0
+margin_bottom = 15.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+script = SubResource( 1 )
+_sections_unfolded = [ "Margin", "Rect", "Visibility" ]
+opaque = false
+
+[connection signal="mouse_entered" from="Panel" to="Panel" method="_on_mouse_entered"]
+
+[connection signal="mouse_exited" from="Panel" to="Panel" method="_on_mouse_exited"]
+
+

@@ -21,7 +21,7 @@ func steer():
 				steering_velocity += velocity.normalized() * force_left
 			
 			force_left -= magnitude
-			if magnitude > 0 and ProjectSettings.get_setting("game/debug_steering"):
+			if magnitude > 0 and Debug.Settings.debug_steering:
 				player.debug("%s: %s" % [behavior.get_name(), round(magnitude)])
 			
 		if force_left <= 0:
