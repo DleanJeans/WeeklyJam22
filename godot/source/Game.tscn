@@ -165,8 +165,6 @@ script = ExtResource( 12 )
 
 [node name="GameTimer" parent="." index="11" instance=ExtResource( 13 )]
 
-countdown_duration = 4
-
 [node name="MusicBox" type="AudioStreamPlayer" parent="." index="12"]
 
 stream = ExtResource( 14 )
@@ -188,31 +186,27 @@ _sections_unfolded = [ "Transform" ]
 
 [connection signal="game_over" from="." to="MenuButton" method="show_in_secs"]
 
-[connection signal="game_over" from="." to="." method="show_mouse"]
-
-[connection signal="game_over" from="." to="." method="_show_winner"]
-
 [connection signal="game_over" from="." to="CoinManager" method="stop_spawners"]
 
 [connection signal="game_over" from="." to="PlayerManager" method="pause_freeze_timer"]
 
 [connection signal="game_over" from="." to="PlayerManager" method="freeze_players"]
 
+[connection signal="game_over" from="." to="." method="show_mouse"]
+
+[connection signal="game_over" from="." to="." method="_show_winner"]
+
+[connection signal="game_paused" from="." to="JoiningScreen" method="hide"]
+
 [connection signal="game_paused" from="." to="." method="_pause_tree"]
 
 [connection signal="game_paused" from="." to="." method="show_mouse"]
 
-[connection signal="game_paused" from="." to="JoiningScreen" method="hide"]
+[connection signal="game_resumed" from="." to="JoiningScreen" method="show_if_not_closed"]
 
 [connection signal="game_resumed" from="." to="." method="_resume_tree"]
 
 [connection signal="game_resumed" from="." to="." method="hide_mouse"]
-
-[connection signal="game_resumed" from="." to="JoiningScreen" method="show_if_not_closed"]
-
-[connection signal="game_started" from="." to="." method="hide_mouse"]
-
-[connection signal="game_started" from="." to="JoiningScreen" method="close"]
 
 [connection signal="game_started" from="." to="CoinManager" method="resume_spawners"]
 
@@ -224,11 +218,11 @@ _sections_unfolded = [ "Transform" ]
 
 [connection signal="game_started" from="." to="PlayerManager" method="reset_positions"]
 
-[connection signal="joining_screen_opened" from="." to="." method="_stop_showing_winner"]
+[connection signal="game_started" from="." to="JoiningScreen" method="close"]
+
+[connection signal="game_started" from="." to="." method="hide_mouse"]
 
 [connection signal="joining_screen_opened" from="." to="ControllerAssigner" method="reset"]
-
-[connection signal="joining_screen_opened" from="." to="JoiningScreen" method="open" flags=3]
 
 [connection signal="joining_screen_opened" from="." to="CoinManager" method="clear"]
 
@@ -242,13 +236,9 @@ _sections_unfolded = [ "Transform" ]
 
 [connection signal="joining_screen_opened" from="." to="PlayerManager" method="reset_positions"]
 
-[connection signal="main_menu_opened" from="." to="." method="resume"]
+[connection signal="joining_screen_opened" from="." to="JoiningScreen" method="open" flags=3]
 
-[connection signal="main_menu_opened" from="." to="." method="stop_counting_down"]
-
-[connection signal="main_menu_opened" from="." to="." method="show_mouse"]
-
-[connection signal="main_menu_opened" from="." to="JoiningScreen" method="close"]
+[connection signal="joining_screen_opened" from="." to="." method="_stop_showing_winner"]
 
 [connection signal="main_menu_opened" from="." to="CoinManager" method="resume_spawners"]
 
@@ -257,6 +247,14 @@ _sections_unfolded = [ "Transform" ]
 [connection signal="main_menu_opened" from="." to="PlayerManager" method="reset_controllers"]
 
 [connection signal="main_menu_opened" from="." to="PlayerManager" method="choose_crocodile_randomly"]
+
+[connection signal="main_menu_opened" from="." to="JoiningScreen" method="close"]
+
+[connection signal="main_menu_opened" from="." to="." method="resume"]
+
+[connection signal="main_menu_opened" from="." to="." method="stop_counting_down"]
+
+[connection signal="main_menu_opened" from="." to="." method="show_mouse"]
 
 [connection signal="duration_pressed" from="MainMenu" to="GameTimer" method="next_duration"]
 

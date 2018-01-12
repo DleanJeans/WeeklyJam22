@@ -83,7 +83,7 @@ func _update_countdown_label():
 	$CountdownLabel.text = text
 
 func _rounded_time_left():
-	return round(timer.time_left) - 1
+	return round(timer.time_left) 
 
 func _play_ticking_sound():
 	var time_left = _rounded_time_left()
