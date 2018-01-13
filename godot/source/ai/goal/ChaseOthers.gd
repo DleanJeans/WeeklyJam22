@@ -1,7 +1,8 @@
 extends "res://source/ai/goal/GoalWithTarget.gd"
 
 func reacquire_target():
-	target = Locator.find_most_desired_player(player)
+	if player != null:
+		target = Locator.find_most_desired_player(player)
 
 func _target_acquired():
 	steering.seek_on(target)
