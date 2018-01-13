@@ -1,6 +1,7 @@
 extends Node2D
 
-onready var player_manager = $"../PlayerManager"
+onready var PlayerManager = $"../PlayerManager"
+onready var MainMenu = $"../MainMenu"
 
 var num_users = 0
 var _current_controller
@@ -12,7 +13,7 @@ func reset():
 		child.reset()
 
 func _process(delta):
-	if $"../MainMenu".visible: return
+	if MainMenu.opened: return
 	
 	for child in get_children():
 		_check_key_list(child)
@@ -33,7 +34,7 @@ func _check_key_list(controller_child):
 func _activate_controller():
 	_current_controller.activated = true
 	num_users += 1
-	player_manager.activate_controller(num_users, _current_controller.get_name())
+	PlayerManager.activate_controller(num_users, _current_controller.get_name())
 
 func _lock_room():
 	if _room_full():

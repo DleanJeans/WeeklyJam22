@@ -1,22 +1,20 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://source/Game.gd" type="Script" id=1]
 [ext_resource path="res://source/maps/6PlayerMap.tscn" type="PackedScene" id=2]
 [ext_resource path="res://source/MainMenu.tscn" type="PackedScene" id=3]
 [ext_resource path="res://source/PauseScreen.tscn" type="PackedScene" id=4]
 [ext_resource path="res://source/JoiningScreen.tscn" type="PackedScene" id=5]
-[ext_resource path="res://FocusStyle.tres" type="StyleBox" id=6]
-[ext_resource path="res://BebasNeue.tres" type="DynamicFont" id=7]
-[ext_resource path="res://source/MenuButton.gd" type="Script" id=8]
-[ext_resource path="res://source/ControllerAssigner.tscn" type="PackedScene" id=9]
-[ext_resource path="res://source/PlayerManager.gd" type="Script" id=10]
-[ext_resource path="res://source/MapSelector.gd" type="Script" id=11]
-[ext_resource path="res://source/CoinManager.gd" type="Script" id=12]
-[ext_resource path="res://source/PlatformManager.gd" type="Script" id=13]
-[ext_resource path="res://source/GameTimer.tscn" type="PackedScene" id=14]
-[ext_resource path="res://assets/OurMusicBox _CanCan.ogg" type="AudioStream" id=15]
-[ext_resource path="res://source/FPS.tscn" type="PackedScene" id=16]
-[ext_resource path="res://source/debug/DebugOverlay.tscn" type="PackedScene" id=17]
+[ext_resource path="res://source/MenuButton.tscn" type="PackedScene" id=6]
+[ext_resource path="res://source/ControllerAssigner.tscn" type="PackedScene" id=7]
+[ext_resource path="res://source/PlayerManager.gd" type="Script" id=8]
+[ext_resource path="res://source/MapSelector.gd" type="Script" id=9]
+[ext_resource path="res://source/CoinManager.gd" type="Script" id=10]
+[ext_resource path="res://source/PlatformManager.gd" type="Script" id=11]
+[ext_resource path="res://source/GameTimer.tscn" type="PackedScene" id=12]
+[ext_resource path="res://assets/OurMusicBox _CanCan.ogg" type="AudioStream" id=13]
+[ext_resource path="res://source/FPS.tscn" type="PackedScene" id=14]
+[ext_resource path="res://source/debug/DebugOverlay.tscn" type="PackedScene" id=15]
 
 [sub_resource type="GDScript" id=1]
 
@@ -36,7 +34,7 @@ func show_crowns():
 	for player in other_players:
 		player.hide_crown()"
 
-[node name="Game" type="Node2D"]
+[node name="Game" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
 _sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
@@ -63,37 +61,14 @@ margin_bottom = 508.0
 
 visible = false
 
-[node name="MenuButton" type="Button" parent="." index="4"]
+[node name="MenuButton" parent="." index="4" instance=ExtResource( 6 )]
 
-visible = false
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = 368.0
-margin_top = 468.0
-margin_right = 686.0
-margin_bottom = 534.0
-rect_scale = Vector2( 0.5, 0.5 )
-rect_pivot_offset = Vector2( 0, 0 )
-mouse_filter = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-custom_styles/hover = ExtResource( 6 )
-custom_styles/focus = ExtResource( 6 )
-custom_fonts/font = ExtResource( 7 )
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Back to Main Menu"
-flat = true
-align = 1
-script = ExtResource( 8 )
-_sections_unfolded = [ "Margin", "custom_fonts", "custom_styles" ]
-delay = 2
+margin_left = -32.0
+margin_top = 516.0
+margin_right = 1888.0
+margin_bottom = 602.0
 
-[node name="ControllerAssigner" parent="." index="5" instance=ExtResource( 9 )]
+[node name="ControllerAssigner" parent="." index="5" instance=ExtResource( 7 )]
 
 [node name="CrownManager" type="Node2D" parent="." index="6"]
 
@@ -103,39 +78,39 @@ script = SubResource( 1 )
 [node name="PlayerManager" type="Node2D" parent="." index="7"]
 
 visible = false
-script = ExtResource( 10 )
+script = ExtResource( 8 )
 
 [node name="MapSelector" type="Node2D" parent="." index="8"]
 
 visible = false
-script = ExtResource( 11 )
+script = ExtResource( 9 )
 
 [node name="CoinManager" type="Node2D" parent="." index="9"]
 
 visible = false
-script = ExtResource( 12 )
+script = ExtResource( 10 )
 
 [node name="PlatformManager" type="Node2D" parent="." index="10"]
 
 visible = false
-script = ExtResource( 13 )
+script = ExtResource( 11 )
 
-[node name="GameTimer" parent="." index="11" instance=ExtResource( 14 )]
+[node name="GameTimer" parent="." index="11" instance=ExtResource( 12 )]
 
 debug_duration = false
 
 [node name="MusicBox" type="AudioStreamPlayer" parent="." index="12"]
 
-stream = ExtResource( 15 )
+stream = ExtResource( 13 )
 volume_db = -5.0
 autoplay = true
 mix_target = 0
 bus = "Master"
 _sections_unfolded = [ "Transform" ]
 
-[node name="FPS" parent="." index="13" instance=ExtResource( 16 )]
+[node name="FPS" parent="." index="13" instance=ExtResource( 14 )]
 
-[node name="DebugOverlay" parent="." index="14" instance=ExtResource( 17 )]
+[node name="DebugOverlay" parent="." index="14" instance=ExtResource( 15 )]
 
 enable_slo_mo = true
 
@@ -144,8 +119,6 @@ enable_slo_mo = true
 [connection signal="game_loaded" from="." to="PlayerManager" method="reset"]
 
 [connection signal="game_loaded" from="." to="PlayerManager" method="choose_crocodile_randomly" flags=3]
-
-[connection signal="game_over" from="." to="MenuButton" method="show_in_secs"]
 
 [connection signal="game_over" from="." to="PlayerManager" method="pause_freeze_timer"]
 
@@ -157,19 +130,19 @@ enable_slo_mo = true
 
 [connection signal="game_over" from="." to="." method="_show_winner"]
 
-[connection signal="game_paused" from="." to="JoiningScreen" method="hide"]
+[connection signal="game_over" from="." to="MenuButton" method="show_in_secs"]
 
 [connection signal="game_paused" from="." to="." method="_pause_tree"]
 
 [connection signal="game_paused" from="." to="." method="show_mouse"]
 
-[connection signal="game_resumed" from="." to="JoiningScreen" method="show_if_not_closed"]
+[connection signal="game_paused" from="." to="JoiningScreen" method="hide"]
 
 [connection signal="game_resumed" from="." to="." method="_resume_tree"]
 
 [connection signal="game_resumed" from="." to="." method="hide_mouse"]
 
-[connection signal="game_started" from="." to="JoiningScreen" method="close"]
+[connection signal="game_resumed" from="." to="JoiningScreen" method="show_if_not_closed"]
 
 [connection signal="game_started" from="." to="PlayerManager" method="enable_ai"]
 
@@ -183,7 +156,7 @@ enable_slo_mo = true
 
 [connection signal="game_started" from="." to="." method="hide_mouse"]
 
-[connection signal="joining_screen_opened" from="." to="JoiningScreen" method="open" flags=3]
+[connection signal="game_started" from="." to="JoiningScreen" method="close"]
 
 [connection signal="joining_screen_opened" from="." to="ControllerAssigner" method="reset"]
 
@@ -203,7 +176,7 @@ enable_slo_mo = true
 
 [connection signal="joining_screen_opened" from="." to="." method="stop_showing_winners"]
 
-[connection signal="main_menu_opened" from="." to="JoiningScreen" method="close"]
+[connection signal="joining_screen_opened" from="." to="JoiningScreen" method="open" flags=3]
 
 [connection signal="main_menu_opened" from="." to="PlayerManager" method="enable_ai"]
 
@@ -219,6 +192,8 @@ enable_slo_mo = true
 
 [connection signal="main_menu_opened" from="." to="." method="show_mouse"]
 
+[connection signal="main_menu_opened" from="." to="JoiningScreen" method="close"]
+
 [connection signal="duration_pressed" from="MainMenu" to="GameTimer" method="next_duration"]
 
 [connection signal="map_pressed" from="MainMenu" to="MapSelector" method="next_map"]
@@ -226,8 +201,6 @@ enable_slo_mo = true
 [connection signal="play_pressed" from="MainMenu" to="." method="open_joining_screen"]
 
 [connection signal="play_pressed" from="MainMenu" to="." method="hide_mouse"]
-
-[connection signal="pressed" from="MenuButton" to="MenuButton" method="hide"]
 
 [connection signal="pressed" from="MenuButton" to="." method="open_main_menu"]
 
