@@ -16,13 +16,14 @@ func _replace_if_similar(new_line):
 	var lines = text.split("\n", true, INF)
 	for line in lines:
 		if line.similarity(new_line) >= 0.5:
-			text = text.replace(line, new_line)
+			var updated_text = text.replace(line, new_line)
+			set_text(updated_text)
 			return true
 	return false
 
 func _append_line(new_line):
 	new_line = "\n%s" % new_line
-	text += new_line
+	set_text(text + new_line)
 
 func set_offset(new_offset):
 	if new_offset != null:
@@ -36,7 +37,7 @@ func _physics_process(delta):
 	_update_position()
 
 func _clear():
-	text = ""
+	set_text("")
 
 func _update_position():
 	var parent = parent_node.get_ref()
@@ -44,3 +45,7 @@ func _update_position():
 		return
 	
 	rect_position = parent.position + offset
+
+func set_text(value):
+	.set_text(value)
+	$Panel.update_visibility()
