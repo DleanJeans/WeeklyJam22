@@ -1,13 +1,10 @@
 extends Node2D
 
 func stop_spawners():
-	for spawner in Global.CoinSpawners:
-		spawner.stop()
+	get_tree().call_group("CoinSpawners", "stop")
 
 func resume_spawners():
-	for spawner in Global.CoinSpawners:
-		spawner.resume()
+	get_tree().call_group("CoinSpawners", "resume")
 
 func clear():
-	for coin in Global.Coins:
-		coin.queue_free()
+	get_tree().call_group("Coins", "queue_free")
