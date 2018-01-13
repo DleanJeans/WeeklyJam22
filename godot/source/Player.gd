@@ -20,7 +20,7 @@ var max_velocity = 300
 var drag_scale = 0.8
 var crocodile_speed = 400
 var normal_speed = 300
-var ai_speed_scale = 0.9
+var ai_speed_scale = 1
 
 onready var platform_offset = $Sprite.texture.get_height() * $Sprite.scale.y
 
@@ -55,7 +55,7 @@ func reset():
 	turn_normal()
 	self.coins = 0
 	self.controller = "AI"
-	$Sprite.modulate = get_node("/root/Const").WHITE
+	$Sprite.modulate = _singleton("Const").WHITE
 	$AI/WinGame.clear_subgoals()
 	$FreezeTimer.stop()
 	$WinnerLabel.hide()
@@ -100,7 +100,7 @@ func is_close_to_at_least_3_others():
 	var players_count = 0
 
 	for b in bodies:
-		if b is Classes.Player and b != self:
+		if b is _singleton("Classes").Player and b != self:
 			players_count += 1
 			if players_count == 3:
 				return true
@@ -189,7 +189,7 @@ func tag_crocodile(player):
 	$TapSound.play()
 
 func _not_taggable(player):
-	return player == self or not is_crocodile() or not player is Classes.Player or frozen or player.on_platform
+	return player == self or not is_crocodile() or not player is _singleton("Classes").Player or frozen or player.on_platform
 
 func start_freezing():
 	$FreezeTimer.start()
@@ -218,7 +218,7 @@ func _physics_process(delta):
 func _emit_signal_if_hit_wall():
 	if get_slide_count() > 0:
 		var collision = get_slide_collision(0)
-		if not collision.collider is Classes.Wall: return
+		if not collision.collider is _singleton("Classes").Wall: return
 
 		var normal = collision.normal
 
@@ -235,17 +235,17 @@ func _move_player():
 	heading = velocity.normalized()
 
 func _ready():
-	yield(Utility.timer(0.1), "timeout")
-	if Debug.Labels.node_not_added(self):
-		Debug.Labels.add_label(self, debug_label_offset)
-	else: Debug.Labels.set_offset(self, debug_label_offset)
+	yield(_singleton("Utility").timer(0.1), "timeout")
+	if _singleton("Debug").Labels.node_not_added(self):
+		_singleton("Debug").Labels.add_label(self, debug_label_offset)
+	else: _singleton("Debug").Labels.set_offset(self, debug_label_offset)
 
 func _process(delta):
 	debug("On Platform: %s" % on_platform)
 
 func debug(info):
-	if not Engine.is_editor_hint() and OS.is_debug_build() and Debug.Settings.debug_players:
-		Debug.Labels.add_line(self, info)
+	if not Engine.is_editor_hint() and OS.is_debug_build() and _singleton("Debug").Settings.debug_players:
+		_singleton("Debug").Labels.add_line(self, info)
 
 func clamp_velocity():
 	var cap = max_velocity
@@ -300,10 +300,10 @@ func _set_color(value):
 		$Sprite/Panic.self_modulate = color
 
 func _set_crocodile(value):
-	get_node("/root/Global").crocodile = value
+	_singleton("Global").crocodile = value
 
 func _get_crocodile():
-	return get_node("/root/Global").crocodile
+	return _singleton("Global").crocodile
 
 func _set_frozen(value):
 	frozen = value
@@ -322,4 +322,7 @@ func _tag_overlapping_player():
 		tag_crocodile(body)
 
 func _exit_tree():
-	Debug.Labels.remove_label(self)
+	_singleton("Debug").Labels.remove_label(self)
+
+func _singleton(name):
+	return get_node("/root/%s" % name)
