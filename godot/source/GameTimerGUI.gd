@@ -34,32 +34,23 @@ func play_countdown_sequence():
 	while _rounded_time_left() > 0:
 		yield(Utility.timer(1), "timeout")
 		_update_countdown_label()
-	if not timer.is_stopped_or_paused():
-		_play_last_sequence()
 
-func _play_last_sequence():
+func play_last_sequence():
 	_play_last_sound()
 	
-	var resist_duration = _countdown_label_resist_duration_after_timeout()
 	yield(Utility.timer(1), "timeout")
 	
-	_stop_countdown_animation()
-	$CountdownLabel.hide()
+	print("Disappeared!")
+	_play_countdown_label_disappear_animation()
+
+func _play_countdown_label_disappear_animation():
+	$CountdownAnimation.play("Disappear", 0.1)
 
 func _play_last_sound():
 	if timer.in_countdown_mode():
 		$StringSound.play()
 	elif timer.in_round_mode():
 		$GameOverVoice.play()
-
-func _countdown_label_resist_duration_after_timeout():
-	var resist_duration 
-	
-	if _countdown_label_text_is(SWIM):
-		resist_duration = 0.1
-	else: resist_duration = 0.5
-	
-	return resist_duration
 
 func _update_round_label():
 	var minutes = floor(timer.time_left / 60)
