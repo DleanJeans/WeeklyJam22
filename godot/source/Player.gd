@@ -114,8 +114,14 @@ func hide_winner_label():
 	$WinnerLabel.hide()
 
 func bounce():
-	if not $JumpAnimation.is_playing():
+	var jump_animation_not_player = _jump_animation_not_playing()
+	var current_animation_is_not_bounce = $JumpAnimation.get_current_animation() != "Bounce"
+	
+	if jump_animation_not_player or current_animation_is_not_bounce:
 		$JumpAnimation.play("Bounce")
+
+func _jump_animation_not_playing():
+	return not $JumpAnimation.is_playing()
 
 func play_jump_gui():
 	$JumpSound.play()
@@ -126,7 +132,7 @@ func jump():
 		force_jump()
 
 func force_jump():
-	if not $JumpAnimation.is_playing():
+	if _jump_animation_not_playing():
 		emit_signal("jump")
 
 func groan():
