@@ -33,13 +33,9 @@ func get_players_touching():
 func get_players_fully_inside():
 	return $Shape/InsideArea.get_overlapping_bodies()
 
-func compute_average_radius():
+func get_size():
 	var size = 100 * $Shape/Sprite.scale * scale
-	var width = size.x
-	var height = size.y
-	
-	var average_radius = sqrt(width * width + height * height)
-	return average_radius
+	return size
 
 func reset():
 	_turn_green()
@@ -49,7 +45,7 @@ func _on_player_enter(body):
 	_current_player = body
 	if _current_player.is_crocodile(): return
 	
-	if _current_player.just_landed:
+	if _current_player.just_landed and _current_player in get_players_fully_inside():
 		_current_player.on_platform = true
 		$Bouncer.bounce_other_players_off(_current_player)
 

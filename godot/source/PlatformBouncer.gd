@@ -2,14 +2,16 @@ extends Node2D
 
 onready var platform = get_parent()
 
+var _newcomer
+
 func bounce_other_players_off(newcomer):
-	var players = _get_affected_players(newcomer)
-	
+	_newcomer = newcomer
+	var players = _get_affected_players()
 	_bounce_players_off(players)
 
-func _get_affected_players(newcomer):
+func _get_affected_players():
 	var players = platform.get_players_fully_inside()
-	players.erase(newcomer)
+	players.erase(_newcomer)
 	
 	for player in players:
 		if not player.on_platform:
@@ -37,8 +39,7 @@ func _set_tween_to_landing_point(player):
 	$Tween.interpolate_property(player, "position", player.position, landing_point, Const.BOUNCE_AIRBONE_TIME, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 
 func _compute_landing_point(player):
-	var to_player = Utility.unit_vector_from(platform, player)
-	var displacement = platform.compute_average_radius() * 0.75
+	var newcomer_to_player = Utility.unit_vector_from(_newcomer, player)
 	
-	var landing_point = platform.position + to_player * displacement
+	var landing_point = _newcomer.position + newcomer_to_player * platform.get_size()
 	return landing_point
