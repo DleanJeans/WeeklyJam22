@@ -67,9 +67,9 @@ func _ready():
 func _show_winner():
 	winners = $PlayerManager.players_with_highest_score()
 	
+	start_showing_winners()
 	_process_winner_gui()
 	_keep_winners_jumping()
-	start_showing_winners()
 
 func start_showing_winners():
 	showing_winners = true

@@ -1,9 +1,10 @@
 extends Timer
 
+export(bool) var debug_duration = false setget set_debug_duration
 export(int) var countdown_duration = 3
 export(int) var round_end_countdown_duration = 5
 
-var durations = [1, 2, 3, .1, 10]
+var durations = [1, 2, 3, 5, 10]
 var duration_index = 2
 var minutes = 3
 var round_duration = 180
@@ -72,3 +73,9 @@ func _start_round_countdown():
 	go_off_in(round_duration)
 	$GUI.show_round_label()
 	$GUI.update_round_label_every_sec()
+
+func set_debug_duration(value):
+	debug_duration = value
+	if debug_duration:
+		durations[3] = 0.1
+	else: durations[3] = 5

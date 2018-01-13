@@ -20,6 +20,8 @@ func reset_controllers():
 		player.controller = "AI"
 
 func activate_controller(player_num, controller_name):
+	if Global.Game.showing_winners: return
+	
 	var random_player = _find_random_player()
 	while random_player.controller != "AI":
 		random_player = _find_random_player()

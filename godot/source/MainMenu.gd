@@ -31,7 +31,7 @@ func _process(delta):
 			menu_button.show()
 			menu_button.grab_focus()
 		else:
-			show()
+			open()
 			menu_button.hide()
 
 func _on_FullScreenButton_pressed():
