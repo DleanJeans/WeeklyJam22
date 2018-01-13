@@ -13,7 +13,7 @@ func _process(delta):
 			_pause_game()
 
 func _is_pause_allowed():
-	var allowed = not (MainMenu.opened or MenuButton.visible or game.showing_winners)
+	var allowed = not (MainMenu.opened or MenuButton.showing or game.showing_winners)
 	return allowed
 
 func _pause_game():
