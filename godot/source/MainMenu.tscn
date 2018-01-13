@@ -9,9 +9,6 @@
 [ext_resource path="res://FocusStyle.tres" type="StyleBox" id=7]
 [ext_resource path="res://source/ButtonHint.tscn" type="PackedScene" id=8]
 
-
-
-
 [sub_resource type="DynamicFont" id=1]
 
 size = 200
@@ -210,6 +207,7 @@ margin_right = 398.0
 margin_bottom = 88.0
 rect_scale = Vector2( 0.5, 0.5 )
 rect_pivot_offset = Vector2( 0, 0 )
+focus_neighbour_top = NodePath("../RoundDurationButton")
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
@@ -223,7 +221,7 @@ group = null
 text = "Toggle Fullscreen"
 flat = true
 align = 1
-_sections_unfolded = [ "Rect", "custom_fonts" ]
+_sections_unfolded = [ "Focus", "custom_fonts" ]
 
 [node name="FullScreenHints" type="HBoxContainer" parent="." index="4"]
 
@@ -336,6 +334,7 @@ margin_right = 530.0
 margin_bottom = 516.0
 rect_scale = Vector2( 0.5, 0.5 )
 rect_pivot_offset = Vector2( 0, 0 )
+focus_neighbour_bottom = NodePath("../FullScreenButton")
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
@@ -350,7 +349,7 @@ group = null
 text = "Duration: 3 Minutes"
 flat = true
 align = 0
-_sections_unfolded = [ "Rect", "custom_fonts" ]
+_sections_unfolded = [ "Focus", "Rect", "custom_fonts" ]
 
 [node name="Credits" type="Label" parent="." index="8"]
 
@@ -379,22 +378,22 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "custom_fonts" ]
 
-[connection signal="pressed" from="FullScreenButton" to="SelectSound" method="play"]
-
 [connection signal="pressed" from="FullScreenButton" to="." method="_on_FullScreenButton_pressed"]
 
-[connection signal="pressed" from="PlayButton" to="SelectSound" method="play"]
-
-[connection signal="pressed" from="PlayButton" to="." method="_on_PlayButton_pressed"]
+[connection signal="pressed" from="FullScreenButton" to="SelectSound" method="play"]
 
 [connection signal="pressed" from="PlayButton" to="." method="hide"]
 
-[connection signal="pressed" from="MapButton" to="SelectSound" method="play"]
+[connection signal="pressed" from="PlayButton" to="." method="_on_PlayButton_pressed"]
+
+[connection signal="pressed" from="PlayButton" to="SelectSound" method="play"]
 
 [connection signal="pressed" from="MapButton" to="." method="_on_MapButton_pressed"]
 
-[connection signal="pressed" from="RoundDurationButton" to="SelectSound" method="play"]
+[connection signal="pressed" from="MapButton" to="SelectSound" method="play"]
 
 [connection signal="pressed" from="RoundDurationButton" to="." method="_on_RoundDurationButton_pressed"]
+
+[connection signal="pressed" from="RoundDurationButton" to="SelectSound" method="play"]
 
 
