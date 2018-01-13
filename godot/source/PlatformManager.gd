@@ -1,13 +1,16 @@
 extends Node2D
 
 func reset():
-	for platform in Global.Platforms:
-		platform.reset()
+	_call_all("reset")
 
 func enable():
-	for platform in Global.Platforms:
-		platform.enable()
+	_call_all("enable")
 
 func disable():
-	for platform in Global.Platforms:
-		platform.disable()
+	_call_all("disable")
+
+func stop_bounce_tween():
+	_call_all("stop_bounce_tween")
+
+func _call_all(method):
+	get_tree().call_group("Platforms", method)

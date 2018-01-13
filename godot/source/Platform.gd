@@ -27,6 +27,9 @@ func dipped():
 func player_dipped(player):
 	return dips.has(player)
 
+func stop_bounce_tween():
+	$Bouncer/Tween.stop_all()
+
 func get_players_touching():
 	return $Shape/EnterArea.get_overlapping_bodies()
 
