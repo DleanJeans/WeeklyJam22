@@ -1,6 +1,6 @@
 extends Node2D
 
-signal game_loaded
+signal map_loaded
 
 signal countdown_started
 
@@ -13,8 +13,10 @@ signal game_resumed
 signal joining_screen_opened
 signal main_menu_opened
 
-var showing_winners = false
-var winners = []
+var winner_jumping setget , get_winner_jumping
+
+func get_winner_jumping():
+	return $TheCrown.keeping_winner_jumping
 
 func open_joining_screen():
 	emit_signal("joining_screen_opened")
@@ -56,34 +58,10 @@ func show_mouse():
 func hide_mouse():
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 
-func stop_showing_winners():
-	showing_winners = false
-
 func _ready():
 	Global.Game = self
 	randomize()
-	emit_signal("game_loaded")
-
-func _show_winner():
-	winners = $PlayerManager.players_with_highest_score()
-	
-	start_showing_winners()
-	_process_winner_gui()
-	_keep_winners_jumping()
-
-func start_showing_winners():
-	showing_winners = true
-
-func _process_winner_gui():
-	for p in winners:
-		p.show_winner_label()
-		p.hide_button_hint()
-
-func _keep_winners_jumping():
-	while showing_winners:
-		for p in winners:
-			p.force_jump()
-		yield(Utility.timer(Const.JUMP_DURATION), "timeout")	
+	emit_signal("map_loaded")
 
 func _process(delta):
 	if Input.is_action_just_pressed("reset_controllers"):

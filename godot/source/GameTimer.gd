@@ -11,8 +11,6 @@ var duration_index = 2
 var minutes = 3
 var round_duration = 180
 
-var time_left setget , _get_time_left
-
 func _get_time_left():
 	return get_time_left()
 
@@ -50,10 +48,10 @@ func go_off_in(seconds):
 	start()
 
 func still_running():
-	return self.time_left > 0 and not is_stopped()
+	return time_left > 0 and not is_stopped()
 
 func is_counting_down():
-	return in_countdown_mode() and get_time_left() > 0
+	return in_countdown_mode() and time_left > 0
 
 func in_countdown_mode():
 	return wait_time == countdown_duration

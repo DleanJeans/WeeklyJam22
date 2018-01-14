@@ -46,7 +46,7 @@ func _set_alpha(alpha):
 func update_visibility():
 	visible = label.text != \"\""
 
-[node name="DebugLabel" type="Label" index="0"]
+[node name="DebugLabel" type="Label"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -63,6 +63,7 @@ lines_skipped = 0
 max_lines_visible = -1
 script = ExtResource( 1 )
 _sections_unfolded = [ "custom_colors" ]
+min_similarity_for_update = 0.75
 
 [node name="Panel" type="Panel" parent="." index="0"]
 

@@ -1,5 +1,7 @@
 extends Label
 
+export(float) var min_similarity_for_update = 0.75
+
 var parent_node
 var offset
 
@@ -8,14 +10,14 @@ func setup(parent_node, offset = Vector2(20, 0)):
 	self.offset = offset
 
 func add_line(line):
-	if _replace_if_similar(line):
+	if _update_if_similar(line):
 		return
 	_append_line(line)
 
-func _replace_if_similar(new_line):
+func _update_if_similar(new_line):
 	var lines = text.split("\n", true, INF)
 	for line in lines:
-		if line.similarity(new_line) >= 0.5:
+		if line.similarity(new_line) >= min_similarity_for_update:
 			var updated_text = text.replace(line, new_line)
 			set_text(updated_text)
 			return true
@@ -44,7 +46,7 @@ func _update_position():
 	if not parent:
 		return
 	
-	rect_position = parent.position + offset
+	rect_position = parent.global_position + offset
 
 func set_text(value):
 	.set_text(value)

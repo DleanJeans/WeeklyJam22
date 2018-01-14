@@ -11,6 +11,8 @@ func relative_dot_to(from, point1, point2):
 	return dot
 
 func find_max(me, objects, calculate_points, filter = null):
+	if me == null: return
+	
 	var highest_points = -INF
 	var best_candidate
 
@@ -27,6 +29,8 @@ func find_max(me, objects, calculate_points, filter = null):
 	return best_candidate
 
 func find_min(me, objects, calculate_points, filter = null):
+	if me == null: return
+	
 	var lowest_points = INF
 	var best_candidate
 

@@ -49,8 +49,7 @@ func next_map():
 	_update_map_button()
 	_enable_ai()
 	
-	game.stop_showing_winners()
-	game.emit_signal("game_loaded")
+	game.emit_signal("map_loaded")
 
 func _disable_ai():
 	game.get_node("PlayerManager").disable_ai()

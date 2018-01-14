@@ -1,8 +1,13 @@
 extends Node2D
 
 signal player_jump(player)
+signal player_get_coin(player)
 
 var positions = []
+
+func listen_to_players_collecting_coins():
+	for player in Global.Players:
+		player.connect("got_coins", self, "emit_signal", ["player_get_coin", player])
 
 func enable_ai():
 	for player in Global.Players:
@@ -20,7 +25,7 @@ func reset_controllers():
 		player.controller = "AI"
 
 func activate_controller(player_num, controller_name):
-	if Global.Game.showing_winners: return
+	if Global.Game.winner_jumping: return
 	
 	var random_player = _find_random_player()
 	while random_player.controller != "AI":
@@ -61,18 +66,3 @@ func resume_freeze_timer():
 
 func pause_freeze_timer():
 	Global.crocodile.get_node("FreezeTimer").set_paused(true)
-
-func players_with_highest_score():
-	var winners = []
-	var highest_score = 1
-	
-	for player in Global.Players:
-		if player.is_crocodile(): continue
-		
-		if player.coins > highest_score:
-			winners = [player]
-			highest_score = player.coins
-		elif player.coins == highest_score:
-			winners.append(player)
-	
-	return winners

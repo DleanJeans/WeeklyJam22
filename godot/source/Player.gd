@@ -46,6 +46,7 @@ signal frozen_as_crocodile
 signal unfrozen_as_crocodile
 
 signal hit_wall(player, bounce)
+signal got_coins()
 
 func almost_unfrozen():
 	return $FreezeTimer.time_left < 1
@@ -57,7 +58,6 @@ func reset():
 	$Sprite.modulate = _singleton("Const").WHITE
 	$AI/WinGame.clear_subgoals()
 	$FreezeTimer.stop()
-	$WinnerLabel.hide()
 	$ScreamSound.choose_random_sound()
 
 func enable_ai():
@@ -68,18 +68,6 @@ func disable_ai():
 
 func hide_button_hint():
 	$ButtonHint.hide()
-
-func show_crown():
-	if $Sprite/Crown.visible or $CrownAnimation.is_playing(): return
-
-	$CrownAnimation.play("PopUp")
-	$PopSound.play()
-
-func hide_crown():
-	if not $Sprite/Crown.visible or $CrownAnimation.is_playing(): return
-
-	$CrownAnimation.play("PopOut")
-	$PopSound.play()
 
 func out_of_coins():
 	return coins <= 0
@@ -105,12 +93,6 @@ func is_close_to_at_least_3_others():
 				return true
 
 	return false
-
-func show_winner_label():
-	$WinnerLabel.show()
-
-func hide_winner_label():
-	$WinnerLabel.hide()
 
 func bounce():
 	var jump_animation_not_player = _jump_animation_not_playing()
@@ -150,6 +132,7 @@ func break_unfrozen():
 
 func collect_coins(amount = 10):
 	self.coins += amount
+	emit_signal("got_coins")
 
 func take_away_coins(amount):
 	if amount > coins:
@@ -295,7 +278,6 @@ func _set_color(value):
 		$Sprite.self_modulate = color
 		$Sprite/CoinLabel.self_modulate = color
 		$Sprite/NameTag.self_modulate = color
-		$WinnerLabel.self_modulate = color
 		$Sprite/Panic.self_modulate = color
 
 func _set_crocodile(value):

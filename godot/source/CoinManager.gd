@@ -1,5 +1,7 @@
 extends Node2D
 
+signal player_collect_coin(player)
+
 func stop_spawners():
 	get_tree().call_group("CoinSpawners", "stop")
 
