@@ -1,15 +1,12 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://source/ai/steering/SteeringTest.gd" type="Script" id=1]
-[ext_resource path="res://source/Platform.tscn" type="PackedScene" id=2]
-[ext_resource path="res://source/Player.tscn" type="PackedScene" id=3]
-[ext_resource path="res://assets/png/Sprite.png" type="Texture" id=4]
-[ext_resource path="res://BebasNeue.otf" type="DynamicFontData" id=5]
-[ext_resource path="res://source/BoxWall.tscn" type="PackedScene" id=6]
-
-
-
-
+[ext_resource path="res://source/debug/DebugOverlay.tscn" type="PackedScene" id=2]
+[ext_resource path="res://source/Platform.tscn" type="PackedScene" id=3]
+[ext_resource path="res://source/Player.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/png/Sprite.png" type="Texture" id=5]
+[ext_resource path="res://BebasNeue.otf" type="DynamicFontData" id=6]
+[ext_resource path="res://source/BoxWall.tscn" type="PackedScene" id=7]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -21,7 +18,7 @@ extents = Vector2( 5, 5 )
 size = 25
 use_mipmaps = false
 use_filter = false
-font_data = ExtResource( 5 )
+font_data = ExtResource( 6 )
 _sections_unfolded = [ "Font", "Settings" ]
 
 [sub_resource type="DynamicFont" id=3]
@@ -29,7 +26,7 @@ _sections_unfolded = [ "Font", "Settings" ]
 size = 25
 use_mipmaps = false
 use_filter = false
-font_data = ExtResource( 5 )
+font_data = ExtResource( 6 )
 _sections_unfolded = [ "Font", "Settings" ]
 
 [node name="SteeringTest" type="Node2D"]
@@ -37,17 +34,23 @@ _sections_unfolded = [ "Font", "Settings" ]
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Platform" parent="." index="0" instance=ExtResource( 2 )]
+[node name="DebugOverlay" parent="." index="0" instance=ExtResource( 2 )]
 
-position = Vector2( 720, 210 )
+mouse_default_cursor_shape = 0
+debug_crown = false
+enable_slo_mo = true
+
+[node name="Platform" parent="." index="1" instance=ExtResource( 3 )]
+
+position = Vector2( 722, 262 )
 scale = Vector2( 2, 1 )
 
-[node name="Platform2" parent="." index="1" instance=ExtResource( 2 )]
+[node name="Platform2" parent="." index="2" instance=ExtResource( 3 )]
 
-position = Vector2( 720, 430 )
+position = Vector2( 722, 372 )
 scale = Vector2( 2, 1 )
 
-[node name="TileMap" type="TileMap" parent="." index="2"]
+[node name="TileMap" type="TileMap" parent="." index="3"]
 
 mode = 0
 tile_set = null
@@ -68,18 +71,18 @@ format = 1
 tile_data = PoolIntArray(  )
 _sections_unfolded = [ "Cell" ]
 
-[node name="TestSubject" parent="TileMap" index="0" instance=ExtResource( 3 )]
+[node name="TestSubject" parent="TileMap" index="0" instance=ExtResource( 4 )]
 
-position = Vector2( 720, 150 )
+position = Vector2( 322, 382 )
 
-[node name="ControlSubject" parent="TileMap" index="1" instance=ExtResource( 3 )]
+[node name="ControlSubject" parent="TileMap" index="1" instance=ExtResource( 4 )]
 
-position = Vector2( 590, 270 )
+position = Vector2( 322, 272 )
 
-[node name="Target" type="StaticBody2D" parent="." index="3"]
+[node name="Target" type="StaticBody2D" parent="." index="4"]
 
 editor/display_folded = true
-position = Vector2( 840, 120 )
+position = Vector2( 720, 370 )
 input_pickable = false
 collision_layer = 1
 collision_mask = 0
@@ -94,14 +97,14 @@ __meta__ = {
 [node name="Sprite" type="Sprite" parent="Target" index="0"]
 
 scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 4 )
+texture = ExtResource( 5 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Shape" type="CollisionShape2D" parent="Target" index="1"]
 
 shape = SubResource( 1 )
 
-[node name="Container" type="VBoxContainer" parent="." index="4"]
+[node name="Container" type="VBoxContainer" parent="." index="5"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -113,6 +116,7 @@ margin_right = 196.0
 margin_bottom = 526.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
+mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 alignment = 0
@@ -130,7 +134,9 @@ anchor_bottom = 0.0
 margin_right = 176.0
 margin_bottom = 40.0
 rect_pivot_offset = Vector2( 0, 0 )
+focus_mode = 2
 mouse_filter = 0
+mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 custom_fonts/font = SubResource( 2 )
@@ -153,7 +159,9 @@ margin_top = 44.0
 margin_right = 176.0
 margin_bottom = 84.0
 rect_pivot_offset = Vector2( 0, 0 )
+focus_mode = 2
 mouse_filter = 0
+mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 custom_fonts/font = SubResource( 2 )
@@ -176,7 +184,9 @@ margin_top = 88.0
 margin_right = 176.0
 margin_bottom = 128.0
 rect_pivot_offset = Vector2( 0, 0 )
+focus_mode = 2
 mouse_filter = 0
+mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 custom_fonts/font = SubResource( 2 )
@@ -199,7 +209,9 @@ margin_top = 132.0
 margin_right = 176.0
 margin_bottom = 172.0
 rect_pivot_offset = Vector2( 0, 0 )
+focus_mode = 2
 mouse_filter = 0
+mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 custom_fonts/font = SubResource( 2 )
@@ -222,7 +234,9 @@ margin_top = 176.0
 margin_right = 176.0
 margin_bottom = 216.0
 rect_pivot_offset = Vector2( 0, 0 )
+focus_mode = 2
 mouse_filter = 0
+mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 custom_fonts/font = SubResource( 2 )
@@ -235,7 +249,7 @@ flat = false
 align = 0
 _sections_unfolded = [ "custom_fonts" ]
 
-[node name="Label" type="Label" parent="." index="5"]
+[node name="Label" type="Label" parent="." index="6"]
 
 anchor_left = 0.5
 anchor_top = 1.0
@@ -247,6 +261,7 @@ margin_right = 507.0
 margin_bottom = 457.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 2
+mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
 custom_fonts/font = SubResource( 3 )
@@ -256,7 +271,7 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "custom_fonts" ]
 
-[node name="BoxWall" parent="." index="6" instance=ExtResource( 6 )]
+[node name="BoxWall" parent="." index="7" instance=ExtResource( 7 )]
 
 [connection signal="toggled" from="Container/Seek" to="." method="_on_Behavior_toggled" binds= [ "Seek" ]]
 

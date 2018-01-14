@@ -20,7 +20,7 @@ var max_velocity = 300
 var drag_scale = 0.8
 var crocodile_speed = 400
 var normal_speed = 300
-var ai_speed_scale = 1
+var ai_speed_scale = 0.975
 
 onready var platform_offset = $Sprite.texture.get_height() * $Sprite.scale.y
 

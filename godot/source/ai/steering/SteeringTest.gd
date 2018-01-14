@@ -16,11 +16,6 @@ func _ready():
 	ControlSubject.turn_normal()
 	
 func _physics_process(delta):
-	var slide_count = TestSubject.get_slide_count()
-#	if slide_count:
-	print("Slide count: %s" % slide_count)
-	
-	TestSubject.velocity += ($Target.position - TestSubject.position).normalized()
 	TestSubject.velocity += Steering.steer()
 
 func _process(delta):
@@ -29,9 +24,9 @@ func _process(delta):
 	if Input.is_mouse_button_pressed(BUTTON_RIGHT):
 		$Target.position = mouse_position
 	
-func _on_Behavior_toggled(pressed, name):
-	print("%s Toggled" % name)
-	var behavior = Steering.get_node(name)
+func _on_Behavior_toggled(pressed, behavior_name):
+	print("%s Toggled" % behavior_name)
+	var behavior = Steering.get_node(behavior_name)
 	if pressed:
 		behavior.on($Target)
 	else: behavior.off()
