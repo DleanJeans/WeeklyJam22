@@ -110,9 +110,9 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 480, 270 ) ]
 }
 
-[node name="GameTimer" type="Timer"]
+[node name="GameTimer" type="Timer" index="0"]
 
-process_mode = 0
+process_mode = 1
 wait_time = 0.01
 one_shot = true
 autostart = false
@@ -128,6 +128,7 @@ layer = 1
 offset = Vector2( 0, 0 )
 rotation = 0.0
 scale = Vector2( 1, 1 )
+transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 script = ExtResource( 2 )
 
 [node name="RoundLabel" type="Label" parent="GUI" index="0"]
@@ -142,6 +143,7 @@ margin_bottom = 120.0
 rect_scale = Vector2( 0.5, 0.5 )
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 2
+mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
 custom_fonts/font = SubResource( 1 )
@@ -166,6 +168,7 @@ margin_bottom = 272.0
 rect_rotation = -0.136255
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 2
+mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
 custom_fonts/font = SubResource( 2 )
@@ -179,13 +182,13 @@ _sections_unfolded = [ "Anchor", "Margin", "Rect", "custom_fonts" ]
 
 [node name="CountdownAnimation" type="AnimationPlayer" parent="GUI" index="2"]
 
+root_node = NodePath("..")
+autoplay = ""
 playback_process_mode = 1
 playback_default_blend_time = 0.0
-root_node = NodePath("..")
+playback_speed = 1.0
 anims/. = SubResource( 3 )
 anims/Disappear = SubResource( 4 )
-playback/active = true
-playback/speed = 1.0
 blend_times = [  ]
 autoplay = ""
 _sections_unfolded = [ "Playback Options", "playback" ]
