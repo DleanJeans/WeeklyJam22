@@ -40,7 +40,6 @@ func play_last_sequence():
 	
 	yield(Utility.timer(1), "timeout")
 	
-	print("Disappeared!")
 	_play_countdown_label_disappear_animation()
 
 func _play_countdown_label_disappear_animation():
@@ -62,7 +61,7 @@ func _update_round_label():
 
 func _update_countdown_label():
 	var time_left = _rounded_time_left()
-	print("%s -> %s" % [timer.time_left, time_left])
+	print("GameTimer/GUI: %s -> %s" % [timer.time_left, time_left])
 	var text = "%s" % time_left
 	
 	if time_left == 0:
@@ -78,7 +77,7 @@ func _rounded_time_left():
 
 func _play_ticking_sound():
 	var time_left = _rounded_time_left()
-	if time_left > 0 and time_left < timer.countdown_duration + 2:
+	if time_left > 0 and time_left <= timer.round_end_countdown_duration:
 		$TikSound.play()
 
 func _start_countdown_animation():
