@@ -6,13 +6,10 @@
 [ext_resource path="res://source/CoinSpawner.tscn" type="PackedScene" id=4]
 [ext_resource path="res://source/Player.tscn" type="PackedScene" id=5]
 
-
-
-
-[node name="Map" type="Node2D"]
+[node name="Map" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
-name = "The Island - 3 Players"
+map_name = "The Island - 3 Players"
 position_tween_time = 0.5
 
 [node name="BoxWall" parent="." index="0" instance=ExtResource( 2 )]

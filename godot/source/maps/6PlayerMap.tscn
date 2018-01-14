@@ -6,13 +6,10 @@
 [ext_resource path="res://source/Platform.tscn" type="PackedScene" id=4]
 [ext_resource path="res://source/Player.tscn" type="PackedScene" id=5]
 
-
-
-
 [node name="Map" type="Node2D"]
 
 script = ExtResource( 1 )
-name = "Rectangle - 6 Players"
+map_name = "The Corners - 6 Players"
 position_tween_time = 0.5
 
 [node name="BoxWall" parent="." index="0" instance=ExtResource( 2 )]

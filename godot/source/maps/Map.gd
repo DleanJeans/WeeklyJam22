@@ -1,6 +1,6 @@
 extends Node2D
 
-export(String) var name = "Map Name"
+export(String) var map_name = "Map Name"
 
 export(float) var position_tween_time = 0.5
 

@@ -71,7 +71,7 @@ func _increment_map_index():
 	index = wrapi(index + 1, 0, MAX_MAP)
 
 func _update_map_button():
-	game.get_node("MainMenu/MapButton").text = "Map: %s" % _current_map.name
+	game.get_node("MainMenu/MapButton").text = "Map: %s" % _current_map.map_name
 
 func _enable_ai():
 	game.get_node("PlayerManager").enable_ai()

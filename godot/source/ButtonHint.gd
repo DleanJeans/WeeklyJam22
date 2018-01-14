@@ -3,14 +3,14 @@ extends Control
 
 export(String, "A", "3", "Enter", "L1", "Space", "Start", "F11") var button = "Space" setget set_button
 
-func set_button(name):
-	button = name
+func set_button(button_name):
+	button = button_name
 	
 	if not has_node("Sprites"): return
 	
 	for sprite in $Sprites.get_children():
 		sprite.hide()
-	$Sprites.get_node(name).show()
+	$Sprites.get_node(button).show()
 
 func set_visible(value):
 	if visible != value:

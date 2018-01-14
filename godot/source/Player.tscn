@@ -816,21 +816,21 @@ func start():
 	jumped = false
 
 func _process(delta):
-	var time = get_time_left()
-	if time > 0:
-		label.text = String(time + 1).substr(0, 1)
+	if time_left > 0:
+		label.text = String(time_left + 1).substr(0, 1)
 	else: label.text = \"\"
 	
 	var frozen = player.frozen
 	if label.text == \"4\" or label.text == \"3\" and not frozen:
 		print(\"Gotcha! %s\" % label.text)
-		print(\"Paused: %s\" % is_paused())
+		print(\"Paused: %s\" % paused)
 		print(\"Stopped: %s\" % is_stopped())
+		player.frozen = true
 	
 	if label.text == \"4\":
-		set_paused(false)
+		paused = false
 	
-	if time < jump_duration / 2 and player.is_crocodile() and not jumped:
+	if time_left < jump_duration / 2 and player.is_crocodile() and not jumped:
 		jumped = true
 		player.break_unfrozen()"
 

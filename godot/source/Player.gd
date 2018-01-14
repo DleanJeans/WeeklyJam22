@@ -48,8 +48,7 @@ signal unfrozen_as_crocodile
 signal hit_wall(player, bounce)
 
 func almost_unfrozen():
-	var time_left = $FreezeTimer.get_time_left()
-	return time_left < 1
+	return $FreezeTimer.time_left < 1
 
 func reset():
 	turn_normal()
@@ -141,8 +140,8 @@ func groan():
 		$ButtonHint.pop_out()
 		$Sprite/Crocodile.rawr()
 
-func _finished_playing(name):
-	if name == "Jump" or name == "Groan":
+func _finished_playing(_name):
+	if _name == "Jump" or _name == "Groan":
 		$ButtonHint.pop_up()
 
 func break_unfrozen():
@@ -253,8 +252,8 @@ func clamp_velocity():
 		cap *= ai_speed_scale
 	velocity = velocity.clamped(cap)
 
-func set_name_tag(name):
-	$Sprite/NameTag.text = name
+func set_name_tag(_name):
+	$Sprite/NameTag.text = _name
 
 func _set_controller(value):
 	controller = value
@@ -324,5 +323,5 @@ func _tag_overlapping_player():
 func _exit_tree():
 	_singleton("Debug").Labels.remove_label(self)
 
-func _singleton(name):
-	return get_node("/root/%s" % name)
+func _singleton(_name):
+	return get_node("/root/%s" % _name)

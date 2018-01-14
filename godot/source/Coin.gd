@@ -16,8 +16,8 @@ func _on_collected(body):
 func _is_not_player(body):
 	return not body is Classes.Player
 
-func _on_animation_finished(name):
-	if name == "Collected":
+func _on_animation_finished(_name):
+	if _name == "Collected":
 		queue_free()
 
 func _physics_process(delta):
