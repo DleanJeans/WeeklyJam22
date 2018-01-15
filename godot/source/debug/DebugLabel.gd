@@ -46,7 +46,15 @@ func _update_position():
 	if not parent:
 		return
 	
-	rect_position = parent.global_position + offset
+	var parent_position = _global_position(parent)
+	rect_position = parent_position + offset
+
+func _global_position(node):
+	if node is Control:
+		return node.rect_global_position
+	elif node is Node2D:
+		return node.global_position
+	return Vector2()
 
 func set_text(value):
 	.set_text(value)

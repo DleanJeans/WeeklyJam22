@@ -2,6 +2,7 @@ tool
 extends Node
 
 var Game
+var Map
 var Players setget , _get_players 
 var Platforms setget, _get_platforms
 var Coins setget , _get_coins

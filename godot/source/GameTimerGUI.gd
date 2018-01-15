@@ -6,7 +6,7 @@ const GAME_OVER = "Game Over!"
 onready var timer = get_parent()
 
 func update_main_menu_duration_button(minutes):
-	$"/root/Game/MainMenu".update_duration_button(minutes)
+	Screens.MainMenu.update_duration_button(minutes)
 
 func show_round_label():
 	$RoundLabel.show()

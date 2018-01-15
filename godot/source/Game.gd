@@ -23,7 +23,7 @@ func open_joining_screen():
 	emit_signal("joining_screen_opened")
 
 func open_main_menu():
-	$MainMenu.open()
+	Screens.MainMenu.open()
 	emit_signal("main_menu_opened")
 
 func start_counting_down():
@@ -59,9 +59,11 @@ func show_mouse():
 func hide_mouse():
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 
-func _ready():
+func _enter_tree():
 	Global.Game = self
 	randomize()
+
+func _ready():
 	emit_signal("map_preloaded")
 	emit_signal("map_loaded")
 

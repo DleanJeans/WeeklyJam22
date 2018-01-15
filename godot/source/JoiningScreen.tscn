@@ -5,8 +5,7 @@
 [ext_resource path="res://source/ButtonHint.tscn" type="PackedScene" id=3]
 [ext_resource path="res://source/ReadyLabel.tscn" type="PackedScene" id=4]
 
-
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=1]
 
 resource_name = "LabelBobbing"
 length = 1.0
@@ -58,7 +57,7 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
 custom_fonts/font = ExtResource( 2 )
-text = "Press one of these to join"
+text = "Press these buttons to join"
 align = 1
 percent_visible = 1.0
 lines_skipped = 0
@@ -180,7 +179,7 @@ autoplay = ""
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 playback_speed = 1.0
-anims/LabelBobbing = SubResource( 2 )
+anims/LabelBobbing = SubResource( 1 )
 blend_times = [  ]
 autoplay = ""
 

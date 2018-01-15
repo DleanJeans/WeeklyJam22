@@ -1,7 +1,7 @@
 extends Node2D
 
-onready var PlayerManager = $"../PlayerManager"
-onready var MainMenu = $"../MainMenu"
+onready var PlayerManager = Systems.PlayerManager
+onready var MainMenu = Screens.MainMenu
 
 var num_users = 0
 var _current_controller
@@ -19,7 +19,7 @@ func _process(delta):
 		_check_key_list(child)
 
 func _room_full():
-	var player_count = $"../Map/Objects".get_child_count()
+	var player_count = Global.Map.get_child_count()
 	return num_users >= player_count
 
 func _check_key_list(controller_child):

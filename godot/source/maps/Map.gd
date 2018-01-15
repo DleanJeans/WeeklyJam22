@@ -9,6 +9,9 @@ onready var _tween = Tween.new()
 var _players = []
 var _positions = {}
 
+func _enter_tree():
+	Global.Map = self
+
 func _ready():
 	_record_positions()
 	add_child(_tween)

@@ -1,8 +1,8 @@
 extends Container
 
-onready var MainMenu = $"../MainMenu"
-onready var MenuButton = $"../MenuButton"
-onready var game = get_parent()
+onready var MainMenu = Screens.MainMenu
+onready var MenuButton = $"/root/Game/UI/MenuButton"
+onready var game = Global.Game
 
 func _process(delta):
 	if Input.is_action_just_pressed("ui_start") and _is_pause_allowed():

@@ -14,7 +14,7 @@ var round_duration = 180
 func _get_time_left():
 	return get_time_left()
 
-onready var game = get_parent()
+onready var game = Global.Game
 
 func hide():
 	$GUI.hide()

@@ -1,7 +1,7 @@
 extends Container
 
-onready var game = get_parent()
-onready var player_manager = game.get_node("PlayerManager")
+onready var game = Global.Game
+onready var PlayerManager = Systems.PlayerManager
 
 var player_label_dict = {}
 var players_ready = {}
@@ -23,7 +23,7 @@ func open():
 	_hide_labels()
 	_move_label_to_players()
 	_toggle_joypad_hints()
-	player_manager.connect("player_jump", self, "_on_player_jump")
+	PlayerManager.connect("player_jump", self, "_on_player_jump")
 
 func _toggle_joypad_hints():
 	if game.joypad_connected():
@@ -55,8 +55,8 @@ func _disconnnect_jump_signals():
 	for player in players_joined:
 		if player.is_connected("jump", self, "_on_player_jump"):
 			player.disconnect("jump", self, "_on_player_jump")
-	if player_manager.is_connected("player_jump", self, "_on_player_jump"):
-		player_manager.disconnect("player_jump", self, "_on_player_jump")
+	if PlayerManager.is_connected("player_jump", self, "_on_player_jump"):
+		PlayerManager.disconnect("player_jump", self, "_on_player_jump")
 
 func _process(delta):
 	if not visible: return

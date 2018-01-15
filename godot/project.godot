@@ -22,6 +22,8 @@ Utility="*res://source/Utility.gd"
 Classes="*res://source/Classes.gd"
 Const="*res://source/Const.gd"
 Debug="*res://source/debug/Debug.gd"
+Systems="*res://source/Systems.gd"
+Screens="*res://source/Screens.gd"
 
 [display]
 

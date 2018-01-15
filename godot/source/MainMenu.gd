@@ -1,7 +1,7 @@
 extends Container
 
-onready var game = get_parent()
-onready var menu_button = game.get_node("MenuButton")
+onready var game = Global.Game
+onready var menu_button = $"/root/Game/UI/MenuButton"
 
 var opened = true
 
@@ -11,6 +11,9 @@ signal duration_pressed
 
 func update_duration_button(minutes):
 	$DurationButton.text = "Duration: %s Minutes" % minutes
+
+func update_map_button(map_name):
+	$MapButton.text = "Map: %s" % map_name
 
 func open():
 	opened = true

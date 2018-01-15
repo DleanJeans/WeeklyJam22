@@ -18,7 +18,11 @@ func disable_ai():
 		player.disable_ai()
 
 func reset_positions():
-	$"../Map".reset_positions()
+	var map = _current_map()
+	map.reset_positions()
+
+func _current_map():
+	return $"/root/Game/Map"
 
 func reset_controllers():
 	for player in Global.Players:

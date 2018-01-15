@@ -70,7 +70,7 @@ tracks/0/keys = {
 "values": [ Vector2( 0, -540 ), Vector2( 0, 20 ), Vector2( 0, 0 ) ]
 }
 
-[node name="MainMenu" type="Container" index="0"]
+[node name="MainMenu" type="Container"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -392,13 +392,13 @@ _sections_unfolded = [ "Playback Options", "playback" ]
 
 [connection signal="pressed" from="FullscreenButton" to="." method="_on_FullscreenButton_pressed"]
 
-[connection signal="pressed" from="PlayButton" to="PlayButton" method="release_focus"]
-
 [connection signal="pressed" from="PlayButton" to="SelectSound" method="play"]
 
-[connection signal="pressed" from="PlayButton" to="." method="_on_PlayButton_pressed"]
+[connection signal="pressed" from="PlayButton" to="PlayButton" method="release_focus"]
 
 [connection signal="pressed" from="PlayButton" to="." method="close"]
+
+[connection signal="pressed" from="PlayButton" to="." method="_on_PlayButton_pressed"]
 
 [connection signal="pressed" from="MapButton" to="SelectSound" method="play"]
 

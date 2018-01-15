@@ -119,7 +119,7 @@ autostart = false
 script = ExtResource( 1 )
 countdown_duration = 3
 round_end_countdown_duration = 5
-enable_debug_duration = true
+enable_debug_duration = false
 debug_duration = 0.5
 
 [node name="GUI" type="CanvasLayer" parent="." index="0"]
@@ -215,8 +215,8 @@ autoplay = false
 mix_target = 0
 bus = "Master"
 
-[connection signal="timeout" from="." to="." method="_on_timeout" flags=3]
-
 [connection signal="timeout" from="." to="GUI" method="play_last_sequence"]
+
+[connection signal="timeout" from="." to="." method="_on_timeout" flags=3]
 
 

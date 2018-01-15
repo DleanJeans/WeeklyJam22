@@ -2,7 +2,7 @@ extends Node2D
 
 const maps_path = "res://source/maps"
 
-onready var game = get_parent()
+onready var game = Global.Game
 
 var MAX_MAP
 var index = -1
@@ -54,7 +54,7 @@ func next_map():
 	game.emit_signal("map_loaded")
 
 func _disable_ai():
-	game.get_node("PlayerManager").disable_ai()
+	Systems.PlayerManager.disable_ai()
 
 func _free_old_map():
 	game.get_node("Map").free()
@@ -72,7 +72,7 @@ func _increment_map_index():
 	index = wrapi(index + 1, 0, MAX_MAP)
 
 func _update_map_button():
-	game.get_node("MainMenu/MapButton").text = "Map: %s" % _current_map.map_name
+	Screens.MainMenu.update_map_button(_current_map.map_name)
 
 func _enable_ai():
-	game.get_node("PlayerManager").enable_ai()
+	Systems.PlayerManager.enable_ai()
