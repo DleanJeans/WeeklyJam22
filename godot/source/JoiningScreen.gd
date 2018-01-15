@@ -51,14 +51,6 @@ func _move_label_to_players():
 		
 		_set_label_position(label, player)
 
-func _stick_label_to_players():
-	for player in players_joined:
-		var label = player_label_dict[player]
-		_set_label_position(label, player)
-
-func _set_label_position(label, player):
-	label.rect_position = player.position
-
 func _disconnnect_jump_signals():
 	for player in players_joined:
 		if player.is_connected("jump", self, "_on_player_jump"):
@@ -71,13 +63,13 @@ func _process(delta):
 	
 	_stick_label_to_players()
 
-func _all_ready():
-	if players_joined.size() == 0:
-		return false
+func _stick_label_to_players():
 	for player in players_joined:
-		if not players_ready[player]:
-			return false
-	return true
+		var label = player_label_dict[player]
+		_set_label_position(label, player)
+
+func _set_label_position(label, player):
+	label.rect_position = player.position + Vector2(30, -50)
 
 func _on_player_jump(player):
 	var label = player_label_dict[player]
@@ -108,3 +100,11 @@ func _update_label(player):
 	else:
 		label.text = "Not Ready?"
 		label.modulate = Const.WHITE
+
+func _all_ready():
+	if players_joined.size() == 0:
+		return false
+	for player in players_joined:
+		if not players_ready[player]:
+			return false
+	return true

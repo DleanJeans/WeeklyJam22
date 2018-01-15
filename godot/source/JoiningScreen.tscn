@@ -5,11 +5,9 @@
 [ext_resource path="res://source/ButtonHint.tscn" type="PackedScene" id=3]
 [ext_resource path="res://source/ReadyLabel.tscn" type="PackedScene" id=4]
 
-
-
 [sub_resource type="DynamicFont" id=1]
 
-size = 80
+size = 40
 use_mipmaps = false
 use_filter = false
 font_data = ExtResource( 2 )
@@ -25,37 +23,40 @@ margin_right = 960.0
 margin_bottom = 540.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
+mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 script = ExtResource( 1 )
 
-[node name="Hints" type="Container" parent="." index="0"]
+[node name="Hints" type="VBoxContainer" parent="." index="0"]
+
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -480.0
+margin_top = -56.0
+margin_right = 480.0
+margin_bottom = 56.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+alignment = 0
+_sections_unfolded = [ "Rect" ]
+
+[node name="Label" type="Label" parent="Hints" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 440.0
-margin_right = 40.0
-margin_bottom = 480.0
-rect_pivot_offset = Vector2( 0, 0 )
-mouse_filter = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-
-[node name="Label" type="Label" parent="Hints" index="0"]
-
-anchor_left = 0.5
-anchor_top = 0.0
-anchor_right = 0.5
-anchor_bottom = 0.0
-margin_left = -20.0
-margin_top = -200.0
-margin_right = 1900.0
-margin_bottom = -104.0
-rect_scale = Vector2( 0.5, 0.5 )
+margin_right = 960.0
+margin_bottom = 48.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 2
+mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
 custom_fonts/font = SubResource( 1 )
@@ -65,19 +66,20 @@ valign = 1
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
-_sections_unfolded = [ "custom_fonts" ]
+_sections_unfolded = [ "Anchor", "Hint", "Margin", "Rect", "custom_fonts" ]
 
 [node name="ButtonHints" type="HBoxContainer" parent="Hints" index="1"]
 
 anchor_left = 0.0
 anchor_top = 0.0
-anchor_right = 1.0
+anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = -150.0
-margin_right = 920.0
-margin_bottom = -90.0
+margin_top = 52.0
+margin_right = 960.0
+margin_bottom = 102.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
+mouse_default_cursor_shape = 0
 size_flags_horizontal = 7
 size_flags_vertical = 2
 alignment = 1
@@ -90,11 +92,10 @@ __meta__ = {
 
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 354.0
+margin_left = 374.0
 margin_top = 0.0
-margin_right = 414.0
-margin_bottom = 60.0
-rect_scale = Vector2( 1, 1 )
+margin_right = 424.0
+margin_bottom = 50.0
 size_flags_vertical = 3
 _sections_unfolded = [ "Hint", "Mouse", "Rect", "Size Flags" ]
 button = "A"
@@ -103,11 +104,10 @@ button = "A"
 
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 418.0
+margin_left = 428.0
 margin_top = 0.0
 margin_right = 478.0
-margin_bottom = 60.0
-rect_scale = Vector2( 1, 1 )
+margin_bottom = 50.0
 size_flags_vertical = 3
 _sections_unfolded = [ "Hint", "Mouse", "Rect", "Size Flags" ]
 button = "3"
@@ -118,9 +118,8 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 482.0
 margin_top = 0.0
-margin_right = 542.0
-margin_bottom = 60.0
-rect_scale = Vector2( 1, 1 )
+margin_right = 532.0
+margin_bottom = 50.0
 size_flags_vertical = 3
 _sections_unfolded = [ "Hint", "Mouse", "Rect", "Size Flags" ]
 button = "Enter"
@@ -129,13 +128,13 @@ button = "Enter"
 
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 546.0
+margin_left = 536.0
 margin_top = 0.0
-margin_right = 606.0
-margin_bottom = 60.0
-rect_scale = Vector2( 1, 1 )
+margin_right = 586.0
+margin_bottom = 50.0
 size_flags_vertical = 3
 _sections_unfolded = [ "Hint", "Mouse", "Rect", "Size Flags" ]
+button = "Space"
 
 [node name="Labels" type="Container" parent="." index="1"]
 
@@ -148,31 +147,38 @@ margin_right = 40.0
 margin_bottom = 40.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
+mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 
 [node name="Ready1" parent="Labels" index="0" instance=ExtResource( 4 )]
 
 visible = false
+mouse_default_cursor_shape = 0
 
 [node name="Ready2" parent="Labels" index="1" instance=ExtResource( 4 )]
 
 visible = false
+mouse_default_cursor_shape = 0
 
 [node name="Ready3" parent="Labels" index="2" instance=ExtResource( 4 )]
 
 visible = false
+mouse_default_cursor_shape = 0
 
 [node name="Ready4" parent="Labels" index="3" instance=ExtResource( 4 )]
 
 visible = false
+mouse_default_cursor_shape = 0
 
 [node name="Ready5" parent="Labels" index="4" instance=ExtResource( 4 )]
 
 visible = false
+mouse_default_cursor_shape = 0
 
 [node name="Ready6" parent="Labels" index="5" instance=ExtResource( 4 )]
 
 visible = false
+mouse_default_cursor_shape = 0
 
 

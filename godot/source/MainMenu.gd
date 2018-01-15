@@ -17,20 +17,13 @@ func open():
 	show()
 	$PlayButton.grab_focus()
 	$AnimationPlayer.play("Open")
-	_toggle_joypad_hint()
 
 func close():
 	opened = false
 	$AnimationPlayer.play("Close")
 
-func _toggle_joypad_hint():
-	if game.joypad_connected():
-		$FullScreenHints/L1.show()
-	else: $FullScreenHints/L1.hide()
-
 func _ready():
 	$PlayButton.grab_focus()
-	_toggle_joypad_hint()
 
 func _process(delta):
 	if Input.is_action_just_pressed("toggle_main_menu") and OS.is_debug_build():

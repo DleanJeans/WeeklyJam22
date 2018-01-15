@@ -14,4 +14,4 @@ func show():
 
 func hide():
 	showing = false
-	$AnimationPlayer.play("Hide")
+	$AnimationPlayer.play_backwards("Show")

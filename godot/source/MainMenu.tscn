@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://source/MainMenu.gd" type="Script" id=1]
 [ext_resource path="res://source/SelectSound.tscn" type="PackedScene" id=2]
@@ -7,27 +7,18 @@
 [ext_resource path="res://assets/png/Sprite.png" type="Texture" id=5]
 [ext_resource path="res://BebasNeue.otf" type="DynamicFontData" id=6]
 [ext_resource path="res://FocusStyle.tres" type="StyleBox" id=7]
-[ext_resource path="res://source/ButtonHint.tscn" type="PackedScene" id=8]
 
 [sub_resource type="DynamicFont" id=1]
 
-size = 200
+size = 100
 use_mipmaps = false
 use_filter = false
 font_data = ExtResource( 6 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[sub_resource type="DynamicFont" id=2]
-
-size = 60
-use_mipmaps = false
-use_filter = false
-font_data = ExtResource( 6 )
-_sections_unfolded = [ "Settings" ]
-
 [sub_resource type="DynamicFont" id=3]
 
-size = 50
+size = 25
 use_mipmaps = false
 use_filter = false
 font_data = ExtResource( 6 )
@@ -35,7 +26,7 @@ _sections_unfolded = [ "Font", "Settings" ]
 
 [sub_resource type="DynamicFont" id=4]
 
-size = 40
+size = 20
 use_mipmaps = false
 use_filter = false
 font_data = ExtResource( 6 )
@@ -57,7 +48,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.1, 0.3 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 0, 0 ), Vector2( 0, -20 ), Vector2( 0, 540 ) ]
+"values": [ Vector2( 0, 0 ), Vector2( 0, 20 ), Vector2( 0, -540 ) ]
 }
 
 [sub_resource type="Animation" id=6]
@@ -76,23 +67,25 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.2, 0.3 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 0, 540 ), Vector2( 0, -20 ), Vector2( 0, 0 ) ]
+"values": [ Vector2( 0, -540 ), Vector2( 0, 20 ), Vector2( 0, 0 ) ]
 }
 
-[node name="MainMenu" type="Container"]
+[node name="MainMenu" type="Container" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_right = -960.0
+margin_left = -1.0
+margin_right = -961.0
 margin_bottom = -540.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
+mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 1 )
-_sections_unfolded = [ "Rect", "Visibility" ]
+_sections_unfolded = [ "Rect" ]
 __meta__ = {
 "_edit_group_": true
 }
@@ -110,6 +103,7 @@ margin_right = 960.0
 margin_bottom = 540.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
+mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 _sections_unfolded = [ "Anchor", "Grow Direction", "Margin", "Rect", "Visibility" ]
@@ -125,6 +119,7 @@ margin_bottom = 40.0
 rect_rotation = 12.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
+mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 
@@ -141,6 +136,7 @@ margin_right = 867.0
 margin_bottom = 203.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 1
+mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 texture = ExtResource( 3 )
@@ -164,6 +160,7 @@ rect_rotation = -15.0
 rect_scale = Vector2( 0.5, 0.5 )
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 1
+mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 texture = ExtResource( 4 )
@@ -185,6 +182,7 @@ rect_rotation = 15.0
 rect_scale = Vector2( 0.5, 0.5 )
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 1
+mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 texture = ExtResource( 4 )
@@ -206,6 +204,7 @@ margin_bottom = 147.0
 rect_scale = Vector2( 0.75, 0.75 )
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 1
+mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 texture = ExtResource( 5 )
@@ -219,11 +218,11 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 257.0
 margin_top = 15.0
-margin_right = 1658.0
-margin_bottom = 255.0
-rect_scale = Vector2( 0.5, 0.5 )
+margin_right = 964.0
+margin_bottom = 135.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
+mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 custom_fonts/font = SubResource( 1 )
@@ -236,80 +235,7 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="FullScreenButton" type="Button" parent="." index="3"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 20.0
-margin_top = 10.0
-margin_right = 398.0
-margin_bottom = 88.0
-rect_scale = Vector2( 0.5, 0.5 )
-rect_pivot_offset = Vector2( 0, 0 )
-focus_neighbour_top = NodePath("../RoundDurationButton")
-mouse_filter = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-custom_styles/hover = ExtResource( 7 )
-custom_styles/focus = ExtResource( 7 )
-custom_fonts/font = SubResource( 2 )
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Toggle Fullscreen"
-flat = true
-align = 1
-_sections_unfolded = [ "Focus", "custom_fonts" ]
-
-[node name="FullScreenHints" type="HBoxContainer" parent="." index="4"]
-
-editor/display_folded = true
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 20.0
-margin_top = 40.0
-margin_right = 210.0
-margin_bottom = 100.0
-rect_pivot_offset = Vector2( 0, 0 )
-mouse_filter = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-alignment = 1
-_sections_unfolded = [ "Rect" ]
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="F11" parent="FullScreenHints" index="0" instance=ExtResource( 8 )]
-
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 33.0
-margin_top = 0.0
-margin_right = 93.0
-margin_bottom = 60.0
-rect_scale = Vector2( 1, 1 )
-size_flags_horizontal = 4
-button = "F11"
-
-[node name="L1" parent="FullScreenHints" index="1" instance=ExtResource( 8 )]
-
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 97.0
-margin_top = 0.0
-margin_right = 157.0
-margin_bottom = 60.0
-rect_scale = Vector2( 1, 1 )
-size_flags_horizontal = 4
-button = "L1"
-
-[node name="PlayButton" type="Button" parent="." index="5"]
+[node name="PlayButton" type="Button" parent="." index="3"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -317,11 +243,13 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 30.0
 margin_top = 280.0
-margin_right = 530.0
-margin_bottom = 526.0
-rect_scale = Vector2( 0.5, 0.5 )
+margin_right = 380.0
+margin_bottom = 406.0
 rect_pivot_offset = Vector2( 0, 0 )
+focus_neighbour_top = NodePath("../RoundDurationButton")
+focus_mode = 2
 mouse_filter = 0
+mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 custom_styles/hover = ExtResource( 7 )
@@ -334,9 +262,9 @@ group = null
 text = "Play"
 flat = true
 align = 0
-_sections_unfolded = [ "Rect", "custom_fonts", "custom_styles" ]
+_sections_unfolded = [ "Focus", "Rect", "custom_fonts", "custom_styles" ]
 
-[node name="MapButton" type="Button" parent="." index="6"]
+[node name="MapButton" type="Button" parent="." index="4"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -344,11 +272,12 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 30.0
 margin_top = 410.0
-margin_right = 530.0
-margin_bottom = 476.0
-rect_scale = Vector2( 0.5, 0.5 )
+margin_right = 380.0
+margin_bottom = 447.0
 rect_pivot_offset = Vector2( 0, 0 )
+focus_mode = 2
 mouse_filter = 0
+mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 custom_styles/hover = ExtResource( 7 )
@@ -364,7 +293,7 @@ flat = true
 align = 0
 _sections_unfolded = [ "Rect", "custom_fonts" ]
 
-[node name="RoundDurationButton" type="Button" parent="." index="7"]
+[node name="RoundDurationButton" type="Button" parent="." index="5"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -372,12 +301,13 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 30.0
 margin_top = 450.0
-margin_right = 530.0
-margin_bottom = 516.0
-rect_scale = Vector2( 0.5, 0.5 )
+margin_right = 380.0
+margin_bottom = 487.0
 rect_pivot_offset = Vector2( 0, 0 )
-focus_neighbour_bottom = NodePath("../FullScreenButton")
+focus_neighbour_bottom = NodePath("../PlayButton")
+focus_mode = 2
 mouse_filter = 0
+mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 custom_styles/hover = ExtResource( 7 )
@@ -393,7 +323,7 @@ flat = true
 align = 0
 _sections_unfolded = [ "Focus", "Rect", "custom_fonts" ]
 
-[node name="Credits" type="Label" parent="." index="8"]
+[node name="Credits" type="Label" parent="." index="6"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -401,11 +331,11 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 750.0
 margin_top = 400.0
-margin_right = 1142.0
-margin_bottom = 652.0
-rect_scale = Vector2( 0.5, 0.5 )
+margin_right = 947.0
+margin_bottom = 532.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 2
+mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
 custom_fonts/font = SubResource( 4 )
@@ -418,24 +348,22 @@ align = 2
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
-_sections_unfolded = [ "custom_fonts" ]
+_sections_unfolded = [ "Rect", "custom_fonts" ]
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="9"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="7"]
 
+root_node = NodePath("..")
+autoplay = ""
 playback_process_mode = 1
 playback_default_blend_time = 0.1
-root_node = NodePath("..")
+playback_speed = 1.0
 anims/Close = SubResource( 5 )
 anims/Open = SubResource( 6 )
-playback/active = true
-playback/speed = 1.0
 blend_times = [  ]
 autoplay = ""
 _sections_unfolded = [ "Playback Options", "playback" ]
 
-[connection signal="pressed" from="FullScreenButton" to="." method="_on_FullScreenButton_pressed"]
-
-[connection signal="pressed" from="FullScreenButton" to="SelectSound" method="play"]
+[connection signal="pressed" from="PlayButton" to="SelectSound" method="play"]
 
 [connection signal="pressed" from="PlayButton" to="PlayButton" method="release_focus"]
 
@@ -443,14 +371,12 @@ _sections_unfolded = [ "Playback Options", "playback" ]
 
 [connection signal="pressed" from="PlayButton" to="." method="_on_PlayButton_pressed"]
 
-[connection signal="pressed" from="PlayButton" to="SelectSound" method="play"]
+[connection signal="pressed" from="MapButton" to="SelectSound" method="play"]
 
 [connection signal="pressed" from="MapButton" to="." method="_on_MapButton_pressed"]
 
-[connection signal="pressed" from="MapButton" to="SelectSound" method="play"]
+[connection signal="pressed" from="RoundDurationButton" to="SelectSound" method="play"]
 
 [connection signal="pressed" from="RoundDurationButton" to="." method="_on_RoundDurationButton_pressed"]
-
-[connection signal="pressed" from="RoundDurationButton" to="SelectSound" method="play"]
 
 

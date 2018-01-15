@@ -716,7 +716,7 @@ tracks/4/keys = {
 
 [sub_resource type="DynamicFont" id=13]
 
-size = 80
+size = 40
 use_mipmaps = true
 use_filter = false
 font_data = ExtResource( 5 )
@@ -724,7 +724,7 @@ _sections_unfolded = [ "Font", "Settings" ]
 
 [sub_resource type="DynamicFont" id=14]
 
-size = 80
+size = 40
 use_mipmaps = false
 use_filter = false
 font_data = ExtResource( 5 )
@@ -800,7 +800,7 @@ func stop():
 
 [sub_resource type="DynamicFont" id=18]
 
-size = 80
+size = 40
 use_mipmaps = false
 use_filter = false
 font_data = ExtResource( 5 )
@@ -923,11 +923,11 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-margin_left = -187.0
-margin_top = -194.0
-margin_right = -47.0
-margin_bottom = -98.0
-rect_scale = Vector2( 1.25, 0.625 )
+margin_left = -200.0
+margin_top = -192.0
+margin_right = -119.0
+margin_bottom = -144.0
+rect_scale = Vector2( 2.5, 1.25 )
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 2
 mouse_default_cursor_shape = 0
@@ -949,11 +949,11 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = -37.0
-margin_top = -187.0
-margin_right = 25.0
-margin_bottom = -91.0
-rect_scale = Vector2( 1.25, 0.6 )
+margin_left = -50.0
+margin_top = -192.0
+margin_right = -10.0
+margin_bottom = -144.0
+rect_scale = Vector2( 2.5, 1.2 )
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 2
 mouse_default_cursor_shape = 0
@@ -1062,16 +1062,14 @@ script = SubResource( 17 )
 
 [node name="TimerLabel" type="Label" parent="." index="15"]
 
-visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = -8.0
 margin_top = -40.0
-margin_right = 24.0
-margin_bottom = 56.0
-rect_scale = Vector2( 0.5, 0.5 )
+margin_right = 8.0
+margin_bottom = 8.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 2
 mouse_default_cursor_shape = 0
@@ -1083,7 +1081,7 @@ align = 1
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
-_sections_unfolded = [ "Visibility", "custom_fonts" ]
+_sections_unfolded = [ "Rect", "Visibility", "custom_fonts" ]
 
 [node name="MovementVisualizer" parent="." index="16" instance=ExtResource( 13 )]
 
@@ -1095,8 +1093,6 @@ visible = false
 margin_top = 0.0
 margin_right = 23.9334
 margin_bottom = 49.9258
-rect_scale = Vector2( 1, 1 )
-mouse_default_cursor_shape = 0
 button = "A"
 
 [connection signal="bounce" from="." to="." method="play_jump_gui"]
@@ -1109,9 +1105,9 @@ button = "A"
 
 [connection signal="turning_crocodile" from="." to="." method="start_freezing"]
 
-[connection signal="turning_normal" from="." to="SpriteFlipper/AnimationPlayer" method="play" binds= [ "PanicLeft" ]]
-
 [connection signal="turning_normal" from="." to="CrocodileShape" method="set_disabled" binds= [ true ]]
+
+[connection signal="turning_normal" from="." to="SpriteFlipper/AnimationPlayer" method="play" binds= [ "PanicLeft" ]]
 
 [connection signal="unfrozen_as_crocodile" from="." to="." method="_tag_overlapping_player"]
 
