@@ -9,9 +9,6 @@ var CoinSpawners setget , _get_coin_spawners
 
 var crocodile
 
-func toggle_fullscreen():
-	OS.set_window_fullscreen(not OS.is_window_fullscreen())
-
 func player_blocked_by_platform(player):
 	var slide_count = player.get_slide_count()
 	if slide_count == 0:
@@ -37,6 +34,9 @@ func _process(delta):
 		_switch_time_scale_for_slo_mo()
 	elif Input.is_action_just_pressed("toggle_fullscreen"):
 		toggle_fullscreen()
+
+func toggle_fullscreen():
+	OS.window_fullscreen = not OS.window_fullscreen
 
 func _slo_mo_toggle_pressed():
 	return Input.is_action_just_pressed("slo_mo_toggle") and Debug.Settings.enable_slo_mo and OS.is_debug_build()

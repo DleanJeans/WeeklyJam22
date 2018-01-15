@@ -1,8 +1,10 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://FocusStyle.tres" type="StyleBox" id=1]
-[ext_resource path="res://BebasNeue.tres" type="DynamicFont" id=2]
+[ext_resource path="res://assets/FocusStyle.tres" type="StyleBox" id=1]
+[ext_resource path="res://assets/BebasNeue.tres" type="DynamicFont" id=2]
 [ext_resource path="res://source/MenuButton.gd" type="Script" id=3]
+
+
 
 [sub_resource type="Animation" id=2]
 

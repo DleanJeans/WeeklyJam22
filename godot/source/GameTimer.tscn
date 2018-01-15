@@ -2,7 +2,7 @@
 
 [ext_resource path="res://source/GameTimer.gd" type="Script" id=1]
 [ext_resource path="res://source/GameTimerGUI.gd" type="Script" id=2]
-[ext_resource path="res://BebasNeue.otf" type="DynamicFontData" id=3]
+[ext_resource path="res://assets/BebasNeue.otf" type="DynamicFontData" id=3]
 [ext_resource path="res://assets/sfx/Tik.wav" type="AudioStream" id=4]
 [ext_resource path="res://assets/sfx/AscendString.ogg" type="AudioStream" id=5]
 [ext_resource path="res://assets/sfx/GameOver.ogg" type="AudioStream" id=6]
