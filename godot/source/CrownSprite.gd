@@ -1,15 +1,16 @@
 extends Sprite
 
-onready var TheCrown = get_parent()
+onready var ReferenceSprite = get_parent()
+onready var TheCrown = ReferenceSprite.get_parent()
 
 func pop_out():
 	$PopOutAnimation.play(".")
 
-func is_child_to_the_crown():
-	return get_parent() == TheCrown
+func is_child_to_reference_sprite():
+	return get_parent() == ReferenceSprite
 
-func reparent_to_the_crown():
-	reparent(TheCrown)
+func reparent_to_reference_sprite():
+	reparent(ReferenceSprite)
 
 func reparent_to_player_sprite(player):
 	var sprite = player.get_node("Sprite")

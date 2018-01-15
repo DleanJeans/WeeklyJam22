@@ -2,8 +2,8 @@ extends Node2D
 
 export(float) var transition_duration = 0.5
 
-onready var Crown = $Sprite/Crown
-onready var PopOutAnimation = $Sprite/Crown/PopOutAnimation
+onready var Crown = $ReferenceSprite/Crown
+onready var PopOutAnimation = $ReferenceSprite/Crown/PopOutAnimation
 
 var keeping_winner_jumping = false
 
@@ -11,7 +11,7 @@ var _leader
 var _player
 
 func _ready():
-	$Sprite.self_modulate.a = 0
+	$ReferenceSprite.self_modulate.a = 0
 
 func keep_winner_jumping():
 	keeping_winner_jumping = true
@@ -27,7 +27,7 @@ func stop_winner_jumping():
 func reset():
 	_leader = null
 	Crown.hide()
-	Crown.reparent_to_the_crown()
+	Crown.reparent_to_reference_sprite()
 
 func on_player_coins_collected(player):
 	_player = player
@@ -71,7 +71,7 @@ func _fly_to_player_otherwise():
 	_set_tween_to_player_position()
 	$TransitionTween.start()
 	$SwooshSound.play()
-	Crown.reparent_to_the_crown()
+	Crown.reparent_to_reference_sprite()
 
 func _set_tween_to_player_position():
 	$TransitionTween.follow_property(self, "position", Crown.global_position, _player, "position", transition_duration, Tween.TRANS_CUBIC, Tween.EASE_OUT)
@@ -81,5 +81,5 @@ func _set_player_as_new_leader():
 
 func _reparent_crown_to_leader_sprite_on_tween_completed():
 	yield($TransitionTween, "tween_completed")
-	if Crown.is_child_to_the_crown() and _leader != null:
+	if Crown.is_child_to_reference_sprite() and _leader != null:
 		Crown.reparent_to_player_sprite(_leader)

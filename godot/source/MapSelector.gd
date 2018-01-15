@@ -41,6 +41,8 @@ func _get_map_path(file):
 	return "%s/%s" % [maps_path, file]
 
 func next_map():
+	game.emit_signal("map_preloaded")
+	
 	game.stop_counting_down()
 	
 	_disable_ai()

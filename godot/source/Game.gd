@@ -1,5 +1,6 @@
 extends Node2D
 
+signal map_preloaded
 signal map_loaded
 
 signal countdown_started
@@ -61,6 +62,7 @@ func hide_mouse():
 func _ready():
 	Global.Game = self
 	randomize()
+	emit_signal("map_preloaded")
 	emit_signal("map_loaded")
 
 func _process(delta):

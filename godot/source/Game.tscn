@@ -17,7 +17,7 @@
 [ext_resource path="res://assets/OurMusicBox _CanCan.ogg" type="AudioStream" id=15]
 [ext_resource path="res://source/FPS.tscn" type="PackedScene" id=16]
 
-[node name="Game" type="Node2D"]
+[node name="Game" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
 _sections_unfolded = [ "Material", "Transform", "Visibility", "Z" ]
@@ -101,31 +101,31 @@ margin_bottom = 24.0
 
 [connection signal="countdown_started" from="." to="GameTimer" method="start_counting_down"]
 
+[connection signal="game_over" from="." to="MenuButton" method="show_in_secs"]
+
 [connection signal="game_over" from="." to="TheCrown" method="keep_winner_jumping"]
-
-[connection signal="game_over" from="." to="CoinManager" method="stop_spawners"]
-
-[connection signal="game_over" from="." to="PlayerManager" method="pause_freeze_timer"]
 
 [connection signal="game_over" from="." to="PlayerManager" method="freeze_players"]
 
-[connection signal="game_over" from="." to="MenuButton" method="show_in_secs"]
+[connection signal="game_over" from="." to="PlayerManager" method="pause_freeze_timer"]
+
+[connection signal="game_over" from="." to="CoinManager" method="stop_spawners"]
 
 [connection signal="game_over" from="." to="." method="show_mouse"]
 
 [connection signal="game_paused" from="." to="JoiningScreen" method="hide"]
 
-[connection signal="game_paused" from="." to="." method="show_mouse"]
-
 [connection signal="game_paused" from="." to="." method="_pause_tree"]
+
+[connection signal="game_paused" from="." to="." method="show_mouse"]
 
 [connection signal="game_resumed" from="." to="JoiningScreen" method="show_if_not_closed"]
 
-[connection signal="game_resumed" from="." to="." method="hide_mouse"]
-
 [connection signal="game_resumed" from="." to="." method="_resume_tree"]
 
-[connection signal="game_started" from="." to="CoinManager" method="resume_spawners"]
+[connection signal="game_resumed" from="." to="." method="hide_mouse"]
+
+[connection signal="game_started" from="." to="JoiningScreen" method="close"]
 
 [connection signal="game_started" from="." to="PlayerManager" method="unfreeze_players"]
 
@@ -135,19 +135,15 @@ margin_bottom = 24.0
 
 [connection signal="game_started" from="." to="PlayerManager" method="reset_positions"]
 
-[connection signal="game_started" from="." to="JoiningScreen" method="close"]
+[connection signal="game_started" from="." to="CoinManager" method="resume_spawners"]
 
 [connection signal="game_started" from="." to="." method="hide_mouse"]
+
+[connection signal="joining_screen_opened" from="." to="JoiningScreen" method="open"]
 
 [connection signal="joining_screen_opened" from="." to="TheCrown" method="reset"]
 
 [connection signal="joining_screen_opened" from="." to="TheCrown" method="stop_winner_jumping"]
-
-[connection signal="joining_screen_opened" from="." to="ControllerAssigner" method="reset"]
-
-[connection signal="joining_screen_opened" from="." to="CoinManager" method="clear"]
-
-[connection signal="joining_screen_opened" from="." to="CoinManager" method="stop_spawners"]
 
 [connection signal="joining_screen_opened" from="." to="PlayerManager" method="reset"]
 
@@ -157,27 +153,29 @@ margin_bottom = 24.0
 
 [connection signal="joining_screen_opened" from="." to="PlayerManager" method="reset_positions"]
 
+[connection signal="joining_screen_opened" from="." to="CoinManager" method="clear"]
+
+[connection signal="joining_screen_opened" from="." to="CoinManager" method="stop_spawners"]
+
 [connection signal="joining_screen_opened" from="." to="PlatformManager" method="stop_bounce_tween"]
 
-[connection signal="joining_screen_opened" from="." to="JoiningScreen" method="open"]
+[connection signal="joining_screen_opened" from="." to="ControllerAssigner" method="reset"]
 
-[connection signal="main_menu_opened" from="." to="CoinManager" method="resume_spawners"]
-
-[connection signal="main_menu_opened" from="." to="PlayerManager" method="choose_crocodile_randomly"]
+[connection signal="main_menu_opened" from="." to="JoiningScreen" method="close"]
 
 [connection signal="main_menu_opened" from="." to="PlayerManager" method="reset_controllers"]
 
+[connection signal="main_menu_opened" from="." to="PlayerManager" method="choose_crocodile_randomly"]
+
 [connection signal="main_menu_opened" from="." to="PlayerManager" method="enable_ai"]
 
-[connection signal="main_menu_opened" from="." to="JoiningScreen" method="close"]
+[connection signal="main_menu_opened" from="." to="CoinManager" method="resume_spawners"]
 
 [connection signal="main_menu_opened" from="." to="." method="resume"]
 
 [connection signal="main_menu_opened" from="." to="." method="stop_counting_down"]
 
 [connection signal="main_menu_opened" from="." to="." method="show_mouse"]
-
-[connection signal="map_loaded" from="." to="TheCrown" method="reset"]
 
 [connection signal="map_loaded" from="." to="TheCrown" method="stop_winner_jumping"]
 
@@ -186,6 +184,8 @@ margin_bottom = 24.0
 [connection signal="map_loaded" from="." to="PlayerManager" method="choose_crocodile_randomly"]
 
 [connection signal="map_loaded" from="." to="PlayerManager" method="listen_to_players_collecting_coins"]
+
+[connection signal="map_preloaded" from="." to="TheCrown" method="reset"]
 
 [connection signal="duration_pressed" from="MainMenu" to="GameTimer" method="next_duration"]
 

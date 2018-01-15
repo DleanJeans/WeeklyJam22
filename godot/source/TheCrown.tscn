@@ -23,7 +23,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.2, 0.3 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 1e-005, 1e-005 ), Vector2( 1.5, 0.75 ), Vector2( 1.2, 0.6 ) ]
+"values": [ Vector2( 1e-05, 1e-05 ), Vector2( 1.5, 0.75 ), Vector2( 1.2, 0.6 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath(".:visible")
@@ -64,13 +64,13 @@ script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
 transition_duration = 0.5
 
-[node name="Sprite" type="Sprite" parent="." index="0"]
+[node name="ReferenceSprite" type="Sprite" parent="." index="0"]
 
 position = Vector2( 0, -50 )
 texture = ExtResource( 2 )
 _sections_unfolded = [ "Visibility" ]
 
-[node name="Crown" type="Sprite" parent="Sprite" index="0"]
+[node name="Crown" type="Sprite" parent="ReferenceSprite" index="0"]
 
 position = Vector2( 0, 50 )
 scale = Vector2( 1.2, 0.6 )
@@ -82,7 +82,7 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="PopOutAnimation" type="AnimationPlayer" parent="Sprite/Crown" index="0"]
+[node name="PopOutAnimation" type="AnimationPlayer" parent="ReferenceSprite/Crown" index="0"]
 
 root_node = NodePath("..")
 autoplay = ""
@@ -94,7 +94,7 @@ blend_times = [  ]
 autoplay = ""
 _sections_unfolded = [ "Playback Options", "playback" ]
 
-[node name="PopSound" type="AudioStreamPlayer2D" parent="Sprite/Crown" index="1"]
+[node name="PopSound" type="AudioStreamPlayer2D" parent="ReferenceSprite/Crown" index="1"]
 
 position = Vector2( 0, 83.3333 )
 scale = Vector2( 0.972222, 0.972222 )
