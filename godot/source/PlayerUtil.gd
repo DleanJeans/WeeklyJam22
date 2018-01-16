@@ -34,7 +34,7 @@ func not_taggable(body):
 	var is_self = body == player
 	var self_not_crocodile = not player.is_crocodile()
 	
-	return is_self or self_not_crocodile or body.frozen or body.on_platform
+	return is_self or self_not_crocodile or player.frozen or body.on_platform
 
 func setup_debug():
 	yield(Utility.timer(0.1), "timeout")
