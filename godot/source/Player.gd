@@ -1,16 +1,12 @@
 tool
 extends KinematicBody2D
 
-var debug_label_offset = Vector2(40, -100)
-
 var GAMEPAD_DEVICE_MAP = {
 	"P3": 0,
 	"P4": 1,
 	"P5": 2,
 	"P6": 3
 }
-
-var crocodile setget _set_crocodile, _get_crocodile
 
 export(bool) var pushing_out = false
 export(bool) var just_landed = false
@@ -45,8 +41,7 @@ signal bounce
 signal frozen_as_crocodile
 signal unfrozen_as_crocodile
 
-signal hit_wall(player, bounce)
-signal got_coins()
+signal got_coins
 
 func almost_unfrozen():
 	return $FreezeTimer.time_left < 1
@@ -55,7 +50,7 @@ func reset():
 	turn_normal()
 	self.coins = 0
 	self.controller = "AI"
-	$Sprite.modulate = _singleton("Const").WHITE
+	$Sprite.modulate = $Util.WHITE
 	$AI/WinGame.clear_subgoals()
 	$FreezeTimer.stop()
 	$ScreamSound.choose_random_sound()
@@ -73,26 +68,15 @@ func out_of_coins():
 	return coins <= 0
 
 func is_panicking():
-	if self.crocodile == null: return false
+	if $Util.crocodile == null: return false
 
-	var crocodile_in_panic_radius = $PanicRadius.get_overlapping_bodies().has(self.crocodile)
-	var crocodile_not_frozen = not self.crocodile.frozen
+	var crocodile_in_panic_radius = $PanicRadius.get_overlapping_bodies().has($Util.crocodile)
+	var crocodile_not_frozen = not $Util.crocodile.frozen
 
 	return not on_platform and crocodile_in_panic_radius and crocodile_not_frozen
 
 func is_close_to_at_least_3_others():
-	if frozen or not is_crocodile(): return
-
-	var bodies = $PanicRadius.get_overlapping_bodies()
-	var players_count = 0
-
-	for b in bodies:
-		if b is _singleton("Classes").Player and b != self:
-			players_count += 1
-			if players_count == 3:
-				return true
-
-	return false
+	return $Util.is_close_to_at_least_3_others()
 
 func bounce():
 	var jump_animation_not_player = _jump_animation_not_playing()
@@ -155,23 +139,20 @@ func turn_normal():
 
 func turn_crocodile():
 	emit_signal("turning_crocodile")
-	self.crocodile = self
+	$Util.crocodile = self
 	self.max_velocity = crocodile_speed
 
 func is_crocodile():
-	return self == self.crocodile
+	return self == $Util.crocodile
 
 func tag_crocodile(player):
-	if _not_taggable(player):
+	if $Util.not_taggable(player):
 		return
 
 	turn_normal()
 	player.turn_crocodile()
 	_transfer_coins(player)
 	$TapSound.play()
-
-func _not_taggable(player):
-	return player == self or not is_crocodile() or not player is _singleton("Classes").Player or frozen or player.on_platform
 
 func start_freezing():
 	$FreezeTimer.start()
@@ -191,23 +172,9 @@ func _coins_gained(coins_lost):
 	return coins_lost
 
 func _physics_process(delta):
-	_emit_signal_if_hit_wall()
-
 	if frozen: return
 
 	_move_player()
-
-func _emit_signal_if_hit_wall():
-	if get_slide_count() > 0:
-		var collision = get_slide_collision(0)
-		if not collision.collider is _singleton("Classes").Wall: return
-
-		var normal = collision.normal
-
-		if abs(normal.x) == 1:
-			emit_signal("hit_wall", self, Vector2(-1, 1))
-		elif abs(normal.y) == 1:
-			emit_signal("hit_wall", self, Vector2(1, -1))
 
 func _move_player():
 	clamp_velocity()
@@ -217,17 +184,14 @@ func _move_player():
 	heading = velocity.normalized()
 
 func _ready():
-	yield(_singleton("Utility").timer(0.1), "timeout")
-	if _singleton("Debug").Labels.node_not_added(self):
-		_singleton("Debug").Labels.add_label(self, debug_label_offset)
-	else: _singleton("Debug").Labels.set_offset(self, debug_label_offset)
+	$Util.setup_debug()
 
 func _process(delta):
 	debug("On Platform: %s" % on_platform)
 
-func debug(info):
-	if not Engine.is_editor_hint() and OS.is_debug_build() and _singleton("Debug").Settings.debug_players:
-		_singleton("Debug").Labels.add_line(self, info)
+func debug(text):
+	if not Engine.editor_hint:
+		$Util.debug(text)
 
 func clamp_velocity():
 	var cap = max_velocity
@@ -280,12 +244,6 @@ func _set_color(value):
 		$Sprite/NameTag.self_modulate = color
 		$Sprite/Panic.self_modulate = color
 
-func _set_crocodile(value):
-	_singleton("Global").crocodile = value
-
-func _get_crocodile():
-	return _singleton("Global").crocodile
-
 func _set_frozen(value):
 	frozen = value
 	if is_crocodile():
@@ -294,16 +252,10 @@ func _set_frozen(value):
 		else: emit_signal("unfrozen_as_crocodile")
 
 func _leave_platform():
-	if self.crocodile != null:
-		self.crocodile._tag_overlapping_player()
+	if $Util.crocodile != null:
+		$Util.crocodile._tag_overlapping_player()
 
 func _tag_overlapping_player():
 	var bodies = $TouchArea.get_overlapping_bodies()
 	for body in bodies:
 		tag_crocodile(body)
-
-func _exit_tree():
-	_singleton("Debug").Labels.remove_label(self)
-
-func _singleton(_name):
-	return get_node("/root/%s" % _name)
