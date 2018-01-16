@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://source/Player.gd" type="Script" id=1]
 [ext_resource path="res://source/PlayerUtil.gd" type="Script" id=2]
@@ -14,25 +14,24 @@
 [ext_resource path="res://assets/sfx/CartoonJump.ogg" type="AudioStream" id=12]
 [ext_resource path="res://assets/sfx/screams/Crowd.ogg" type="AudioStream" id=13]
 [ext_resource path="res://source/MovementVisualizer.tscn" type="PackedScene" id=14]
-[ext_resource path="res://source/ButtonHint.tscn" type="PackedScene" id=15]
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
 extents = Vector2( 15, 5 )
 
-[sub_resource type="CapsuleShape2D" id=3]
+[sub_resource type="CapsuleShape2D" id=2]
 
 custom_solver_bias = 0.0
 radius = 15.0
 height = 15.0
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=3]
 
 custom_solver_bias = 0.0
 extents = Vector2( 20, 10 )
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=4]
 
 length = 1.0
 loop = false
@@ -110,7 +109,7 @@ tracks/5/keys = {
 "values": [ false, true, false ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=5]
 
 length = 1.0
 loop = false
@@ -188,7 +187,7 @@ tracks/5/keys = {
 "values": [ false, true, false ]
 }
 
-[sub_resource type="GDScript" id=7]
+[sub_resource type="GDScript" id=6]
 
 script/source = "extends Node2D
 
@@ -200,9 +199,6 @@ func _physics_process(delta):
 
 func _flip_crocodile():
 	var moving_right = player.velocity.x > 0 and sign(player.velocity.x) == sign(player.heading.x)
-	
-	if player.get_name() == \"Player5\":
-		pass
 	
 	if player.is_crocodile():
 		_reset_Sprite_color()
@@ -234,7 +230,7 @@ func _play_animation_if_not_playing(animation_name):
 func _reset_Sprite_color():
 	$'../Sprite'.self_modulate = player.color"
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=7]
 
 length = 0.8
 loop = true
@@ -384,7 +380,7 @@ tracks/11/keys = {
 "values": [ 0.0, 15.0, -15.0 ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=8]
 
 length = 0.8
 loop = true
@@ -534,7 +530,7 @@ tracks/11/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=9]
 
 length = 0.01
 loop = false
@@ -552,7 +548,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=10]
 
 length = 0.01
 loop = false
@@ -582,6 +578,72 @@ tracks/1/keys = {
 "values": [ false ]
 }
 
+[sub_resource type="Animation" id=11]
+
+length = 0.01
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("../Sprite/Panic:flip_h")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../Sprite/Panic/Tongue:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("../Sprite/Panic:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("../Sprite:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("../Sprite/Crocodile:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
 [sub_resource type="Animation" id=12]
 
 length = 0.01
@@ -597,72 +659,6 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ false ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("../Sprite/Panic/Tongue:flip_h")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ false ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("../Sprite/Panic:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("../Sprite:self_modulate")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Color( 0, 0, 0, 0 ) ]
-}
-tracks/4/type = "value"
-tracks/4/path = NodePath("../Sprite/Crocodile:visible")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
-
-[sub_resource type="Animation" id=13]
-
-length = 0.01
-loop = false
-step = 0.1
-tracks/0/type = "value"
-tracks/0/path = NodePath("../Sprite/Panic:flip_h")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
 "values": [ true ]
 }
 tracks/1/type = "value"
@@ -714,7 +710,7 @@ tracks/4/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="DynamicFont" id=14]
+[sub_resource type="DynamicFont" id=13]
 
 size = 40
 use_mipmaps = true
@@ -722,7 +718,7 @@ use_filter = false
 font_data = ExtResource( 6 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[sub_resource type="DynamicFont" id=15]
+[sub_resource type="DynamicFont" id=14]
 
 size = 40
 use_mipmaps = false
@@ -730,12 +726,12 @@ use_filter = false
 font_data = ExtResource( 6 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[sub_resource type="CircleShape2D" id=16]
+[sub_resource type="CircleShape2D" id=15]
 
 custom_solver_bias = 0.0
 radius = 150.0
 
-[sub_resource type="GDScript" id=17]
+[sub_resource type="GDScript" id=16]
 
 script/source = "extends Timer
 
@@ -772,7 +768,7 @@ func _process(delta):
 		jumped = true
 		player.break_unfrozen()"
 
-[sub_resource type="GDScript" id=18]
+[sub_resource type="GDScript" id=17]
 
 script/source = "extends AudioStreamPlayer2D
 
@@ -798,7 +794,7 @@ func stop():
 	if playing:
 		.stop()"
 
-[sub_resource type="DynamicFont" id=19]
+[sub_resource type="DynamicFont" id=18]
 
 size = 40
 use_mipmaps = false
@@ -806,7 +802,7 @@ use_filter = false
 font_data = ExtResource( 6 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[node name="Player" type="KinematicBody2D" index="0" groups=[
+[node name="Player" type="KinematicBody2D" groups=[
 "Players",
 ]]
 
@@ -829,7 +825,7 @@ script = ExtResource( 2 )
 
 visible = false
 position = Vector2( 0, -2 )
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="CrocodileShape" type="CollisionShape2D" parent="." index="2"]
@@ -837,7 +833,7 @@ _sections_unfolded = [ "Transform" ]
 visible = false
 position = Vector2( 0.2, -0.2 )
 rotation = 1.5708
-shape = SubResource( 3 )
+shape = SubResource( 2 )
 disabled = true
 _sections_unfolded = [ "Transform" ]
 
@@ -856,7 +852,7 @@ _sections_unfolded = [ "Collision", "Pickable", "Transform" ]
 [node name="Shape" type="CollisionShape2D" parent="TouchArea" index="0"]
 
 scale = Vector2( 1.1, 1 )
-shape = SubResource( 4 )
+shape = SubResource( 3 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="JumpAnimation" type="AnimationPlayer" parent="." index="4"]
@@ -866,8 +862,8 @@ autoplay = "Grounded"
 playback_process_mode = 1
 playback_default_blend_time = 0.1
 playback_speed = 1.25
-anims/Bounce = SubResource( 5 )
-anims/Jump = SubResource( 6 )
+anims/Bounce = SubResource( 4 )
+anims/Jump = SubResource( 5 )
 blend_times = [  ]
 autoplay = "Grounded"
 _sections_unfolded = [ "Playback Options" ]
@@ -887,7 +883,7 @@ visible = false
 
 editor/display_folded = true
 visible = false
-script = SubResource( 7 )
+script = SubResource( 6 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="SpriteFlipper" index="0"]
 
@@ -896,12 +892,12 @@ autoplay = ""
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 playback_speed = 1.0
-anims/CrocodileLeft = SubResource( 8 )
-anims/CrocodileRight = SubResource( 9 )
-anims/EditorReset = SubResource( 10 )
-anims/Normal = SubResource( 11 )
-anims/PanicLeft = SubResource( 12 )
-anims/PanicRight = SubResource( 13 )
+anims/CrocodileLeft = SubResource( 7 )
+anims/CrocodileRight = SubResource( 8 )
+anims/EditorReset = SubResource( 9 )
+anims/Normal = SubResource( 10 )
+anims/PanicLeft = SubResource( 11 )
+anims/PanicRight = SubResource( 12 )
 blend_times = [  ]
 autoplay = ""
 
@@ -937,7 +933,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 14 )
+custom_fonts/font = SubResource( 13 )
 text = "0"
 align = 1
 valign = 1
@@ -963,7 +959,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 15 )
+custom_fonts/font = SubResource( 14 )
 text = "P0"
 align = 1
 percent_visible = 1.0
@@ -1009,7 +1005,7 @@ audio_bus_name = "Master"
 
 [node name="Shape" type="CollisionShape2D" parent="PanicRadius" index="0"]
 
-shape = SubResource( 16 )
+shape = SubResource( 15 )
 
 [node name="FreezeTimer" type="Timer" parent="." index="11"]
 
@@ -1017,7 +1013,7 @@ process_mode = 1
 wait_time = 3.0
 one_shot = true
 autostart = false
-script = SubResource( 17 )
+script = SubResource( 16 )
 
 [node name="TapSound" type="AudioStreamPlayer2D" parent="." index="12"]
 
@@ -1062,10 +1058,11 @@ max_distance = 2000.0
 attenuation = 1.0
 bus = "Master"
 area_mask = 1
-script = SubResource( 18 )
+script = SubResource( 17 )
 
 [node name="TimerLabel" type="Label" parent="." index="16"]
 
+visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -1079,7 +1076,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 19 )
+custom_fonts/font = SubResource( 18 )
 text = "3"
 align = 1
 percent_visible = 1.0
@@ -1091,36 +1088,24 @@ _sections_unfolded = [ "Rect", "Visibility", "custom_fonts" ]
 
 visible = false
 
-[node name="ButtonHint" parent="." index="18" instance=ExtResource( 15 )]
+[connection signal="bounce" from="." to="JumpSound" method="play"]
 
-visible = false
-margin_top = 0.0
-margin_right = 23.9334
-margin_bottom = 49.9258
-button = "A"
-
-[connection signal="bounce" from="." to="." method="play_jump_gui"]
-
-[connection signal="jump" from="." to="." method="play_jump_gui"]
+[connection signal="jump" from="." to="JumpSound" method="play"]
 
 [connection signal="jump" from="." to="JumpAnimation" method="play" binds= [ "Jump" ]]
 
-[connection signal="turning_crocodile" from="." to="CrocodileShape" method="set_disabled" binds= [ false ]]
-
 [connection signal="turning_crocodile" from="." to="." method="start_freezing"]
 
-[connection signal="turning_normal" from="." to="CrocodileShape" method="set_disabled" binds= [ true ]]
+[connection signal="turning_crocodile" from="." to="CrocodileShape" method="set_disabled" binds= [ false ]]
 
 [connection signal="turning_normal" from="." to="SpriteFlipper/AnimationPlayer" method="play" binds= [ "PanicLeft" ]]
+
+[connection signal="turning_normal" from="." to="CrocodileShape" method="set_disabled" binds= [ true ]]
 
 [connection signal="unfrozen_as_crocodile" from="." to="." method="_tag_overlapping_player"]
 
 [connection signal="body_entered" from="TouchArea" to="." method="tag_crocodile"]
 
-[connection signal="animation_finished" from="JumpAnimation" to="." method="_finished_playing"]
-
 [connection signal="timeout" from="FreezeTimer" to="." method="_set_frozen" binds= [ false ]]
-
-[connection signal="finished" from="GroaningSound" to="." method="_finished_playing" binds= [ "Groan" ]]
 
 

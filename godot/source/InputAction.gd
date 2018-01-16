@@ -17,7 +17,7 @@ func _process(delta):
 		if not player.is_crocodile():
 			player.jump()
 		elif not player.frozen:
-			player.groan()
+			player.rawr()
 
 func _is_action_pressed(action):
 	return Input.is_action_pressed("%s_%s" % [player.controller.to_lower(), action])

@@ -28,7 +28,7 @@ func go_around_platform_if_needed():
 	var collider = collision.collider
 	
 	if collider is Classes.Platform:
-		player.groan()
+		player.rawr()
 		add_subgoal(Classes.GoAroundPlatform.new(collision.collider, target))
 
 func terminate():

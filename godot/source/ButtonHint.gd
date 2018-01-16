@@ -22,8 +22,4 @@ func pop_up():
 	$AnimationPlayer.play("PopUp")
 
 func pop_out():
-	$AnimationPlayer.play_backwards("PopUp")
-
-func _process(delta):
-	if Input.is_action_just_pressed("p1_action"):
-		pop_out()
+	$AnimationPlayer.play("PopOut")

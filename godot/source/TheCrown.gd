@@ -15,7 +15,6 @@ func _ready():
 
 func keep_winner_jumping():
 	keeping_winner_jumping = true
-	_leader.hide_button_hint()
 	
 	while keeping_winner_jumping:
 		_leader.force_jump()

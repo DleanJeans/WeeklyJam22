@@ -1,0 +1,136 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://source/PlayerHints.gd" type="Script" id=1]
+
+[sub_resource type="GDScript" id=1]
+
+script/source = "extends Node
+
+const HINT_OFFSET = Vector2(-25, 0)
+const HINT_INVISIBLE_DURATION = 0.75
+
+var ButtonHint = load(\"res://source/ButtonHint.tscn\")
+var ButtonHintClass = load(\"res://source/ButtonHint.gd\")
+
+var hint_dictionary = {}
+
+var current_player
+var current_hint
+
+func hide_all():
+	for hint in hint_dictionary.values():
+		hint.hide()
+
+func clear_dictionary():
+	hint_dictionary.clear()
+
+func pop_hint_if_has_one():
+	if player_already_has_hint():
+		pop_hint()
+
+func player_already_has_hint():
+	return hint_dictionary.has(current_player)
+
+func pop_hint():
+	var hint = current_hint
+	hint.pop_out()
+	yield(Utility.timer(HINT_INVISIBLE_DURATION), \"timeout\")
+	hint.pop_up()
+
+func free_hint():
+	current_hint.hide()
+	hint_dictionary.erase(current_player)
+
+func create_hint_for_player():
+	_get_hint_for_player()
+	_add_hint_to_dictionary()
+	_add_as_sibling_if_new()
+	_show_hint()
+	set_hint_button()
+
+func _get_hint_for_player():
+	current_hint = _get_free_or_new_hint()
+
+func _get_free_or_new_hint():
+	var used_hints = hint_dictionary.values()
+	
+	for child in _get_hints():
+		if child is ButtonHintClass and not child in used_hints:
+			return child
+	
+	return ButtonHint.instance()
+
+func _add_hint_to_dictionary():
+	hint_dictionary[current_player] = current_hint
+
+func _add_as_sibling_if_new():
+	if not _get_hints().has(current_hint):
+		get_parent().add_child(current_hint)
+
+func _show_hint():
+	current_hint.show()
+
+func player_is_ai_controlled():
+	return current_player.is_ai_controlled()
+
+func set_hint_button():
+	match current_player.controller:
+		\"P1\": current_hint.button = \"Space\"
+		\"P2\": current_hint.button = \"Enter\"
+		\"P3\", \"P4\", \"P5\", \"P6\": current_hint.button = _get_action_button_name()
+
+func _get_action_button_name():
+	if _controller_name_has_USB():
+		return \"3\"
+	else: return \"A\"
+
+func _controller_name_has_USB():
+	var device_name = _get_device_name()
+	return device_name.find(\"USB\") > -1
+
+func _get_device_name():
+	var controller = current_player.controller # P3, P4, P5, P6
+	var controller_id = controller.substr(1, 1) # e.g. P3 -> 3
+	var device_id = int(controller_id) - 3 # e.g.: P4 -> 1
+	var device_name = Input.get_joy_name(device_id)
+	
+	return device_name
+
+func attach_hints_to_player():
+	for player in hint_dictionary.keys():
+		_attach_hint(player)
+
+func _attach_hint(player):
+	set_current_player(player)
+	current_hint.rect_position = current_player.position + HINT_OFFSET
+
+func _get_hints():
+	return get_parent().get_children()
+
+func set_current_player(player):
+	current_player = player
+	current_hint = _get_hint(player)
+
+func _get_hint(player):
+	if player_already_has_hint():
+		return hint_dictionary[player]
+	else: return null"
+
+[node name="PlayerHints" type="Control"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+script = ExtResource( 1 )
+
+[node name="Script" type="Node" parent="." index="0"]
+
+script = SubResource( 1 )
+
+

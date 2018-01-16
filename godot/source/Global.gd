@@ -1,6 +1,8 @@
 tool
 extends Node
 
+signal fullscreen_toggle(fullscreen)
+
 var Game
 var Map
 var Players setget , _get_players 
@@ -38,6 +40,7 @@ func _process(delta):
 
 func toggle_fullscreen():
 	OS.window_fullscreen = not OS.window_fullscreen
+	emit_signal("fullscreen_toggle", OS.window_fullscreen)
 
 func _slo_mo_toggle_pressed():
 	return Input.is_action_just_pressed("slo_mo_toggle") and Debug.Settings.enable_slo_mo and OS.is_debug_build()

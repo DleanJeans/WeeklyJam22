@@ -1,13 +1,27 @@
 extends Node2D
 
 signal player_jump(player)
+signal player_go_rawr(player)
 signal player_get_coin(player)
+signal player_controller_changed(player)
 
 var positions = []
 
 func listen_to_players_collecting_coins():
 	for player in Global.Players:
-		player.connect("got_coins", self, "emit_signal", ["player_get_coin", player])
+		_forward_signal(player, "got_coins", "player_get_coin", [player])
+
+func listen_to_players_jumping():
+	for player in Global.Players:
+		_forward_signal(player, "jump", "player_jump" , [player])
+
+func listen_to_players_going_rawr():
+	for player in Global.Players:
+		_forward_signal(player, "rawr", "player_go_rawr" , [player])
+
+func _forward_signal(player, player_signal, self_signal, bindings = []):
+	bindings.push_front(self_signal)
+	player.connect(player_signal, self, "emit_signal", bindings)
 
 func enable_ai():
 	for player in Global.Players:
@@ -27,6 +41,7 @@ func _current_map():
 func reset_controllers():
 	for player in Global.Players:
 		player.controller = "AI"
+		emit_signal("player_controller_changed", player)
 
 func activate_controller(player_num, controller_name):
 	if Global.Game.winner_jumping: return
@@ -38,7 +53,8 @@ func activate_controller(player_num, controller_name):
 	random_player.controller = controller_name
 	random_player.set_name_tag("P%s" % player_num)
 	random_player.force_jump()
-	emit_signal("player_jump", random_player)
+	
+	emit_signal("player_controller_changed", random_player)
 
 func choose_crocodile_randomly():
 	if Global.crocodile != null: return

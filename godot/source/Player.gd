@@ -37,6 +37,7 @@ signal turning_normal
 
 signal jump
 signal bounce
+signal rawr
 
 signal frozen_as_crocodile
 signal unfrozen_as_crocodile
@@ -60,9 +61,6 @@ func enable_ai():
 
 func disable_ai():
 	$AI.disable()
-
-func hide_button_hint():
-	$ButtonHint.hide()
 
 func out_of_coins():
 	return coins <= 0
@@ -88,10 +86,6 @@ func bounce():
 func _jump_animation_not_playing():
 	return not $JumpAnimation.is_playing()
 
-func play_jump_gui():
-	$JumpSound.play()
-	$ButtonHint.pop_out()
-
 func jump():
 	if not (frozen or jump_frozen):
 		force_jump()
@@ -100,18 +94,14 @@ func force_jump():
 	if _jump_animation_not_playing():
 		emit_signal("jump")
 
-func groan():
+func rawr():
 	if not $GroaningSound.playing:
 		$GroaningSound.play()
-		$ButtonHint.pop_out()
 		$Sprite/Crocodile.rawr()
-
-func _finished_playing(_name):
-	if _name == "Jump" or _name == "Groan":
-		$ButtonHint.pop_up()
+		emit_signal("rawr")
 
 func break_unfrozen():
-	groan()
+	rawr()
 	jump()
 
 func collect_coins(amount = 10):
@@ -124,7 +114,7 @@ func take_away_coins(amount):
 
 	self.coins -= amount
 
-func is_controlled_by_ai():
+func is_ai_controlled():
 	return controller == "AI"
 
 func move(direction, multiplier = 1):
@@ -184,7 +174,8 @@ func _move_player():
 	heading = velocity.normalized()
 
 func _ready():
-	$Util.setup_debug()
+	if not Engine.editor_hint:
+		$Util.setup_debug()
 
 func _process(delta):
 	debug("On Platform: %s" % on_platform)
@@ -195,7 +186,7 @@ func debug(text):
 
 func clamp_velocity():
 	var cap = max_velocity
-	if is_controlled_by_ai():
+	if is_ai_controlled():
 		cap *= ai_speed_scale
 	velocity = velocity.clamped(cap)
 
@@ -204,33 +195,15 @@ func set_name_tag(_name):
 
 func _set_controller(value):
 	controller = value
+	_update_name_tag_visibility()
+
+func _update_name_tag_visibility():
 	if $Sprite/NameTag == null: return
 
-	$Sprite/NameTag.text = value
-	if value == "AI":
+	$Sprite/NameTag.text = controller
+	if controller == "AI":
 		$Sprite/NameTag.hide()
 	else: $Sprite/NameTag.show()
-
-	_toggle_button_hint_visible()
-	_choose_button_hint()
-
-func _toggle_button_hint_visible():
-	if controller == "AI":
-		$ButtonHint.hide()
-	else: $ButtonHint.show()
-
-func _choose_button_hint():
-	match controller:
-		"P1": $ButtonHint.button = "Space"
-		"P2": $ButtonHint.button = "Enter"
-		"P3", "P4", "P5", "P6": $ButtonHint.button = _get_gamepad_bottom_button_name()
-
-func _get_gamepad_bottom_button_name():
-	var device_id = int(controller.substr(1, 1)) - 3 # P3 -> 0 and so on
-	var device_name = Input.get_joy_name(device_id)
-	if device_name.find("USB") > -1:
-		return "3"
-	else: return "A"
 
 func _set_coins(value):
 	coins = value
