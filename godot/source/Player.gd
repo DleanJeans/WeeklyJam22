@@ -95,10 +95,7 @@ func force_jump():
 		emit_signal("jump")
 
 func rawr():
-	if not $GroaningSound.playing:
-		$GroaningSound.play()
-		$Sprite/Crocodile.rawr()
-		emit_signal("rawr")
+	emit_signal("rawr")
 
 func break_unfrozen():
 	rawr()

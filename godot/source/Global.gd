@@ -1,6 +1,8 @@
 tool
 extends Node
 
+signal crocodile_changed
+
 var Game
 var Map
 var Players setget , _get_players 
@@ -8,7 +10,11 @@ var Platforms setget, _get_platforms
 var Coins setget , _get_coins
 var CoinSpawners setget , _get_coin_spawners
 
-var crocodile
+var crocodile setget set_crocodile
+
+func set_crocodile(value):
+	crocodile = value
+	emit_signal("crocodile_changed")
 
 func player_blocked_by_platform(player):
 	var slide_count = player.get_slide_count()

@@ -3,6 +3,12 @@ extends Node
 func timer(sec):
 	return get_tree().create_timer(sec)
 
+func reparent(node, new_parent):
+	var old_parent = node.get_parent()
+	if old_parent != null:
+		old_parent.remove_child(node)
+	new_parent.add_child(node)
+
 func relative_dot_to(from, point1, point2):
 	var to_point1 = unit_vector_from(from, point1)
 	var to_point2 = unit_vector_from(from, point2)

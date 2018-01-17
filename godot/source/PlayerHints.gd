@@ -17,8 +17,6 @@ func on_player_jump(player):
 		$Script.create_hint_for_player()
 		
 	$Script.pop_hint_if_has_one()
-	
-	print("Player: %s" % $Script.current_player.get_name())
 
 func on_player_controller_changed(player):
 	$Script.set_current_player(player)
