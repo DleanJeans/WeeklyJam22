@@ -1,8 +1,6 @@
 tool
 extends Node
 
-signal fullscreen_toggle(fullscreen)
-
 var Game
 var Map
 var Players setget , _get_players 
@@ -35,12 +33,6 @@ func _get_coin_spawners():
 func _process(delta):
 	if _slo_mo_toggle_pressed():
 		_switch_time_scale_for_slo_mo()
-	elif Input.is_action_just_pressed("toggle_fullscreen"):
-		toggle_fullscreen()
-
-func toggle_fullscreen():
-	OS.window_fullscreen = not OS.window_fullscreen
-	emit_signal("fullscreen_toggle", OS.window_fullscreen)
 
 func _slo_mo_toggle_pressed():
 	return Input.is_action_just_pressed("slo_mo_toggle") and Debug.Settings.enable_slo_mo and OS.is_debug_build()

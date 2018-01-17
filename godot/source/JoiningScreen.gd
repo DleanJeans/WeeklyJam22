@@ -9,12 +9,6 @@ var players_joined = []
 
 var closed = true
 
-func _ready():
-	Global.connect("fullscreen_toggle", self, "_update_guide")
-
-func _update_guide():
-	$Hints/Guide.update()
-
 func show_if_not_closed():
 	if not closed:
 		show()
@@ -30,8 +24,6 @@ func open():
 	_move_label_to_players()
 	_toggle_joypad_hints()
 	PlayerManager.connect("player_jump", self, "_on_player_jump")
-	
-	$Hints/Guide.update()
 
 func _toggle_joypad_hints():
 	if game.joypad_connected():

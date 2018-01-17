@@ -46,6 +46,3 @@ func _on_MapButton_pressed():
 
 func _on_RoundDurationButton_pressed():
 	emit_signal("duration_pressed")
-
-func _on_FullscreenButton_pressed():
-	Global.toggle_fullscreen()
