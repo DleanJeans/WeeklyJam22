@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://source/Player.gd" type="Script" id=1]
 [ext_resource path="res://source/PlayerUtil.gd" type="Script" id=2]
@@ -768,7 +768,22 @@ func _process(delta):
 		jumped = true
 		player.break_unfrozen()"
 
-[sub_resource type="GDScript" id=17]
+[sub_resource type="AudioStreamRandomPitch" id=20]
+
+audio_stream = ExtResource( 11 )
+random_pitch = 1.15
+
+[sub_resource type="AudioStreamRandomPitch" id=17]
+
+audio_stream = ExtResource( 12 )
+random_pitch = 1.25
+
+[sub_resource type="AudioStreamRandomPitch" id=21]
+
+audio_stream = ExtResource( 13 )
+random_pitch = 1.5
+
+[sub_resource type="GDScript" id=18]
 
 script/source = "extends AudioStreamPlayer2D
 
@@ -782,19 +797,22 @@ func choose_random_sound():
 
 func play_crowd_screaming():
 	if playing: return
-	stream = crowd_scream
+	set_audio(crowd_scream)
 	play()
 
 func play_random_individual():
 	if playing: return
-	stream = individual_scream
+	set_audio(individual_scream)
 	play()
+
+func set_audio(audio):
+	stream.audio_stream = audio
 
 func stop():
 	if playing:
 		.stop()"
 
-[sub_resource type="DynamicFont" id=18]
+[sub_resource type="DynamicFont" id=19]
 
 size = 40
 use_mipmaps = false
@@ -802,7 +820,7 @@ use_filter = false
 font_data = ExtResource( 6 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[node name="Player" type="KinematicBody2D" groups=[
+[node name="Player" type="KinematicBody2D" index="0" groups=[
 "Players",
 ]]
 
@@ -1029,7 +1047,7 @@ area_mask = 1
 [node name="GroaningSound" type="AudioStreamPlayer2D" parent="." index="13"]
 
 visible = false
-stream = ExtResource( 11 )
+stream = SubResource( 20 )
 volume_db = 10.0
 autoplay = false
 max_distance = 2000.0
@@ -1040,7 +1058,7 @@ area_mask = 1
 [node name="JumpSound" type="AudioStreamPlayer2D" parent="." index="14"]
 
 visible = false
-stream = ExtResource( 12 )
+stream = SubResource( 17 )
 volume_db = 0.0
 autoplay = false
 max_distance = 2000.0
@@ -1051,14 +1069,14 @@ area_mask = 1
 [node name="ScreamSound" type="AudioStreamPlayer2D" parent="." index="15"]
 
 visible = false
-stream = ExtResource( 13 )
+stream = SubResource( 21 )
 volume_db = 0.0
 autoplay = false
 max_distance = 2000.0
 attenuation = 1.0
-bus = "Master"
+bus = "Screams"
 area_mask = 1
-script = SubResource( 17 )
+script = SubResource( 18 )
 
 [node name="TimerLabel" type="Label" parent="." index="16"]
 
@@ -1076,7 +1094,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 18 )
+custom_fonts/font = SubResource( 19 )
 text = "3"
 align = 1
 percent_visible = 1.0
@@ -1090,9 +1108,9 @@ visible = false
 
 [connection signal="bounce" from="." to="JumpSound" method="play"]
 
-[connection signal="jump" from="." to="JumpSound" method="play"]
-
 [connection signal="jump" from="." to="JumpAnimation" method="play" binds= [ "Jump" ]]
+
+[connection signal="jump" from="." to="JumpSound" method="play"]
 
 [connection signal="turning_crocodile" from="." to="." method="start_freezing"]
 

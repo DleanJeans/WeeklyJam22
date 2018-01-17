@@ -1,10 +1,10 @@
 
 \.import/
 
-*.tres
-
 *.import
 
 export/
 
 screenshots/
+
+default_env.tres
