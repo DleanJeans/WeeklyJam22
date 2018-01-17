@@ -1,8 +1,7 @@
 extends Control
 
 func reset():
-	$Script.hide_all()
-	$Script.clear_dictionary()
+	$Script.free_hints()
 
 func on_player_go_rawr(player):
 	$Script.set_current_player(player)
@@ -29,6 +28,3 @@ func on_player_controller_changed(player):
 	if $Script.player_is_ai_controlled():
 		$Script.free_hint()
 	else: $Script.set_hint_button()
-
-func _process(delta):
-	$Script.attach_hints_to_player()

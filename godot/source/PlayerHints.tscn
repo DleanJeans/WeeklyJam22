@@ -12,17 +12,30 @@ const HINT_INVISIBLE_DURATION = 0.75
 var ButtonHint = load(\"res://source/ButtonHint.tscn\")
 var ButtonHintClass = load(\"res://source/ButtonHint.gd\")
 
+onready var PlayerHints = get_parent()
+
 var hint_dictionary = {}
 
 var current_player
 var current_hint
 
-func hide_all():
-	for hint in hint_dictionary.values():
-		hint.hide()
+var _hint_count = 0
 
-func clear_dictionary():
-	hint_dictionary.clear()
+func free_hints():
+	for hint in hint_dictionary.values():
+		set_current_player(hint.get_parent())
+		free_hint()
+
+func free_hint():
+	reparent_hint(PlayerHints)
+	
+	current_hint.hide()
+	hint_dictionary.erase(current_player)
+
+func reparent_hint(new_parent):
+	var old_parent = current_hint.get_parent()
+	old_parent.remove_child(current_hint)
+	new_parent.add_child(current_hint)
 
 func pop_hint_if_has_one():
 	if player_already_has_hint():
@@ -37,14 +50,12 @@ func pop_hint():
 	yield(Utility.timer(HINT_INVISIBLE_DURATION), \"timeout\")
 	hint.pop_up()
 
-func free_hint():
-	current_hint.hide()
-	hint_dictionary.erase(current_player)
-
 func create_hint_for_player():
 	_get_hint_for_player()
+	_add_hint_as_sibling_if_new()
 	_add_hint_to_dictionary()
-	_add_as_sibling_if_new()
+	_offset_hint()
+	_add_to_player_as_child()
 	_show_hint()
 	set_hint_button()
 
@@ -52,20 +63,30 @@ func _get_hint_for_player():
 	current_hint = _get_free_or_new_hint()
 
 func _get_free_or_new_hint():
-	var used_hints = hint_dictionary.values()
-	
-	for child in _get_hints():
-		if child is ButtonHintClass and not child in used_hints:
+	for child in _get_free_hints():
+		if child is ButtonHintClass:
 			return child
 	
-	return ButtonHint.instance()
+	return _create_new_hint()
+
+func _create_new_hint():
+	var new_hint = ButtonHint.instance()
+	_hint_count += 1
+	new_hint.name = \"ButtonHint%s\" % _hint_count
+	return new_hint
+
+func _add_hint_as_sibling_if_new():
+	if not PlayerHints.get_children().has(current_hint):
+		PlayerHints.add_child(current_hint)
+
+func _offset_hint():
+	current_hint.rect_position = HINT_OFFSET
 
 func _add_hint_to_dictionary():
 	hint_dictionary[current_player] = current_hint
 
-func _add_as_sibling_if_new():
-	if not _get_hints().has(current_hint):
-		get_parent().add_child(current_hint)
+func _add_to_player_as_child():
+	reparent_hint(current_player)
 
 func _show_hint():
 	current_hint.show()
@@ -96,16 +117,8 @@ func _get_device_name():
 	
 	return device_name
 
-func attach_hints_to_player():
-	for player in hint_dictionary.keys():
-		_attach_hint(player)
-
-func _attach_hint(player):
-	set_current_player(player)
-	current_hint.rect_position = current_player.position + HINT_OFFSET
-
-func _get_hints():
-	return get_parent().get_children()
+func _get_free_hints():
+	return PlayerHints.get_children()
 
 func set_current_player(player):
 	current_player = player
@@ -116,7 +129,7 @@ func _get_hint(player):
 		return hint_dictionary[player]
 	else: return null"
 
-[node name="PlayerHints" type="Control"]
+[node name="PlayerHints" type="Control" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
