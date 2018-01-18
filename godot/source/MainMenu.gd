@@ -16,14 +16,15 @@ func update_map_button(map_name):
 	$MapButton.text = "Map: %s" % map_name
 
 func open():
-	opened = true
 	show()
+	opened = true
 	$PlayButton.grab_focus()
 	$AnimationPlayer.play("Open")
 
 func close():
 	opened = false
 	$AnimationPlayer.play("Close")
+	yield($AnimationPlayer, "animation_finished")
 
 func _ready():
 	$PlayButton.grab_focus()
@@ -46,3 +47,7 @@ func _on_MapButton_pressed():
 
 func _on_RoundDurationButton_pressed():
 	emit_signal("duration_pressed")
+
+func _grab_focus_if_opened():
+	if opened:
+		$PlayButton.grab_focus()
