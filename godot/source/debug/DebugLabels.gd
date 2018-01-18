@@ -7,6 +7,8 @@ var DebugLabel = load("res://source/debug/DebugLabel.tscn")
 var _label_dictionary = {}
 
 func remove_label(node):
+	if node_not_added(node): return
+	
 	var label = _get_label(node)
 	label.queue_free()
 	_remove_from_dictionary(node)
