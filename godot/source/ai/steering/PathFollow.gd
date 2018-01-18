@@ -53,10 +53,7 @@ func _set_next_index():
 func _next_index():
 	var next_index = current_index + direction
 	if loop:
-		if next_index < 0:
-			next_index = _path.size() - 1
-		elif next_index >= _path.size():
-			next_index = 0
+		next_index = wrapi(next_index, 0, _path.size())
 	return next_index
 
 func _path_smoothable():
