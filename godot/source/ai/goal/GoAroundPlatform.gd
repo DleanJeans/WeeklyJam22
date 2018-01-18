@@ -17,7 +17,7 @@ func process():
 	_update_goal_state()
 
 func _update_goal_state():
-	if _target == null or _target.on_platform:
+	if _target == null:
 		state = GOAL_FAILED
 
 func activate():
