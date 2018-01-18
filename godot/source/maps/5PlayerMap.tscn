@@ -1,10 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://source/maps/Map.gd" type="Script" id=1]
 [ext_resource path="res://source/BoxWall.tscn" type="PackedScene" id=2]
 [ext_resource path="res://source/Platform.tscn" type="PackedScene" id=3]
-[ext_resource path="res://source/CoinSpawner.tscn" type="PackedScene" id=4]
-[ext_resource path="res://source/Player.tscn" type="PackedScene" id=5]
+[ext_resource path="res://source/Player.tscn" type="PackedScene" id=4]
 
 [node name="Map" type="Node2D"]
 
@@ -33,18 +32,7 @@ scale = Vector2( 2, 1 )
 position = Vector2( 800, 440 )
 scale = Vector2( 2, 1 )
 
-[node name="CoinSpawners" type="Node2D" parent="." index="2"]
-
-_sections_unfolded = [ "Transform" ]
-
-[node name="CoinSpawner4" parent="CoinSpawners" index="0" instance=ExtResource( 4 )]
-
-position = Vector2( 480, 310 )
-scale = Vector2( 7, 3 )
-_sections_unfolded = [ "Transform" ]
-spawn_interval = 0.5
-
-[node name="Objects" type="TileMap" parent="." index="3"]
+[node name="Objects" type="TileMap" parent="." index="2"]
 
 mode = 0
 tile_set = null
@@ -65,27 +53,27 @@ format = 1
 tile_data = PoolIntArray(  )
 _sections_unfolded = [ "Cell" ]
 
-[node name="Player1" parent="Objects" index="0" instance=ExtResource( 5 )]
+[node name="Player1" parent="Objects" index="0" instance=ExtResource( 4 )]
 
 position = Vector2( 210, 300 )
 color = Color( 0.441249, 0.0397797, 0.925781, 1 )
 
-[node name="Player2" parent="Objects" index="1" instance=ExtResource( 5 )]
+[node name="Player2" parent="Objects" index="1" instance=ExtResource( 4 )]
 
 position = Vector2( 480, 250 )
 color = Color( 0.953125, 0.0670166, 0.399307, 1 )
 
-[node name="Player3" parent="Objects" index="2" instance=ExtResource( 5 )]
+[node name="Player3" parent="Objects" index="2" instance=ExtResource( 4 )]
 
 position = Vector2( 340, 440 )
 color = Color( 1, 0.703125, 0, 1 )
 
-[node name="Player4" parent="Objects" index="3" instance=ExtResource( 5 )]
+[node name="Player4" parent="Objects" index="3" instance=ExtResource( 4 )]
 
 position = Vector2( 620, 440 )
 color = Color( 0.164063, 0.164063, 0.164063, 1 )
 
-[node name="Player5" parent="Objects" index="4" instance=ExtResource( 5 )]
+[node name="Player5" parent="Objects" index="4" instance=ExtResource( 4 )]
 
 position = Vector2( 750, 300 )
 color = Color( 0, 1, 0.390625, 1 )
