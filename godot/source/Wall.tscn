@@ -1,9 +1,4 @@
-[gd_scene load_steps=4 format=2]
-
-[ext_resource path="res://source/Wall.gd" type="Script" id=1]
-[ext_resource path="res://assets/png/Sprite.png" type="Texture" id=2]
-
-
+[gd_scene load_steps=2 format=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -13,25 +8,17 @@ extents = Vector2( 32, 32 )
 [node name="Wall" type="StaticBody2D"]
 
 input_pickable = false
-collision_layer = 8
-collision_mask = 17
+collision_layer = 10
+collision_mask = 19
 constant_linear_velocity = Vector2( 0, 0 )
 constant_angular_velocity = 0.0
 friction = 1.0
 bounce = 0.0
-script = ExtResource( 1 )
 _sections_unfolded = [ "Collision", "Transform" ]
 
 [node name="Shape" type="CollisionShape2D" parent="." index="0"]
 
 shape = SubResource( 1 )
 _sections_unfolded = [ "Transform" ]
-
-[node name="Sprite" type="Sprite" parent="Shape" index="0"]
-
-self_modulate = Color( 0.0103455, 0.882813, 0.289808, 1 )
-scale = Vector2( 0.64, 0.64 )
-texture = ExtResource( 2 )
-_sections_unfolded = [ "Transform", "Visibility" ]
 
 

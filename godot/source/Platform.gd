@@ -1,9 +1,5 @@
 extends StaticBody2D
 
-# ALWAYS keep $Shape/EnterArea/Shape
-# a lil bit larget than $Shape itself
-# because only then _on_player_enter() can be called
-
 signal player_exited(player)
 
 var occupied setget , _get_occupied
@@ -29,9 +25,6 @@ func player_dipped(player):
 
 func stop_bounce_tween():
 	$Bouncer/Tween.stop_all()
-
-func get_players_touching():
-	return $Shape/EnterArea.get_overlapping_bodies()
 
 func get_players_fully_inside():
 	return $Shape/InsideArea.get_overlapping_bodies()
@@ -59,6 +52,8 @@ func _player_not_allowed():
 	return _current_player.is_crocodile() or self.occupied
 
 func _on_player_exited(player):
+	if not player is Classes.Player: return
+	
 	emit_signal("player_exited", player) 
 	
 	if player.on_platform:

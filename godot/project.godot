@@ -218,7 +218,7 @@ toggle_main_menu=[ Object(InputEventKey,"resource_local_to_scene":false,"resourc
 [layer_names]
 
 2d_physics/layer_1="Players"
-2d_physics/layer_2="BlockedPlayers"
+2d_physics/layer_2="Coins"
 2d_physics/layer_3="Platforms"
 2d_physics/layer_4="Walls"
 2d_physics/layer_5="Walled"
