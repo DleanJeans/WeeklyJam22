@@ -21,13 +21,8 @@ func activate():
 	state = GOAL_ACTIVE
 	player = get_parent().player
 	steering = player.get_node("AI/Steering")
-	
-#	print("\nPlayer: %s" % player.get_name())
-#	print("Goal Activated: %s" % _name)
 
 func terminate():
-#	print("\nPlayer: %s" % player.get_name())
-#	print("Goal Terminated - %s: %s" % [state, _name])
 	clear_subgoals()
 	queue_free()
 	state = GOAL_TERMINATED
