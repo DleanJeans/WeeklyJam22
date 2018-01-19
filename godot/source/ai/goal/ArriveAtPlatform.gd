@@ -9,11 +9,8 @@ func _ready():
 func _setup_fail_timer():
 	fail_timer.one_shot = true
 	fail_timer.wait_time = 1.5
-	fail_timer.connect("timeout", self, "_goal_failed")
+	fail_timer.connect("timeout", self, "terminate")
 	add_child(fail_timer)
-
-func _goal_failed():
-	state = GOAL_FAILED
 
 func activate():
 	.activate()
@@ -24,7 +21,7 @@ func reacquire_target():
 	platform = Locator.find_most_desired_platform(player)
 	dip_platform()
 	if platform == null:
-		state = GOAL_FAILED
+		terminate()
 
 func dip_platform():
 	if platform != null:
@@ -41,9 +38,9 @@ func process():
 	.process()
 
 	if platform == null:
-		state = GOAL_FAILED
+		terminate()
 	elif _get_enough_on_platform() and not player.is_panicking():
-		state = GOAL_COMPLETED
+		terminate()
 	elif Global.player_blocked_by_platform(player):
 		player.jump()
 
@@ -54,6 +51,8 @@ func _get_enough_on_platform():
 
 func terminate():
 	.terminate()
-	steering.seek_off()
+	
+	if steering != null:
+		steering.seek_off()
 	fail_timer.queue_free()
 	undip_platform()

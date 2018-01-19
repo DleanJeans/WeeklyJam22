@@ -18,15 +18,13 @@ func process():
 
 func _update_goal_state():
 	if _target == null:
-		state = GOAL_FAILED
+		terminate()
 
 func activate():
 	.activate()
 	path_follow = steering.get_node("PathFollow")
 	
 	_update_goal_state()
-	if state != GOAL_ACTIVE:
-		return
 	
 	get_parent().pause_acquisition()
 	
@@ -67,7 +65,7 @@ func _start_following():
 
 func _terminate_if_not_blocked_anymore(point_index, point):
 	if _platform_not_blocking_way_to_target(point):
-		state = GOAL_COMPLETED
+		terminate()
 
 func _platform_not_blocking_way_to_target(point):
 	var raycast_result = Utility.raycast(player, _target, [], Const.COLLISION_PLATFORM)

@@ -11,7 +11,7 @@ func process():
 	.process()
 	
 	if not player.is_crocodile():
-		state = GOAL_COMPLETED
+		terminate()
 	
 	go_around_platform_if_needed()
 

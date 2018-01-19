@@ -10,7 +10,7 @@ func process():
 	.process()
 	
 	if player.is_crocodile():
-		state = GOAL_FAILED
+		terminate()
 	
 	if _should_flee():
 		var subgoal = Classes.ArriveAtPlatform

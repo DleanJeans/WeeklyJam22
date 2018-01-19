@@ -10,7 +10,7 @@ func _ready():
 	add_child(timer)
 
 func _get_on_platform():
-	state = GOAL_COMPLETED
+	terminate()
 	get_parent().add_subgoal(Classes.ArriveAtPlatform.new())
 
 func activate():
@@ -22,7 +22,7 @@ func process():
 	.process()
 	
 	if _got_away():
-		state = GOAL_COMPLETED
+		terminate()
 
 func _got_away():
 	var on_platform = player.on_platform

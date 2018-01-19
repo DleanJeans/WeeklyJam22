@@ -10,7 +10,9 @@ enum {
 
 var player
 var steering
-var state = GOAL_INACTIVE
+var activated = false
+
+var subgoals = []
 
 onready var _name = get_script().get_path().get_file().get_basename()
 
@@ -18,81 +20,54 @@ func _ready():
 	clear_subgoals()
 
 func activate():
-	state = GOAL_ACTIVE
+	activated = true
+	
 	player = get_parent().player
 	steering = player.get_node("AI/Steering")
 
 func terminate():
 	clear_subgoals()
 	queue_free()
-	state = GOAL_TERMINATED
-
-func add_subgoal(goal):
-	add_child(goal)
-	move_child(goal, 0)
+	_remove_from_parent_goal()
 
 func clear_subgoals():
-	for child in get_children():
-		if child is Classes.Goal:
-			_terminate_subgoal(child)
+	for child in subgoals:
+		child.terminate()
 
-func activate_if_inactive():
-	if is_inactive():
-		activate()
+func _remove_from_parent_goal():
+	var parent = get_parent()
+	if parent is Classes.Goal:
+		parent.remove_subgoal(self)
+
+func remove_subgoal(goal):
+	subgoals.erase(goal)
+	if not goal.is_queued_for_deletion():
+		goal.queue_Free()
+
+func add_subgoal(goal):
+	subgoals.push_front(goal)
+	add_child(goal)
 
 func process():
 	activate_if_inactive()
 	process_subgoals()
 
+func activate_if_inactive():
+	if not activated:
+		activate()
+
 func process_subgoals():
 	if _has_subgoals():
 		_first_subgoal().process()
 	
-	_clear_completed_failed_subgoals()
-
 func _first_subgoal():
-	for i in range(0, get_child_count()):
-		var child = get_child(i)
-		if child is Classes.Goal:
-			return child
-	return null
+	return subgoals[0]
 
-func _clear_completed_failed_subgoals():
-	while _has_subgoals() and _first_subgoal()._is_completed_or_failed():
-		_terminate_subgoal(_first_subgoal())
-
-func _terminate_subgoal(goal):
-	if goal.is_terminated() or goal.is_inactive(): return
-	goal.terminate()
-	remove_child(goal)
+func _subgoal_count():
+	return subgoals.size()
 
 func _has_subgoals():
 	return _subgoal_count() > 0
 
 func _has_no_subgoals():
 	return _subgoal_count() == 0
-
-func _subgoal_count():
-	var count = 0
-	for child in get_children():
-		if child is Classes.Goal:
-			count += 1
-	return count
-
-func _is_completed_or_failed():
-	return is_completed() or has_failed()
-
-func is_inactive():
-	return state == GOAL_INACTIVE
-
-func is_active():
-	return state == GOAL_ACTIVE
-
-func is_completed():
-	return state == GOAL_COMPLETED
-
-func has_failed():
-	return state == GOAL_FAILED
-
-func is_terminated():
-	return state == GOAL_TERMINATED
