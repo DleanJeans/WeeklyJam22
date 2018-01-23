@@ -26,8 +26,7 @@ func next_duration():
 
 func _increment_duration_index():
 	duration_index += 1
-	if duration_index >= durations.size():
-		duration_index = 0
+	duration_index = wrapi(duration_index, 0, durations.size())
 
 func _calculate_round_duration():
 	minutes = durations[duration_index]
@@ -77,10 +76,11 @@ func _start_round_countdown():
 func set_enable_debug_duration(value):
 	enable_debug_duration = value
 	if enable_debug_duration:
-		durations[3] = debug_duration
-	else: durations[3] = 5
+		durations.append(debug_duration)
+	else: durations.erase(debug_duration)
 
 func set_debug_duration(value):
-	debug_duration = value
 	if enable_debug_duration:
-		durations[3] = value
+		var index = durations.find(debug_duration)
+		durations[index] = value
+	debug_duration = value
