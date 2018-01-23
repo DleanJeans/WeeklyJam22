@@ -50,8 +50,6 @@ func almost_unfrozen():
 func reset():
 	turn_normal()
 	self.coins = 0
-	self.controller = "AI"
-	$Sprite.modulate = $Util.WHITE
 	$AI/WinGame.clear_subgoals()
 	$FreezeTimer.stop()
 	$ScreamSound.choose_random_sound()

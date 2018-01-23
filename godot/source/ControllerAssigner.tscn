@@ -2,7 +2,6 @@
 
 [ext_resource path="res://source/ControllerAssigner.gd" type="Script" id=1]
 
-
 [sub_resource type="GDScript" id=1]
 
 script/source = "extends Node2D
@@ -13,11 +12,14 @@ var key_list = []
 func reset():
 	activated = false
 
+func unreset():
+	activated = true
+
 func _ready():
 	key_list.append(_add_prefix_to(\"action\"))
 
 func _add_prefix_to(action):
-	return \"%s_%s\" % [get_name().to_lower(), action]"
+	return \"%s_%s\" % [name.to_lower(), action]"
 
 [node name="ControllerAssigner" type="Node2D"]
 

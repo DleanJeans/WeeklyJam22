@@ -1,7 +1,7 @@
 extends Container
 
 onready var MainMenu = Screens.MainMenu
-onready var MenuButton = $"/root/Game/UI/MenuButton"
+onready var GameOverScreen = $"/root/Game/UI/GameOverScreen"
 onready var game = Global.Game
 
 func _process(delta):
@@ -13,7 +13,7 @@ func _process(delta):
 			_pause_game()
 
 func _is_pause_allowed():
-	var allowed = not (MainMenu.opened or MenuButton.showing or game.winner_jumping)
+	var allowed = not (MainMenu.opened or GameOverScreen.showing or game.winner_jumping)
 	return allowed
 
 func _pause_game():

@@ -363,18 +363,18 @@ _sections_unfolded = [ "Playback Options", "playback" ]
 
 [connection signal="pressed" from="PlayButton" to="PlayButton" method="release_focus"]
 
-[connection signal="pressed" from="PlayButton" to="SelectSound" method="play"]
-
 [connection signal="pressed" from="PlayButton" to="." method="_on_PlayButton_pressed"]
 
 [connection signal="pressed" from="PlayButton" to="." method="close"]
 
-[connection signal="pressed" from="MapButton" to="SelectSound" method="play"]
+[connection signal="pressed" from="PlayButton" to="SelectSound" method="play"]
 
 [connection signal="pressed" from="MapButton" to="." method="_on_MapButton_pressed"]
 
-[connection signal="pressed" from="DurationButton" to="SelectSound" method="play"]
+[connection signal="pressed" from="MapButton" to="SelectSound" method="play"]
 
 [connection signal="pressed" from="DurationButton" to="." method="_on_RoundDurationButton_pressed"]
+
+[connection signal="pressed" from="DurationButton" to="SelectSound" method="play"]
 
 

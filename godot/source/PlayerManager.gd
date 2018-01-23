@@ -43,18 +43,14 @@ func reset_controllers():
 		player.controller = "AI"
 		emit_signal("player_controller_changed", player)
 
-func activate_controller(player_num, controller_name):
-	if Global.Game.winner_jumping: return
-	
+func emit_player_controller_changed(player):
+	emit_signal("player_controller_changed", player)
+
+func find_random_ai():
 	var random_player = _find_random_player()
 	while random_player.controller != "AI":
 		random_player = _find_random_player()
-		
-	random_player.controller = controller_name
-	random_player.set_name_tag("P%s" % player_num)
-	random_player.force_jump()
-	
-	emit_signal("player_controller_changed", random_player)
+	return random_player
 
 func choose_crocodile_randomly():
 	if Global.crocodile != null: return

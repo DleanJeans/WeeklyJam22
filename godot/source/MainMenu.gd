@@ -1,7 +1,6 @@
 extends Container
 
 onready var game = Global.Game
-onready var menu_button = $"/root/Game/UI/MenuButton"
 
 var opened = true
 
@@ -33,11 +32,8 @@ func _process(delta):
 	if Input.is_action_just_pressed("toggle_main_menu") and OS.is_debug_build():
 		if opened:
 			close()
-			menu_button.show()
-			menu_button.grab_focus()
 		else:
 			open()
-			menu_button.hide()
 
 func _on_PlayButton_pressed():
 	emit_signal("play_pressed")

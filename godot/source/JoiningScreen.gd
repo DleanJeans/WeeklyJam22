@@ -3,11 +3,26 @@ extends Container
 onready var game = Global.Game
 onready var PlayerManager = Systems.PlayerManager
 
-var player_label_dict = {}
+var label_dict = {}
 var players_ready = {}
 var players_joined = []
 
 var closed = true
+
+var _current_player
+var _current_label
+
+func _ready():
+	setup_label_dict()
+
+func setup_label_dict():
+	label_dict.clear()
+	
+	for i in range(0, Global.Players.size()):
+		var player = Global.Players[i]
+		var label = $Labels.get_child(i)
+		
+		label_dict[player] = label
 
 func show_if_not_closed():
 	if not closed:
@@ -16,14 +31,31 @@ func show_if_not_closed():
 func open():
 	closed = false
 	show()
+	$Hints.show()
 	
 	players_joined = []
 	players_ready = {}
 	
+	$ControllerManager.reset()
 	_hide_labels()
-	_move_label_to_players()
+	_add_user_controlled_player()
 	_toggle_joypad_hints()
 	PlayerManager.connect("player_jump", self, "_on_player_jump")
+
+func _add_user_controlled_player():
+	for player in Global.Players:
+		if player.is_ai_controlled(): continue
+		_current_player = player
+		_get_current_label()
+		
+		players_joined.append(player)
+		players_ready[player] = false
+		_current_label.show()
+		
+		_update_current_label()
+
+func _get_current_label():
+	_current_label = label_dict[_current_player]
 
 func _toggle_joypad_hints():
 	if game.joypad_connected():
@@ -42,15 +74,6 @@ func _hide_labels():
 	for label in $Labels.get_children():
 		label.hide()
 
-func _move_label_to_players():
-	player_label_dict = {}
-	for i in range(0, Global.Players.size()):
-		var player = Global.Players[i]
-		var label = $Labels.get_child(i)
-		player_label_dict[player] = label
-		
-		_set_label_position(label, player)
-
 func _disconnnect_jump_signals():
 	for player in players_joined:
 		if player.is_connected("jump", self, "_on_player_jump"):
@@ -65,24 +88,20 @@ func _process(delta):
 
 func _stick_label_to_players():
 	for player in players_joined:
-		var label = player_label_dict[player]
+		var label = label_dict[player]
 		_set_label_position(label, player)
 
 func _set_label_position(label, player):
 	label.rect_position = player.position + Vector2(30, -50)
 
 func _on_player_jump(player):
-	var label = player_label_dict[player]
+	_current_player = player
+	_current_label = label_dict[player]
 	
 	if players_ready.has(player):
-		players_ready[player] = not players_ready[player]
-		_update_label(player)
+		_toggle_player_ready()
 	else:
-		players_ready[player] = false
-		players_joined.append(player)
-		
-		label.show()
-		_update_label(player)
+		_add_player()
 	
 	if _all_ready():
 		game.start_counting_down()
@@ -91,19 +110,31 @@ func _on_player_jump(player):
 		game.stop_counting_down()
 		$Hints.show()
 
-func _update_label(player):
-	var label = player_label_dict[player]
-	if players_ready[player]:
-		label.text = "Ready!"
-		label.modulate = player.color
+func _toggle_player_ready():
+	players_ready[_current_player] = not players_ready[_current_player]
+	_update_current_label()
+
+func _add_player():
+	players_ready[_current_player] = false
+	players_joined.append(_current_player)
+	
+	_current_label.show()
+	_update_current_label()
+
+func _update_current_label():
+	var player_is_ready = players_ready[_current_player]
+	
+	if player_is_ready:
+		_current_label.text = "Ready!"
+		_current_label.modulate = _current_player.color
 	else:
-		label.text = "Not Ready?"
-		label.modulate = Const.WHITE
+		_current_label.text = "Not Ready?"
+		_current_label.modulate = Const.WHITE
 
 func _all_ready():
 	if players_joined.size() == 0:
 		return false
 	for player in players_joined:
-		if not players_ready[player]:
+		if not players_ready[_current_player]:
 			return false
 	return true

@@ -4,7 +4,7 @@
 [ext_resource path="res://source/Gator.tscn" type="PackedScene" id=2]
 [ext_resource path="res://source/CoinSpawner.tscn" type="PackedScene" id=3]
 
-[node name="TheGator" type="Node2D" index="0"]
+[node name="TheGator" type="Node2D"]
 
 scale = Vector2( 0.3, 0.6 )
 script = ExtResource( 1 )

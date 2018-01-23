@@ -8,6 +8,8 @@ signal countdown_started
 signal game_started
 signal game_over
 
+signal game_again
+
 signal game_paused
 signal game_resumed
 
@@ -15,6 +17,9 @@ signal joining_screen_opened
 signal main_menu_opened
 
 var winner_jumping setget , get_winner_jumping
+
+func play_again():
+	emit_signal("game_again")
 
 func get_winner_jumping():
 	return $TheCrown.keeping_winner_jumping
