@@ -144,7 +144,11 @@ _sections_unfolded = [ "Transform" ]
 
 [connection signal="game_again" from="." to="." method="open_joining_screen" flags=3]
 
-[connection signal="game_over" from="." to="Systems/CoinManager" method="stop_spawners"]
+[connection signal="game_over" from="." to="TheCrown" method="keep_winner_jumping"]
+
+[connection signal="game_over" from="." to="UI/GameOverScreen" method="show_in_secs"]
+
+[connection signal="game_over" from="." to="UI/PlayerHints" method="reset"]
 
 [connection signal="game_over" from="." to="." method="show_mouse"]
 
@@ -152,23 +156,23 @@ _sections_unfolded = [ "Transform" ]
 
 [connection signal="game_over" from="." to="Systems/PlayerManager" method="freeze_players"]
 
-[connection signal="game_over" from="." to="TheCrown" method="keep_winner_jumping"]
+[connection signal="game_over" from="." to="Systems/CoinManager" method="stop_spawners"]
 
-[connection signal="game_over" from="." to="UI/PlayerHints" method="reset"]
-
-[connection signal="game_over" from="." to="UI/GameOverScreen" method="show_in_secs"]
+[connection signal="game_paused" from="." to="Screens/Join" method="hide"]
 
 [connection signal="game_paused" from="." to="." method="show_mouse"]
 
 [connection signal="game_paused" from="." to="." method="_pause_tree"]
 
-[connection signal="game_paused" from="." to="Screens/Join" method="hide"]
+[connection signal="game_resumed" from="." to="Screens/Join" method="show_if_not_closed"]
 
 [connection signal="game_resumed" from="." to="." method="_resume_tree"]
 
 [connection signal="game_resumed" from="." to="." method="hide_mouse"]
 
-[connection signal="game_resumed" from="." to="Screens/Join" method="show_if_not_closed"]
+[connection signal="game_started" from="." to="TheGator" method="reparent_to_crocodile" flags=3]
+
+[connection signal="game_started" from="." to="Screens/Join" method="close"]
 
 [connection signal="game_started" from="." to="." method="hide_mouse"]
 
@@ -180,13 +184,13 @@ _sections_unfolded = [ "Transform" ]
 
 [connection signal="game_started" from="." to="Systems/PlayerManager" method="enable_ai"]
 
-[connection signal="game_started" from="." to="TheGator" method="reparent_to_crocodile" flags=3]
+[connection signal="joining_screen_opened" from="." to="TheCrown" method="reset"]
 
-[connection signal="game_started" from="." to="Screens/Join" method="close"]
+[connection signal="joining_screen_opened" from="." to="TheCrown" method="stop_winner_jumping"]
 
-[connection signal="joining_screen_opened" from="." to="Systems/CoinManager" method="clear"]
+[connection signal="joining_screen_opened" from="." to="TheGator" method="reparent_here"]
 
-[connection signal="joining_screen_opened" from="." to="Systems/CoinManager" method="stop_spawners"]
+[connection signal="joining_screen_opened" from="." to="Screens/Join" method="open"]
 
 [connection signal="joining_screen_opened" from="." to="Systems/PlatformManager" method="stop_bounce_tween"]
 
@@ -198,13 +202,11 @@ _sections_unfolded = [ "Transform" ]
 
 [connection signal="joining_screen_opened" from="." to="Systems/PlayerManager" method="disable_ai"]
 
-[connection signal="joining_screen_opened" from="." to="TheCrown" method="reset"]
+[connection signal="joining_screen_opened" from="." to="Systems/CoinManager" method="clear"]
 
-[connection signal="joining_screen_opened" from="." to="TheCrown" method="stop_winner_jumping"]
+[connection signal="joining_screen_opened" from="." to="Systems/CoinManager" method="stop_spawners"]
 
-[connection signal="joining_screen_opened" from="." to="TheGator" method="reparent_here"]
-
-[connection signal="joining_screen_opened" from="." to="Screens/Join" method="open"]
+[connection signal="main_menu_opened" from="." to="Screens/Join" method="close"]
 
 [connection signal="main_menu_opened" from="." to="." method="resume"]
 
@@ -218,7 +220,13 @@ _sections_unfolded = [ "Transform" ]
 
 [connection signal="main_menu_opened" from="." to="Systems/PlayerManager" method="enable_ai"]
 
-[connection signal="main_menu_opened" from="." to="Screens/Join" method="close"]
+[connection signal="map_loaded" from="." to="TheCrown" method="stop_winner_jumping"]
+
+[connection signal="map_loaded" from="." to="TheGator" method="reparent_to_crocodile" flags=3]
+
+[connection signal="map_loaded" from="." to="TheGator" method="update_coin_parent"]
+
+[connection signal="map_loaded" from="." to="Screens/Join" method="setup_label_dict"]
 
 [connection signal="map_loaded" from="." to="Systems/PlayerManager" method="reset"]
 
@@ -229,14 +237,6 @@ _sections_unfolded = [ "Transform" ]
 [connection signal="map_loaded" from="." to="Systems/PlayerManager" method="listen_to_players_going_rawr"]
 
 [connection signal="map_loaded" from="." to="Systems/PlayerManager" method="choose_crocodile_randomly"]
-
-[connection signal="map_loaded" from="." to="TheCrown" method="stop_winner_jumping"]
-
-[connection signal="map_loaded" from="." to="TheGator" method="reparent_to_crocodile" flags=3]
-
-[connection signal="map_loaded" from="." to="TheGator" method="update_coin_parent"]
-
-[connection signal="map_loaded" from="." to="Screens/Join" method="setup_label_dict"]
 
 [connection signal="map_preloaded" from="." to="TheCrown" method="reset"]
 

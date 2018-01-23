@@ -6,9 +6,6 @@ func stop_spawners():
 	get_tree().call_group("CoinSpawners", "stop")
 	print("Coin Spawners stopped!")
 
-func resume_spawners():
-	get_tree().call_group("CoinSpawners", "resume")
-
 func clear():
 	get_tree().call_group("Coins", "queue_free")
 

@@ -48,7 +48,7 @@ func _listen_to_crocodile_going_rawr():
 func _stop_for_awhile():
 	$CoinSpawner.stop()
 	yield(Utility.timer(3), "timeout")
-	if Global.crocodile != null:
+	if Global.crocodile != null and not Global.Game.game_over:
 		$CoinSpawner.resume()
 
 func _process(delta):

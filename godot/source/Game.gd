@@ -16,12 +16,12 @@ signal game_resumed
 signal joining_screen_opened
 signal main_menu_opened
 
-var winner_jumping setget , get_winner_jumping
+var game_over setget , get_game_over
 
 func play_again():
 	emit_signal("game_again")
 
-func get_winner_jumping():
+func get_game_over():
 	return $TheCrown.keeping_winner_jumping
 
 func open_joining_screen():

@@ -20,6 +20,7 @@ audio_bus_override = false
 audio_bus_name = "Master"
 script = ExtResource( 1 )
 spawn_interval = 3.0
+fluctuating_amount = 0.1
 
 [node name="Shape" type="CollisionShape2D" parent="." index="0"]
 

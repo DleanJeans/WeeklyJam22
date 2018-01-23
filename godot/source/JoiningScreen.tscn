@@ -2,16 +2,16 @@
 
 [ext_resource path="res://source/JoiningScreen.gd" type="Script" id=1]
 [ext_resource path="res://source/ControllerAssigner.tscn" type="PackedScene" id=2]
-[ext_resource path="res://assets/BebasNeue.otf" type="DynamicFontData" id=3]
-[ext_resource path="res://source/ButtonHint.tscn" type="PackedScene" id=4]
-[ext_resource path="res://source/ReadyLabel.tscn" type="PackedScene" id=5]
+[ext_resource path="res://source/ReadyLabel.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/BebasNeue.otf" type="DynamicFontData" id=4]
+[ext_resource path="res://source/ButtonHint.tscn" type="PackedScene" id=5]
 
 [sub_resource type="DynamicFont" id=1]
 
 size = 25
 use_mipmaps = false
 use_filter = false
-font_data = ExtResource( 3 )
+font_data = ExtResource( 4 )
 _sections_unfolded = [ "Font", "Settings" ]
 
 [node name="JoiningScreen" type="Container"]
@@ -31,7 +31,46 @@ script = ExtResource( 1 )
 
 [node name="ControllerManager" parent="." index="0" instance=ExtResource( 2 )]
 
-[node name="Hints" type="VBoxContainer" parent="." index="1"]
+[node name="Labels" type="Container" parent="." index="1"]
+
+editor/display_folded = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 40.0
+margin_bottom = 40.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="Ready1" parent="Labels" index="0" instance=ExtResource( 3 )]
+
+visible = false
+
+[node name="Ready2" parent="Labels" index="1" instance=ExtResource( 3 )]
+
+visible = false
+
+[node name="Ready3" parent="Labels" index="2" instance=ExtResource( 3 )]
+
+visible = false
+
+[node name="Ready4" parent="Labels" index="3" instance=ExtResource( 3 )]
+
+visible = false
+
+[node name="Ready5" parent="Labels" index="4" instance=ExtResource( 3 )]
+
+visible = false
+
+[node name="Ready6" parent="Labels" index="5" instance=ExtResource( 3 )]
+
+visible = false
+
+[node name="Hints" type="VBoxContainer" parent="." index="2"]
 
 anchor_left = 0.0
 anchor_top = 0.5
@@ -70,6 +109,7 @@ _sections_unfolded = [ "custom_fonts" ]
 
 [node name="ButtonHints" type="HBoxContainer" parent="Hints" index="1"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -88,7 +128,7 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="A" parent="Hints/ButtonHints" index="0" instance=ExtResource( 4 )]
+[node name="A" parent="Hints/ButtonHints" index="0" instance=ExtResource( 5 )]
 
 anchor_right = 0.0
 anchor_bottom = 0.0
@@ -100,7 +140,7 @@ size_flags_vertical = 3
 _sections_unfolded = [ "Hint", "Mouse", "Rect", "Size Flags" ]
 button = "A"
 
-[node name="B3" parent="Hints/ButtonHints" index="1" instance=ExtResource( 4 )]
+[node name="B3" parent="Hints/ButtonHints" index="1" instance=ExtResource( 5 )]
 
 anchor_right = 0.0
 anchor_bottom = 0.0
@@ -112,7 +152,7 @@ size_flags_vertical = 3
 _sections_unfolded = [ "Hint", "Mouse", "Rect", "Size Flags" ]
 button = "3"
 
-[node name="Enter" parent="Hints/ButtonHints" index="2" instance=ExtResource( 4 )]
+[node name="Enter" parent="Hints/ButtonHints" index="2" instance=ExtResource( 5 )]
 
 anchor_right = 0.0
 anchor_bottom = 0.0
@@ -124,7 +164,7 @@ size_flags_vertical = 3
 _sections_unfolded = [ "Hint", "Mouse", "Rect", "Size Flags" ]
 button = "Enter"
 
-[node name="Space" parent="Hints/ButtonHints" index="3" instance=ExtResource( 4 )]
+[node name="Space" parent="Hints/ButtonHints" index="3" instance=ExtResource( 5 )]
 
 anchor_right = 0.0
 anchor_bottom = 0.0
@@ -135,44 +175,5 @@ margin_bottom = 50.0
 size_flags_vertical = 3
 _sections_unfolded = [ "Hint", "Mouse", "Rect", "Size Flags" ]
 button = "Space"
-
-[node name="Labels" type="Container" parent="." index="2"]
-
-editor/display_folded = true
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_right = 40.0
-margin_bottom = 40.0
-rect_pivot_offset = Vector2( 0, 0 )
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-
-[node name="Ready1" parent="Labels" index="0" instance=ExtResource( 5 )]
-
-visible = false
-
-[node name="Ready2" parent="Labels" index="1" instance=ExtResource( 5 )]
-
-visible = false
-
-[node name="Ready3" parent="Labels" index="2" instance=ExtResource( 5 )]
-
-visible = false
-
-[node name="Ready4" parent="Labels" index="3" instance=ExtResource( 5 )]
-
-visible = false
-
-[node name="Ready5" parent="Labels" index="4" instance=ExtResource( 5 )]
-
-visible = false
-
-[node name="Ready6" parent="Labels" index="5" instance=ExtResource( 5 )]
-
-visible = false
 
 

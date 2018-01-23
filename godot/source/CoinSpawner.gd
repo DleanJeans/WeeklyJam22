@@ -8,11 +8,11 @@ export(float) var spawn_interval = 1
 export(float) var fluctuating_amount = 0.1
 
 onready var _coin_parent
-onready var _scaled_extents = $Shape.shape.extents * scale
+onready var _scaled_extents = $Shape.shape.extents * self.scale
 onready var _size = _scaled_extents * 2
 
-func _ready():
-	$Timer.start()
+func is_stopped():
+	return $Timer.is_stopped()
 
 func stop():
 	$Timer.stop()
@@ -21,6 +21,8 @@ func resume():
 	$Timer.start()
 
 func spawn():
+	if is_stopped(): return
+	
 	_spawn_coin()
 	_flutuate_spawn_time()
 
