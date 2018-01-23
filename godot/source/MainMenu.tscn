@@ -245,7 +245,7 @@ rect_pivot_offset = Vector2( 0, 0 )
 focus_neighbour_top = NodePath("../DurationButton")
 focus_mode = 2
 mouse_filter = 0
-mouse_default_cursor_shape = 0
+mouse_default_cursor_shape = 2
 size_flags_horizontal = 1
 size_flags_vertical = 1
 custom_styles/hover = ExtResource( 7 )
@@ -258,7 +258,7 @@ group = null
 text = "Play"
 flat = true
 align = 0
-_sections_unfolded = [ "Focus", "Rect", "Visibility", "custom_fonts", "custom_styles" ]
+_sections_unfolded = [ "Mouse", "Visibility", "custom_fonts" ]
 
 [node name="MapButton" type="Button" parent="." index="4"]
 
@@ -273,7 +273,7 @@ margin_bottom = 447.0
 rect_pivot_offset = Vector2( 0, 0 )
 focus_mode = 2
 mouse_filter = 0
-mouse_default_cursor_shape = 0
+mouse_default_cursor_shape = 2
 size_flags_horizontal = 1
 size_flags_vertical = 1
 custom_styles/hover = ExtResource( 7 )
@@ -303,7 +303,7 @@ rect_pivot_offset = Vector2( 0, 0 )
 focus_neighbour_bottom = NodePath("../PlayButton")
 focus_mode = 2
 mouse_filter = 0
-mouse_default_cursor_shape = 0
+mouse_default_cursor_shape = 2
 size_flags_horizontal = 1
 size_flags_vertical = 1
 custom_styles/hover = ExtResource( 7 )
@@ -361,20 +361,20 @@ _sections_unfolded = [ "Playback Options", "playback" ]
 
 [connection signal="visibility_changed" from="." to="." method="_grab_focus_if_opened"]
 
-[connection signal="pressed" from="PlayButton" to="PlayButton" method="release_focus"]
-
-[connection signal="pressed" from="PlayButton" to="." method="_on_PlayButton_pressed"]
+[connection signal="pressed" from="PlayButton" to="SelectSound" method="play"]
 
 [connection signal="pressed" from="PlayButton" to="." method="close"]
 
-[connection signal="pressed" from="PlayButton" to="SelectSound" method="play"]
+[connection signal="pressed" from="PlayButton" to="." method="_on_PlayButton_pressed"]
 
-[connection signal="pressed" from="MapButton" to="." method="_on_MapButton_pressed"]
+[connection signal="pressed" from="PlayButton" to="PlayButton" method="release_focus"]
 
 [connection signal="pressed" from="MapButton" to="SelectSound" method="play"]
 
-[connection signal="pressed" from="DurationButton" to="." method="_on_RoundDurationButton_pressed"]
+[connection signal="pressed" from="MapButton" to="." method="_on_MapButton_pressed"]
 
 [connection signal="pressed" from="DurationButton" to="SelectSound" method="play"]
+
+[connection signal="pressed" from="DurationButton" to="." method="_on_RoundDurationButton_pressed"]
 
 

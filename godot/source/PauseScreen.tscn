@@ -122,7 +122,7 @@ rect_pivot_offset = Vector2( 0, 0 )
 focus_neighbour_top = NodePath("../MenuButton")
 focus_mode = 2
 mouse_filter = 0
-mouse_default_cursor_shape = 0
+mouse_default_cursor_shape = 2
 size_flags_horizontal = 1
 size_flags_vertical = 1
 custom_styles/hover = ExtResource( 4 )
@@ -151,7 +151,7 @@ rect_pivot_offset = Vector2( 0, 0 )
 focus_neighbour_bottom = NodePath("../ResumeButton")
 focus_mode = 2
 mouse_filter = 0
-mouse_default_cursor_shape = 0
+mouse_default_cursor_shape = 2
 size_flags_horizontal = 1
 size_flags_vertical = 1
 custom_styles/hover = ExtResource( 4 )
@@ -166,16 +166,16 @@ flat = true
 align = 1
 _sections_unfolded = [ "Focus", "Rect", "custom_fonts" ]
 
-[connection signal="pressed" from="ResumeButton" to="SelectSound" method="play"]
-
 [connection signal="pressed" from="ResumeButton" to="." method="hide"]
 
 [connection signal="pressed" from="ResumeButton" to="." method="_resume_game"]
 
-[connection signal="pressed" from="MenuButton" to="SelectSound" method="play"]
+[connection signal="pressed" from="ResumeButton" to="SelectSound" method="play"]
 
 [connection signal="pressed" from="MenuButton" to="." method="hide"]
 
 [connection signal="pressed" from="MenuButton" to="." method="_open_main_menu"]
+
+[connection signal="pressed" from="MenuButton" to="SelectSound" method="play"]
 
 
