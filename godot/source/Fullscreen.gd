@@ -16,7 +16,8 @@ func _process(delta):
 
 func _pre_toggle():
 	if not enable_oversampling_workaround: return
-	Global.Game.hide()
+	if Global.Game != null:
+		Global.Game.hide()
 
 func toggle():
 	_pre_toggle()
@@ -25,4 +26,5 @@ func toggle():
 
 func _post_toggle():
 	if not enable_oversampling_workaround: return
-	Global.Game.show()
+	if Global.Game != null:
+		Global.Game.show()
