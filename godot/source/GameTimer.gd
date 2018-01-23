@@ -6,7 +6,7 @@ export(int) var round_end_countdown_duration = 5
 export(bool) var enable_debug_duration = false setget set_enable_debug_duration
 export(float) var debug_duration = 0.5 setget set_debug_duration
 
-var durations = [1, 2, 3, 5, 10]
+var durations = [1, 2, 3, 5]
 var duration_index = 2
 var minutes = 3
 var round_duration = 180

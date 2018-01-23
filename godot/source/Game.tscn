@@ -72,7 +72,6 @@ map_name = "Map Name"
 
 [node name="GameTimer" parent="." index="5" instance=ExtResource( 11 )]
 
-enable_debug_duration = true
 debug_duration = 0.1
 
 [node name="UI" type="Container" parent="." index="6"]
