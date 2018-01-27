@@ -31,7 +31,7 @@ func _on_crocodile_changed():
 		return
 	else: show()
 	
-	_listen_to_crocodile_going_rawr()
+	_play_rawr_animation_if_signalled()
 	reparent_to_crocodile()
 	_stop_for_awhile()
 
@@ -41,7 +41,7 @@ func _no_crocodile():
 func _stop_coin_spawner():
 	$CoinSpawner.stop()
 
-func _listen_to_crocodile_going_rawr():
+func _play_rawr_animation_if_signalled():
 	if not _crocodile.is_connected("rawr", Gator, "rawr"):
 		_crocodile.connect("rawr", Gator, "rawr")
 
@@ -64,10 +64,15 @@ func _spawn_coin_if_go_far_enough():
 		_spawn_coin()
 		return
 	
+	if _go_far_enough():
+		_spawn_coin()
+
+func _go_far_enough():
 	var distance_squared_to_last_spawn_point = _get_distance_squared_to_last_spawn_point()
 	var distance_between_coins_squared = distance_between_coins * distance_between_coins
-	if distance_squared_to_last_spawn_point > distance_between_coins_squared:
-		_spawn_coin()
+	
+	var far_enough = distance_squared_to_last_spawn_point > distance_between_coins_squared
+	return far_enough
 
 func _get_distance_squared_to_last_spawn_point():
 	return Utility.distance_squared(position, _last_coin_spawn_position)

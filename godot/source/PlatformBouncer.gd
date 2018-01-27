@@ -39,7 +39,12 @@ func _set_tween_to_landing_point(player):
 	$Tween.interpolate_property(player, "position", player.position, landing_point, Const.BOUNCE_AIRBONE_TIME, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 
 func _compute_landing_point(player):
-	var newcomer_to_player = Utility.unit_vector_from(_newcomer, player)
+	var start_position = _newcomer.position
 	
-	var landing_point = _newcomer.position + newcomer_to_player * platform.get_size()
+	var newcomer_to_player = Utility.unit_vector_from(_newcomer, player)
+	var platform_size = platform.get_size()
+	var distance = newcomer_to_player * platform_size
+	
+	var landing_point = start_position + distance
+	
 	return landing_point
