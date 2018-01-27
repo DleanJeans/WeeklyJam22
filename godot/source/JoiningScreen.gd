@@ -135,6 +135,6 @@ func _all_ready():
 	if players_joined.size() == 0:
 		return false
 	for player in players_joined:
-		if not players_ready[_current_player]:
+		if not players_ready[player]:
 			return false
 	return true
