@@ -1,4 +1,4 @@
-extends "res://source//ai/goal/Goal.gd"
+extends "res://source/ai/goal/Goal.gd"
 
 func process():
 	.process()

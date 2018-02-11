@@ -232,6 +232,10 @@ toggle_main_menu=[ Object(InputEventKey,"resource_local_to_scene":false,"resourc
 2d_physics/layer_4="Walls"
 2d_physics/layer_5="Walled"
 
+[logging]
+
+file_logging/enable_file_logging=true
+
 [rendering]
 
 quality/intended_usage/framebuffer_allocation=0

@@ -1,4 +1,4 @@
-extends "res://source//ai/steering/SteeringBehavior.gd"
+extends "res://source/ai/steering/SteeringBehavior.gd"
 
 signal point_reached(index, vector)
 

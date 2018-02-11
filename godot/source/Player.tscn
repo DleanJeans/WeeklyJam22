@@ -519,7 +519,6 @@ playback_speed = 1.25
 anims/Bounce = SubResource( 4 )
 anims/Jump = SubResource( 5 )
 blend_times = [  ]
-autoplay = "Grounded"
 _sections_unfolded = [ "Playback Options" ]
 
 [node name="InputAction" type="Node2D" parent="." index="5"]
@@ -549,7 +548,6 @@ anims/Normal = SubResource( 7 )
 anims/PanicLeft = SubResource( 8 )
 anims/PanicRight = SubResource( 9 )
 blend_times = [  ]
-autoplay = ""
 
 [node name="Shadow" type="Sprite" parent="." index="8"]
 
@@ -684,7 +682,7 @@ area_mask = 1
 
 visible = false
 stream = SubResource( 15 )
-volume_db = -40.0
+volume_db = 10.0
 autoplay = false
 max_distance = 2000.0
 attenuation = 1.0
@@ -726,13 +724,13 @@ visible = false
 
 [connection signal="jump" from="." to="JumpAnimation" method="play" binds= [ "Jump" ]]
 
-[connection signal="turning_crocodile" from="." to="CrocodileShape" method="set_disabled" binds= [ false ]]
-
 [connection signal="turning_crocodile" from="." to="." method="start_freezing"]
 
-[connection signal="turning_normal" from="." to="SpriteFlipper/AnimationPlayer" method="play" binds= [ "PanicLeft" ]]
+[connection signal="turning_crocodile" from="." to="CrocodileShape" method="set_disabled" binds= [ false ]]
 
 [connection signal="turning_normal" from="." to="CrocodileShape" method="set_disabled" binds= [ true ]]
+
+[connection signal="turning_normal" from="." to="SpriteFlipper/AnimationPlayer" method="play" binds= [ "PanicLeft" ]]
 
 [connection signal="unfrozen_as_crocodile" from="." to="." method="_tag_overlapping_player"]
 

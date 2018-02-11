@@ -1,17 +1,17 @@
 extends Node
 
-var Platform = preload("res://source/Platform.gd")
-var Player = preload("res://source/Player.gd")
-var Coin = preload("res://source/Coin.gd")
-var Wall = preload("res://source/Wall.gd")
+var Platform = load("res://source/Platform.gd")
+var Player = load("res://source/Player.gd")
+var Coin = load("res://source/Coin.gd")
+var Wall = load("res://source/Wall.gd")
 
-var Goal = preload("res://source/ai/goal/Goal.gd")
+var Goal = load("res://source/ai/goal/Goal.gd")
 
-var ChaseOthers = preload("res://source/ai/goal/ChaseOthers.gd")
-var GoAroundPlatform = preload("res://source/ai/goal/GoAroundPlatform.gd")
+var ChaseOthers = load("res://source/ai/goal/ChaseOthers.gd")
+var GoAroundPlatform = load("res://source/ai/goal/GoAroundPlatform.gd")
 
-var GetMostCoins = preload("res://source/ai/goal/GetMostCoins.gd")
-var ArriveAtPlatform = preload("res://source/ai/goal/ArriveAtPlatform.gd")
-var GoGetCoin = preload("res://source/ai/goal/GoGetCoin.gd")
-var LeavePlatform = preload("res://source/ai/goal/LeavePlatform.gd")
-var FleeCrocodile = preload("res://source/ai/goal/FleeCrocodile.gd")
+var GetMostCoins = load("res://source/ai/goal/GetMostCoins.gd")
+var ArriveAtPlatform = load("res://source/ai/goal/ArriveAtPlatform.gd")
+var GoGetCoin = load("res://source/ai/goal/GoGetCoin.gd")
+var LeavePlatform = load("res://source/ai/goal/LeavePlatform.gd")
+var FleeCrocodile = load("res://source/ai/goal/FleeCrocodile.gd")

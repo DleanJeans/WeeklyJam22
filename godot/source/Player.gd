@@ -18,8 +18,6 @@ var crocodile_speed = 400
 var normal_speed = 300
 var ai_speed_scale = 0.975
 
-onready var platform_offset = $Sprite.texture.get_height() * $Sprite.scale.y
-
 var controller = "AI" setget _set_controller
 var on_platform = false
 

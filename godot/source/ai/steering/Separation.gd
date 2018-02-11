@@ -1,5 +1,5 @@
 tool
-extends "res://source//ai/steering/SteeringBehavior.gd"
+extends "res://source/ai/steering/SteeringBehavior.gd"
 
 export(int) var separation_range = 50 setget _set_separation_range
 

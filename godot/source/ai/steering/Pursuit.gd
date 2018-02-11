@@ -1,4 +1,4 @@
-extends "res://source//ai/steering/SteeringBehavior.gd"
+extends "res://source/ai/steering/SteeringBehavior.gd"
 
 export(float) var look_ahead_time_tweaker = 0.5
 onready var seeker = get_parent().get_node("Seek")

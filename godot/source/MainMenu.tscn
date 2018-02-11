@@ -314,7 +314,7 @@ action_mode = 0
 enabled_focus_mode = 2
 shortcut = null
 group = null
-text = "Duration: 3 Minutes"
+text = "Duration: 1 Minutes"
 flat = true
 align = 0
 _sections_unfolded = [ "Focus", "Rect", "custom_fonts" ]
@@ -356,16 +356,15 @@ playback_speed = 1.0
 anims/Close = SubResource( 4 )
 anims/Open = SubResource( 5 )
 blend_times = [  ]
-autoplay = ""
 _sections_unfolded = [ "Playback Options", "playback" ]
 
 [connection signal="visibility_changed" from="." to="." method="_grab_focus_if_opened"]
 
 [connection signal="pressed" from="PlayButton" to="SelectSound" method="play"]
 
-[connection signal="pressed" from="PlayButton" to="." method="close"]
-
 [connection signal="pressed" from="PlayButton" to="." method="_on_PlayButton_pressed"]
+
+[connection signal="pressed" from="PlayButton" to="." method="close"]
 
 [connection signal="pressed" from="PlayButton" to="PlayButton" method="release_focus"]
 
